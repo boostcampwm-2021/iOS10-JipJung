@@ -1,0 +1,14 @@
+# Uncomment the next line to define a global platform for your project
+# platform :ios, '9.0'
+
+target 'JipJung' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+  # Pods for JipJung
+  pod "SwiftLint"
+  pod "RxSwift"
+  pod "RxCocoa"
+  pod "RxRelay"
+  pod "RealmSwift"
+  pod "SnapKit"
+end

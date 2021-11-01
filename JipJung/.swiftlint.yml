@@ -1,0 +1,24 @@
+excluded:
+- Pods
+disabled_rules:
+- switch_case_alignment
+- trailing_whitespace
+
+opt_in_rules:
+  - force_unwrapping
+  
+force_unwrapping: error
+force_cast: error
+force_try: error
+comma: error
+vertical_whitespace:
+    severity: error
+colon:
+  severity: error
+  
+line_length:
+  warning: 120
+  ignores_function_declarations: true
+  ignores_comments: true
+  ignores_interpolated_strings: true
+  ignores_urls: true
