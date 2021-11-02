@@ -41,6 +41,226 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		91828FA827311F6F00204DE3 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				91828FB027311FFB00204DE3 /* Common */,
+				91828FAC27311FD700204DE3 /* Home */,
+				91828FAD27311FE200204DE3 /* Explore */,
+				91828FAE27311FE800204DE3 /* Me */,
+				91828FAF27311FED00204DE3 /* Sound */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		91828FA927311F8300204DE3 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				91828FB32731202100204DE3 /* Interfaces */,
+				91828FB22731201A00204DE3 /* Entities */,
+				91828FB12731201200204DE3 /* UseCases */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		91828FAA27311F8A00204DE3 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				91828FB52731205C00204DE3 /* Interfaces */,
+				91828FB42731204D00204DE3 /* Repositories */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		91828FAB27311F9400204DE3 /* Infra */ = {
+			isa = PBXGroup;
+			children = (
+				91828FB92731208900204DE3 /* UserDefaults */,
+				91828FB82731207700204DE3 /* LocalDB */,
+				91828FB72731207000204DE3 /* File */,
+				91828FB62731206700204DE3 /* Network */,
+			);
+			path = Infra;
+			sourceTree = "<group>";
+		};
+		91828FAC27311FD700204DE3 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				91828FC3273121EE00204DE3 /* Maxim */,
+				91828FBB2731216D00204DE3 /* Main */,
+				91828FBC2731217300204DE3 /* Categories */,
+				91828FBD2731217C00204DE3 /* Focus */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		91828FAD27311FE200204DE3 /* Explore */ = {
+			isa = PBXGroup;
+			children = (
+				91828FBF2731219F00204DE3 /* Search */,
+				91828FBE2731219900204DE3 /* Main */,
+			);
+			path = Explore;
+			sourceTree = "<group>";
+		};
+		91828FAE27311FE800204DE3 /* Me */ = {
+			isa = PBXGroup;
+			children = (
+				91828FC2273121BE00204DE3 /* FavoriteMaxim */,
+				91828FC1273121B300204DE3 /* FavoriteSound */,
+				91828FC0273121AE00204DE3 /* Main */,
+			);
+			path = Me;
+			sourceTree = "<group>";
+		};
+		91828FAF27311FED00204DE3 /* Sound */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Sound;
+			sourceTree = "<group>";
+		};
+		91828FB027311FFB00204DE3 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		91828FB12731201200204DE3 /* UseCases */ = {
+			isa = PBXGroup;
+			children = (
+				91828FBA2731214200204DE3 /* Protocol */,
+			);
+			path = UseCases;
+			sourceTree = "<group>";
+		};
+		91828FB22731201A00204DE3 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		91828FB32731202100204DE3 /* Interfaces */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Interfaces;
+			sourceTree = "<group>";
+		};
+		91828FB42731204D00204DE3 /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Repositories;
+			sourceTree = "<group>";
+		};
+		91828FB52731205C00204DE3 /* Interfaces */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Interfaces;
+			sourceTree = "<group>";
+		};
+		91828FB62731206700204DE3 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		91828FB72731207000204DE3 /* File */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = File;
+			sourceTree = "<group>";
+		};
+		91828FB82731207700204DE3 /* LocalDB */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = LocalDB;
+			sourceTree = "<group>";
+		};
+		91828FB92731208900204DE3 /* UserDefaults */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = UserDefaults;
+			sourceTree = "<group>";
+		};
+		91828FBA2731214200204DE3 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		91828FBB2731216D00204DE3 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		91828FBC2731217300204DE3 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+		91828FBD2731217C00204DE3 /* Focus */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Focus;
+			sourceTree = "<group>";
+		};
+		91828FBE2731219900204DE3 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		91828FBF2731219F00204DE3 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		91828FC0273121AE00204DE3 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		91828FC1273121B300204DE3 /* FavoriteSound */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = FavoriteSound;
+			sourceTree = "<group>";
+		};
+		91828FC2273121BE00204DE3 /* FavoriteMaxim */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = FavoriteMaxim;
+			sourceTree = "<group>";
+		};
+		91828FC3273121EE00204DE3 /* Maxim */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Maxim;
+			sourceTree = "<group>";
+		};
 		DD3902C4272FCA10009ECA82 = {
 			isa = PBXGroup;
 			children = (
