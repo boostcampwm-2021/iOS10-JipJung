@@ -16,11 +16,34 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        window = UIWindow(windowScene: windowScene)
-        let mainViewController = ViewController()
-
-        window?.rootViewController = mainViewController
+        window = UIWindow(frame: windowScene.coordinateSpace.bounds)
+        window?.windowScene = windowScene
+        window?.rootViewController = createTabbar()
         window?.makeKeyAndVisible()
+    }
+    
+    func createTabbar() -> UITabBarController {
+        let tabbar = UITabBarController()
+        tabbar.viewControllers = [createHomeViewController(), createExploreViewController(), createMeViewController()]
+        return tabbar
+    }
+    
+    func createHomeViewController() -> UIViewController {
+        let homeViewController = HomeViewController()
+        homeViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .contacts, tag: 0)
+        return homeViewController
+    }
+    
+    func createExploreViewController() -> UIViewController {
+        let exploreViewController = ExploreViewController()
+        exploreViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .contacts, tag: 1)
+        return exploreViewController
+    }
+    
+    func createMeViewController() -> UIViewController {
+        let meViewController = MeViewController()
+        meViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .contacts, tag: 2)
+        return meViewController
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

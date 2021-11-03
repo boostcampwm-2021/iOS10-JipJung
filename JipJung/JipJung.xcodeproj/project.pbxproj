@@ -10,10 +10,12 @@
 		91E4178927312FEB001BA0A6 /* LocalFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E4178827312FEB001BA0A6 /* LocalFileManager.swift */; };
 		DD3902D1272FCA10009ECA82 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3902D0272FCA10009ECA82 /* AppDelegate.swift */; };
 		DD3902D3272FCA10009ECA82 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3902D2272FCA10009ECA82 /* SceneDelegate.swift */; };
-		DD3902D5272FCA10009ECA82 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3902D4272FCA10009ECA82 /* ViewController.swift */; };
 		DD3902DA272FCA12009ECA82 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DD3902D9272FCA12009ECA82 /* Assets.xcassets */; };
 		DD3902DD272FCA12009ECA82 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DD3902DB272FCA12009ECA82 /* LaunchScreen.storyboard */; };
 		DDAA3D3D5F09E051F5BE96A6 /* Pods_JipJung.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6ECB91629425C2E076873750 /* Pods_JipJung.framework */; };
+		DDB5CE9E27328E8300E8F9EB /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB5CE9D27328E8300E8F9EB /* HomeViewController.swift */; };
+		DDB5CEA227328EC300E8F9EB /* ExploreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB5CEA127328EC300E8F9EB /* ExploreViewController.swift */; };
+		DDB5CEA827328EF400E8F9EB /* MeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB5CEA727328EF400E8F9EB /* MeViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,11 +26,13 @@
 		DD3902CD272FCA10009ECA82 /* JipJung.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JipJung.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD3902D0272FCA10009ECA82 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DD3902D2272FCA10009ECA82 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		DD3902D4272FCA10009ECA82 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		DD3902D9272FCA12009ECA82 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DD3902DC272FCA12009ECA82 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DD3902DE272FCA12009ECA82 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DD3902FC272FD388009ECA82 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		DDB5CE9D27328E8300E8F9EB /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		DDB5CEA127328EC300E8F9EB /* ExploreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreViewController.swift; sourceTree = "<group>"; };
+		DDB5CEA727328EF400E8F9EB /* MeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,9 +85,9 @@
 		DD3902CF272FCA10009ECA82 /* JipJung */ = {
 			isa = PBXGroup;
 			children = (
+				DDB5CE9927328E5000E8F9EB /* UI */,
 				91E4174C27312E5A001BA0A6 /* Infra */,
 				DD3902FD272FE21D009ECA82 /* Application */,
-				DD3902D4272FCA10009ECA82 /* ViewController.swift */,
 				DD3902DE272FCA12009ECA82 /* Info.plist */,
 			);
 			path = JipJung;
@@ -106,6 +110,64 @@
 				DD3902DB272FCA12009ECA82 /* LaunchScreen.storyboard */,
 			);
 			path = Application;
+			sourceTree = "<group>";
+		};
+		DDB5CE9927328E5000E8F9EB /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				DDB5CEA327328ED900E8F9EB /* Me */,
+				DDB5CE9A27328E5D00E8F9EB /* Home */,
+				DDB5CE9F27328EA900E8F9EB /* Explore */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		DDB5CE9A27328E5D00E8F9EB /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				DDB5CE9C27328E7600E8F9EB /* Main */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		DDB5CE9C27328E7600E8F9EB /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				DDB5CE9D27328E8300E8F9EB /* HomeViewController.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		DDB5CE9F27328EA900E8F9EB /* Explore */ = {
+			isa = PBXGroup;
+			children = (
+				DDB5CEA027328EB900E8F9EB /* Main */,
+			);
+			path = Explore;
+			sourceTree = "<group>";
+		};
+		DDB5CEA027328EB900E8F9EB /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				DDB5CEA127328EC300E8F9EB /* ExploreViewController.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		DDB5CEA327328ED900E8F9EB /* Me */ = {
+			isa = PBXGroup;
+			children = (
+				DDB5CEA427328EDF00E8F9EB /* Main */,
+			);
+			path = Me;
+			sourceTree = "<group>";
+		};
+		DDB5CEA427328EDF00E8F9EB /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				DDB5CEA727328EF400E8F9EB /* MeViewController.swift */,
+			);
+			path = Main;
 			sourceTree = "<group>";
 		};
 		FC10DDE8A3B3F38BE43E9B68 /* Pods */ = {
@@ -249,7 +311,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DD3902D5272FCA10009ECA82 /* ViewController.swift in Sources */,
+				DDB5CE9E27328E8300E8F9EB /* HomeViewController.swift in Sources */,
+				DDB5CEA827328EF400E8F9EB /* MeViewController.swift in Sources */,
+				DDB5CEA227328EC300E8F9EB /* ExploreViewController.swift in Sources */,
 				DD3902D1272FCA10009ECA82 /* AppDelegate.swift in Sources */,
 				DD3902D3272FCA10009ECA82 /* SceneDelegate.swift in Sources */,
 				91E4178927312FEB001BA0A6 /* LocalFileManager.swift in Sources */,
