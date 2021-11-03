@@ -67,17 +67,17 @@ JipJung
 ├── UI
 │   ├── Common
 │   ├── Home
-|   │   ├── Main
-|   │   ├── Categories
-|   │   ├── Focus
-|   │   └── Maxim
+│   │   ├── Main
+│   │   ├── Categories
+│   │   ├── Focus
+│   │   └── Maxim
 │   ├── Explore
-|   │   ├── Main
-|   │   └── Search
+│   │   ├── Main
+│   │   └── Search
 │   ├── Me
-|   │   ├── Main
-|   │   ├── FavoriteMaxim
-|   │   └── FavoriteSound
+│   │   ├── Main
+│   │   ├── FavoriteMaxim
+│   │   └── FavoriteSound
 │   └── Sound
 ├── Domain
 │   ├── Entities
