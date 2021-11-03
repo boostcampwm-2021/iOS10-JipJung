@@ -28,24 +28,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         return tabbar
     }
     
-    func createHomeViewController() -> ViewController {
-        let mainViewController = ViewController()
-        mainViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .contacts, tag: 0)
-        return mainViewController
+    func createHomeViewController() -> UIViewController {
+        let homeViewController = HomeViewController()
+        homeViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .contacts, tag: 0)
+        return homeViewController
     }
     
-    func createExploreViewController() -> ViewController {
-        let mainViewController = ViewController()
-        mainViewController.view.backgroundColor = .red
-        mainViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .contacts, tag: 1)
-        return mainViewController
+    func createExploreViewController() -> UIViewController {
+        let exploreViewController = ExploreViewController()
+        exploreViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .contacts, tag: 1)
+        return exploreViewController
     }
     
-    func createMeViewController() -> ViewController {
-        let mainViewController = ViewController()
-        mainViewController.view.backgroundColor = .blue
-        mainViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .contacts, tag: 2)
-        return mainViewController
+    func createMeViewController() -> UIViewController {
+        let meViewController = MeViewController()
+        meViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .contacts, tag: 2)
+        return meViewController
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
