@@ -72,8 +72,6 @@
 		DFED21CB2733702800E99641 /* MusicPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFED21CA2733702800E99641 /* MusicPlayerViewController.swift */; };
 		DFED21CE2733848600E99641 /* MusicDescriptionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFED21CD2733848600E99641 /* MusicDescriptionView.xib */; };
 		DFED21D02733931600E99641 /* MusicDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFED21CF2733931600E99641 /* MusicDescriptionView.swift */; };
-		DFED21D32733A15700E99641 /* MusicPlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFED21D22733A15700E99641 /* MusicPlayerViewModel.swift */; };
-		DFED21D52733A5EF00E99641 /* PlayerMaximView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFED21D42733A5EF00E99641 /* PlayerMaximView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -165,8 +163,6 @@
 		DFED21CA2733702800E99641 /* MusicPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayerViewController.swift; sourceTree = "<group>"; };
 		DFED21CD2733848600E99641 /* MusicDescriptionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MusicDescriptionView.xib; sourceTree = "<group>"; };
 		DFED21CF2733931600E99641 /* MusicDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicDescriptionView.swift; sourceTree = "<group>"; };
-		DFED21D22733A15700E99641 /* MusicPlayerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayerViewModel.swift; sourceTree = "<group>"; };
-		DFED21D42733A5EF00E99641 /* PlayerMaximView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerMaximView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -456,7 +452,6 @@
 			children = (
 				DFED21CC273383F600E99641 /* Views */,
 				DFED21CA2733702800E99641 /* MusicPlayerViewController.swift */,
-				DFED21D22733A15700E99641 /* MusicPlayerViewModel.swift */,
 			);
 			path = Sound;
 			sourceTree = "<group>";
@@ -497,7 +492,6 @@
 			children = (
 				DFED21CD2733848600E99641 /* MusicDescriptionView.xib */,
 				DFED21CF2733931600E99641 /* MusicDescriptionView.swift */,
-				DFED21D42733A5EF00E99641 /* PlayerMaximView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
