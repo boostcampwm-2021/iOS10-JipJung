@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 class MusicPlayerViewController: UIViewController {
-    // MARK: - view builder
+    // MARK: - View builder -> 임시 코드가 포함됨
     let topView: UIView = {
         let view = UIView()
         view.backgroundColor = .purple
@@ -42,12 +42,20 @@ class MusicPlayerViewController: UIViewController {
     }()
     
     let playButton: UIButton = {
-        let button = UIButton()
+        let button = UIButton(type: .system)
         button.backgroundColor = .gray
         button.setTitle("Play", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.addTarget(self, action: #selector(playButtonTouched(_:)), for: .touchUpInside)
         return button
     }()
     
+    let maximTextView: PlayerMaximView? = {
+        let view = PlayerMaximView()
+        return view
+    }()
+    
+    // MARK: - Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
@@ -57,19 +65,38 @@ class MusicPlayerViewController: UIViewController {
         setBottomView()
     }
     
-    // MARK: - constraint 설정 + addSubView
+    // MARK: - Input vent from views
+    @objc func favoriteButtonTouched(_ sender: UIButton) {
+        print(#function, #line)
+    }
+    
+    @objc func streamingButtonTouched(_ sender: UIButton) {
+        print(#function, #line)
+    }
+    
+    @objc func playButtonTouched(_ sender: UIButton) {
+        print(#function, #line)
+    }
+    
+    @objc func backButtonTouched(_ sender: UIButton) {
+        print(#function, #line)
+    }
+}
+
+// MARK: - AddSubView + Constraints
+extension MusicPlayerViewController {
     func setNavigationBar() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             image: UIImage(systemName: "chevron.backward"),
             style: .done,
             target: self,
-            action: nil
+            action: #selector(backButtonTouched(_:))
         )
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             image: UIImage(systemName: "heart"),
             style: .plain,
             target: self,
-            action: nil
+            action: #selector(favoriteButtonTouched(_:))
         )
     }
     
@@ -109,5 +136,15 @@ class MusicPlayerViewController: UIViewController {
             make.leading.top.trailing.equalToSuperview().inset(12)
             make.bottom.equalTo(playButton.snp.top).offset(-12)
         }
+        
+        guard let maximTextView = maximTextView else {
+            return
+        }
+        
+        maximView.addSubview(maximTextView)
+        maximTextView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
     }
+    
 }

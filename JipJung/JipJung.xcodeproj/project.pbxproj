@@ -72,6 +72,7 @@
 		DFED21CB2733702800E99641 /* MusicPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFED21CA2733702800E99641 /* MusicPlayerViewController.swift */; };
 		DFED21CE2733848600E99641 /* MusicDescriptionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFED21CD2733848600E99641 /* MusicDescriptionView.xib */; };
 		DFED21D02733931600E99641 /* MusicDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFED21CF2733931600E99641 /* MusicDescriptionView.swift */; };
+		DFED21D92733AE8400E99641 /* PlayerMaximView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFED21D82733AE8400E99641 /* PlayerMaximView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -163,6 +164,7 @@
 		DFED21CA2733702800E99641 /* MusicPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayerViewController.swift; sourceTree = "<group>"; };
 		DFED21CD2733848600E99641 /* MusicDescriptionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MusicDescriptionView.xib; sourceTree = "<group>"; };
 		DFED21CF2733931600E99641 /* MusicDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicDescriptionView.swift; sourceTree = "<group>"; };
+		DFED21D82733AE8400E99641 /* PlayerMaximView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerMaximView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -492,6 +494,7 @@
 			children = (
 				DFED21CD2733848600E99641 /* MusicDescriptionView.xib */,
 				DFED21CF2733931600E99641 /* MusicDescriptionView.swift */,
+				DFED21D82733AE8400E99641 /* PlayerMaximView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -780,6 +783,7 @@
 				B4015CD82739270C006BD14A /* GenreCollectionViewCell.swift in Sources */,
 				9198DE952733863500EBAEC8 /* Common.swift in Sources */,
 				91CE6F7527391E1C00176AF2 /* HomeViewModel.swift in Sources */,
+				DFED21D92733AE8400E99641 /* PlayerMaximView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
