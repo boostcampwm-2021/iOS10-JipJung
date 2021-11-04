@@ -8,9 +8,9 @@
 import Foundation
 
 protocol LocalFileAccessible {
-  func read(_ filePath: String) -> Data?
-  func write(_ data: Data, at filePath: String) -> Bool
-  func delete(_ filePath: String) -> Bool
+  func read(_ fileName: String) -> Data?
+  func write(_ data: Data, at fileName: String) -> Bool
+  func delete(_ fileName: String) -> Bool
 }
 
 class LocalFileManager: LocalFileAccessible {
@@ -19,13 +19,13 @@ class LocalFileManager: LocalFileAccessible {
   
   private let cachePath = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0]
   
-  func read(_ filePath: String) -> Data? {
-    let fileURL = cachePath.appendingPathComponent(filePath)
+  func read(_ fileName: String) -> Data? {
+    let fileURL = cachePath.appendingPathComponent(fileName)
     return try? Data(contentsOf: fileURL)
   }
   
-  func write(_ data: Data, at filePath: String) -> Bool {
-    let fileURL = cachePath.appendingPathComponent(filePath)
+  func write(_ data: Data, at fileName: String) -> Bool {
+    let fileURL = cachePath.appendingPathComponent(fileName)
     do {
       try data.write(to: fileURL)
     } catch {
@@ -34,8 +34,8 @@ class LocalFileManager: LocalFileAccessible {
     return true
   }
   
-  func delete(_ filePath: String) -> Bool {
-    let fileURL = cachePath.appendingPathComponent(filePath)
+  func delete(_ fileName: String) -> Bool {
+    let fileURL = cachePath.appendingPathComponent(fileName)
     do {
       try FileManager.default.removeItem(at: fileURL)
     } catch {
