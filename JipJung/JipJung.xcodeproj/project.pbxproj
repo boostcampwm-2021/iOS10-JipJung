@@ -16,6 +16,7 @@
 		DDB5CE9E27328E8300E8F9EB /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB5CE9D27328E8300E8F9EB /* HomeViewController.swift */; };
 		DDB5CEA227328EC300E8F9EB /* ExploreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB5CEA127328EC300E8F9EB /* ExploreViewController.swift */; };
 		DDB5CEA827328EF400E8F9EB /* MeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB5CEA727328EF400E8F9EB /* MeViewController.swift */; };
+		DDB5CEAF273372A700E8F9EB /* Music.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB5CEAE273372A700E8F9EB /* Music.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +34,7 @@
 		DDB5CE9D27328E8300E8F9EB /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		DDB5CEA127328EC300E8F9EB /* ExploreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreViewController.swift; sourceTree = "<group>"; };
 		DDB5CEA727328EF400E8F9EB /* MeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeViewController.swift; sourceTree = "<group>"; };
+		DDB5CEAE273372A700E8F9EB /* Music.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Music.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +87,7 @@
 		DD3902CF272FCA10009ECA82 /* JipJung */ = {
 			isa = PBXGroup;
 			children = (
+				DDB5CEAC2733727600E8F9EB /* Domain */,
 				DDB5CE9927328E5000E8F9EB /* UI */,
 				91E4174C27312E5A001BA0A6 /* Infra */,
 				DD3902FD272FE21D009ECA82 /* Application */,
@@ -168,6 +171,22 @@
 				DDB5CEA727328EF400E8F9EB /* MeViewController.swift */,
 			);
 			path = Main;
+			sourceTree = "<group>";
+		};
+		DDB5CEAC2733727600E8F9EB /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				DDB5CEAD2733728100E8F9EB /* Entities */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		DDB5CEAD2733728100E8F9EB /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				DDB5CEAE273372A700E8F9EB /* Music.swift */,
+			);
+			path = Entities;
 			sourceTree = "<group>";
 		};
 		FC10DDE8A3B3F38BE43E9B68 /* Pods */ = {
@@ -315,6 +334,7 @@
 				DDB5CEA827328EF400E8F9EB /* MeViewController.swift in Sources */,
 				DDB5CEA227328EC300E8F9EB /* ExploreViewController.swift in Sources */,
 				DD3902D1272FCA10009ECA82 /* AppDelegate.swift in Sources */,
+				DDB5CEAF273372A700E8F9EB /* Music.swift in Sources */,
 				DD3902D3272FCA10009ECA82 /* SceneDelegate.swift in Sources */,
 				91E4178927312FEB001BA0A6 /* LocalFileManager.swift in Sources */,
 			);
