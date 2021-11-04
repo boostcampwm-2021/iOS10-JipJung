@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		9198DE952733863500EBAEC8 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9198DE942733863500EBAEC8 /* Common.swift */; };
+		9198DE8C2733791000EBAEC8 /* LocalFileMangerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9198DE8B2733791000EBAEC8 /* LocalFileMangerTests.swift */; };
+		9198DE9227337A4900EBAEC8 /* LocalFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E4178827312FEB001BA0A6 /* LocalFileManager.swift */; };
 		91E4178927312FEB001BA0A6 /* LocalFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E4178827312FEB001BA0A6 /* LocalFileManager.swift */; };
 		B4F36B5127336EE20073609C /* UserDefaultsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F36B5027336EE20073609C /* UserDefaultsStorage.swift */; };
 		B4F36B5927338E9B0073609C /* UserDefaultsStorageTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F36B5827338E9B0073609C /* UserDefaultsStorageTest.swift */; };
@@ -27,6 +29,7 @@
 
 /* Begin PBXContainerItemProxy section */
 		B4F36B5A27338E9B0073609C /* PBXContainerItemProxy */ = {
+		9198DE8D2733791000EBAEC8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = DD3902C5272FCA10009ECA82 /* Project object */;
 			proxyType = 1;
@@ -40,6 +43,8 @@
 		0B8DD22FEC5E234B31F27E14 /* Pods-JipJung.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JipJung.release.xcconfig"; path = "Target Support Files/Pods-JipJung/Pods-JipJung.release.xcconfig"; sourceTree = "<group>"; };
 		6ECB91629425C2E076873750 /* Pods_JipJung.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_JipJung.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9198DE942733863500EBAEC8 /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
+		9198DE892733791000EBAEC8 /* LocalFileMangerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LocalFileMangerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9198DE8B2733791000EBAEC8 /* LocalFileMangerTests.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = LocalFileMangerTests.swift; sourceTree = "<group>"; tabWidth = 4; };
 		91E4178827312FEB001BA0A6 /* LocalFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFileManager.swift; sourceTree = "<group>"; };
 		B4F36B5027336EE20073609C /* UserDefaultsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsStorage.swift; sourceTree = "<group>"; };
 		B4F36B5627338E9B0073609C /* UserDefaultsStorageTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UserDefaultsStorageTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -62,6 +67,7 @@
 
 /* Begin PBXFrameworksBuildPhase section */
 		B4F36B5327338E9B0073609C /* Frameworks */ = {
+		9198DE862733791000EBAEC8 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -85,6 +91,12 @@
 				9198DE942733863500EBAEC8 /* Common.swift */,
 			);
 			path = Localizing;
+		9198DE8A2733791000EBAEC8 /* LocalFileMangerTests */ = {
+			isa = PBXGroup;
+			children = (
+				9198DE8B2733791000EBAEC8 /* LocalFileMangerTests.swift */,
+			);
+			path = LocalFileMangerTests;
 			sourceTree = "<group>";
 		};
 		91E4174C27312E5A001BA0A6 /* Infra */ = {
@@ -126,6 +138,7 @@
 				DD3902FC272FD388009ECA82 /* .swiftlint.yml */,
 				DD3902CF272FCA10009ECA82 /* JipJung */,
 				B4F36B5727338E9B0073609C /* UserDefaultsStorageTest */,
+				9198DE8A2733791000EBAEC8 /* LocalFileMangerTests */,
 				DD3902CE272FCA10009ECA82 /* Products */,
 				DD3902F8272FD248009ECA82 /* Frameworks */,
 				FC10DDE8A3B3F38BE43E9B68 /* Pods */,
@@ -137,6 +150,7 @@
 			children = (
 				DD3902CD272FCA10009ECA82 /* JipJung.app */,
 				B4F36B5627338E9B0073609C /* UserDefaultsStorageTest.xctest */,
+				9198DE892733791000EBAEC8 /* LocalFileMangerTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -269,6 +283,13 @@
 				B4F36B5227338E9B0073609C /* Sources */,
 				B4F36B5327338E9B0073609C /* Frameworks */,
 				B4F36B5427338E9B0073609C /* Resources */,
+		9198DE882733791000EBAEC8 /* LocalFileMangerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9198DE912733791000EBAEC8 /* Build configuration list for PBXNativeTarget "LocalFileMangerTests" */;
+			buildPhases = (
+				9198DE852733791000EBAEC8 /* Sources */,
+				9198DE862733791000EBAEC8 /* Frameworks */,
+				9198DE872733791000EBAEC8 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -278,6 +299,11 @@
 			name = UserDefaultsStorageTest;
 			productName = UserDefaultsStorageTest;
 			productReference = B4F36B5627338E9B0073609C /* UserDefaultsStorageTest.xctest */;
+				9198DE8E2733791000EBAEC8 /* PBXTargetDependency */,
+			);
+			name = LocalFileMangerTests;
+			productName = LocalFileMangerTests;
+			productReference = 9198DE892733791000EBAEC8 /* LocalFileMangerTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		DD3902CC272FCA10009ECA82 /* JipJung */ = {
@@ -313,6 +339,8 @@
 					B4F36B5527338E9B0073609C = {
 						CreatedOnToolsVersion = 13.0;
 						TestTargetID = DD3902CC272FCA10009ECA82;
+					9198DE882733791000EBAEC8 = {
+						CreatedOnToolsVersion = 13.1;
 					};
 					DD3902CC272FCA10009ECA82 = {
 						CreatedOnToolsVersion = 13.1;
@@ -334,12 +362,14 @@
 			targets = (
 				DD3902CC272FCA10009ECA82 /* JipJung */,
 				B4F36B5527338E9B0073609C /* UserDefaultsStorageTest */,
+				9198DE882733791000EBAEC8 /* LocalFileMangerTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		B4F36B5427338E9B0073609C /* Resources */ = {
+		9198DE872733791000EBAEC8 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -422,6 +452,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				B4F36B5927338E9B0073609C /* UserDefaultsStorageTest.swift in Sources */,
+		9198DE852733791000EBAEC8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9198DE8C2733791000EBAEC8 /* LocalFileMangerTests.swift in Sources */,
+				9198DE9227337A4900EBAEC8 /* LocalFileManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -451,6 +487,10 @@
 			isa = PBXTargetDependency;
 			target = DD3902CC272FCA10009ECA82 /* JipJung */;
 			targetProxy = B4F36B5A27338E9B0073609C /* PBXContainerItemProxy */;
+		9198DE8E2733791000EBAEC8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DD3902CC272FCA10009ECA82 /* JipJung */;
+			targetProxy = 9198DE8D2733791000EBAEC8 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -470,6 +510,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+		9198DE8F2733791000EBAEC8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = B3PWYBKFUK;
@@ -481,6 +524,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = Wavvie.UserDefaultsStorageTest;
+				PRODUCT_BUNDLE_IDENTIFIER = Wavvie.LocalFileMangerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -493,6 +537,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+			};
+			name = Debug;
+		};
+		9198DE902733791000EBAEC8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = B3PWYBKFUK;
@@ -504,6 +554,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = Wavvie.UserDefaultsStorageTest;
+				PRODUCT_BUNDLE_IDENTIFIER = Wavvie.LocalFileMangerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -692,6 +743,11 @@
 			buildConfigurations = (
 				B4F36B5D27338E9B0073609C /* Debug */,
 				B4F36B5E27338E9B0073609C /* Release */,
+		9198DE912733791000EBAEC8 /* Build configuration list for PBXNativeTarget "LocalFileMangerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9198DE8F2733791000EBAEC8 /* Debug */,
+				9198DE902733791000EBAEC8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
