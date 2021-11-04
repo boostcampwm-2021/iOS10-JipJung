@@ -11,7 +11,7 @@ struct Music {
     let id: String
     let name: String
     let mode: Int
-    let thumbURL: String
+    let thumbnailImageURL: String
     let videoURL: String
     let soundURL: String
 }

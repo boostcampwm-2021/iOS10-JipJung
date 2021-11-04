@@ -10,6 +10,6 @@ import Foundation
 struct Maxim {
     let id: String
     let day: Int
-    let thumbURL: String
+    let thumbnailImageURL: String
     let content: String
 }
