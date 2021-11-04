@@ -8,9 +8,9 @@
 import Foundation
 
 protocol UserDefaultsStorable {
-    func save(for key: String, integer: Int)
-    func save(for key: String, stringArray: [String])
-    func load(for key: String) -> Int
+    func save(for key: String, value: Int)
+    func save(for key: String, value: [String])
+    func load(for key: String) -> Int?
     func load(for key: String) -> [String]?
 }
 
@@ -21,20 +21,23 @@ final class UserDefaultsStorage: UserDefaultsStorable {
         self.userDefaults = userDefaults
     }
     
-    func save(for key: String, integer: Int) {
-        userDefaults.set(integer, forKey: key)
+    func save(for key: String, value: Int) {
+        userDefaults.set(value, forKey: key)
+        userDefaults.synchronize()
     }
     
-    func save(for key: String, stringArray: [String]) {
-        userDefaults.set(stringArray, forKey: key)
+    func save(for key: String, value: [String]) {
+        userDefaults.set(value, forKey: key)
+        userDefaults.synchronize()
     }
     
-    func load(for key: String) -> Int {
-        return userDefaults.integer(forKey: key)
+    func load(for key: String) -> Int? {
+        let value = userDefaults.integer(forKey: key)
+        return value == 0 ? nil : value
     }
     
     func load(for key: String) -> [String]? {
-        guard let stringArray = userDefaults.object(forKey: key) as? [String] else { return nil }
-        return stringArray
+        guard let value = userDefaults.object(forKey: key) as? [String] else { return nil }
+        return value
     }
 }
