@@ -50,7 +50,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     private func createHomeViewController() -> UIViewController {
         let tabBarItem = UITabBarItem(
             title: TabBarItems.Home.title,
-            image: TabBarItems.Home.image,
+            image: UIImage(systemName: TabBarItems.Home.image),
             tag: 0
         )
         
