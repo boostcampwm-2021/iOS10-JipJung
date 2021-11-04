@@ -70,6 +70,8 @@
 		DF6B111127390F1900D9924E /* MediaResourceRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6B111027390F1900D9924E /* MediaResourceRepository.swift */; };
 		DF71D22F2734455600CD980E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DF71D22E2734455600CD980E /* GoogleService-Info.plist */; };
 		DFED21CB2733702800E99641 /* MusicPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFED21CA2733702800E99641 /* MusicPlayerViewController.swift */; };
+		DFED21CE2733848600E99641 /* MusicDescriptionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DFED21CD2733848600E99641 /* MusicDescriptionView.xib */; };
+		DFED21D02733931600E99641 /* MusicDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFED21CF2733931600E99641 /* MusicDescriptionView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -159,6 +161,8 @@
 		DF6B111027390F1900D9924E /* MediaResourceRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaResourceRepository.swift; sourceTree = "<group>"; };
 		DF71D22E2734455600CD980E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DFED21CA2733702800E99641 /* MusicPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayerViewController.swift; sourceTree = "<group>"; };
+		DFED21CD2733848600E99641 /* MusicDescriptionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MusicDescriptionView.xib; sourceTree = "<group>"; };
+		DFED21CF2733931600E99641 /* MusicDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicDescriptionView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -446,6 +450,7 @@
 		DFED21C927336F8F00E99641 /* Sound */ = {
 			isa = PBXGroup;
 			children = (
+				DFED21CC273383F600E99641 /* Views */,
 				DFED21CA2733702800E99641 /* MusicPlayerViewController.swift */,
 			);
 			path = Sound;
@@ -482,6 +487,13 @@
 				DF08B1DC2737F5010066518B /* RemoteServiceProvider.swift */,
 			);
 			path = Network;
+		DFED21CC273383F600E99641 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				DFED21CD2733848600E99641 /* MusicDescriptionView.xib */,
+				DFED21CF2733931600E99641 /* MusicDescriptionView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		FC10DDE8A3B3F38BE43E9B68 /* Pods */ = {
@@ -617,6 +629,7 @@
 				91DABCC2273A651400E57AAE /* test2.mp4 in Resources */,
 				91EA47C027383DE600780C3E /* test.mp4 in Resources */,
 				91EA47C127383DE600780C3E /* testSound.m4a in Resources */,
+				DFED21CE2733848600E99641 /* MusicDescriptionView.xib in Resources */,
 				DD3902DD272FCA12009ECA82 /* LaunchScreen.storyboard in Resources */,
 				DD3902DA272FCA12009ECA82 /* Assets.xcassets in Resources */,
 				DF71D22F2734455600CD980E /* GoogleService-Info.plist in Resources */,
@@ -755,6 +768,7 @@
 				9165584E273B5F2000C55CDC /* NetworkEnums.swift in Sources */,
 				91EA47C6273846A800780C3E /* BlurCircleButton.swift in Sources */,
 				B4015CD42739151B006BD14A /* RecentMusicViewController.swift in Sources */,
+				DFED21D02733931600E99641 /* MusicDescriptionView.swift in Sources */,
 				DD3902D3272FCA10009ECA82 /* SceneDelegate.swift in Sources */,
 				B4015CD627391529006BD14A /* FavoriteMusicViewController.swift in Sources */,
 				91E4178927312FEB001BA0A6 /* LocalFileManager.swift in Sources */,
