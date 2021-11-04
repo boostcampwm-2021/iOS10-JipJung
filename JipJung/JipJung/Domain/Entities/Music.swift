@@ -6,12 +6,24 @@
 //
 
 import Foundation
+import RealmSwift
 
-struct Music {
-    let id: String
-    let name: String
-    let mode: Int
-    let thumbnailImageURL: String
-    let videoURL: String
-    let soundURL: String
+class Music: Object {
+    @Persisted(primaryKey: true) var id: String
+    @Persisted var name: String
+    @Persisted var mode: Int
+    @Persisted var thumbnailImageURL: String
+    @Persisted var videoURL: String
+    @Persisted var soundURL: String
+    
+    private override init() {
+        super.init()
+    }
+    
+    convenience init(id: String, name: String, mode: Int, thumbnailImageURL: String, videoURL: String, soundURL: String) {
+        self.init()
+        self.id = id
+        self.name = name
+        self.mode = mode
+    }
 }

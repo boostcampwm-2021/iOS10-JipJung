@@ -6,10 +6,23 @@
 //
 
 import Foundation
+import RealmSwift
 
-struct Maxim {
-    let id: String
-    let day: Int
-    let thumbnailImageURL: String
-    let content: String
+class Maxim: Object {
+    @Persisted(primaryKey: true) var id: String
+    @Persisted var day: Date
+    @Persisted var thumbnailImageURL: String
+    @Persisted var content: String
+    
+    private override init() {
+        super.init()
+    }
+    
+    convenience init(id: String, day: Date, thumbnailImageURL: String, content: String) {
+        self.init()
+        self.id = id
+        self.day = day
+        self.thumbnailImageURL = thumbnailImageURL
+        self.content = content
+    }
 }
