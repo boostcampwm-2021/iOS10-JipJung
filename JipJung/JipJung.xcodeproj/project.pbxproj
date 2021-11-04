@@ -25,6 +25,7 @@
 		DDB5CEB12733746600E8F9EB /* Maxim.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB5CEB02733746600E8F9EB /* Maxim.swift */; };
 		DDB5CEB32733752D00E8F9EB /* FavoriteMusic.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB5CEB22733752D00E8F9EB /* FavoriteMusic.swift */; };
 		DDB5CEB82733765500E8F9EB /* FavoriteMaxim.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB5CEB72733765500E8F9EB /* FavoriteMaxim.swift */; };
+		DFED21CB2733702800E99641 /* MusicPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFED21CA2733702800E99641 /* MusicPlayerViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +70,7 @@
 		DDB5CEB02733746600E8F9EB /* Maxim.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Maxim.swift; sourceTree = "<group>"; };
 		DDB5CEB22733752D00E8F9EB /* FavoriteMusic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteMusic.swift; sourceTree = "<group>"; };
 		DDB5CEB72733765500E8F9EB /* FavoriteMaxim.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteMaxim.swift; sourceTree = "<group>"; };
+		DFED21CA2733702800E99641 /* MusicPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -204,9 +206,10 @@
 		DDB5CE9927328E5000E8F9EB /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				DDB5CE9F27328EA900E8F9EB /* Explore */,
 				DDB5CEA327328ED900E8F9EB /* Me */,
 				DDB5CE9A27328E5D00E8F9EB /* Home */,
-				DDB5CE9F27328EA900E8F9EB /* Explore */,
+				DFED21C927336F8F00E99641 /* Sound */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -276,6 +279,12 @@
 				DDB5CEB72733765500E8F9EB /* FavoriteMaxim.swift */,
 			);
 			path = Entities;
+		DFED21C927336F8F00E99641 /* Sound */ = {
+			isa = PBXGroup;
+			children = (
+				DFED21CA2733702800E99641 /* MusicPlayerViewController.swift */,
+			);
+			path = Sound;
 			sourceTree = "<group>";
 		};
 		FC10DDE8A3B3F38BE43E9B68 /* Pods */ = {
@@ -502,6 +511,7 @@
 				DDB5CEB12733746600E8F9EB /* Maxim.swift in Sources */,
 				DDB5CEB82733765500E8F9EB /* FavoriteMaxim.swift in Sources */,
 				DDB5CEA227328EC300E8F9EB /* ExploreViewController.swift in Sources */,
+				DFED21CB2733702800E99641 /* MusicPlayerViewController.swift in Sources */,
 				DD3902D1272FCA10009ECA82 /* AppDelegate.swift in Sources */,
 				DDB5CEAF273372A700E8F9EB /* Music.swift in Sources */,
 				B4F36B5127336EE20073609C /* UserDefaultsStorage.swift in Sources */,
