@@ -36,7 +36,6 @@ class HomeViewController: UIViewController {
     
     private func configureMainScrollView() {
         mainScrollView.delegate = self
-        mainScrollView.backgroundColor = .orange
         
         view.addSubview(mainScrollView)
         mainScrollView.snp.makeConstraints {
@@ -51,23 +50,86 @@ class HomeViewController: UIViewController {
     }
     
     private func configureTopView() {
-        topView.backgroundColor = .cyan
         view.addSubview(topView)
         topView.snp.makeConstraints {
             $0.top.equalTo(view.snp.topMargin)
             $0.left.right.equalToSuperview()
             $0.height.equalTo(topViewHeight)
         }
+        
+        let helloLabel = UILabel()
+        helloLabel.text = "Hi, friend"
+        helloLabel.textColor = .black
+        helloLabel.font = .preferredFont(forTextStyle: .title3)
+        
+        topView.addSubview(helloLabel)
+        helloLabel.snp.makeConstraints {
+            $0.left.right.equalToSuperview().inset(16)
+            $0.bottom.equalTo(topView.snp.centerY).offset(-4)
+        }
+        
+        let nowStateLabel = UILabel()
+        nowStateLabel.text = "Good Day"
+        nowStateLabel.textColor = .black
+        nowStateLabel.font = .preferredFont(forTextStyle: .title1)
+        
+        topView.addSubview(nowStateLabel)
+        nowStateLabel.snp.makeConstraints {
+            $0.top.equalTo(topView.snp.centerY)
+            $0.left.right.equalToSuperview().inset(16)
+        }
     }
     
     private func configureBottomView() {
-        bottomView.backgroundColor = .red
+        bottomView.backgroundColor = .gray
         mainScrollContentsView.addSubview(bottomView)
         bottomView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(topBottomYGap + topViewHeight)
             $0.left.right.bottom.equalToSuperview()
             $0.height.equalTo(bottomViewHeight)
         }
+        
+        let focusButtonStackView = UIStackView()
+        focusButtonStackView.axis = .horizontal
+        focusButtonStackView.alignment = .center
+        focusButtonStackView.distribution = .equalSpacing
+        bottomView.addSubview(focusButtonStackView)
+        focusButtonStackView.snp.makeConstraints {
+            $0.top.left.right.equalToSuperview().inset(16)
+            $0.height.equalTo(80)
+        }
+        
+        let focus0 = UIView()
+        focus0.backgroundColor = .black
+        focus0.snp.makeConstraints {
+            $0.width.height.equalTo(60)
+        }
+        
+        let focus1 = UIView()
+        focus1.backgroundColor = .black
+        focus1.backgroundColor = .black
+        focus1.snp.makeConstraints {
+            $0.width.height.equalTo(60)
+        }
+        
+        let focus2 = UIView()
+        focus2.backgroundColor = .black
+        focus2.backgroundColor = .black
+        focus2.snp.makeConstraints {
+            $0.width.height.equalTo(60)
+        }
+        
+        let focus3 = UIView()
+        focus3.backgroundColor = .black
+        focus3.backgroundColor = .black
+        focus3.snp.makeConstraints {
+            $0.width.height.equalTo(60)
+        }
+        
+        focusButtonStackView.addArrangedSubview(focus0)
+        focusButtonStackView.addArrangedSubview(focus1)
+        focusButtonStackView.addArrangedSubview(focus2)
+        focusButtonStackView.addArrangedSubview(focus3)
     }
 }
 
