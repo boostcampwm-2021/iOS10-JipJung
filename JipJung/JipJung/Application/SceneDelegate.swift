@@ -7,30 +7,55 @@
 
 import UIKit
 
+import SnapKit
+
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
-        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
-        window?.rootViewController = createTabbar()
+        window?.rootViewController = createTabBarController()
         window?.makeKeyAndVisible()
     }
     
-    func createTabbar() -> UITabBarController {
-        let tabbar = UITabBarController()
-        tabbar.viewControllers = [createHomeViewController(), createExploreViewController(), createMeViewController()]
-        return tabbar
+    private func createTabBarController() -> UITabBarController {
+        let tabBarController = UITabBarController()
+        self.configure(tabBarController.tabBar)
+        
+        tabBarController.viewControllers = [
+            createHomeViewController(),
+            createExploreViewController(),
+            createMeViewController()
+        ]
+        return tabBarController
     }
     
-    func createHomeViewController() -> UIViewController {
+    private func configure(_ tabBar: UITabBar) {
+        tabBar.backgroundImage = UIImage()
+        tabBar.barTintColor = .clear
+        tabBar.tintColor = .black
+        tabBar.unselectedItemTintColor = .gray
+        
+        let blurEffect = UIBlurEffect(style: .light) // here you can change blur style
+        let blurView = UIVisualEffectView(effect: blurEffect)
+        tabBar.insertSubview(blurView, at: 0)
+        blurView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+    }
+    
+    private func createHomeViewController() -> UIViewController {
+        let tabBarItem = UITabBarItem(
+            title: TabBarItems.Home.title,
+            image: UIImage(systemName: TabBarItems.Home.image),
+            tag: 0
+        )
+        
         let homeViewController = HomeViewController()
-        homeViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .contacts, tag: 0)
+        homeViewController.tabBarItem = tabBarItem
         return homeViewController
     }
     
