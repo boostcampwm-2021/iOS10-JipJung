@@ -285,6 +285,8 @@
 				DDB5CEB72733765500E8F9EB /* FavoriteMaxim.swift */,
 			);
 			path = Entities;
+			sourceTree = "<group>";
+		};
 		DFED21C927336F8F00E99641 /* Sound */ = {
 			isa = PBXGroup;
 			children = (
