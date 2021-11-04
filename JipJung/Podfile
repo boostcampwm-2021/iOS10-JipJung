@@ -11,4 +11,5 @@ target 'JipJung' do
   pod "RxRelay"
   pod "RealmSwift"
   pod "SnapKit"
+  pod "Firebase/Storage"
 end
