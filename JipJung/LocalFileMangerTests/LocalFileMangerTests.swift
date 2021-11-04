@@ -104,10 +104,4 @@ class LocalFileMangerTests: XCTestCase {
         // Then
         XCTAssertFalse(fileData)
     }
-    
-    func testExample() {
-        // Given
-        // When
-        // Then
-    }
 }
