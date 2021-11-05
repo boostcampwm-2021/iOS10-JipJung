@@ -60,8 +60,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     func createExploreViewController() -> UIViewController {
-        let exploreViewController = ExploreViewController()
-        exploreViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .contacts, tag: 1)
+        let exploreViewController = UINavigationController(rootViewController: ExploreViewController())
+        exploreViewController.title = TabBarItems.Explore.title
+        exploreViewController.tabBarItem.image = UIImage(systemName: TabBarItems.Explore.image)
         return exploreViewController
     }
     
