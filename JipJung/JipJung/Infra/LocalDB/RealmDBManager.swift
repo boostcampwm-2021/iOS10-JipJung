@@ -10,21 +10,21 @@ import RxSwift
 import RealmSwift
 
 protocol LocalDBManageable {
-    func search<T: Object>(with predicate: NSPredicate?) -> Single<Results<T>>?
+    func search<T: Object>(with predicate: NSPredicate?) -> Single<[T]>
     func write(_ value: Object) -> Single<Bool>
     func delete(_ value: Object) -> Single<Bool>
 }
 
 class RealmDBManager: LocalDBManageable {
     enum RealmError: Error {
-        case initFail
+        case initFail, searchFail
     }
 
     let shared = RealmDBManager()
     
     private init() {}
     
-    func search<T: Object>(with predicate: NSPredicate? = nil) -> Single<Results<T>>? {
+    func search<T: Object>(with predicate: NSPredicate? = nil) -> Single<[T]> {
         let realm = try? Realm()
         return Single.create { observal in
             guard let realm = realm else {
@@ -32,12 +32,22 @@ class RealmDBManager: LocalDBManageable {
                 return Disposables.create()
             }
             if let predicate = predicate {
-                let obj = realm.objects(T.self).filter(predicate)
-                observal(.success(obj))
+                let realmObjects = realm.objects(T.self).filter(predicate)
+                let elements = try? realmObjects.compactMap({ element throws in element})
+                if let elements = elements {
+                    observal(.success(elements))
+                    return Disposables.create()
+                }
             } else {
-                let obj = realm.objects(T.self)
-                observal(.success(obj))
+                let realmObjects = realm.objects(T.self)
+                let elements = try? realmObjects.compactMap({ element throws in element})
+                if let elements = elements {
+                    observal(.success(elements))
+                    return Disposables.create()
+                }
             }
+            observal(.failure(RealmError.searchFail))
+
             return Disposables.create()
         }
     }
