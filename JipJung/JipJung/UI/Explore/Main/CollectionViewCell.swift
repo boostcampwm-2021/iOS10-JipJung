@@ -8,10 +8,10 @@
 import UIKit
 import SnapKit
 
-class DummyCCell: UICollectionViewCell {
+class CollectionViewCell: UICollectionViewCell {
     // MARK: - Static Constants
     
-    static let cellIdentifier = "DummyCCell"
+    static let cellIdentifier = "CollectionViewCell"
     
     // MARK: - Initializers
        

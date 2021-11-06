@@ -35,8 +35,9 @@ class ExploreViewController: UIViewController {
         categoryCollectionView.showsHorizontalScrollIndicator = false
         categoryCollectionView.delegate = self
         categoryCollectionView.dataSource = self
-        categoryCollectionView.register(DummyCCell.self,
-                                forCellWithReuseIdentifier: DummyCCell.cellIdentifier)
+        categoryCollectionView.register(
+            CollectionViewCell.self,
+            forCellWithReuseIdentifier: CollectionViewCell.cellIdentifier)
         return categoryCollectionView
     }()
 
@@ -52,8 +53,8 @@ class ExploreViewController: UIViewController {
         soundContentsCollectionView.showsHorizontalScrollIndicator = false
         soundContentsCollectionView.delegate = self
         soundContentsCollectionView.dataSource = self
-        soundContentsCollectionView.register(DummyCCell.self,
-                                forCellWithReuseIdentifier: DummyCCell.cellIdentifier)
+        soundContentsCollectionView.register(CollectionViewCell.self,
+                                forCellWithReuseIdentifier: CollectionViewCell.cellIdentifier)
         return soundContentsCollectionView
     }()
 
@@ -128,13 +129,8 @@ extension ExploreViewController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        
         return 1
     }
-}
-
-extension ExploreViewController: UICollectionViewDelegate {
-    
 }
 
 extension ExploreViewController: UICollectionViewDataSource {
@@ -143,7 +139,7 @@ extension ExploreViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DummyCCell.cellIdentifier, for: indexPath) as? DummyCCell else { return  UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionViewCell.cellIdentifier, for: indexPath) as? CollectionViewCell else { return  UICollectionViewCell() }
         
         return cell
     }
