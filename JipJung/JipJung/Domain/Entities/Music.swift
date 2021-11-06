@@ -25,5 +25,8 @@ class Music: Object {
         self.id = id
         self.name = name
         self.mode = mode
+        self.thumbnailImageURL = thumbnailImageURL
+        self.videoURL = videoURL
+        self.soundURL = soundURL
     }
 }
