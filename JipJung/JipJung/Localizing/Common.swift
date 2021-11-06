@@ -21,3 +21,7 @@ enum TabBarItems {
         static let image = ""
     }
 }
+
+enum UserDefaultsKeys {
+    static let searchHistory = "SearchHistory"
+}

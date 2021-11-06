@@ -97,13 +97,13 @@ extension SearchViewController: UISearchBarDelegate {
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let keyword = searchBar.text  else { return }
+        guard let keyword = searchBar.text else { return }
         var searchHistory: [String] = []
-        if let data: [String] = userDefaultStorage.load(for: "searchHistory") {
+        if let data: [String] = userDefaultStorage.load(for: UserDefaultsKeys.searchHistory) {
             searchHistory = data
         }
         searchHistory.append(keyword)
-        userDefaultStorage.save(for: "searchHistory", value: searchHistory)
+        userDefaultStorage.save(for: UserDefaultsKeys.searchHistory, value: searchHistory)
         searchHistoryTableView.reloadData()
         
         dismissKeyboard()
@@ -126,13 +126,13 @@ extension SearchViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let searchHistory: [String] = userDefaultStorage.load(for: "searchHistory") else { return 0 }
+        guard let searchHistory: [String] = userDefaultStorage.load(for: UserDefaultsKeys.searchHistory) else { return 0 }
         return searchHistory.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = searchHistoryTableView.dequeueReusableCell(withIdentifier: SearchTableViewCell.cellIdentifier) as? SearchTableViewCell,
-              let searchHistory: [String] = userDefaultStorage.load(for: "searchHistory")
+              let searchHistory: [String] = userDefaultStorage.load(for: UserDefaultsKeys.searchHistory)
         else { return UITableViewCell() }
         
         cell.searchHistory.text = searchHistory[indexPath.item]
