@@ -16,10 +16,10 @@ enum Media: String {
     case video
 }
 
-enum RemoteServiceError: String, Error {
-    case invalidURL
-    case failDataTaskDownload
-    case noInternet
+enum RemoteServiceError: Error {
+    case transportError
+    case serverSideError
+    case badURL
 }
 
 protocol RemoteServiceAccessible {
@@ -40,17 +40,24 @@ final class RemoteManager {
                 guard let url = url,
                       error == nil
                 else {
-                    observer(.failure(RemoteServiceError.invalidURL))
+                    observer(.failure(RemoteServiceError.badURL))
                     return
                 }
                 
-                URLSession.shared.dataTask(with: url) { (data, _, error) in
+                URLSession.shared.dataTask(with: url) { (data, response, error) in
                     guard let data = data,
                           error == nil
                     else {
-                        observer(.failure(RemoteServiceError.failDataTaskDownload))
+                        observer(.failure(RemoteServiceError.transportError))
                         return
                     }
+                    
+                    guard let response = response as? HTTPURLResponse,
+                          (200 ..< 300) ~= response.statusCode
+                    else {
+                        return observer(.failure(RemoteServiceError.serverSideError))
+                    }
+                    
                     observer(.success(data))
                 }.resume()
             }
