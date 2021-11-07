@@ -293,6 +293,8 @@
 				DDB5CEBD2733A49A00E8F9EB /* RealmDBManager.swift */,
 			);
 			path = LocalDB;
+			sourceTree = "<group>";
+		};
 		DF71D23027344AC700CD980E /* Network */ = {
 			isa = PBXGroup;
 			children = (
