@@ -6,8 +6,19 @@
 //
 
 import Foundation
+import RealmSwift
 
-struct FavoriteMaxim {
-    let id: String
-    let addDate: Date
+class FavoriteMaxim: Object {
+    @Persisted(primaryKey: true) var id: String
+    @Persisted var addDate: Date
+
+    private override init() {
+        super.init()
+    }
+    
+    convenience init(id: String, addDate: Date) {
+        self.init()
+        self.id = id
+        self.addDate = addDate
+    }
 }
