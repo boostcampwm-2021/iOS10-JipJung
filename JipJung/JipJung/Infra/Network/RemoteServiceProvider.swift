@@ -26,10 +26,8 @@ protocol RemoteServiceAccessible {
     func fetchMedia(key: String, type: Media) -> Single<Data>
 }
 
-final class RemoteManager {
-    static let shared = RemoteManager()
+final class RemoteServiceProvider: RemoteServiceAccessible {
     private let storage = Storage.storage()
-    private init() {}
     
     func fetchMedia(key: String, type: Media) -> Single<Data> {
         let fullPath = type.rawValue + "/" + key

@@ -26,7 +26,7 @@
 		DDB5CEB32733752D00E8F9EB /* FavoriteMusic.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB5CEB22733752D00E8F9EB /* FavoriteMusic.swift */; };
 		DDB5CEB82733765500E8F9EB /* FavoriteMaxim.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB5CEB72733765500E8F9EB /* FavoriteMaxim.swift */; };
 		DDB5CEBE2733A49A00E8F9EB /* RealmDBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB5CEBD2733A49A00E8F9EB /* RealmDBManager.swift */; };
-		DF17C87E27366637008AC640 /* RemoteManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF17C87D27366637008AC640 /* RemoteManager.swift */; };
+		DF08B1DD2737F5010066518B /* RemoteServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF08B1DC2737F5010066518B /* RemoteServiceProvider.swift */; };
 		DF71D22F2734455600CD980E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DF71D22E2734455600CD980E /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
@@ -73,7 +73,7 @@
 		DDB5CEB22733752D00E8F9EB /* FavoriteMusic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteMusic.swift; sourceTree = "<group>"; };
 		DDB5CEB72733765500E8F9EB /* FavoriteMaxim.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteMaxim.swift; sourceTree = "<group>"; };
 		DDB5CEBD2733A49A00E8F9EB /* RealmDBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmDBManager.swift; sourceTree = "<group>"; };
-		DF17C87D27366637008AC640 /* RemoteManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteManager.swift; sourceTree = "<group>"; };
+		DF08B1DC2737F5010066518B /* RemoteServiceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteServiceProvider.swift; sourceTree = "<group>"; };
 		DF71D22E2734455600CD980E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -298,7 +298,7 @@
 		DF71D23027344AC700CD980E /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				DF17C87D27366637008AC640 /* RemoteManager.swift */,
+				DF08B1DC2737F5010066518B /* RemoteServiceProvider.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -522,12 +522,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DF08B1DD2737F5010066518B /* RemoteServiceProvider.swift in Sources */,
 				DDB5CEB32733752D00E8F9EB /* FavoriteMusic.swift in Sources */,
 				DDB5CE9E27328E8300E8F9EB /* HomeViewController.swift in Sources */,
 				DDB5CEA827328EF400E8F9EB /* MeViewController.swift in Sources */,
 				DDB5CEB12733746600E8F9EB /* Maxim.swift in Sources */,
 				DDB5CEB82733765500E8F9EB /* FavoriteMaxim.swift in Sources */,
-				DF17C87E27366637008AC640 /* RemoteManager.swift in Sources */,
 				DDB5CEA227328EC300E8F9EB /* ExploreViewController.swift in Sources */,
 				DD3902D1272FCA10009ECA82 /* AppDelegate.swift in Sources */,
 				DDB5CEAF273372A700E8F9EB /* Music.swift in Sources */,
