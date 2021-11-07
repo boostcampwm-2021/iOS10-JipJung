@@ -92,7 +92,7 @@ JipJung
 │   ├── Network
 │   └── UserDefaults
 ├── Info.plist
-└── GoogleService.json
+└── GoogleService-Info.plist
 ``` 
 
 #### 참고자료
