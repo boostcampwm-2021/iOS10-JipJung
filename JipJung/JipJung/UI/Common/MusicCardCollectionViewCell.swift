@@ -44,20 +44,15 @@ class MusicCardCollectionViewCell: UICollectionViewCell {
     func configureUI() {
         backgroundColor = .systemCyan.withAlphaComponent(0.5)
         addSubview(imageView)
-        imageView.snp.makeConstraints { [weak self] make in
-            guard let frame = self?.frame else {
-                return
-            }
+        let frame = self.frame
+        imageView.snp.makeConstraints { make in
             make.width.equalToSuperview().multipliedBy(0.7)
             make.centerX.equalToSuperview()
             make.height.equalTo(imageView.snp.width)
             make.top.equalToSuperview().offset(frame.width * 0.115)
         }
         addSubview(titleView)
-        titleView.snp.makeConstraints { [weak self] make in
-            guard let frame = self?.frame else {
-                return
-            }
+        titleView.snp.makeConstraints { make in
             make.width.equalToSuperview().multipliedBy(0.9)
             make.centerX.equalToSuperview()
             make.top.equalTo(imageView.snp.bottom).offset(frame.width * 0.115)
