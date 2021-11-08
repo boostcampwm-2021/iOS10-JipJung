@@ -45,7 +45,7 @@ class SearchViewController: UIViewController {
         searchHistoryTableView.backgroundColor = .black
         searchHistoryTableView.delegate = self
         searchHistoryTableView.dataSource = self
-        searchHistoryTableView.register(SearchTableViewCell.self, forCellReuseIdentifier: SearchTableViewCell.identifier)
+        searchHistoryTableView.register(SearchTableViewCell.self, forCellReuseIdentifier: SearchTableViewCell.id)
         
         return searchHistoryTableView
     }()
