@@ -13,11 +13,15 @@ enum TabBarItems {
     
     enum Explore {
         static let title = "Explore"
-        static let image = ""
+        static let image = "slash.circle"
     }
     
     enum Me {
         static let title = "Me"
         static let image = ""
     }
+}
+
+enum UserDefaultsKeys {
+    static let searchHistory = "SearchHistory"
 }

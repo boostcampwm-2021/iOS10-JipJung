@@ -27,7 +27,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         tabBarController.viewControllers = [
             createHomeViewController(),
-            createExploreViewController(),
+            createExploreNavigationViewController(),
             createMeViewController()
         ]
         return tabBarController
@@ -59,10 +59,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         return homeViewController
     }
     
-    func createExploreViewController() -> UIViewController {
+    func createExploreNavigationViewController() -> UIViewController {
+        let tabBarItem = UITabBarItem(
+            title: TabBarItems.Explore.title,
+            image: UIImage(systemName: TabBarItems.Explore.image),
+            tag: 1
+        )
+        
         let exploreViewController = ExploreViewController()
-        exploreViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .contacts, tag: 1)
-        return exploreViewController
+        exploreViewController.tabBarItem = tabBarItem
+        let exploreNavigationViewController = UINavigationController(rootViewController: exploreViewController)
+        
+        return exploreNavigationViewController
     }
     
     func createMeViewController() -> UIViewController {
