@@ -33,7 +33,17 @@ class LocalFileManager: LocalFileAccessible {
     }
     return true
   }
-  
+    
+    func write(from: URL, fileName: String) -> Bool {
+        let path = cachePath.appendingPathComponent(fileName, isDirectory: true)
+        do {
+            try FileManager.default.moveItem(at: from, to: path)
+        } catch {
+            return false
+        }
+        return true
+    }
+    
   func delete(_ fileName: String) -> Bool {
     let fileURL = cachePath.appendingPathComponent(fileName)
     do {
