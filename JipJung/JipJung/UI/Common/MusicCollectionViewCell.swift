@@ -8,7 +8,11 @@
 import UIKit
 import SnapKit
 
-class MusicCardCollectionViewCell: UICollectionViewCell {
+class MusicCollectionViewCell: UICollectionViewCell {
+    // MARK: - Static Constants
+    
+    static let identifier = "MusicCollectionViewCell"
+    
     lazy var imageView: UIImageView = {
         let imageView = UIImageView(frame: frame)
         imageView.image = UIImage(systemName: "photo")
@@ -30,6 +34,8 @@ class MusicCardCollectionViewCell: UICollectionViewCell {
         super.layoutSubviews()
         imageView.makeCircle()
     }
+    
+    // MARK: - Initializers
     
     override init(frame: CGRect) {
         super.init(frame: frame)
