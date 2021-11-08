@@ -23,17 +23,17 @@ enum RemoteServiceError: Error {
 }
 
 protocol RemoteServiceAccessible {
-    func fetchMedia(key: String, type: Media) -> Single<Data>
+    func request(key: String, type: Media) -> Single<URL>
 }
 
 final class RemoteServiceProvider: RemoteServiceAccessible {
     private let storage = Storage.storage()
     
-    func fetchMedia(key: String, type: Media) -> Single<Data> {
+    func request(key: String, type: Media) -> Single<URL> {
         let fullPath = type.rawValue + "/" + key
         let reference = storage.reference(withPath: fullPath)
         
-        return Single<Data>.create { observer in
+        return Single<URL>.create { observer in
             reference.downloadURL { url, error in
                 guard let url = url,
                       error == nil
@@ -42,8 +42,8 @@ final class RemoteServiceProvider: RemoteServiceAccessible {
                     return
                 }
                 
-                URLSession.shared.dataTask(with: url) { (data, response, error) in
-                    guard let data = data,
+                URLSession.shared.downloadTask(with: url) { (url, response, error) in
+                    guard let url = url,
                           error == nil
                     else {
                         observer(.failure(RemoteServiceError.transportError))
@@ -56,7 +56,7 @@ final class RemoteServiceProvider: RemoteServiceAccessible {
                         return observer(.failure(RemoteServiceError.serverSideError))
                     }
                     
-                    observer(.success(data))
+                    observer(.success(url))
                 }.resume()
             }
             
