@@ -21,14 +21,19 @@ class HomeViewController: UIViewController {
         return view
     }()
     private let topView = UIView()
+    private let mediaControllView = UIView()
     private let bottomView = UIView()
     
     private let topViewHeight = SystemConstants.deviceScreenSize.width / 3
-    private let topBottomYGap = SystemConstants.deviceScreenSize.height / 2
+    private let mediaControlViewHeight = SystemConstants.deviceScreenSize.height / 2
     private let bottomViewHeight = SystemConstants.deviceScreenSize.height
-    private let focusButtonSize:(width: CGFloat, height: CGFloat) = (60, 90)
+    private let focusButtonSize: (width: CGFloat, height: CGFloat) = (60, 90)
+    
+    private var videoPlayer: AVPlayer?
+    private var audioPlayer: AVAudioPlayer?
     
     private var isAttached = false
+    private var isPlaying = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,9 +44,48 @@ class HomeViewController: UIViewController {
     private func configureUI() {
         view.backgroundColor = .black
         
+        configureMediaContentsView()
         configureMainScrollView()
         configureTopView()
         configureBottomView()
+        configureMediaControllView()
+    }
+    
+    private func configureMediaContentsView() {
+        guard let videoURL = Bundle.main.url(forResource: "test", withExtension: "mp4"),
+              let soundURL = Bundle.main.url(forResource: "testSound", withExtension: "m4a")
+        else {
+            return
+        }
+        
+        videoPlayer = AVPlayer(url: videoURL)
+        audioPlayer = try? AVAudioPlayer(contentsOf: soundURL)
+        
+        videoPlayer?.actionAtItemEnd = .none
+        audioPlayer?.numberOfLoops = -1
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(playerItemDidReachEnd(notification:)),
+            name: .AVPlayerItemDidPlayToEndTime,
+            object: videoPlayer?.currentItem
+        )
+        
+        view.addSubview(mediaBackgroundView)
+        mediaBackgroundView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        
+        let playerLayer = AVPlayerLayer(player: videoPlayer)
+        playerLayer.videoGravity = .resizeAspectFill
+        playerLayer.frame = UIScreen.main.bounds
+        mediaBackgroundView.layer.addSublayer(playerLayer)
+    }
+    
+    @objc func playerItemDidReachEnd(notification: Notification) {
+        if let playerItem = notification.object as? AVPlayerItem {
+            playerItem.seek(to: CMTime.zero, completionHandler: nil)
+        }
     }
     
     private func configureMainScrollView() {
@@ -100,7 +144,7 @@ class HomeViewController: UIViewController {
     private func configureBottomView() {
         mainScrollContentsView.addSubview(bottomView)
         bottomView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(topBottomYGap + topViewHeight)
+            $0.top.equalToSuperview().offset(mediaControlViewHeight + topViewHeight)
             $0.leading.trailing.bottom.equalToSuperview()
             $0.height.equalTo(bottomViewHeight)
         }
@@ -139,6 +183,29 @@ class HomeViewController: UIViewController {
         }
     }
     
+    private func configureMediaControllView() {
+        mediaControllView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(mediaButton(_:))))
+        mediaControllView.addGestureRecognizer(UIPanGestureRecognizer(target: nil, action: nil))
+        
+        mainScrollContentsView.addSubview(mediaControllView)
+        mediaControllView.snp.makeConstraints {
+            $0.height.equalTo(mediaControlViewHeight)
+            $0.leading.trailing.equalToSuperview()
+            $0.bottom.equalTo(bottomView.snp.top)
+        }
+    }
+    
+    @objc private func mediaButton(_ sender: UITapGestureRecognizer) {
+        if isPlaying {
+            audioPlayer?.pause()
+            videoPlayer?.pause()
+        } else {
+            audioPlayer?.play()
+            videoPlayer?.play()
+        }
+        isPlaying.toggle()
+    }
+    
     @objc private func bottomViewDragged(_ sender: UIPanGestureRecognizer) {
         if sender.state != .ended { return }
         
@@ -147,7 +214,7 @@ class HomeViewController: UIViewController {
         if (self.isAttached && moveY > 0) || (!self.isAttached && moveY < 0) {
             self.isAttached = true
             self.mainScrollView.setContentOffset(
-                CGPoint(x: 0, y: topBottomYGap - SystemConstants.statusBarHeight),
+                CGPoint(x: 0, y: self.mediaControlViewHeight - SystemConstants.statusBarHeight),
                 animated: true
             )
         } else {
@@ -161,29 +228,14 @@ class HomeViewController: UIViewController {
     }
     
     @objc private func focusButtonTouched(_ sender: UITapGestureRecognizer) {
-        guard let senderView = sender.view as? FocusButton,
-              let mode = senderView.mode
-        else {
-            return
-        }
         
-        switch mode {
-        case .normal:
-            print(#function, "\(mode)")
-        case .ticktock:
-            print(#function, "\(mode)")
-        case .infinity:
-            print(#function, "\(mode)")
-        case .breath:
-            print(#function, "\(mode)")
-        }
     }
 }
 
 extension HomeViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let currentContentsOffsetY = scrollView.contentOffset.y
-        let currentTopBottomYGap = topBottomYGap - (currentContentsOffsetY + SystemConstants.statusBarHeight)
+        let currentTopBottomYGap = mediaControlViewHeight - (currentContentsOffsetY + SystemConstants.statusBarHeight)
         
         if currentTopBottomYGap <= 0 {
             isAttached = true
@@ -197,7 +249,7 @@ extension HomeViewController: UIScrollViewDelegate {
             }
         }
         
-        mediaBackgroundView.alpha = currentTopBottomYGap / topBottomYGap
+        mediaBackgroundView.alpha = currentTopBottomYGap / mediaControlViewHeight
     }
 }
 
