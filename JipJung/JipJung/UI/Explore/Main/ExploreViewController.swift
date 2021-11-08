@@ -25,7 +25,7 @@ class ExploreViewController: UIViewController {
         return searchBar
     }()
     
-    private lazy var categoryCollectionView: UICollectionView = {
+    private lazy var genreCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
@@ -36,12 +36,12 @@ class ExploreViewController: UIViewController {
         categoryCollectionView.delegate = self
         categoryCollectionView.dataSource = self
         categoryCollectionView.register(
-            MusicCollectionViewCell.self,
-            forCellWithReuseIdentifier: MusicCollectionViewCell.identifier)
+            GenreCollectionViewCell.self,
+            forCellWithReuseIdentifier: GenreCollectionViewCell.id)
         return categoryCollectionView
     }()
 
-    private lazy var soundContentsCollectionView: UICollectionView = {
+    private lazy var soundCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
@@ -58,6 +58,10 @@ class ExploreViewController: UIViewController {
             forCellWithReuseIdentifier: MusicCollectionViewCell.identifier)
         return soundContentsCollectionView
     }()
+    
+    // MARK: - Private Constants
+    
+    private let category: [String] = ["All", "Melody", "Nature", "Urban", "Relax", "Techno", "House", "Hiphop", "Jazz", "Leftfield"]
 
     // MARK: - Lifecycle Methods
     
@@ -88,15 +92,15 @@ class ExploreViewController: UIViewController {
             $0.centerX.top.bottom.equalToSuperview()
         }
         
-        scrollContentView.addSubview(categoryCollectionView)
-        categoryCollectionView.snp.makeConstraints {
+        scrollContentView.addSubview(genreCollectionView)
+        genreCollectionView.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
             $0.height.equalTo(30)
         }
         
-        scrollContentView.addSubview(soundContentsCollectionView)
-        soundContentsCollectionView.snp.makeConstraints {
-            $0.top.equalTo(categoryCollectionView.snp.bottom).offset(20)
+        scrollContentView.addSubview(soundCollectionView)
+        soundCollectionView.snp.makeConstraints {
+            $0.top.equalTo(genreCollectionView.snp.bottom).offset(20)
             $0.height.equalTo(1200)
             $0.leading.trailing.bottom.equalToSuperview()
         }
@@ -121,9 +125,9 @@ extension ExploreViewController: UISearchBarDelegate {
 
 extension ExploreViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if collectionView == categoryCollectionView {
-            return CGSize(width: 60, height: 30)
-        } else if collectionView == soundContentsCollectionView {
+        if collectionView == genreCollectionView {
+            return CGSize(width: category[indexPath.item].count * 10, height: 30)
+        } else if collectionView == soundCollectionView {
             return CGSize(width: 180, height: 200)
         }
         return CGSize(width: 50, height: 50)
@@ -136,12 +140,26 @@ extension ExploreViewController: UICollectionViewDelegateFlowLayout {
 
 extension ExploreViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        if collectionView == genreCollectionView {
+            return category.count
+        } else if collectionView == soundCollectionView {
+            return 10
+        }
+        return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MusicCollectionViewCell.identifier, for: indexPath) as? MusicCollectionViewCell else { return  UICollectionViewCell() }
-        
-        return cell
+        if collectionView == genreCollectionView {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GenreCollectionViewCell.id, for: indexPath) as? GenreCollectionViewCell else { return  UICollectionViewCell() }
+            cell.genreLabel.text = category[indexPath.item]
+            return cell
+        }
+        else if collectionView == soundCollectionView {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MusicCollectionViewCell.id, for: indexPath) as? MusicCollectionViewCell else { return  UICollectionViewCell() }
+            return cell
+        }
+        else {
+            return  UICollectionViewCell()
+        }
     }
 }
