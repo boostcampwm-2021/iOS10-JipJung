@@ -12,7 +12,7 @@ class SearchTableViewCell: UITableViewCell {
 
     // MARK: - Static Constants
     
-    static let cellIdentifier = "SearchTableViewCell"
+    static let identifier = "SearchTableViewCell"
     
     // MARK: - Subviews
     
