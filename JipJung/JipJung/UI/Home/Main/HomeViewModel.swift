@@ -24,6 +24,13 @@ final class HomeViewModel {
     
     init(soundListUseCase: SoundListUseCase) {
         self.soundListUseCase = soundListUseCase
+        
+        Observable
+            .combineLatest(mode, brightMode, darknessMode) { ($0, $1, $2) }
+            .subscribe { [weak self] (mode, brightModeList, darknessModeList) in
+                self?.currentModeList.accept(mode == .bright ? brightModeList : darknessModeList)
+            }
+            .disposed(by: bag)
     }
     
     func viewControllerLoaded() {
@@ -58,23 +65,6 @@ final class HomeViewModel {
                 print(error.localizedDescription)
             }
             .disposed(by: bag)
-        
-        mode.bind { [weak self] mode in
-            guard let currentModeList = self?.currentModeList,
-                  let brightMode = self?.brightMode,
-                  let darknessMode = self?.darknessMode
-            else {
-                return
-            }
-            
-            switch mode {
-            case .bright:
-                currentModeList.accept(brightMode.value)
-            case .darkness:
-                currentModeList.accept(darknessMode.value)
-            }
-        }
-        .disposed(by: bag)
     }
     
     func modeSwitchTouched() {
@@ -83,5 +73,11 @@ final class HomeViewModel {
     
     func mediaPlayButtonTouched() {
         isPlaying.accept(!isPlaying.value)
+        
+        if isPlaying.value {
+            
+        } else {
+            
+        }
     }
 }

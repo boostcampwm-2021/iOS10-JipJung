@@ -55,12 +55,27 @@ class HomeViewController: UIViewController {
     private func configureUI() {
         view.backgroundColor = .white
         
+        configureMainScrollView()
         configureMediaCollectionView()
-//        configureMediaContentsView()
-//        configureMainScrollView()
-//        configureTopView()
-//        configureBottomView()
-//        configureMediaControllView()
+        configureTopView()
+        configureBottomView()
+    }
+    
+    private func configureMainScrollView() {
+        mainScrollView.delegate = self
+        
+        mainScrollView.backgroundColor = .clear
+        view.addSubview(mainScrollView)
+        mainScrollView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        
+        mainScrollContentsView.backgroundColor = .clear
+        mainScrollView.addSubview(mainScrollContentsView)
+        mainScrollContentsView.snp.makeConstraints {
+            $0.centerX.width.equalToSuperview()
+            $0.top.bottom.equalToSuperview()
+        }
     }
     
     private func configureMediaCollectionView() {
@@ -70,16 +85,17 @@ class HomeViewController: UIViewController {
         )
         guard let mediaCollectionView = mediaCollectionView else { return }
         
+        mainScrollContentsView.addSubview(mediaCollectionView)
+        mediaCollectionView.snp.makeConstraints {
+            $0.edges.equalTo(view)
+        }
+        
         mediaCollectionView.register(
             MediaCollectionViewCell.self,
             forCellWithReuseIdentifier: MediaCollectionViewCell.identifier
         )
         mediaCollectionView.contentInsetAdjustmentBehavior = .never
         mediaCollectionView.bounces = false
-        view.addSubview(mediaCollectionView)
-        mediaCollectionView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
     }
     
     private func makeMediaCollectionLayout() -> UICollectionViewLayout {
@@ -100,55 +116,8 @@ class HomeViewController: UIViewController {
         return layout
     }
     
-    private func configureMediaContentsView() {
-        guard let videoURL = Bundle.main.url(forResource: "test", withExtension: "mp4"),
-              let soundURL = Bundle.main.url(forResource: "testSound", withExtension: "m4a")
-        else {
-            return
-        }
-        
-        videoPlayer = AVPlayer(url: videoURL)
-        audioPlayer = try? AVAudioPlayer(contentsOf: soundURL)
-        
-        videoPlayer?.actionAtItemEnd = .none
-        audioPlayer?.numberOfLoops = -1
-        
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(playerItemDidReachEnd(notification:)),
-            name: .AVPlayerItemDidPlayToEndTime,
-            object: videoPlayer?.currentItem
-        )
-        
-        view.addSubview(mediaBackgroundView)
-        mediaBackgroundView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
-        
-        let playerLayer = AVPlayerLayer(player: videoPlayer)
-        playerLayer.videoGravity = .resizeAspectFill
-        playerLayer.frame = UIScreen.main.bounds
-        mediaBackgroundView.layer.addSublayer(playerLayer)
-    }
-    
-    private func configureMainScrollView() {
-        mainScrollView.delegate = self
-        
-        view.addSubview(mainScrollView)
-        mainScrollView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
-        
-        mainScrollContentsView.backgroundColor = .clear
-        mainScrollView.addSubview(mainScrollContentsView)
-        mainScrollContentsView.snp.makeConstraints {
-            $0.centerX.width.equalToSuperview()
-            $0.top.bottom.equalToSuperview()
-        }
-    }
-    
     private func configureTopView() {
-        view.addSubview(topView)
+        mainScrollContentsView.addSubview(topView)
         topView.snp.makeConstraints {
             $0.top.equalTo(view.snp.topMargin)
             $0.leading.trailing.equalToSuperview()
@@ -181,6 +150,24 @@ class HomeViewController: UIViewController {
         nowStateLabel.snp.makeConstraints {
             $0.top.equalTo(topView.snp.centerY)
             $0.leading.trailing.equalToSuperview().inset(16)
+        }
+        
+        let modeSwitch: UIButton = {
+            let button = UIButton()
+            button.addTarget(
+                self,
+                action: #selector(modeSwitchTouched(_:)),
+                for: .touchUpInside
+            )
+            button.backgroundColor = .gray.withAlphaComponent(0.5)
+            return button
+        }()
+        
+        topView.addSubview(modeSwitch)
+        modeSwitch.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.trailing.equalToSuperview().offset(-16)
+            $0.width.height.equalTo(40)
         }
     }
     
@@ -226,24 +213,6 @@ class HomeViewController: UIViewController {
         }
     }
     
-    private func configureMediaControllView() {
-        mediaControllView.addGestureRecognizer(UITapGestureRecognizer(
-            target: self,
-            action: #selector(mediaPlayButtonTouched(_:)))
-        )
-        mediaControllView.addGestureRecognizer(UIPanGestureRecognizer(
-            target: nil,
-            action: nil)
-        )
-        
-        mainScrollContentsView.addSubview(mediaControllView)
-        mediaControllView.snp.makeConstraints {
-            $0.height.equalTo(mediaControlViewHeight)
-            $0.leading.trailing.equalToSuperview()
-            $0.bottom.equalTo(bottomView.snp.top)
-        }
-    }
-    
     private func bindUI() {
         bindUIInController()
         bindUIWithViewModel()
@@ -284,7 +253,7 @@ class HomeViewController: UIViewController {
             to: mediaCollectionView.rx.items(cellIdentifier: MediaCollectionViewCell.identifier)
         ) { item, element, cell in
             guard let cell = cell as? MediaCollectionViewCell,
-                  let videoURL = Bundle.main.url(forResource: "test", withExtension: "mp4")
+                  let videoURL = Bundle.main.url(forResource: element, withExtension: "mp4")
             else {
                 return
             }
@@ -301,6 +270,7 @@ class HomeViewController: UIViewController {
     
     @objc private func mediaPlayButtonTouched(_ sender: UITapGestureRecognizer) {
         viewModel?.mediaPlayButtonTouched()
+        print(#function)
     }
     
     @objc private func bottomViewDragged(_ sender: UIPanGestureRecognizer) {
@@ -324,8 +294,12 @@ class HomeViewController: UIViewController {
         }
     }
     
-    @objc private func focusButtonTouched(_ sender: UITapGestureRecognizer) {
+    @objc private func modeSwitchTouched(_ sender: UIButton) {
         viewModel?.modeSwitchTouched()
+    }
+    
+    @objc private func focusButtonTouched(_ sender: UITapGestureRecognizer) {
+        
     }
 }
 
