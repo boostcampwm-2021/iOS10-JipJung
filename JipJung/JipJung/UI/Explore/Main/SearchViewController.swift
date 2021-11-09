@@ -45,7 +45,7 @@ class SearchViewController: UIViewController {
         searchHistoryTableView.backgroundColor = .black
         searchHistoryTableView.delegate = self
         searchHistoryTableView.dataSource = self
-        searchHistoryTableView.register(SearchTableViewCell.self, forCellReuseIdentifier: SearchTableViewCell.identifier)
+        searchHistoryTableView.register(SearchTableViewCell.self, forCellReuseIdentifier: SearchTableViewCell.id)
         
         return searchHistoryTableView
     }()
@@ -131,11 +131,17 @@ extension SearchViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = searchHistoryTableView.dequeueReusableCell(withIdentifier: SearchTableViewCell.identifier) as? SearchTableViewCell,
-              let searchHistory: [String] = userDefaultStorage.load(for: UserDefaultsKeys.searchHistory)
+        guard let cell = searchHistoryTableView.dequeueReusableCell(withIdentifier: SearchTableViewCell.id) as? SearchTableViewCell,
+              var searchHistory: [String] = userDefaultStorage.load(for: UserDefaultsKeys.searchHistory)
         else { return UITableViewCell() }
         
         cell.searchHistory.text = searchHistory[indexPath.item]
+        cell.deleteButtonTapHandler = { [weak self] in
+            searchHistory.remove(at: indexPath.item)
+            self?.userDefaultStorage.save(for: UserDefaultsKeys.searchHistory, value: searchHistory)
+            self?.searchHistoryTableView.reloadData()
+        }
+        cell.bindUI()
         return cell
     }
 }

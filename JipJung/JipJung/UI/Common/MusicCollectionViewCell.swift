@@ -11,7 +11,7 @@ import SnapKit
 class MusicCollectionViewCell: UICollectionViewCell {
     // MARK: - Static Constants
     
-    static let identifier = "MusicCollectionViewCell"
+    static let id = "MusicCollectionViewCell"
     
     lazy var imageView: UIImageView = {
         let imageView = UIImageView(frame: frame)
