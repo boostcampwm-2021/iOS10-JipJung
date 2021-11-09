@@ -37,7 +37,7 @@ class MusicPlayerViewController: UIViewController {
         return view
     }()
     
-    let maximTextView: PlayerMaximView? = {
+    let maximTextView: PlayerMaximView = {
         let view = PlayerMaximView()
         return view
     }()
@@ -148,10 +148,6 @@ extension MusicPlayerViewController {
         maximView.snp.makeConstraints { make in
             make.leading.top.trailing.equalToSuperview().inset(12)
             make.bottom.equalTo(playButton.snp.top).offset(-12)
-        }
-        
-        guard let maximTextView = maximTextView else {
-            return
         }
         
         maximView.addSubview(maximTextView)
