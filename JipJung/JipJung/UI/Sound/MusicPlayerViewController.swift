@@ -11,6 +11,8 @@ import SnapKit
 
 class MusicPlayerViewController: UIViewController {
     // MARK: - View builder -> 임시 코드가 포함됨
+    let dataSource = ["Relax", "Melody", "Meditation", "Etc"]
+    
     let topView: UIView = {
         let view = UIView()
         view.backgroundColor = .purple
@@ -23,14 +25,8 @@ class MusicPlayerViewController: UIViewController {
         return view
     }()
     
-    let musicDescriptionView: MusicDescriptionView? = {
-        guard let view = Bundle.main.loadNibNamed(
-            MusicDescriptionView.identifier,
-            owner: self,
-            options: nil
-        )?.first as? MusicDescriptionView else {
-            return nil
-        }
+    var musicDescriptionView: MusicDescriptionView = {
+        let view = MusicDescriptionView()
         view.backgroundColor = .green
         return view
     }()
@@ -41,25 +37,41 @@ class MusicPlayerViewController: UIViewController {
         return view
     }()
     
-    let playButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.backgroundColor = .gray
-        button.setTitle("Play", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.addTarget(self, action: #selector(playButtonTouched(_:)), for: .touchUpInside)
-        return button
-    }()
-    
     let maximTextView: PlayerMaximView? = {
         let view = PlayerMaximView()
         return view
     }()
     
+    let playButton: UIButton = {
+        let button = SolidButton()
+        button.backgroundColor = .gray
+        button.setTitle("Play", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        return button
+    }()
+    
+    var collectionView: UICollectionView = {
+        let layout = LeftAlignCollectionViewFlowLayout()
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+//        collectionView.collectionViewLayout = layout
+        collectionView.register(TagCell.self, forCellWithReuseIdentifier: TagCell.identifier)
+        return collectionView
+    }()
+
     // MARK: - Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
 
+        configureUI()
+        
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        playButton.addTarget(self, action: #selector(playButtonTouched(_:)), for: .touchUpInside)
+    }
+    
+    func configureUI() {
         setNavigationBar()
         setTopView()
         setBottomView()
@@ -104,17 +116,18 @@ extension MusicPlayerViewController {
         self.view.addSubview(topView)
         topView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
-            make.height.equalTo(view.snp.width)
+            make.height.equalTo(view.snp.width).multipliedBy(1.2)
         }
         
-        guard let musicDescriptionView = musicDescriptionView else {
-            return
-        }
-
         topView.addSubview(musicDescriptionView)
         musicDescriptionView.snp.makeConstraints { make in
             make.leading.trailing.bottom.equalToSuperview().inset(12)
-            make.height.equalTo(120)
+            make.height.equalTo(105)
+        }
+        
+        musicDescriptionView.tagView.addSubview(collectionView)
+        collectionView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
     }
     
