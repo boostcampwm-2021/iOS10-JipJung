@@ -248,9 +248,6 @@ class InfinityFocusViewController: UIViewController {
             guard let self = self else { return }
             self.continueButton.isHidden = false
             self.exitButton.isHidden = false
-            print(self.view.center.x)
-            print(self.view.center.x * 0.45)
-            print(self.view.center.x * 1.55)
             self.continueButton.frame = CGRect(x: self.continueButton.frame.minX * 0.45,
                                                y: self.continueButton.frame.minY,
                                                width: self.continueButton.frame.width,
