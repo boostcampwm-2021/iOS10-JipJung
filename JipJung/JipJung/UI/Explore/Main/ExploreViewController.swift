@@ -36,8 +36,8 @@ class ExploreViewController: UIViewController {
         categoryCollectionView.delegate = self
         categoryCollectionView.dataSource = self
         categoryCollectionView.register(
-            CollectionViewCell.self,
-            forCellWithReuseIdentifier: CollectionViewCell.cellIdentifier)
+            MusicCollectionViewCell.self,
+            forCellWithReuseIdentifier: MusicCollectionViewCell.identifier)
         return categoryCollectionView
     }()
 
@@ -53,8 +53,9 @@ class ExploreViewController: UIViewController {
         soundContentsCollectionView.showsHorizontalScrollIndicator = false
         soundContentsCollectionView.delegate = self
         soundContentsCollectionView.dataSource = self
-        soundContentsCollectionView.register(CollectionViewCell.self,
-                                forCellWithReuseIdentifier: CollectionViewCell.cellIdentifier)
+        soundContentsCollectionView.register(
+            MusicCollectionViewCell.self,
+            forCellWithReuseIdentifier: MusicCollectionViewCell.identifier)
         return soundContentsCollectionView
     }()
 
@@ -139,7 +140,7 @@ extension ExploreViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionViewCell.cellIdentifier, for: indexPath) as? CollectionViewCell else { return  UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MusicCollectionViewCell.identifier, for: indexPath) as? MusicCollectionViewCell else { return  UICollectionViewCell() }
         
         return cell
     }
