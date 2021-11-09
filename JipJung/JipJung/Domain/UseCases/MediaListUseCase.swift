@@ -1,5 +1,5 @@
 //
-//  SoundListUseCase.swift
+//  MediaListUseCase.swift
 //  JipJung
 //
 //  Created by Soohyeon Lee on 2021/11/08.
@@ -9,10 +9,10 @@ import Foundation
 
 import RxSwift
 
-class SoundListUseCase {
+class MediaListUseCase {
     func fetchModeSoundList(mode: SoundMode) -> Single<[String]> {
         return Single<[String]>.create { single in
-            let demo = mode == .bright ? ["test", "C2"] : ["C1", "test"]
+            let demo = mode == .bright ? ["test", "test2"] : ["test2", "test"]
             
             single(.success(demo))
             return Disposables.create()

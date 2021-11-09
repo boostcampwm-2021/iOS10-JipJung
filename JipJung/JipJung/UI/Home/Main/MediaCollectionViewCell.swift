@@ -8,7 +8,7 @@
 import AVKit
 import UIKit
 
-class MediaCollectionViewCell: UICollectionViewCell {
+final class MediaCollectionViewCell: UICollectionViewCell {
     static let identifier = "MediaCollectionViewCell"
     
     private var videoPlayer: AVPlayer? {
@@ -22,10 +22,16 @@ class MediaCollectionViewCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        videoPlayer = nil
+        
+        NotificationCenter.default.removeObserver(
+            self,
+            name: .AVPlayerItemDidPlayToEndTime,
+            object: videoPlayer?.currentItem
+        )
         layer.sublayers?.forEach {
             $0.removeFromSuperlayer()
         }
+        videoPlayer = nil
     }
     
     override init(frame: CGRect) {
@@ -36,8 +42,33 @@ class MediaCollectionViewCell: UICollectionViewCell {
         super.init(coder: coder)
     }
     
+    func playVideo() {
+        guard let videoPlayer = videoPlayer else { return }
+        videoPlayer.currentItem?.seek(to: .zero, completionHandler: nil)
+        videoPlayer.play()
+    }
+    
+    func pauseVideo() {
+        guard let videoPlayer = videoPlayer else { return }
+        videoPlayer.pause()
+    }
+    
     func setVideo(videoURL: URL) {
         videoPlayer = AVPlayer(url: videoURL)
         videoPlayer?.actionAtItemEnd = .none
+        videoPlayer?.isMuted = true
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(playerItemDidReachEnd(notification:)),
+            name: .AVPlayerItemDidPlayToEndTime,
+            object: videoPlayer?.currentItem
+        )
+    }
+    
+    @objc func playerItemDidReachEnd(notification: Notification) {
+        if let playerItem = notification.object as? AVPlayerItem {
+            playerItem.seek(to: CMTime.zero, completionHandler: nil)
+        }
     }
 }

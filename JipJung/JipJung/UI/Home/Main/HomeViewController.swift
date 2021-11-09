@@ -49,7 +49,10 @@ class HomeViewController: UIViewController {
     }
     
     private func configureViewModel() {
-        viewModel = HomeViewModel(soundListUseCase: SoundListUseCase())
+        viewModel = HomeViewModel(
+            mediaListUseCase: MediaListUseCase(),
+            audioPlayUseCase: AudioPlayUseCase()
+        )
     }
     
     private func configureUI() {
@@ -214,19 +217,27 @@ class HomeViewController: UIViewController {
     }
     
     private func bindUI() {
-        bindUIInController()
+        bindUIWithMediaCollectionView()
         bindUIWithViewModel()
     }
     
-    private func bindUIInController() {
+    private func bindUIWithMediaCollectionView() {
         guard let mediaCollectionView = mediaCollectionView else { return }
         
-        mediaCollectionView
-            .rx
-            .modelSelected(String.self)
-            .subscribe(onNext: { item in
-                print(item)
-            })
+        Observable
+            .zip(
+                mediaCollectionView.rx.itemSelected,
+                mediaCollectionView.rx.modelSelected(String.self)
+            )
+            .bind { [weak self] indexPath, model in
+                guard let result = self?.mediaPlayButtonTouched(urlString: model),
+                      let cell = mediaCollectionView.cellForItem(at: indexPath) as? MediaCollectionViewCell
+                else {
+                    return
+                }
+                
+                result ? cell.playVideo() : cell.pauseVideo()
+            }
             .disposed(by: bag)
     }
     
@@ -262,15 +273,12 @@ class HomeViewController: UIViewController {
         .disposed(by: bag)
     }
     
-    @objc private func playerItemDidReachEnd(notification: Notification) {
-        if let playerItem = notification.object as? AVPlayerItem {
-            playerItem.seek(to: CMTime.zero, completionHandler: nil)
+    private func mediaPlayButtonTouched(urlString: String) -> Bool {
+        guard let viewModel = viewModel else {
+            return false
         }
-    }
-    
-    @objc private func mediaPlayButtonTouched(_ sender: UITapGestureRecognizer) {
-        viewModel?.mediaPlayButtonTouched()
-        print(#function)
+
+        return viewModel.mediaPlayButtonTouched(urlString: urlString)
     }
     
     @objc private func bottomViewDragged(_ sender: UIPanGestureRecognizer) {

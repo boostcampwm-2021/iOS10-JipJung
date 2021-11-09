@@ -11,7 +11,8 @@ import RxSwift
 import RxRelay
 
 final class HomeViewModel {
-    let soundListUseCase: SoundListUseCase
+    let mediaListUseCase: MediaListUseCase
+    let audioPlayUseCase: AudioPlayUseCase
     
     let bag = DisposeBag()
     let mode = BehaviorRelay<SoundMode>(value: .bright)
@@ -22,8 +23,12 @@ final class HomeViewModel {
     let recentPlayHistory = BehaviorRelay<[String]>(value: [])
     let isPlaying = BehaviorRelay(value: false)
     
-    init(soundListUseCase: SoundListUseCase) {
-        self.soundListUseCase = soundListUseCase
+    init(
+        mediaListUseCase: MediaListUseCase,
+        audioPlayUseCase: AudioPlayUseCase
+    ) {
+        self.mediaListUseCase = mediaListUseCase
+        self.audioPlayUseCase = audioPlayUseCase
         
         Observable
             .combineLatest(mode, brightMode, darknessMode) { ($0, $1, $2) }
@@ -34,7 +39,7 @@ final class HomeViewModel {
     }
     
     func viewControllerLoaded() {
-        soundListUseCase.fetchModeSoundList(mode: .bright)
+        mediaListUseCase.fetchModeSoundList(mode: .bright)
             .subscribe { [weak self] in
                 self?.brightMode.accept($0)
             } onFailure: { error in
@@ -42,7 +47,7 @@ final class HomeViewModel {
             }
             .disposed(by: bag)
         
-        soundListUseCase.fetchModeSoundList(mode: .darkness)
+        mediaListUseCase.fetchModeSoundList(mode: .darkness)
             .subscribe { [weak self] in
                 self?.darknessMode.accept($0)
             } onFailure: { error in
@@ -50,7 +55,7 @@ final class HomeViewModel {
             }
             .disposed(by: bag)
         
-        soundListUseCase.fetchFavoriteSoundList()
+        mediaListUseCase.fetchFavoriteSoundList()
             .subscribe { [weak self] in
                 self?.favoriteSoundList.accept($0)
             } onFailure: { error in
@@ -58,7 +63,7 @@ final class HomeViewModel {
             }
             .disposed(by: bag)
         
-        soundListUseCase.fetchRecentPlayHistory()
+        mediaListUseCase.fetchRecentPlayHistory()
             .subscribe { [weak self] in
                 self?.recentPlayHistory.accept($0)
             } onFailure: { error in
@@ -71,13 +76,21 @@ final class HomeViewModel {
         mode.accept(mode.value == .bright ? .darkness : .bright)
     }
     
-    func mediaPlayButtonTouched() {
+    func mediaPlayButtonTouched(urlString: String) -> Bool {
         isPlaying.accept(!isPlaying.value)
         
         if isPlaying.value {
-            
+            do {
+                try audioPlayUseCase.ready(urlString: urlString)
+                audioPlayUseCase.play()
+            } catch {
+                print(error.localizedDescription)
+                return false
+            }
+            return true
         } else {
-            
+            audioPlayUseCase.pause()
+            return false
         }
     }
 }

@@ -14,7 +14,9 @@
 		91CE6F6F2739024800176AF2 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CE6F6E2739024800176AF2 /* Enums.swift */; };
 		91CE6F7327390AD200176AF2 /* FocusButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CE6F7227390AD200176AF2 /* FocusButton.swift */; };
 		91CE6F7527391E1C00176AF2 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CE6F7427391E1C00176AF2 /* HomeViewModel.swift */; };
-		91CE6F782739203200176AF2 /* SoundListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CE6F772739203200176AF2 /* SoundListUseCase.swift */; };
+		91CE6F782739203200176AF2 /* MediaListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CE6F772739203200176AF2 /* MediaListUseCase.swift */; };
+		91DABCC0273A4EF000E57AAE /* AudioPlayUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DABCBF273A4EF000E57AAE /* AudioPlayUseCase.swift */; };
+		91DABCC2273A651400E57AAE /* test2.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 91DABCC1273A64FD00E57AAE /* test2.mp4 */; };
 		91E4178927312FEB001BA0A6 /* LocalFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E4178827312FEB001BA0A6 /* LocalFileManager.swift */; };
 		91EA47C027383DE600780C3E /* test.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 91EA47BF27383DD200780C3E /* test.mp4 */; };
 		91EA47C127383DE600780C3E /* testSound.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 91EA47BE27383DD100780C3E /* testSound.m4a */; };
@@ -85,7 +87,9 @@
 		91CE6F6E2739024800176AF2 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		91CE6F7227390AD200176AF2 /* FocusButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusButton.swift; sourceTree = "<group>"; };
 		91CE6F7427391E1C00176AF2 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
-		91CE6F772739203200176AF2 /* SoundListUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundListUseCase.swift; sourceTree = "<group>"; };
+		91CE6F772739203200176AF2 /* MediaListUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaListUseCase.swift; sourceTree = "<group>"; };
+		91DABCBF273A4EF000E57AAE /* AudioPlayUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayUseCase.swift; sourceTree = "<group>"; };
+		91DABCC1273A64FD00E57AAE /* test2.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = test2.mp4; sourceTree = "<group>"; };
 		91E4178827312FEB001BA0A6 /* LocalFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFileManager.swift; sourceTree = "<group>"; };
 		91EA47BE27383DD100780C3E /* testSound.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = testSound.m4a; sourceTree = "<group>"; };
 		91EA47BF27383DD200780C3E /* test.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = test.mp4; sourceTree = "<group>"; };
@@ -176,7 +180,8 @@
 		91CE6F7627391FF700176AF2 /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
-				91CE6F772739203200176AF2 /* SoundListUseCase.swift */,
+				91CE6F772739203200176AF2 /* MediaListUseCase.swift */,
+				91DABCBF273A4EF000E57AAE /* AudioPlayUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -242,6 +247,7 @@
 		DD3902CF272FCA10009ECA82 /* JipJung */ = {
 			isa = PBXGroup;
 			children = (
+				91DABCC1273A64FD00E57AAE /* test2.mp4 */,
 				91EA47BF27383DD200780C3E /* test.mp4 */,
 				91EA47BE27383DD100780C3E /* testSound.m4a */,
 				DDB5CEAC2733727600E8F9EB /* Domain */,
@@ -529,6 +535,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				91DABCC2273A651400E57AAE /* test2.mp4 in Resources */,
 				91EA47C027383DE600780C3E /* test.mp4 in Resources */,
 				91EA47C127383DE600780C3E /* testSound.m4a in Resources */,
 				DD3902DD272FCA12009ECA82 /* LaunchScreen.storyboard in Resources */,
@@ -628,7 +635,7 @@
 				B40D1FAD273B5F2800881A49 /* PomodoroFocusViewController.swift in Sources */,
 				DDB5CEB32733752D00E8F9EB /* FavoriteMusic.swift in Sources */,
 				DDB5CE9E27328E8300E8F9EB /* HomeViewController.swift in Sources */,
-				91CE6F782739203200176AF2 /* SoundListUseCase.swift in Sources */,
+				91CE6F782739203200176AF2 /* MediaListUseCase.swift in Sources */,
 				91EA47C827384EA500780C3E /* SystemConstants.swift in Sources */,
 				DDB5CEA827328EF400E8F9EB /* MeViewController.swift in Sources */,
 				DDB5CEB12733746600E8F9EB /* Maxim.swift in Sources */,
@@ -646,6 +653,7 @@
 				B40D1FB3273B5F3500881A49 /* InfinityFocusViewModel.swift in Sources */,
 				91EA47C42738451100780C3E /* BlurEffect.swift in Sources */,
 				B40D1FAB273B5F2100881A49 /* DefaultFocusViewModel.swift in Sources */,
+				91DABCC0273A4EF000E57AAE /* AudioPlayUseCase.swift in Sources */,
 				DDB5CEBE2733A49A00E8F9EB /* RealmDBManager.swift in Sources */,
 				B40D1FB5273B5F3900881A49 /* GenerateTimerUseCase.swift in Sources */,
 				914E1D87273A191D000CA5FB /* MediaCollectionViewCell.swift in Sources */,
