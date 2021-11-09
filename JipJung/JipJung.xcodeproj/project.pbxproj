@@ -21,6 +21,7 @@
 		B4015CD42739151B006BD14A /* RecentMusicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4015CD32739151B006BD14A /* RecentMusicViewController.swift */; };
 		B4015CD627391529006BD14A /* FavoriteMusicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4015CD527391529006BD14A /* FavoriteMusicViewController.swift */; };
 		B4015CD82739270C006BD14A /* GenreCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4015CD72739270C006BD14A /* GenreCollectionViewCell.swift */; };
+		B40D1F95273A2FE700881A49 /* InfinityFocusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40D1F94273A2FE700881A49 /* InfinityFocusViewController.swift */; };
 		B4F36B5127336EE20073609C /* UserDefaultsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F36B5027336EE20073609C /* UserDefaultsStorage.swift */; };
 		B4F36B5927338E9B0073609C /* UserDefaultsStorageTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F36B5827338E9B0073609C /* UserDefaultsStorageTest.swift */; };
 		B4F36B662733B8770073609C /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F36B652733B8770073609C /* SearchViewController.swift */; };
@@ -80,6 +81,7 @@
 		B4015CD32739151B006BD14A /* RecentMusicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentMusicViewController.swift; sourceTree = "<group>"; };
 		B4015CD527391529006BD14A /* FavoriteMusicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteMusicViewController.swift; sourceTree = "<group>"; };
 		B4015CD72739270C006BD14A /* GenreCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreCollectionViewCell.swift; sourceTree = "<group>"; };
+		B40D1F94273A2FE700881A49 /* InfinityFocusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfinityFocusViewController.swift; sourceTree = "<group>"; };
 		B4F36B5027336EE20073609C /* UserDefaultsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsStorage.swift; sourceTree = "<group>"; };
 		B4F36B5627338E9B0073609C /* UserDefaultsStorageTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UserDefaultsStorageTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4F36B5827338E9B0073609C /* UserDefaultsStorageTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsStorageTest.swift; sourceTree = "<group>"; };
@@ -268,6 +270,7 @@
 				91CE6F6E2739024800176AF2 /* Enums.swift */,
 				B4015CD32739151B006BD14A /* RecentMusicViewController.swift */,
 				B4015CD527391529006BD14A /* FavoriteMusicViewController.swift */,
+				B40D1F94273A2FE700881A49 /* InfinityFocusViewController.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -600,6 +603,7 @@
 				B4015CD42739151B006BD14A /* RecentMusicViewController.swift in Sources */,
 				DD3902D3272FCA10009ECA82 /* SceneDelegate.swift in Sources */,
 				B4015CD627391529006BD14A /* FavoriteMusicViewController.swift in Sources */,
+				B40D1F95273A2FE700881A49 /* InfinityFocusViewController.swift in Sources */,
 				91E4178927312FEB001BA0A6 /* LocalFileManager.swift in Sources */,
 				91CE6F7327390AD200176AF2 /* FocusButton.swift in Sources */,
 				B4015CD82739270C006BD14A /* GenreCollectionViewCell.swift in Sources */,
