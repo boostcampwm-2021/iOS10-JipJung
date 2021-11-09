@@ -245,6 +245,23 @@ class HomeViewController: UIViewController {
     }
     
     private func bindUI() {
+        bindUIInController()
+        bindUIWithViewModel()
+    }
+    
+    private func bindUIInController() {
+        guard let mediaCollectionView = mediaCollectionView else { return }
+        
+        mediaCollectionView
+            .rx
+            .modelSelected(String.self)
+            .subscribe(onNext: { item in
+                print(item)
+            })
+            .disposed(by: bag)
+    }
+    
+    private func bindUIWithViewModel() {
         guard let viewModel = viewModel,
               let mediaCollectionView = mediaCollectionView
         else {
@@ -265,26 +282,13 @@ class HomeViewController: UIViewController {
         
         viewModel.currentModeList.bind(
             to: mediaCollectionView.rx.items(cellIdentifier: MediaCollectionViewCell.identifier)
-        ) { [weak self] item, element, cell in
+        ) { item, element, cell in
             guard let cell = cell as? MediaCollectionViewCell,
                   let videoURL = Bundle.main.url(forResource: "test", withExtension: "mp4")
             else {
                 return
             }
-            cell.addGestureRecognizer(UITapGestureRecognizer(
-                target: self,
-                action: #selector(self?.focusButtonTouched))
-            )
-            cell.setVideo(videoURL: videoURL)
-            if item == 0 {
-                cell.backgroundColor = .red
-            } else if item == 1 {
-                cell.backgroundColor = .green
-            } else if item == 2 {
-                cell.backgroundColor = .blue
-            } else {
-                cell.backgroundColor = .brown
-            }
+            cell.setVideo(videoURL: videoURL) // element.videoURL
         }
         .disposed(by: bag)
     }
