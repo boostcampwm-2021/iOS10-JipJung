@@ -1,5 +1,5 @@
 //
-//  Enums.swift.swift
+//  Enums.swift
 //  JipJung
 //
 //  Created by Soohyeon Lee on 2021/11/08.
@@ -7,6 +7,10 @@
 
 import Foundation
 import CoreGraphics
+
+enum SoundMode {
+    case bright, darkness
+}
 
 enum FocusMode: CaseIterable {
     case normal, ticktock, infinity, breath

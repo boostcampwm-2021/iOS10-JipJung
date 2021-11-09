@@ -12,6 +12,8 @@
 		9198DE952733863500EBAEC8 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9198DE942733863500EBAEC8 /* Common.swift */; };
 		91CE6F6F2739024800176AF2 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CE6F6E2739024800176AF2 /* Enums.swift */; };
 		91CE6F7327390AD200176AF2 /* FocusButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CE6F7227390AD200176AF2 /* FocusButton.swift */; };
+		91CE6F7527391E1C00176AF2 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CE6F7427391E1C00176AF2 /* HomeViewModel.swift */; };
+		91CE6F782739203200176AF2 /* SoundListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CE6F772739203200176AF2 /* SoundListUseCase.swift */; };
 		91E4178927312FEB001BA0A6 /* LocalFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E4178827312FEB001BA0A6 /* LocalFileManager.swift */; };
 		91EA47C027383DE600780C3E /* test.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 91EA47BF27383DD200780C3E /* test.mp4 */; };
 		91EA47C127383DE600780C3E /* testSound.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 91EA47BE27383DD100780C3E /* testSound.m4a */; };
@@ -29,6 +31,7 @@
 		B40D1FB5273B5F3900881A49 /* GenerateTimerUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40D1FB4273B5F3900881A49 /* GenerateTimerUseCase.swift */; };
 		B40D1FB7273B60A500881A49 /* Int+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40D1FB6273B60A500881A49 /* Int+Extension.swift */; };
 		B40D1FB9273B674F00881A49 /* InfinityFocusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40D1FB8273B674F00881A49 /* InfinityFocusViewController.swift */; };
+		B492D8F3273544BF007F8A35 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B492D8F2273544BF007F8A35 /* CollectionViewCell.swift */; };
 		B4F36B5127336EE20073609C /* UserDefaultsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F36B5027336EE20073609C /* UserDefaultsStorage.swift */; };
 		B4F36B5927338E9B0073609C /* UserDefaultsStorageTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F36B5827338E9B0073609C /* UserDefaultsStorageTest.swift */; };
 		B4F36B662733B8770073609C /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F36B652733B8770073609C /* SearchViewController.swift */; };
@@ -79,6 +82,8 @@
 		9198DE942733863500EBAEC8 /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		91CE6F6E2739024800176AF2 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		91CE6F7227390AD200176AF2 /* FocusButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusButton.swift; sourceTree = "<group>"; };
+		91CE6F7427391E1C00176AF2 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		91CE6F772739203200176AF2 /* SoundListUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundListUseCase.swift; sourceTree = "<group>"; };
 		91E4178827312FEB001BA0A6 /* LocalFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFileManager.swift; sourceTree = "<group>"; };
 		91EA47BE27383DD100780C3E /* testSound.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = testSound.m4a; sourceTree = "<group>"; };
 		91EA47BF27383DD200780C3E /* test.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = test.mp4; sourceTree = "<group>"; };
@@ -96,6 +101,7 @@
 		B40D1FB4273B5F3900881A49 /* GenerateTimerUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenerateTimerUseCase.swift; sourceTree = "<group>"; };
 		B40D1FB6273B60A500881A49 /* Int+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
 		B40D1FB8273B674F00881A49 /* InfinityFocusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfinityFocusViewController.swift; sourceTree = "<group>"; };
+		B492D8F2273544BF007F8A35 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		B4F36B5027336EE20073609C /* UserDefaultsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsStorage.swift; sourceTree = "<group>"; };
 		B4F36B5627338E9B0073609C /* UserDefaultsStorageTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UserDefaultsStorageTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4F36B5827338E9B0073609C /* UserDefaultsStorageTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsStorageTest.swift; sourceTree = "<group>"; };
@@ -163,6 +169,14 @@
 				9198DE942733863500EBAEC8 /* Common.swift */,
 			);
 			path = Localizing;
+			sourceTree = "<group>";
+		};
+		91CE6F7627391FF700176AF2 /* UseCases */ = {
+			isa = PBXGroup;
+			children = (
+				91CE6F772739203200176AF2 /* SoundListUseCase.swift */,
+			);
+			path = UseCases;
 			sourceTree = "<group>";
 		};
 		91E4174C27312E5A001BA0A6 /* Infra */ = {
@@ -291,6 +305,7 @@
 				B40D1FB8273B674F00881A49 /* InfinityFocusViewController.swift */,
 				B40D1FB2273B5F3500881A49 /* InfinityFocusViewModel.swift */,
 				B40D1FB4273B5F3900881A49 /* GenerateTimerUseCase.swift */,
+				91CE6F7427391E1C00176AF2 /* HomeViewModel.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -333,6 +348,7 @@
 		DDB5CEAC2733727600E8F9EB /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				91CE6F7627391FF700176AF2 /* UseCases */,
 				DDB5CEAD2733728100E8F9EB /* Entities */,
 			);
 			path = Domain;
@@ -609,6 +625,7 @@
 				B40D1FAD273B5F2800881A49 /* PomodoroFocusViewController.swift in Sources */,
 				DDB5CEB32733752D00E8F9EB /* FavoriteMusic.swift in Sources */,
 				DDB5CE9E27328E8300E8F9EB /* HomeViewController.swift in Sources */,
+				91CE6F782739203200176AF2 /* SoundListUseCase.swift in Sources */,
 				91EA47C827384EA500780C3E /* SystemConstants.swift in Sources */,
 				DDB5CEA827328EF400E8F9EB /* MeViewController.swift in Sources */,
 				DDB5CEB12733746600E8F9EB /* Maxim.swift in Sources */,
@@ -636,6 +653,7 @@
 				91CE6F7327390AD200176AF2 /* FocusButton.swift in Sources */,
 				B4015CD82739270C006BD14A /* GenreCollectionViewCell.swift in Sources */,
 				9198DE952733863500EBAEC8 /* Common.swift in Sources */,
+				91CE6F7527391E1C00176AF2 /* HomeViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,6 +7,7 @@
 import AVKit
 import UIKit
 
+import RxSwift
 import SnapKit
 
 class HomeViewController: UIViewController {
@@ -29,16 +30,23 @@ class HomeViewController: UIViewController {
     private let bottomViewHeight = SystemConstants.deviceScreenSize.height
     private let focusButtonSize: (width: CGFloat, height: CGFloat) = (60, 90)
     
+    private var viewModel: HomeViewModel?
     private var videoPlayer: AVPlayer?
     private var audioPlayer: AVAudioPlayer?
-    
     private var isAttached = false
-    private var isPlaying = false
+    
+    let bag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        configureViewModel()
         configureUI()
+        bindUI()
+    }
+    
+    private func configureViewModel() {
+        viewModel = HomeViewModel(soundListUseCase: SoundListUseCase())
     }
     
     private func configureUI() {
@@ -80,12 +88,6 @@ class HomeViewController: UIViewController {
         playerLayer.videoGravity = .resizeAspectFill
         playerLayer.frame = UIScreen.main.bounds
         mediaBackgroundView.layer.addSublayer(playerLayer)
-    }
-    
-    @objc func playerItemDidReachEnd(notification: Notification) {
-        if let playerItem = notification.object as? AVPlayerItem {
-            playerItem.seek(to: CMTime.zero, completionHandler: nil)
-        }
     }
     
     private func configureMainScrollView() {
@@ -184,7 +186,7 @@ class HomeViewController: UIViewController {
     }
     
     private func configureMediaControllView() {
-        mediaControllView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(mediaButton(_:))))
+        mediaControllView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(mediaPlayButtonTouched(_:))))
         mediaControllView.addGestureRecognizer(UIPanGestureRecognizer(target: nil, action: nil))
         
         mainScrollContentsView.addSubview(mediaControllView)
@@ -195,15 +197,26 @@ class HomeViewController: UIViewController {
         }
     }
     
-    @objc private func mediaButton(_ sender: UITapGestureRecognizer) {
-        if isPlaying {
-            audioPlayer?.pause()
-            videoPlayer?.pause()
-        } else {
-            audioPlayer?.play()
-            videoPlayer?.play()
+    private func bindUI() {
+        viewModel?.isPlaying.bind(onNext: { [weak self] state in
+            if state {
+                self?.audioPlayer?.play()
+                self?.videoPlayer?.play()
+            } else {
+                self?.audioPlayer?.pause()
+                self?.videoPlayer?.pause()
+            }
+        }).disposed(by: bag)
+    }
+    
+    @objc private func playerItemDidReachEnd(notification: Notification) {
+        if let playerItem = notification.object as? AVPlayerItem {
+            playerItem.seek(to: CMTime.zero, completionHandler: nil)
         }
-        isPlaying.toggle()
+    }
+    
+    @objc private func mediaPlayButtonTouched(_ sender: UITapGestureRecognizer) {
+        viewModel?.mediaPlayButtonTouched()
     }
     
     @objc private func bottomViewDragged(_ sender: UIPanGestureRecognizer) {
