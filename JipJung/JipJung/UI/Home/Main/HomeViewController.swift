@@ -186,8 +186,14 @@ class HomeViewController: UIViewController {
     }
     
     private func configureMediaControllView() {
-        mediaControllView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(mediaPlayButtonTouched(_:))))
-        mediaControllView.addGestureRecognizer(UIPanGestureRecognizer(target: nil, action: nil))
+        mediaControllView.addGestureRecognizer(UITapGestureRecognizer(
+            target: self,
+            action: #selector(mediaPlayButtonTouched(_:)))
+        )
+        mediaControllView.addGestureRecognizer(UIPanGestureRecognizer(
+            target: nil,
+            action: nil)
+        )
         
         mainScrollContentsView.addSubview(mediaControllView)
         mediaControllView.snp.makeConstraints {
