@@ -23,7 +23,9 @@ class MediaCollectionViewCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         videoPlayer = nil
-        layer.sublayers?.first?.removeFromSuperlayer()
+        layer.sublayers?.forEach {
+            $0.removeFromSuperlayer()
+        }
     }
     
     override init(frame: CGRect) {
