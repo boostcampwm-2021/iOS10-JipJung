@@ -10,8 +10,8 @@ import Foundation
 import RxSwift
 
 enum MediaRepositoryError: Error {
-    case notsuchFile
-    case failedFileCopy
+    case fileNotFound
+    case fileCopyError
 }
 
 final class MediaRepository {
@@ -27,16 +27,16 @@ final class MediaRepository {
         }
         
         return remoteServiceProvider.request(key: fileName, type: type)
-            .map { url in LocalFileManager.shared.write(from: url, fileName: fileName) }
+            .map { url in LocalFileManager.shared.move(from: url, fileName: fileName) }
             .map { isSucceed in
                 switch isSucceed {
                 case true:
                     guard let data = LocalFileManager.shared.read(fileName) else {
-                        throw MediaRepositoryError.notsuchFile
+                        throw MediaRepositoryError.fileNotFound
                     }
                     return data
                 case false:
-                    throw MediaRepositoryError.failedFileCopy
+                    throw MediaRepositoryError.fileCopyError
                 }
             }
     }
