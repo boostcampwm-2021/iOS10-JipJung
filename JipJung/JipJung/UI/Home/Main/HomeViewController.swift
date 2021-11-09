@@ -11,6 +11,7 @@ import RxSwift
 import SnapKit
 
 class HomeViewController: UIViewController {
+    private var mediaCollectionView: UICollectionView?
     private let mediaBackgroundView = UIView()
     private let mainScrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -43,6 +44,8 @@ class HomeViewController: UIViewController {
         configureViewModel()
         configureUI()
         bindUI()
+        
+        viewModel?.viewControllerLoaded()
     }
     
     private func configureViewModel() {
@@ -50,13 +53,51 @@ class HomeViewController: UIViewController {
     }
     
     private func configureUI() {
-        view.backgroundColor = .black
+        view.backgroundColor = .white
         
-        configureMediaContentsView()
-        configureMainScrollView()
-        configureTopView()
-        configureBottomView()
-        configureMediaControllView()
+        configureMediaCollectionView()
+//        configureMediaContentsView()
+//        configureMainScrollView()
+//        configureTopView()
+//        configureBottomView()
+//        configureMediaControllView()
+    }
+    
+    private func configureMediaCollectionView() {
+        mediaCollectionView = UICollectionView(
+            frame: .zero,
+            collectionViewLayout: makeMediaCollectionLayout()
+        )
+        guard let mediaCollectionView = mediaCollectionView else { return }
+        
+        mediaCollectionView.register(
+            MediaCollectionViewCell.self,
+            forCellWithReuseIdentifier: MediaCollectionViewCell.identifier
+        )
+        mediaCollectionView.contentInsetAdjustmentBehavior = .never
+        mediaCollectionView.bounces = false
+        view.addSubview(mediaCollectionView)
+        mediaCollectionView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+    }
+    
+    private func makeMediaCollectionLayout() -> UICollectionViewLayout {
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .fractionalHeight(1)
+        )
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .fractionalHeight(1)
+        )
+        
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .paging
+        let layout = UICollectionViewCompositionalLayout(section: section)
+        return layout
     }
     
     private func configureMediaContentsView() {
@@ -204,15 +245,48 @@ class HomeViewController: UIViewController {
     }
     
     private func bindUI() {
-        viewModel?.isPlaying.bind(onNext: { [weak self] state in
-            if state {
-                self?.audioPlayer?.play()
-                self?.videoPlayer?.play()
-            } else {
-                self?.audioPlayer?.pause()
-                self?.videoPlayer?.pause()
+        guard let viewModel = viewModel,
+              let mediaCollectionView = mediaCollectionView
+        else {
+            return
+        }
+        
+        viewModel.isPlaying.bind(
+            onNext: { [weak self] state in
+                if state {
+                    self?.audioPlayer?.play()
+                    self?.videoPlayer?.play()
+                } else {
+                    self?.audioPlayer?.pause()
+                    self?.videoPlayer?.pause()
+                }
             }
-        }).disposed(by: bag)
+        ).disposed(by: bag)
+        
+        viewModel.currentModeList.bind(
+            to: mediaCollectionView.rx.items(cellIdentifier: MediaCollectionViewCell.identifier)
+        ) { [weak self] item, element, cell in
+            guard let cell = cell as? MediaCollectionViewCell,
+                  let videoURL = Bundle.main.url(forResource: "test", withExtension: "mp4")
+            else {
+                return
+            }
+            cell.addGestureRecognizer(UITapGestureRecognizer(
+                target: self,
+                action: #selector(self?.focusButtonTouched))
+            )
+            cell.setVideo(videoURL: videoURL)
+            if item == 0 {
+                cell.backgroundColor = .red
+            } else if item == 1 {
+                cell.backgroundColor = .green
+            } else if item == 2 {
+                cell.backgroundColor = .blue
+            } else {
+                cell.backgroundColor = .brown
+            }
+        }
+        .disposed(by: bag)
     }
     
     @objc private func playerItemDidReachEnd(notification: Notification) {
@@ -247,7 +321,7 @@ class HomeViewController: UIViewController {
     }
     
     @objc private func focusButtonTouched(_ sender: UITapGestureRecognizer) {
-        
+        viewModel?.modeSwitchTouched()
     }
 }
 
