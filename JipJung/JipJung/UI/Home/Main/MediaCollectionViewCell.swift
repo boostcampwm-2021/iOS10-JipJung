@@ -11,28 +11,27 @@ import UIKit
 class MediaCollectionViewCell: UICollectionViewCell {
     static let identifier = "MediaCollectionViewCell"
     
-    private var videoPlayer: AVPlayer?
+    private var videoPlayer: AVPlayer? {
+        didSet {
+            let playerLayer = AVPlayerLayer(player: videoPlayer)
+            playerLayer.videoGravity = .resizeAspectFill
+            playerLayer.frame = UIScreen.main.bounds
+            layer.addSublayer(playerLayer)
+        }
+    }
     
     override func prepareForReuse() {
         super.prepareForReuse()
         videoPlayer = nil
+        layer.sublayers?.first?.removeFromSuperlayer()
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.configureUI()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        self.configureUI()
-    }
-    
-    private func configureUI() {
-        let playerLayer = AVPlayerLayer(player: videoPlayer)
-        playerLayer.videoGravity = .resizeAspectFill
-        playerLayer.frame = UIScreen.main.bounds
-        layer.addSublayer(playerLayer)
     }
     
     func setVideo(videoURL: URL) {
