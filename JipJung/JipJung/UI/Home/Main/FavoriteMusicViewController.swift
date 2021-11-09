@@ -8,9 +8,6 @@
 import Foundation
 import UIKit
 
-import Foundation
-import UIKit
-
 class FavoriteMusicViewController: UIViewController {
     // MARK: - Subviews
     
@@ -37,8 +34,9 @@ class FavoriteMusicViewController: UIViewController {
         favoriteMusicCollectionView.showsHorizontalScrollIndicator = false
         favoriteMusicCollectionView.delegate = self
         favoriteMusicCollectionView.dataSource = self
-        favoriteMusicCollectionView.register(MusicCollectionViewCell.self,
-                                forCellWithReuseIdentifier: MusicCollectionViewCell.identifier)
+        favoriteMusicCollectionView.register(
+            MusicCollectionViewCell.self,
+            forCellWithReuseIdentifier: MusicCollectionViewCell.identifier)
         return favoriteMusicCollectionView
     }()
     

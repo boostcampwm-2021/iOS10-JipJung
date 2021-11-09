@@ -53,8 +53,9 @@ class ExploreViewController: UIViewController {
         soundContentsCollectionView.showsHorizontalScrollIndicator = false
         soundContentsCollectionView.delegate = self
         soundContentsCollectionView.dataSource = self
-        soundContentsCollectionView.register(MusicCollectionViewCell.self,
-                                forCellWithReuseIdentifier: MusicCollectionViewCell.identifier)
+        soundContentsCollectionView.register(
+            MusicCollectionViewCell.self,
+            forCellWithReuseIdentifier: MusicCollectionViewCell.identifier)
         return soundContentsCollectionView
     }()
 
