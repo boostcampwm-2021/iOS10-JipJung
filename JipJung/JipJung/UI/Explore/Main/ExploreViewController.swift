@@ -61,7 +61,7 @@ class ExploreViewController: UIViewController {
     
     // MARK: - Private Constants
     
-    private let category: [String] = ["All", "Melody", "Nature", "Urban", "Relax", "Techno", "House", "Hiphop", "Jazz", "Leftfield"]
+    private let category: [String] = [Genre.All, Genre.Melody, Genre.Relax, Genre.Urban, Genre.Nature, Genre.Techno, Genre.House, Genre.Disco, Genre.Hiphop, Genre.Jazz]
 
     // MARK: - Lifecycle Methods
     
