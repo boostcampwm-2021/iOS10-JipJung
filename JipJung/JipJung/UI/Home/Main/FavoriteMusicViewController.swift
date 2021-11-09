@@ -36,7 +36,7 @@ class FavoriteMusicViewController: UIViewController {
         favoriteMusicCollectionView.dataSource = self
         favoriteMusicCollectionView.register(
             MusicCollectionViewCell.self,
-            forCellWithReuseIdentifier: MusicCollectionViewCell.identifier)
+            forCellWithReuseIdentifier: MusicCollectionViewCell.id)
         return favoriteMusicCollectionView
     }()
     

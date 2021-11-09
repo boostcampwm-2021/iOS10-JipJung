@@ -55,7 +55,7 @@ class ExploreViewController: UIViewController {
         soundContentsCollectionView.dataSource = self
         soundContentsCollectionView.register(
             MusicCollectionViewCell.self,
-            forCellWithReuseIdentifier: MusicCollectionViewCell.identifier)
+            forCellWithReuseIdentifier: MusicCollectionViewCell.id)
         return soundContentsCollectionView
     }()
     
