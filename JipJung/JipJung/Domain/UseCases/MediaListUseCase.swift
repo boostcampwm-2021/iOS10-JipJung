@@ -12,7 +12,7 @@ import RxSwift
 class MediaListUseCase {
     func fetchModeSoundList(mode: SoundMode) -> Single<[String]> {
         return Single<[String]>.create { single in
-            let demo = mode == .bright ? ["test", "test2"] : ["test2", "test"]
+            let demo = mode == .bright ? ["test", "test2", "test"] : ["test2", "test"]
             
             single(.success(demo))
             return Disposables.create()
