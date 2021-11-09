@@ -35,7 +35,7 @@ class GenreCollectionViewCell: UICollectionViewCell {
         configureUI()
     }
     
-    func configureUI() {
+    private func configureUI() {
         addSubview(genreLabel)
         genreLabel.snp.makeConstraints {
             $0.top.leading.trailing.bottom.equalToSuperview()

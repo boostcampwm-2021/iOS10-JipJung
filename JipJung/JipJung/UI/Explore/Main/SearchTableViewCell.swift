@@ -56,7 +56,7 @@ class SearchTableViewCell: UITableViewCell {
         bindUI()
     }
     
-    func configureUI() {
+    private func configureUI() {
         selectionStyle = .none
         backgroundColor = .black
         
