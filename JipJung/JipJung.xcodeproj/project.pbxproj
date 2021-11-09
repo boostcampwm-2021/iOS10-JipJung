@@ -36,10 +36,11 @@
 		DDB5CEB32733752D00E8F9EB /* FavoriteMusic.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB5CEB22733752D00E8F9EB /* FavoriteMusic.swift */; };
 		DDB5CEB82733765500E8F9EB /* FavoriteMaxim.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB5CEB72733765500E8F9EB /* FavoriteMaxim.swift */; };
 		DDB5CEBE2733A49A00E8F9EB /* RealmDBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB5CEBD2733A49A00E8F9EB /* RealmDBManager.swift */; };
-		DF08B1DD2737F5010066518B /* RemoteServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF08B1DC2737F5010066518B /* RemoteServiceProvider.swift */; };
-		DF71D22F2734455600CD980E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DF71D22E2734455600CD980E /* GoogleService-Info.plist */; };
 		DDB92B9B2737A98B00EE26F0 /* MusicCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB92B9A2737A98B00EE26F0 /* MusicCardCollectionViewCell.swift */; };
 		DDB92B9D2737BD5E00EE26F0 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB92B9C2737BD5E00EE26F0 /* UIView+Extension.swift */; };
+		DF08B1DD2737F5010066518B /* RemoteServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF08B1DC2737F5010066518B /* RemoteServiceProvider.swift */; };
+		DF6B111127390F1900D9924E /* MediaRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6B111027390F1900D9924E /* MediaRepository.swift */; };
+		DF71D22F2734455600CD980E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DF71D22E2734455600CD980E /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,10 +96,11 @@
 		DDB5CEB22733752D00E8F9EB /* FavoriteMusic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteMusic.swift; sourceTree = "<group>"; };
 		DDB5CEB72733765500E8F9EB /* FavoriteMaxim.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteMaxim.swift; sourceTree = "<group>"; };
 		DDB5CEBD2733A49A00E8F9EB /* RealmDBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmDBManager.swift; sourceTree = "<group>"; };
-		DF08B1DC2737F5010066518B /* RemoteServiceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteServiceProvider.swift; sourceTree = "<group>"; };
-		DF71D22E2734455600CD980E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DDB92B9A2737A98B00EE26F0 /* MusicCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicCardCollectionViewCell.swift; sourceTree = "<group>"; };
 		DDB92B9C2737BD5E00EE26F0 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
+		DF08B1DC2737F5010066518B /* RemoteServiceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteServiceProvider.swift; sourceTree = "<group>"; };
+		DF6B111027390F1900D9924E /* MediaRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaRepository.swift; sourceTree = "<group>"; };
+		DF71D22E2734455600CD980E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -338,14 +340,6 @@
 			path = LocalDB;
 			sourceTree = "<group>";
 		};
-		DF71D23027344AC700CD980E /* Network */ = {
-			isa = PBXGroup;
-			children = (
-				DF08B1DC2737F5010066518B /* RemoteServiceProvider.swift */,
-			);
-			path = Network;
-			sourceTree = "<group>";
-		};
 		DDB92B992737A96600EE26F0 /* Common */ = {
 			isa = PBXGroup;
 			children = (
@@ -353,6 +347,15 @@
 				DDB92B9C2737BD5E00EE26F0 /* UIView+Extension.swift */,
 			);
 			path = Common;
+			sourceTree = "<group>";
+		};
+		DF71D23027344AC700CD980E /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				DF08B1DC2737F5010066518B /* RemoteServiceProvider.swift */,
+				DF6B111027390F1900D9924E /* MediaRepository.swift */,
+			);
+			path = Network;
 			sourceTree = "<group>";
 		};
 		FC10DDE8A3B3F38BE43E9B68 /* Pods */ = {
@@ -586,6 +589,7 @@
 				DDB5CEB12733746600E8F9EB /* Maxim.swift in Sources */,
 				DDB92B9B2737A98B00EE26F0 /* MusicCardCollectionViewCell.swift in Sources */,
 				DDB5CEB82733765500E8F9EB /* FavoriteMaxim.swift in Sources */,
+				DF6B111127390F1900D9924E /* MediaRepository.swift in Sources */,
 				DDB5CEA227328EC300E8F9EB /* ExploreViewController.swift in Sources */,
 				DD3902D1272FCA10009ECA82 /* AppDelegate.swift in Sources */,
 				DDB5CEAF273372A700E8F9EB /* Music.swift in Sources */,
