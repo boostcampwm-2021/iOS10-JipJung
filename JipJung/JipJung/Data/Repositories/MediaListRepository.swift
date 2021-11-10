@@ -16,6 +16,9 @@ final class MediaListRepository {
         self.localDBManager = localDBManager
     }
     
+    // TODO: fetchAllMediaList 구현
+    
+    // TODO: fetchMediaMyList로 변경
     func fetchMediaList(mode: MediaMode?) -> Single<[Media]> {
         return localDBManager.requestMediaList(mode: mode)
     }

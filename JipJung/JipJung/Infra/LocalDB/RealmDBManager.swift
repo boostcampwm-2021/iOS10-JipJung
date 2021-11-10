@@ -66,6 +66,9 @@ class RealmDBManager: LocalDBManageable {
 
     // TODO: NSPredicte를 활용한 Search 함수를 적극적으로 이용하기 - 기존 request 함수 대체
     
+    // TODO: requestAllMediaList 구현
+    
+    // TODO: requestMediaMyList로 변경
     func requestMediaList(mode: MediaMode?) -> Single<[Media]> {
         let realm = try? Realm()
         return Single.create { single in

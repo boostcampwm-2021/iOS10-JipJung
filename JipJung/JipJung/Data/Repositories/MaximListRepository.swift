@@ -16,6 +16,7 @@ final class MaximListRepository {
         self.localDBManager = localDBManager
     }
     
+    // TODO: fetchAllMaximList로 변경
     func fetchMaximList() -> Single<[Maxim]> {
         return localDBManager.requestMaximList()
     }
