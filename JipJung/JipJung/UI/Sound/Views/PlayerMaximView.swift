@@ -16,19 +16,29 @@ class PlayerMaximView: UIView {
         At night,
         The moon draws faint tides from ear to ear.
         """
-        label.text = words
         label.font = .italicSystemFont(ofSize: 18)
         label.numberOfLines = 0
-        label.sizeToFit()
-        label.backgroundColor = .green
+        label.textColor = .white
+        
+        let attrString = NSMutableAttributedString(string: words)
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 24
+        attrString.addAttribute(
+            NSAttributedString.Key.paragraphStyle,
+            value: paragraphStyle,
+            range: NSMakeRange(0, attrString.length)
+        )
+        label.attributedText = attrString
+        
         return label
     }()
     
     let personNameLabel: UILabel = {
         let label = UILabel()
-        let words = "J.M. Coetzee"
+        let words = "- J.M. Coetzee"
         label.text = words
-        label.font = .systemFont(ofSize: 24)
+        label.font = .italicSystemFont(ofSize: 18)
+        label.textColor = UIColor(white: 1, alpha: 0.35)
         return label
     }()
     
@@ -54,7 +64,7 @@ class PlayerMaximView: UIView {
         
         personNameLabel.snp.makeConstraints { make in
             make.trailing.equalToSuperview()
-            make.top.equalTo(maximLabel.snp.bottom)
+            make.top.equalTo(maximLabel.snp.bottom).offset(32)
         }
     }
 }

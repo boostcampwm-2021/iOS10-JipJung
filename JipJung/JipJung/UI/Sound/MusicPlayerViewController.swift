@@ -17,48 +17,32 @@ class MusicPlayerViewController: UIViewController {
     }
     
     let dataSource = ["Relax", "Melody", "Meditation", "Etc"]
+    let themeColor = CGColor(red: 34.0/255.0, green: 48.0/255.0, blue: 74.0/255.0, alpha: 1)
     
-    let navigationBar: UINavigationBar = {
-        let navigationBar = UINavigationBar()
-        return navigationBar
-    }()
+    let navigationBar = UINavigationBar()
     
-    let topView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .purple
-        return view
-    }()
+    let topView = UIView()
 
-    let bottomView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .cyan
-        return view
-    }()
+    let bottomView = UIView()
     
-    var musicDescriptionView: MusicDescriptionView = {
-        let view = MusicDescriptionView()
-//        view.backgroundColor = .green
-        return view
-    }()
+    let musicDescriptionView = MusicDescriptionView()
 
-    let maximTextView: PlayerMaximView = {
-        let view = PlayerMaximView()
-        return view
-    }()
+    let maximTextView = PlayerMaximView()
     
     let backButton = PlayerBackButton()
     
     let favoriteButton = FavoriteButton()
     
     let playButton: UIButton = {
-        let button = SolidButton()
-        button.backgroundColor = .systemGray6
-        button.setTitle("Play", for: .normal)
-        button.setTitleColor(.gray, for: .normal)
+        let button = UIButton(type: .system)
+        button.titleLabel?.font = .boldSystemFont(ofSize: 16)
+        button.backgroundColor = .white
+        button.setTitle("Download To Play", for: .normal)
+        button.layer.cornerRadius = 8
         return button
     }()
-    
-    var tagCollectionView: UICollectionView = {
+        
+    let tagCollectionView: UICollectionView = {
         let layout = LeftAlignCollectionViewFlowLayout()
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -83,6 +67,8 @@ class MusicPlayerViewController: UIViewController {
         tagCollectionView.delegate = self
         tagCollectionView.dataSource = self
         playButton.addTarget(self, action: #selector(playButtonTouched(_:)), for: .touchUpInside)
+        backButton.addTarget(self, action: #selector(backButtonTouched(_:)), for: .touchUpInside)
+        favoriteButton.addTarget(self, action: #selector(favoriteButtonTouched(_:)), for: .touchUpInside)
     }
     
     override func viewDidLayoutSubviews() {
@@ -193,6 +179,9 @@ extension MusicPlayerViewController {
     }
     
     func configureBottomView() {
+        bottomView.layer.backgroundColor = themeColor
+        playButton.setTitleColor(UIColor(cgColor: themeColor), for: .normal)
+        
         self.view.addSubview(bottomView)
         bottomView.snp.makeConstraints { make in
             make.leading.trailing.bottom.equalToSuperview()
@@ -207,7 +196,6 @@ extension MusicPlayerViewController {
         
         let maximContainerView: UIView = {
             let view = UIView()
-            view.backgroundColor = .magenta
             return view
         }()
         

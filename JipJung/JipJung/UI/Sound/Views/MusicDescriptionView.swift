@@ -20,7 +20,7 @@ class MusicDescriptionView: UIView {
     
     var subscriptionLabel: UILabel = {
         let label = UILabel()
-        label.text = "A blueberry pie and icecrream"
+        label.text = "A blueberry pie and icecream"
         label.textColor = UIColor(white: 1, alpha: 0.8)
         return label
     }()

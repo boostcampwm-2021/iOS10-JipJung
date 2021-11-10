@@ -72,6 +72,7 @@
 		DF30FEF9273A730F001C720E /* TagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF30FEF8273A730F001C720E /* TagCell.swift */; };
 		DF30FEFB273ADAA9001C720E /* CollectionView+MusicPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF30FEFA273ADAA9001C720E /* CollectionView+MusicPlayerViewController.swift */; };
 		DF30FEFD273AEBD3001C720E /* sea.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = DF30FEFC273AEB09001C720E /* sea.mp4 */; };
+		DF30FEFF273C42B0001C720E /* PlayerBaseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF30FEFE273C42B0001C720E /* PlayerBaseButton.swift */; };
 		DF6B111127390F1900D9924E /* MediaRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6B111027390F1900D9924E /* MediaRepository.swift */; };
 		DF71D22F2734455600CD980E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DF71D22E2734455600CD980E /* GoogleService-Info.plist */; };
 		DFED21CB2733702800E99641 /* MusicPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFED21CA2733702800E99641 /* MusicPlayerViewController.swift */; };
@@ -168,6 +169,7 @@
 		DF30FEF8273A730F001C720E /* TagCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCell.swift; sourceTree = "<group>"; };
 		DF30FEFA273ADAA9001C720E /* CollectionView+MusicPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CollectionView+MusicPlayerViewController.swift"; sourceTree = "<group>"; };
 		DF30FEFC273AEB09001C720E /* sea.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = sea.mp4; sourceTree = "<group>"; };
+		DF30FEFE273C42B0001C720E /* PlayerBaseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerBaseButton.swift; sourceTree = "<group>"; };
 		DF6B111027390F1900D9924E /* MediaRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaRepository.swift; sourceTree = "<group>"; };
 		DF71D22E2734455600CD980E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DFED21CA2733702800E99641 /* MusicPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayerViewController.swift; sourceTree = "<group>"; };
@@ -510,8 +512,8 @@
 			children = (
 				DFED21CF2733931600E99641 /* MusicDescriptionView.swift */,
 				DFED21D82733AE8400E99641 /* PlayerMaximView.swift */,
-				DF30FEF4273A61D4001C720E /* SolidButton.swift */,
 				DF30FEF8273A730F001C720E /* TagCell.swift */,
+				DF30FEFE273C42B0001C720E /* PlayerBaseButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -754,6 +756,7 @@
 				B4153945273B9676004EF80F /* FocusRecord.swift in Sources */,
 				91EA47C827384EA500780C3E /* SystemConstants.swift in Sources */,
 				B4153947273BA005004EF80F /* Date+Extension.swift in Sources */,
+				DF30FEFF273C42B0001C720E /* PlayerBaseButton.swift in Sources */,
 				DDB5CEA827328EF400E8F9EB /* MeViewController.swift in Sources */,
 				DDB5CEB12733746600E8F9EB /* Maxim.swift in Sources */,
 				DDB92B9B2737A98B00EE26F0 /* MusicCollectionViewCell.swift in Sources */,
@@ -778,7 +781,6 @@
 				B40D1FB7273B60A500881A49 /* Int+Extension.swift in Sources */,
 				B40D1FB3273B5F3500881A49 /* InfinityFocusViewModel.swift in Sources */,
 				91CE6F6F2739024800176AF2 /* Enums.swift in Sources */,
-				DF30FEF5273A61D4001C720E /* SolidButton.swift in Sources */,
 				91EA47C42738451100780C3E /* BlurEffect.swift in Sources */,
 				9165585E273B8F5000C55CDC /* MaximListRepository.swift in Sources */,
 				B40D1FAB273B5F2100881A49 /* DefaultFocusViewModel.swift in Sources */,
