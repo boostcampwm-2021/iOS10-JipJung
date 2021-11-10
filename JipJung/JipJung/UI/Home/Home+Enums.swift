@@ -50,7 +50,7 @@ enum FocusMode: CaseIterable {
         case .normal:
             return FocusViewController.Factory.makeDefaultTimer()
         case .pomodoro:
-            return UIViewController()
+            return FocusViewController.Factory.makePomodoroTimer()
         case .infinity:
             return FocusViewController.Factory.makeInfinityTimer()
         case .breath:

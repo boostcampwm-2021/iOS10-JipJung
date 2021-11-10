@@ -94,7 +94,7 @@ class PomodoroFocusViewController: UIViewController {
     
     // MARK: - Initializer
 
-    convenience init(viewModel: PomodoroFocusViewModel) {
+    convenience init(viewModel: PomodoroFocusViewModel? = nil) {
         self.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
     }

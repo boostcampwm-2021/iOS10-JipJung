@@ -16,11 +16,15 @@ class FocusViewController: UIViewController {
                 focusStartView: DefaultFocusStartView()
             )
         }
+        static func makePomodoroTimer() -> PomodoroFocusViewController {
+            return PomodoroFocusViewController(viewModel: nil)
+        }
         static func makeInfinityTimer() -> InfinityFocusViewController {
             let useCase = GenerateTimerUseCase()
             let viewModel = InfinityFocusViewModel(generateTimerUseCase: useCase)
             return InfinityFocusViewController(viewModel: viewModel)
         }
+        
     }
     var focusHeaderView: FocusHeaderView
     var focusTimerView: FocusTimerViewable
@@ -42,6 +46,7 @@ class FocusViewController: UIViewController {
         configureUI()
         configureDelegate()
         bind()
+        
     }
     
     func configureUI() {
