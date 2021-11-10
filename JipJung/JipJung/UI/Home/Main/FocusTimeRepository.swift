@@ -8,11 +8,11 @@
 import Foundation
 import RxSwift
 
-protocol FucusTimeRepositoryProtocol {
+protocol FocusTimeRepositoryProtocol {
     func save(record: FocusRecord) -> Single<Bool>
 }
 
-final class FocusTimeRepository: FucusTimeRepositoryProtocol {
+final class FocusTimeRepository: FocusTimeRepositoryProtocol {
     private let realmDBManager: LocalDBManageable
     private var disposeBag: DisposeBag = DisposeBag()
     

@@ -13,9 +13,9 @@ protocol SaveFocusTimeUseCaseProtocol {
 }
 
 final class SaveFocusTimeUseCase: SaveFocusTimeUseCaseProtocol {
-    private let focusTimeRepository: FucusTimeRepositoryProtocol
+    private let focusTimeRepository: FocusTimeRepositoryProtocol
     
-    init(focusTimeRepository: FucusTimeRepositoryProtocol) {
+    init(focusTimeRepository: FocusTimeRepositoryProtocol) {
         self.focusTimeRepository = focusTimeRepository
     }
     
