@@ -35,7 +35,7 @@ class PlayerBackButton: PlayerBaseButton {
     }
 }
 
-class HeartButton: PlayerBackButton {
+class FavoriteButton: PlayerBaseButton {
     override func configure() {
         super.configure()
         setImage(UIImage(systemName: "heart"), for: .normal)

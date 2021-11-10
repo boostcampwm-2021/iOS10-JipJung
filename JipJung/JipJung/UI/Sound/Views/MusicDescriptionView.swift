@@ -12,28 +12,32 @@ import SnapKit
 class MusicDescriptionView: UIView {
     var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "title"
+        label.text = "BlueBerry Nights"
         label.font = .systemFont(ofSize: 32, weight: .medium)
+        label.textColor = .white
         return label
     }()
     
     var subscriptionLabel: UILabel = {
         let label = UILabel()
-        label.text = "subTitle"
+        label.text = "A blueberry pie and icecrream"
+        label.textColor = UIColor(white: 1, alpha: 0.8)
         return label
     }()
     
     var streamingButton: UIButton = {
         let button = UIButton(type: .system)
+        button.tintColor = UIColor(white: 1, alpha: 0.8)
         button.setImage(UIImage(systemName: "headphones.circle"), for: .normal)
         return button
     }()
     
     var tagView: UIView = {
         let view = UIView()
-        view.backgroundColor = .orange
         return view
     }()
+    
+    let gradientLayer = CAGradientLayer()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -45,11 +49,29 @@ class MusicDescriptionView: UIView {
         configure()
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        gradientLayer.frame = bounds
+    }
+    
     func configure() {
-        self.addSubview(titleLabel)
-        self.addSubview(subscriptionLabel)
-        self.addSubview(streamingButton)
-        self.addSubview(tagView)
+        let colors: [CGColor] = [.init(gray: 0.0, alpha: 0.5), .init(gray: 0, alpha: 0.0)]
+        gradientLayer.colors = colors        
+        gradientLayer.startPoint = CGPoint(x: 0.5, y: 1.0)
+        gradientLayer.endPoint = CGPoint(x: 0.5, y: 0.0)
+        layer.addSublayer(gradientLayer)
+        
+        let contentView = UIView()
+        addSubview(contentView)
+        contentView.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview().inset(12)
+            make.top.bottom.equalToSuperview()
+        }
+        
+        contentView.addSubview(titleLabel)
+        contentView.addSubview(subscriptionLabel)
+        contentView.addSubview(streamingButton)
+        contentView.addSubview(tagView)
         
         streamingButton.snp.makeConstraints { make in
             make.top.trailing.equalToSuperview()
