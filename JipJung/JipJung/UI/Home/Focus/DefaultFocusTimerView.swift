@@ -7,22 +7,50 @@
 
 import UIKit
 
-class DefaultFocusTimerView: UIView {
+class DefaultFocusTimerView: UIView, FocusTimerViewable {
+    weak var delegate: FocusTimerViewDelegate?
+    
+    lazy var timeLabel: UILabel = {
+        let label = UILabel()
+        label.text = "시작안함"
+        label.textColor = .secondarySystemGroupedBackground
+        label.font = .systemFont(ofSize: 32)
+        return label
+    }()
+    
     convenience init() {
         self.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
     }
 
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        backgroundColor = .red
-    }
-
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .red
+        configureUI()
     }
     
-    @IBAction func selec(_ sender: Any) {
-        print(3)
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        configureUI()
+    }
+    
+    private func configureUI() {
+//        backgroundColor = .systemBackground
+        addSubview(timeLabel)
+        timeLabel.snp.makeConstraints { make in
+            make.width.equalTo(100)
+            make.height.equalTo(50)
+            make.center.equalToSuperview()
+        }
+    }
+    
+    func startFocus(with time: String) {
+        timeLabel.text = time
+    }
+    
+    func endFocus() {
+        timeLabel.text = "종료"
+    }
+    
+    func changeTime(with time: String) {
+        timeLabel.text = time
     }
 }

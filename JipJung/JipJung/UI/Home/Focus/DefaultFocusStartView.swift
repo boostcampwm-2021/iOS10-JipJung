@@ -7,17 +7,6 @@
 
 import UIKit
 
-protocol FocusStarViewDelegate: AnyObject {
-    func startButtonDidClicked()
-}
-
-protocol FocusStartViewable: UIView {
-    var delegate: FocusStarViewDelegate? { get set }
-    func clickStartButton(_ sender: UIButton)
-    func startFocus()
-    func endFocus()
-}
-
 class DefaultFocusStartView: UIView, FocusStartViewable {
     weak var delegate: FocusStarViewDelegate?
     lazy var startButton: UIButton = {
@@ -62,5 +51,9 @@ class DefaultFocusStartView: UIView, FocusStartViewable {
     
     @IBAction func clickStartButton(_ sender: UIButton) {
         delegate?.startButtonDidClicked()
+    }
+    
+    func logngtab(_ sender: UIButton) {
+        delegate?.endButtonDidClicked()
     }
 }

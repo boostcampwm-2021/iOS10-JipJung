@@ -83,6 +83,8 @@
 		DDB92BA5273802D500EE26F0 /* DefaultFocusStartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB92BA4273802D500EE26F0 /* DefaultFocusStartView.swift */; };
 		DDB92BA7273803AA00EE26F0 /* FocusExtraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB92BA6273803AA00EE26F0 /* FocusExtraView.swift */; };
 		DDB92BA92738CC0B00EE26F0 /* FocusHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB92BA82738CC0B00EE26F0 /* FocusHeaderView.swift */; };
+		DDB92BAB273921E100EE26F0 /* FocusTimerViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB92BAA273921E100EE26F0 /* FocusTimerViewProtocol.swift */; };
+		DDB92BAD2739611B00EE26F0 /* FocusStartViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB92BAC2739611B00EE26F0 /* FocusStartViewProtocol.swift */; };
 		DF08B1DD2737F5010066518B /* RemoteServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF08B1DC2737F5010066518B /* RemoteServiceProvider.swift */; };
 		DF71D22F2734455600CD980E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DF71D22E2734455600CD980E /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
@@ -187,6 +189,8 @@
 		DDB92BA4273802D500EE26F0 /* DefaultFocusStartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFocusStartView.swift; sourceTree = "<group>"; };
 		DDB92BA6273803AA00EE26F0 /* FocusExtraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusExtraView.swift; sourceTree = "<group>"; };
 		DDB92BA82738CC0B00EE26F0 /* FocusHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusHeaderView.swift; sourceTree = "<group>"; };
+		DDB92BAA273921E100EE26F0 /* FocusTimerViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusTimerViewProtocol.swift; sourceTree = "<group>"; };
+		DDB92BAC2739611B00EE26F0 /* FocusStartViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusStartViewProtocol.swift; sourceTree = "<group>"; };
 		DF08B1DC2737F5010066518B /* RemoteServiceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteServiceProvider.swift; sourceTree = "<group>"; };
 		DF71D22E2734455600CD980E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -518,6 +522,8 @@
 				DDB92BA4273802D500EE26F0 /* DefaultFocusStartView.swift */,
 				DDB92BA6273803AA00EE26F0 /* FocusExtraView.swift */,
 				DDB92BA82738CC0B00EE26F0 /* FocusHeaderView.swift */,
+				DDB92BAA273921E100EE26F0 /* FocusTimerViewProtocol.swift */,
+				DDB92BAC2739611B00EE26F0 /* FocusStartViewProtocol.swift */,
 			);
 			path = Focus;
 			sourceTree = "<group>";
@@ -792,6 +798,7 @@
 				DF30FEFF273C42B0001C720E /* PlayerBaseButton.swift in Sources */,
 				DDB5CEA827328EF400E8F9EB /* MeViewController.swift in Sources */,
 				DDB92BA12737E36E00EE26F0 /* FocusViewController.swift in Sources */,
+				DDB92BAD2739611B00EE26F0 /* FocusStartViewProtocol.swift in Sources */,
 				DDB5CEB12733746600E8F9EB /* Maxim.swift in Sources */,
 				DDB92B9B2737A98B00EE26F0 /* MusicCollectionViewCell.swift in Sources */,
 				DF30FF05273CBC3B001C720E /* MusicPlayerButtons.swift in Sources */,
@@ -835,6 +842,7 @@
 				B4015CD42739151B006BD14A /* RecentMusicViewController.swift in Sources */,
 				DFED21D02733931600E99641 /* MusicDescriptionView.swift in Sources */,
 				DDB92BA7273803AA00EE26F0 /* FocusExtraView.swift in Sources */,
+				DDB92BAB273921E100EE26F0 /* FocusTimerViewProtocol.swift in Sources */,
 				DD3902D3272FCA10009ECA82 /* SceneDelegate.swift in Sources */,
 				B4015CD627391529006BD14A /* FavoriteMusicViewController.swift in Sources */,
 				91E4178927312FEB001BA0A6 /* LocalFileManager.swift in Sources */,
