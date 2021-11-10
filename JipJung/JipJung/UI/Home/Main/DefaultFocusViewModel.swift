@@ -24,6 +24,7 @@ protocol DefaultFocusViewModelOutput {
 final class DefaultFocusViewModel: DefaultFocusViewModelInput, DefaultFocusViewModelOutput {
     var clockTime: BehaviorRelay<Int> = BehaviorRelay<Int>(value: 0)
     var waveAnimationTime: BehaviorRelay<Int> = BehaviorRelay<Int>(value: 0)
+    var timerState: BehaviorRelay<TimerState> = BehaviorRelay<TimerState>(value: .ready)
     
     private var runningStateDisposeBag: DisposeBag = DisposeBag()
     private var disposeBag: DisposeBag = DisposeBag()
@@ -35,6 +36,11 @@ final class DefaultFocusViewModel: DefaultFocusViewModelInput, DefaultFocusViewM
     }
     
     func startClockTimer() {
+        if timerState.value == .paused {
+            timerState.accept(.running(isContinue: true))
+        } else if timerState.value == .ready {
+            timerState.accept(.running(isContinue: false))
+        }
         generateTimerUseCase.execute(seconds: 1)
             .subscribe { [weak self] _ in
                 guard let self = self else { return }
@@ -44,10 +50,12 @@ final class DefaultFocusViewModel: DefaultFocusViewModelInput, DefaultFocusViewM
     }
     
     func pauseClockTimer() {
+        timerState.accept(.paused)
         runningStateDisposeBag = DisposeBag()
     }
     
     func resetClockTimer() {
+        timerState.accept(.ready)
         clockTime.accept(0)
         runningStateDisposeBag = DisposeBag()
     }

@@ -87,7 +87,7 @@ class InfinityFocusViewController: UIViewController {
     
     private var viewModel: InfinityFocusViewModel?
     private var disposeBag: DisposeBag = DisposeBag()
-    private var state = BehaviorRelay<FocusState>(value: .ready)
+    private var state = BehaviorRelay<TimerState>(value: .ready)
     
     // MARK: - Lifecycle Methods
     
@@ -170,7 +170,7 @@ class InfinityFocusViewController: UIViewController {
         startButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
-                self.state.accept(.running)
+//                self.state.accept(.running)
                 self.viewModel?.startClockTimer()
             }
             .disposed(by: disposeBag)
@@ -186,7 +186,7 @@ class InfinityFocusViewController: UIViewController {
         continueButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
-                self.state.accept(.running)
+//                self.state.accept(.running)
                 self.viewModel?.startClockTimer()
             }
             .disposed(by: disposeBag)
@@ -265,8 +265,6 @@ class InfinityFocusViewController: UIViewController {
             self.exitButton.isHidden = true
             self.pauseButton.isHidden = false
         }
-        
-        viewModel?.startWaveAnimationTimer()
     }
     
     func changeStateToPaused() {

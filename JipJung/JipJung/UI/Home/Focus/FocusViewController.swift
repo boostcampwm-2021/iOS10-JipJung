@@ -10,11 +10,8 @@ import RxSwift
 
 class FocusViewController: UIViewController {
     enum Factory {
-        static func makeDefaultTimer() -> FocusViewController {
-            return FocusViewController(
-                focusTimerView: DefaultFocusTimerView(),
-                focusStartView: DefaultFocusStartView()
-            )
+        static func makeDefaultTimer() -> DefaultFocusViewController {
+            return DefaultFocusViewController(viewModel: DefaultFocusViewModel(generateTimerUseCase: GenerateTimerUseCase()))
         }
         static func makePomodoroTimer() -> PomodoroFocusViewController {
             return PomodoroFocusViewController(viewModel: nil)

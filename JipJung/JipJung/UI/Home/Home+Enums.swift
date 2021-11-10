@@ -66,8 +66,8 @@ enum FocusViewButtonSize {
     static let exitButton = CGSize(width: 115, height: 50)
 }
 
-enum FocusState {
+enum TimerState: Equatable {
     case ready
-    case running
+    case running(isContinue: Bool)
     case paused
 }

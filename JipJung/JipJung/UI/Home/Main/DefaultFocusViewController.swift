@@ -22,8 +22,10 @@ class DefaultFocusViewController: UIViewController {
     }()
     
     private lazy var circleShapeLayer: CAShapeLayer = {
-        let circleShapeLayer = createCircleShapeLayer(strokeColor: UIColor.systemGray,
-                                                      lineWidth: 3)
+        let circleShapeLayer = createCircleShapeLayer(
+            strokeColor: UIColor.systemGray,
+            lineWidth: 3
+        )
         return circleShapeLayer
     }()
     
@@ -77,18 +79,33 @@ class DefaultFocusViewController: UIViewController {
         return exitButton
     }()
     
+    private lazy var timeProgressLayer: CAShapeLayer = {
+        let timeProgressLayer = createCircleShapeLayer(
+            strokeColor: .secondarySystemBackground,
+            lineWidth: 3,
+            startAngle: -CGFloat.pi / 2,
+            endAngle: 3 * CGFloat.pi / 2
+        )
+        timeProgressLayer.fillColor = nil
+        return timeProgressLayer
+    }()
+    
+    private let pulsesLayer = CALayer()
+    private var pulseCreateSupportTimer: Timer?
+    
     // MARK: - Private Variables
     
     private var viewModel: DefaultFocusViewModel?
     private var disposeBag: DisposeBag = DisposeBag()
-    private var state = BehaviorRelay<FocusState>(value: .ready)
     
     // MARK: - Lifecycle Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        configurePulseLayer()
+        configureProgressBar()
         configureUI()
+        
         bindUI()
     }
     
@@ -102,7 +119,7 @@ class DefaultFocusViewController: UIViewController {
     // MARK: - Helpers
     
     func configureUI() {
-        view.backgroundColor = .gray
+        view.backgroundColor = .clear
                 
         view.layer.addSublayer(circleShapeLayer)
         
@@ -145,24 +162,22 @@ class DefaultFocusViewController: UIViewController {
         }
     }
     
-    func bindUI() {
-        state.bind { [weak self] in
-            guard let self = self else { return }
-            switch $0 {
-            case .ready:
-                self.changeStateToReady()
-            case .running:
-                self.changeStateToRunning()
-            case .paused:
-                self.changeStateToPaused()
-            }
+    private func configureProgressBar() {
+        view.layer.addSublayer(timeProgressLayer)
+    }
+    
+    private func configurePulseLayer() {
+        view.layer.addSublayer(pulsesLayer)
+        for _ in 1...4 {
+            let pulseLayer = createCircleShapeLayer(strokeColor: .secondarySystemBackground, lineWidth: 1)
+            pulsesLayer.addSublayer(pulseLayer)
         }
-        .disposed(by: disposeBag)
-        
+    }
+    
+    func bindUI() {
         startButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
-                self.state.accept(.running)
                 self.viewModel?.startClockTimer()
             }
             .disposed(by: disposeBag)
@@ -170,7 +185,6 @@ class DefaultFocusViewController: UIViewController {
         pauseButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
-                self.state.accept(.paused)
                 self.viewModel?.pauseClockTimer()
             }
             .disposed(by: disposeBag)
@@ -178,7 +192,6 @@ class DefaultFocusViewController: UIViewController {
         continueButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
-                self.state.accept(.running)
                 self.viewModel?.startClockTimer()
             }
             .disposed(by: disposeBag)
@@ -186,33 +199,36 @@ class DefaultFocusViewController: UIViewController {
         exitButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
-                self.state.accept(.ready)
                 self.viewModel?.resetClockTimer()
             }
             .disposed(by: disposeBag)
         
         viewModel?.clockTime
             .bind(onNext: { [weak self] in
-                guard let self = self else { return }
+                guard let self = self, $0 > 0 else { return }
                 self.timeLabel.text = $0.digitalClockFormatted
+                self.startPulse(second: $0)
             })
             .disposed(by: disposeBag)
         
-        viewModel?.waveAnimationTime
-            .bind(onNext: { [weak self] in
-                guard let self = self else { return }
-                if $0 > 0 {
-                    self.animateWave()
-                }
-                if let sublayers = self.view.layer.sublayers,
-                   sublayers.count > 15 {
-                    self.view.layer.sublayers?.removeSubrange(10...sublayers.count-3)
-                }
-            })
-            .disposed(by: disposeBag)
+        viewModel?.timerState.bind(onNext: { [weak self] in
+            guard let self = self else { return }
+            switch $0 {
+            case .ready:
+                self.changeStateToReady()
+                self.stopTimer()
+                print("stop")
+            case .running(let isContinue):
+                self.changeStateToRunning()
+                isContinue ? self.resumeTimerProgressBar() : self.startTimer()
+            case .paused:
+                self.changeStateToPaused()
+                self.pauseTimerProgressBar()
+            }
+        })
     }
     
-    func changeStateToReady() {
+    private func changeStateToReady() {
         pauseButton.isHidden = true
         
         UIView.animate(withDuration: 0.5) { [weak self] in
@@ -232,7 +248,7 @@ class DefaultFocusViewController: UIViewController {
         }
     }
     
-    func changeStateToRunning() {
+    private func changeStateToRunning() {
         startButton.isHidden = true
         
         UIView.animate(withDuration: 0.5) { [weak self] in
@@ -254,7 +270,7 @@ class DefaultFocusViewController: UIViewController {
         viewModel?.startWaveAnimationTimer()
     }
     
-    func changeStateToPaused() {
+    private func changeStateToPaused() {
         startButton.isHidden = true
         pauseButton.isHidden = true
 
@@ -273,12 +289,12 @@ class DefaultFocusViewController: UIViewController {
         }
     }
     
-    private func createCircleShapeLayer(strokeColor: UIColor, lineWidth: CGFloat) -> CAShapeLayer {
+    private func createCircleShapeLayer(strokeColor: UIColor, lineWidth: CGFloat, startAngle: CGFloat = 0, endAngle: CGFloat = 2 * CGFloat.pi) -> CAShapeLayer {
         let circleShapeLayer = CAShapeLayer()
         let circlePath = UIBezierPath(arcCenter: .zero,
                                       radius: 125,
-                                      startAngle: -CGFloat.pi / 2,
-                                      endAngle: 3 * CGFloat.pi / 2 ,
+                                      startAngle: startAngle,
+                                      endAngle: endAngle,
                                       clockwise: true)
         circleShapeLayer.path = circlePath.cgPath
         circleShapeLayer.strokeColor = strokeColor.cgColor
@@ -290,26 +306,33 @@ class DefaultFocusViewController: UIViewController {
         circleShapeLayer.position = CGPoint(x: centerX, y: centerY)
         return circleShapeLayer
     }
-
-    func animateWave() {
-        let waveAnimationLayer = createCircleShapeLayer(strokeColor: UIColor.white,
-                                                        lineWidth: 1)
-        view.layer.addSublayer(waveAnimationLayer)
-        
-        let waveAnimation = CABasicAnimation(keyPath: "transform.scale")
-        waveAnimation.toValue = 1.5
-        
-        let fadeOutAnimation = CABasicAnimation(keyPath: "opacity")
-        fadeOutAnimation.fromValue = 1
-        fadeOutAnimation.toValue = 0
-        
-        CATransaction.begin()
-        let animationGroup = CAAnimationGroup()
-        animationGroup.animations = [waveAnimation, fadeOutAnimation]
-        animationGroup.duration = 3
-        animationGroup.repeatCount = 1
-        animationGroup.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
-        waveAnimationLayer.add(animationGroup, forKey: "wave")
-        CATransaction.commit()
+    
+    private func startTimer() {
+        let animation = CABasicAnimation(keyPath: #keyPath(CAShapeLayer.strokeEnd))
+        animation.fromValue = 0
+        animation.toValue = 1
+        animation.duration = 100
+        animation.fillMode = .forwards
+        timeProgressLayer.add(animation, forKey: nil)
+        view.layer.addSublayer(timeProgressLayer)
+    }
+    
+    private func startPulse(second: Int) {
+        print("hi")
+        self.pulsesLayer.sublayers?[second % 4].add(PulseAnimation(), forKey: "pulse")
+    }
+    
+    private func pauseTimerProgressBar() {
+        timeProgressLayer.pauseLayer()
+    }
+    
+    private func resumeTimerProgressBar() {
+        timeProgressLayer.resumeLayer()
+    }
+    
+    private func stopTimer() {
+        timeProgressLayer.removeAllAnimations()
+        timeProgressLayer.removeFromSuperlayer()
+        pulsesLayer.sublayers?.forEach({ $0.removeAllAnimations() })
     }
 }

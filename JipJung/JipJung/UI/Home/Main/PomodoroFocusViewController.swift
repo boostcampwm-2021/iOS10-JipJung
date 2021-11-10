@@ -81,7 +81,7 @@ class PomodoroFocusViewController: UIViewController {
     
     private var viewModel: PomodoroFocusViewModel?
     private var disposeBag: DisposeBag = DisposeBag()
-    private var state = BehaviorRelay<FocusState>(value: .ready)
+    private var state = BehaviorRelay<TimerState>(value: .ready)
     
     // MARK: - Lifecycle Methods
     
@@ -162,7 +162,7 @@ class PomodoroFocusViewController: UIViewController {
         startButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
-                self.state.accept(.running)
+//                self.state.accept(.running)
                 self.viewModel?.startClockTimer()
             }
             .disposed(by: disposeBag)
@@ -178,7 +178,7 @@ class PomodoroFocusViewController: UIViewController {
         continueButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
-                self.state.accept(.running)
+//                self.state.accept(.running)
                 self.viewModel?.startClockTimer()
             }
             .disposed(by: disposeBag)
