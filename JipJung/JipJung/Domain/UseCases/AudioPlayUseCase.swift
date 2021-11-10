@@ -13,13 +13,13 @@ class AudioPlayUseCase {
         case badURLError
     }
     
-    private var url: URL?
+    private var url = URL(string: "")
     private(set) var audioPlayer: AVAudioPlayer?
     
     func ready(urlString: String) throws {
-        guard let url = URL(string: urlString) else { return }
-        
-        if let currentURL = self.url, currentURL == url {
+        guard let newURL = URL(string: urlString),
+              self.url != newURL
+        else {
             return
         }
         
@@ -31,7 +31,7 @@ class AudioPlayUseCase {
         
         do {
             let player = try AVAudioPlayer(contentsOf: soundURL)
-            self.url = url
+            self.url = newURL
             self.audioPlayer = player
             audioPlayer?.numberOfLoops = -1
             audioPlayer?.prepareToPlay()

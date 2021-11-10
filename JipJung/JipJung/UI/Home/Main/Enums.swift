@@ -13,13 +13,13 @@ enum SoundMode {
 }
 
 enum FocusMode: CaseIterable {
-    case normal, ticktock, infinity, breath
+    case normal, pomodoro, infinity, breath
     
     enum Normal {
         static let title = "기본"
         static let image = "house"
     }
-    enum TickTock {
+    enum Pomodoro {
         static let title = "뽀모도로"
         static let image = "house"
     }
@@ -36,8 +36,8 @@ enum FocusMode: CaseIterable {
         switch mode {
         case .normal:
             return (Normal.title, Normal.image)
-        case .ticktock:
-            return (TickTock.title, TickTock.image)
+        case .pomodoro:
+            return (Pomodoro.title, Pomodoro.image)
         case .infinity:
             return (Infinity.title, Infinity.image)
         case .breath:
