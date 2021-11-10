@@ -359,7 +359,22 @@ class HomeViewController: UIViewController {
     }
     
     @objc private func focusButtonTouched(_ sender: UITapGestureRecognizer) {
+        guard let senderView = sender.view as? FocusButton,
+        let mode = senderView.mode
+        else {
+            return
+        }
         
+        switch mode {
+        case .normal:
+            print("normal") // 해당 ViewController 출력
+        case .pomodoro:
+            print("pomodoro") // 해당 ViewController 출력
+        case .infinity:
+            print("infinity") // 해당 ViewController 출력
+        case .breath:
+            print("breath") // 해당 ViewController 출력
+        }
     }
 }
 
