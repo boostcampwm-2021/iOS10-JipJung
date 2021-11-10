@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreGraphics
 
 enum FocusMode: CaseIterable {
     case normal, ticktock, infinity, breath
@@ -39,4 +40,17 @@ enum FocusMode: CaseIterable {
             return (Breath.title, Breath.image)
         }
     }
+}
+
+enum FocusViewButtonSize {
+    static let startButton = CGSize(width: 115, height: 50)
+    static let pauseButton = CGSize(width: 100, height: 50)
+    static let continueButton = CGSize(width: 115, height: 50)
+    static let exitButton = CGSize(width: 115, height: 50)
+}
+
+enum FocusState {
+    case ready
+    case running
+    case paused
 }
