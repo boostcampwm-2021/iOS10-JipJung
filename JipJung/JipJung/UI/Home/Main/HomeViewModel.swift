@@ -15,7 +15,7 @@ final class HomeViewModel {
     let audioPlayUseCase: AudioPlayUseCase
     
     let bag = DisposeBag()
-    let mode = BehaviorRelay<SoundMode>(value: .bright)
+    let mode = BehaviorRelay<MediaMode>(value: .bright)
     let currentModeList = BehaviorRelay<[String]>(value: [])
     let brightMode = BehaviorRelay<[String]>(value: [])
     let darknessMode = BehaviorRelay<[String]>(value: [])

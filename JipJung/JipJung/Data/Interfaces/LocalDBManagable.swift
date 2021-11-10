@@ -7,6 +7,9 @@
 
 import Foundation
 
+import RealmSwift
+import RxSwift
+
 protocol LocalDBManageable {
     func search<T: Object>(with predicate: NSPredicate?) -> Single<[T]>
     func write(_ value: Object) -> Single<Bool>
