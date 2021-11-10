@@ -22,7 +22,7 @@ final class RemoteServiceProvider: RemoteServiceAccessible {
                 guard let url = url,
                       error == nil
                 else {
-                    single(.failure(RemoteServiceError.badURLError))
+                    single(.failure(RemoteServiceError.badURL))
                     return
                 }
                 
@@ -30,17 +30,27 @@ final class RemoteServiceProvider: RemoteServiceAccessible {
                     guard let url = url,
                           error == nil
                     else {
-                        single(.failure(RemoteServiceError.transportError))
+                        single(.failure(RemoteServiceError.transportFailed))
                         return
                     }
                     
-                    guard let response = response as? HTTPURLResponse,
-                          (200 ..< 300) ~= response.statusCode
-                    else {
-                        return single(.failure(RemoteServiceError.serverSideError))
+                    guard let response = response as? HTTPURLResponse else {
+                        single(.failure(RemoteServiceError.unknown))
+                        return
                     }
                     
-                    single(.success(url))
+                    if (200 ..< 300) ~= response.statusCode {
+                        single(.success(url))
+                    } else if (400 ..< 500) ~= response.statusCode {
+                        single(.failure(RemoteServiceError.client))
+                        return
+                    } else if (500 ..< 600) ~= response.statusCode {
+                        single(.failure(RemoteServiceError.server))
+                        return
+                    } else {
+                        single(.failure(RemoteServiceError.unknown))
+                        return
+                    }
                 }.resume()
             }
             

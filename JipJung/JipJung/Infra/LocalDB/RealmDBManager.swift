@@ -16,7 +16,7 @@ class RealmDBManager: LocalDBManageable {
         let realm = try? Realm()
         return Single.create { single in
             guard let realm = realm else {
-                single(.failure(RealmError.initError))
+                single(.failure(RealmError.initFailed))
                 return Disposables.create()
             }
             if let predicate = predicate {
@@ -34,7 +34,7 @@ class RealmDBManager: LocalDBManageable {
                     return Disposables.create()
                 }
             }
-            single(.failure(RealmError.searchError))
+            single(.failure(RealmError.searchFailed))
 
             return Disposables.create()
         }
@@ -70,7 +70,7 @@ class RealmDBManager: LocalDBManageable {
         let realm = try? Realm()
         return Single.create { single in
             guard let realm = realm else {
-                single(.failure(RealmError.initError))
+                single(.failure(RealmError.initFailed))
                 return Disposables.create()
             }
             
@@ -84,7 +84,7 @@ class RealmDBManager: LocalDBManageable {
             if let result = result {
                 single(.success(result))
             } else {
-                single(.failure(RealmError.searchError))
+                single(.failure(RealmError.searchFailed))
             }
             
             return Disposables.create()
@@ -95,7 +95,7 @@ class RealmDBManager: LocalDBManageable {
         let realm = try? Realm()
         return Single.create { single in
             guard let realm = realm else {
-                single(.failure(RealmError.initError))
+                single(.failure(RealmError.initFailed))
                 return Disposables.create()
             }
             
@@ -103,7 +103,7 @@ class RealmDBManager: LocalDBManageable {
             let playHistoryIDs = try? playHistoryList.compactMap({ element throws in element.id})
             
             guard let ids = playHistoryIDs else {
-                single(.failure(RealmError.searchError))
+                single(.failure(RealmError.searchFailed))
                 return Disposables.create()
             }
             
@@ -112,7 +112,7 @@ class RealmDBManager: LocalDBManageable {
             if let result = result {
                 single(.success(result))
             } else {
-                single(.failure(RealmError.searchError))
+                single(.failure(RealmError.searchFailed))
             }
             return Disposables.create()
         }
@@ -122,7 +122,7 @@ class RealmDBManager: LocalDBManageable {
         let realm = try? Realm()
         return Single.create { single in
             guard let realm = realm else {
-                single(.failure(RealmError.initError))
+                single(.failure(RealmError.initFailed))
                 return Disposables.create()
             }
             
@@ -130,7 +130,7 @@ class RealmDBManager: LocalDBManageable {
             let favoriteMediaIDs = try? favoriteMediaList.compactMap({ element throws in element.id})
             
             guard let ids = favoriteMediaIDs else {
-                single(.failure(RealmError.searchError))
+                single(.failure(RealmError.searchFailed))
                 return Disposables.create()
             }
             
@@ -139,7 +139,7 @@ class RealmDBManager: LocalDBManageable {
             if let result = result {
                 single(.success(result))
             } else {
-                single(.failure(RealmError.searchError))
+                single(.failure(RealmError.searchFailed))
             }
             return Disposables.create()
         }
@@ -149,7 +149,7 @@ class RealmDBManager: LocalDBManageable {
         let realm = try? Realm()
         return Single.create { single in
             guard let realm = realm else {
-                single(.failure(RealmError.initError))
+                single(.failure(RealmError.initFailed))
                 return Disposables.create()
             }
             
@@ -158,7 +158,7 @@ class RealmDBManager: LocalDBManageable {
             if let result = result {
                 single(.success(result))
             } else {
-                single(.failure(RealmError.searchError))
+                single(.failure(RealmError.searchFailed))
             }
             
             return Disposables.create()
@@ -169,7 +169,7 @@ class RealmDBManager: LocalDBManageable {
         let realm = try? Realm()
         return Single.create { single in
             guard let realm = realm else {
-                single(.failure(RealmError.initError))
+                single(.failure(RealmError.initFailed))
                 return Disposables.create()
             }
             
@@ -177,7 +177,7 @@ class RealmDBManager: LocalDBManageable {
             let favoriteMaximIDs = try? favoriteMaximList.compactMap({ element throws in element.id})
             
             guard let ids = favoriteMaximIDs else {
-                single(.failure(RealmError.searchError))
+                single(.failure(RealmError.searchFailed))
                 return Disposables.create()
             }
             
@@ -186,7 +186,7 @@ class RealmDBManager: LocalDBManageable {
             if let result = result {
                 single(.success(result))
             } else {
-                single(.failure(RealmError.searchError))
+                single(.failure(RealmError.searchFailed))
             }
             return Disposables.create()
         }

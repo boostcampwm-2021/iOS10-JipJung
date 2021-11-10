@@ -8,6 +8,6 @@
 import Foundation
 
 enum RealmError: Error {
-    case initError
-    case searchError
+    case initFailed
+    case searchFailed
 }
