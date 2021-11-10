@@ -21,13 +21,13 @@ final class MediaRepository {
         self.remoteServiceProvider = remoteServiceAccessible
     }
     
-    func fetch(fileName: String, type: Media) -> Single<Data> {
+    func fetch(fileName: String, type: MediaType) -> Single<Data> {
         if let data = LocalFileManager.shared.read(fileName) {
             return Single.just(data)
         }
         
         return remoteServiceProvider.request(key: fileName, type: type)
-            .map { url in LocalFileManager.shared.move(from: url, fileName: fileName) }
+            .map { url in LocalFileManager.shared.move(from: url, to: fileName) }
             .map { isSucceed in
                 switch isSucceed {
                 case true:
