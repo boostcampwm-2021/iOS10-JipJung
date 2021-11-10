@@ -8,7 +8,7 @@
 import Foundation
 import RealmSwift
 
-class FavoriteMusic: Object {
+class FavoriteMedia: Object {
     @Persisted(primaryKey: true) var id: String
     @Persisted var addDate: Date
     

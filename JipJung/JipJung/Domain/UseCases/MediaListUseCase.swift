@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 
 class MediaListUseCase {
-    func fetchModeSoundList(mode: SoundMode) -> Single<[String]> {
+    func fetchModeSoundList(mode: MediaMode) -> Single<[String]> {
         return Single<[String]>.create { single in
             let demo = mode == .bright ? ["test", "test2", "test"] : ["test2", "test"]
             

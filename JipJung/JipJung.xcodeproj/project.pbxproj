@@ -14,6 +14,8 @@
 		9165584E273B5F2000C55CDC /* NetworkEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9165584D273B5F2000C55CDC /* NetworkEnums.swift */; };
 		91655850273B5F4800C55CDC /* RemoteServiceAccessible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9165584F273B5F4800C55CDC /* RemoteServiceAccessible.swift */; };
 		91655852273B618700C55CDC /* LocalFileEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91655851273B618700C55CDC /* LocalFileEnums.swift */; };
+		91655854273B6EE800C55CDC /* LocalDBManagable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91655853273B6EE800C55CDC /* LocalDBManagable.swift */; };
+		91655856273B6F0200C55CDC /* LocalDBEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91655855273B6F0200C55CDC /* LocalDBEnums.swift */; };
 		9198DE952733863500EBAEC8 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9198DE942733863500EBAEC8 /* Common.swift */; };
 		91CE6F6F2739024800176AF2 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CE6F6E2739024800176AF2 /* Enums.swift */; };
 		91CE6F7327390AD200176AF2 /* FocusButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CE6F7227390AD200176AF2 /* FocusButton.swift */; };
@@ -51,9 +53,9 @@
 		DDB5CE9E27328E8300E8F9EB /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB5CE9D27328E8300E8F9EB /* HomeViewController.swift */; };
 		DDB5CEA227328EC300E8F9EB /* ExploreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB5CEA127328EC300E8F9EB /* ExploreViewController.swift */; };
 		DDB5CEA827328EF400E8F9EB /* MeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB5CEA727328EF400E8F9EB /* MeViewController.swift */; };
-		DDB5CEAF273372A700E8F9EB /* Music.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB5CEAE273372A700E8F9EB /* Music.swift */; };
+		DDB5CEAF273372A700E8F9EB /* Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB5CEAE273372A700E8F9EB /* Media.swift */; };
 		DDB5CEB12733746600E8F9EB /* Maxim.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB5CEB02733746600E8F9EB /* Maxim.swift */; };
-		DDB5CEB32733752D00E8F9EB /* FavoriteMusic.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB5CEB22733752D00E8F9EB /* FavoriteMusic.swift */; };
+		DDB5CEB32733752D00E8F9EB /* FavoriteMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB5CEB22733752D00E8F9EB /* FavoriteMedia.swift */; };
 		DDB5CEB82733765500E8F9EB /* FavoriteMaxim.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB5CEB72733765500E8F9EB /* FavoriteMaxim.swift */; };
 		DDB5CEBE2733A49A00E8F9EB /* RealmDBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB5CEBD2733A49A00E8F9EB /* RealmDBManager.swift */; };
 		DDB92B9B2737A98B00EE26F0 /* MusicCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB92B9A2737A98B00EE26F0 /* MusicCollectionViewCell.swift */; };
@@ -91,6 +93,8 @@
 		9165584D273B5F2000C55CDC /* NetworkEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkEnums.swift; sourceTree = "<group>"; };
 		9165584F273B5F4800C55CDC /* RemoteServiceAccessible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteServiceAccessible.swift; sourceTree = "<group>"; };
 		91655851273B618700C55CDC /* LocalFileEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFileEnums.swift; sourceTree = "<group>"; };
+		91655853273B6EE800C55CDC /* LocalDBManagable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDBManagable.swift; sourceTree = "<group>"; };
+		91655855273B6F0200C55CDC /* LocalDBEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDBEnums.swift; sourceTree = "<group>"; };
 		9198DE942733863500EBAEC8 /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		91CE6F6E2739024800176AF2 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		91CE6F7227390AD200176AF2 /* FocusButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusButton.swift; sourceTree = "<group>"; };
@@ -131,9 +135,9 @@
 		DDB5CE9D27328E8300E8F9EB /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		DDB5CEA127328EC300E8F9EB /* ExploreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreViewController.swift; sourceTree = "<group>"; };
 		DDB5CEA727328EF400E8F9EB /* MeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeViewController.swift; sourceTree = "<group>"; };
-		DDB5CEAE273372A700E8F9EB /* Music.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Music.swift; sourceTree = "<group>"; };
+		DDB5CEAE273372A700E8F9EB /* Media.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Media.swift; sourceTree = "<group>"; };
 		DDB5CEB02733746600E8F9EB /* Maxim.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Maxim.swift; sourceTree = "<group>"; };
-		DDB5CEB22733752D00E8F9EB /* FavoriteMusic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteMusic.swift; sourceTree = "<group>"; };
+		DDB5CEB22733752D00E8F9EB /* FavoriteMedia.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteMedia.swift; sourceTree = "<group>"; };
 		DDB5CEB72733765500E8F9EB /* FavoriteMaxim.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteMaxim.swift; sourceTree = "<group>"; };
 		DDB5CEBD2733A49A00E8F9EB /* RealmDBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmDBManager.swift; sourceTree = "<group>"; };
 		DDB92B9A2737A98B00EE26F0 /* MusicCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -209,6 +213,7 @@
 			children = (
 				9165584B273B5D3F00C55CDC /* LocalFileAccessible.swift */,
 				9165584F273B5F4800C55CDC /* RemoteServiceAccessible.swift */,
+				91655853273B6EE800C55CDC /* LocalDBManagable.swift */,
 			);
 			path = Interfaces;
 			sourceTree = "<group>";
@@ -410,9 +415,9 @@
 		DDB5CEAD2733728100E8F9EB /* Entities */ = {
 			isa = PBXGroup;
 			children = (
-				DDB5CEAE273372A700E8F9EB /* Music.swift */,
+				DDB5CEAE273372A700E8F9EB /* Media.swift */,
 				DDB5CEB02733746600E8F9EB /* Maxim.swift */,
-				DDB5CEB22733752D00E8F9EB /* FavoriteMusic.swift */,
+				DDB5CEB22733752D00E8F9EB /* FavoriteMedia.swift */,
 				DDB5CEB72733765500E8F9EB /* FavoriteMaxim.swift */,
 			);
 			path = Entities;
@@ -421,6 +426,7 @@
 		DDB5CEBC2733A3A200E8F9EB /* LocalDB */ = {
 			isa = PBXGroup;
 			children = (
+				91655855273B6F0200C55CDC /* LocalDBEnums.swift */,
 				DDB5CEBD2733A49A00E8F9EB /* RealmDBManager.swift */,
 			);
 			path = LocalDB;
@@ -678,6 +684,9 @@
 				B40D1FA9273B5F1900881A49 /* DefaultFocusViewController.swift in Sources */,
 				B40D1FAD273B5F2800881A49 /* PomodoroFocusViewController.swift in Sources */,
 				DDB5CEB32733752D00E8F9EB /* FavoriteMusic.swift in Sources */,
+				91655854273B6EE800C55CDC /* LocalDBManagable.swift in Sources */,
+				DDB92B9D2737BD5E00EE26F0 /* UIView+Extension.swift in Sources */,
+				DDB5CEB32733752D00E8F9EB /* FavoriteMedia.swift in Sources */,
 				DDB5CE9E27328E8300E8F9EB /* HomeViewController.swift in Sources */,
 				91CE6F782739203200176AF2 /* MediaListUseCase.swift in Sources */,
 				91EA47C827384EA500780C3E /* SystemConstants.swift in Sources */,
@@ -686,11 +695,12 @@
 				DDB92B9B2737A98B00EE26F0 /* MusicCollectionViewCell.swift in Sources */,
 				DDB5CEB82733765500E8F9EB /* FavoriteMaxim.swift in Sources */,
 				DF6B111127390F1900D9924E /* MediaResourceRepository.swift in Sources */,
+				91655856273B6F0200C55CDC /* LocalDBEnums.swift in Sources */,
 				91655852273B618700C55CDC /* LocalFileEnums.swift in Sources */,
 				DDB5CEA227328EC300E8F9EB /* ExploreViewController.swift in Sources */,
 				9165584C273B5D3F00C55CDC /* LocalFileAccessible.swift in Sources */,
 				DD3902D1272FCA10009ECA82 /* AppDelegate.swift in Sources */,
-				DDB5CEAF273372A700E8F9EB /* Music.swift in Sources */,
+				DDB5CEAF273372A700E8F9EB /* Media.swift in Sources */,
 				B4F36B662733B8770073609C /* SearchViewController.swift in Sources */,
 				B4F36B5127336EE20073609C /* UserDefaultsStorage.swift in Sources */,
 				B40D1FAF273B5F2C00881A49 /* PomodoroFocusViewModel.swift in Sources */,
