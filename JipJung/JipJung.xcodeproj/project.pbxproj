@@ -76,6 +76,9 @@
 		DFED21CB2733702800E99641 /* MusicPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFED21CA2733702800E99641 /* MusicPlayerViewController.swift */; };
 		DFED21D02733931600E99641 /* MusicDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFED21CF2733931600E99641 /* MusicDescriptionView.swift */; };
 		DFED21D92733AE8400E99641 /* MusicPlayerMaximView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFED21D82733AE8400E99641 /* MusicPlayerMaximView.swift */; };
+		DDB92B9B2737A98B00EE26F0 /* MusicCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB92B9A2737A98B00EE26F0 /* MusicCardCollectionViewCell.swift */; };
+		DDB92B9D2737BD5E00EE26F0 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB92B9C2737BD5E00EE26F0 /* UIView+Extension.swift */; };
+		DDB92BA12737E36E00EE26F0 /* FocusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB92BA02737E36E00EE26F0 /* FocusViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -171,6 +174,9 @@
 		DFED21CA2733702800E99641 /* MusicPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayerViewController.swift; sourceTree = "<group>"; };
 		DFED21CF2733931600E99641 /* MusicDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicDescriptionView.swift; sourceTree = "<group>"; };
 		DFED21D82733AE8400E99641 /* MusicPlayerMaximView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayerMaximView.swift; sourceTree = "<group>"; };
+		DDB92B9A2737A98B00EE26F0 /* MusicCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicCardCollectionViewCell.swift; sourceTree = "<group>"; };
+		DDB92B9C2737BD5E00EE26F0 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
+		DDB92BA02737E36E00EE26F0 /* FocusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -375,6 +381,7 @@
 			children = (
 				91CE6F6E2739024800176AF2 /* Home+Enums.swift */,
 				DDB5CE9C27328E7600E8F9EB /* Main */,
+				DDB92B9F2737E36300EE26F0 /* Focus */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -488,6 +495,13 @@
 				DF08B1DC2737F5010066518B /* RemoteServiceProvider.swift */,
 			);
 			path = Network;
+			path = Common;
+		DDB92B9F2737E36300EE26F0 /* Focus */ = {
+			isa = PBXGroup;
+			children = (
+				DDB92BA02737E36E00EE26F0 /* FocusViewController.swift */,
+			);
+			path = Focus;
 			sourceTree = "<group>";
 		};
 		DFED21C927336F8F00E99641 /* Sound */ = {
@@ -751,6 +765,7 @@
 				B4153947273BA005004EF80F /* Date+Extension.swift in Sources */,
 				DF30FEFF273C42B0001C720E /* PlayerBaseButton.swift in Sources */,
 				DDB5CEA827328EF400E8F9EB /* MeViewController.swift in Sources */,
+				DDB92BA12737E36E00EE26F0 /* FocusViewController.swift in Sources */,
 				DDB5CEB12733746600E8F9EB /* Maxim.swift in Sources */,
 				DDB92B9B2737A98B00EE26F0 /* MusicCollectionViewCell.swift in Sources */,
 				DF30FF05273CBC3B001C720E /* MusicPlayerButtons.swift in Sources */,
