@@ -5,8 +5,8 @@
 //  Created by Soohyeon Lee on 2021/11/08.
 //
 
-import Foundation
 import CoreGraphics
+import UIKit
 
 enum MediaMode: Int {
     case bright, darkness
@@ -42,6 +42,19 @@ enum FocusMode: CaseIterable {
             return (Infinity.title, Infinity.image)
         case .breath:
             return (Breath.title, Breath.image)
+        }
+    }
+    
+    func getFocusViewController() -> UIViewController {
+        switch self {
+        case .normal:
+            return FocusViewController.Factory.makeDefaultTimer()
+        case .pomodoro:
+            return UIViewController()
+        case .infinity:
+            return FocusViewController.Factory.makeInfinityTimer()
+        case .breath:
+            return UIViewController()
         }
     }
 }

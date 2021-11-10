@@ -16,6 +16,11 @@ class FocusViewController: UIViewController {
                 focusStartView: DefaultFocusStartView()
             )
         }
+        static func makeInfinityTimer() -> InfinityFocusViewController {
+            let useCase = GenerateTimerUseCase()
+            let viewModel = InfinityFocusViewModel(generateTimerUseCase: useCase)
+            return InfinityFocusViewController(viewModel: viewModel)
+        }
     }
     var focusHeaderView: FocusHeaderView
     var focusTimerView: FocusTimerViewable
