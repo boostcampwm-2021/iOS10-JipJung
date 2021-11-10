@@ -43,6 +43,8 @@ class HomeViewController: UIViewController {
     private let bottomViewHeight = SystemConstants.deviceScreenSize.height
     private let focusButtonSize: (width: CGFloat, height: CGFloat) = (60, 90)
     
+    var localDBManager: LocalDBManageable?
+    
     private var viewModel: HomeViewModel?
     private var videoPlayer: AVPlayer?
     private var audioPlayer: AVAudioPlayer?
@@ -61,9 +63,18 @@ class HomeViewController: UIViewController {
     }
     
     private func configureViewModel() {
+        guard let localDBManager = localDBManager else { return }
+
+        let contentsListUseCase = ContentsListUseCase(
+            mediaListRepository: MediaListRepository(localDBManager: localDBManager),
+            maximListRepository: MaximListRepository(localDBManager: localDBManager)
+        )
+        
+        let audioPlayUseCase = AudioPlayUseCase()
+        
         viewModel = HomeViewModel(
-            mediaListUseCase: MediaListUseCase(),
-            audioPlayUseCase: AudioPlayUseCase()
+            contentsListUseCase: contentsListUseCase,
+            audioPlayUseCase: audioPlayUseCase
         )
     }
     
@@ -99,6 +110,7 @@ class HomeViewController: UIViewController {
             frame: .zero,
             collectionViewLayout: makeMediaCollectionLayout()
         )
+        mediaCollectionView?.backgroundColor = .gray.withAlphaComponent(0.3)
         mediaCollectionView?.delegate = self
         mediaCollectionView?.register(
             MediaCollectionViewCell.self,
@@ -308,7 +320,7 @@ class HomeViewController: UIViewController {
             to: mediaCollectionView.rx.items(cellIdentifier: MediaCollectionViewCell.identifier)
         ) { item, element, cell in
             guard let cell = cell as? MediaCollectionViewCell,
-                  let videoURL = Bundle.main.url(forResource: element, withExtension: "mp4")
+                  let videoURL = Bundle.main.url(forResource: element.name, withExtension: "mp4")
             else {
                 return
             }
