@@ -7,10 +7,10 @@
 import AVKit
 import UIKit
 
+import RxSwift
 import SnapKit
 
 class HomeViewController: UIViewController {
-    private let mediaBackgroundView = UIView()
     private let mainScrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.showsVerticalScrollIndicator = false
@@ -20,8 +20,22 @@ class HomeViewController: UIViewController {
         let view = UIView()
         return view
     }()
+    private var mediaCollectionView: UICollectionView?
+    private let mediaControlBackgroundView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .clear
+        return view
+    }()
+    private let pageControl: UIPageControl = {
+        let pageControl = UIPageControl()
+        pageControl.isUserInteractionEnabled = false
+        pageControl.pageIndicatorTintColor = .red.withAlphaComponent(0.5)
+        pageControl.currentPageIndicatorTintColor = .blue
+        pageControl.hidesForSinglePage = true
+        pageControl.currentPage = 0
+        return pageControl
+    }()
     private let topView = UIView()
-    private let mediaControllView = UIView()
     private let bottomView = UIView()
     
     private let topViewHeight = SystemConstants.deviceScreenSize.width / 3
@@ -29,68 +43,44 @@ class HomeViewController: UIViewController {
     private let bottomViewHeight = SystemConstants.deviceScreenSize.height
     private let focusButtonSize: (width: CGFloat, height: CGFloat) = (60, 90)
     
+    private var viewModel: HomeViewModel?
     private var videoPlayer: AVPlayer?
     private var audioPlayer: AVAudioPlayer?
-    
     private var isAttached = false
-    private var isPlaying = false
+    
+    let bag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        configureViewModel()
         configureUI()
+        bindUI()
+        
+        viewModel?.viewControllerLoaded()
+    }
+    
+    private func configureViewModel() {
+        viewModel = HomeViewModel(
+            mediaListUseCase: MediaListUseCase(),
+            audioPlayUseCase: AudioPlayUseCase()
+        )
     }
     
     private func configureUI() {
-        view.backgroundColor = .black
+        view.backgroundColor = .white
         
-        configureMediaContentsView()
         configureMainScrollView()
+        configureMediaCollectionView()
+        configureMediaControlBackgroundView()
         configureTopView()
         configureBottomView()
-        configureMediaControllView()
-    }
-    
-    private func configureMediaContentsView() {
-        guard let videoURL = Bundle.main.url(forResource: "test", withExtension: "mp4"),
-              let soundURL = Bundle.main.url(forResource: "testSound", withExtension: "m4a")
-        else {
-            return
-        }
-        
-        videoPlayer = AVPlayer(url: videoURL)
-        audioPlayer = try? AVAudioPlayer(contentsOf: soundURL)
-        
-        videoPlayer?.actionAtItemEnd = .none
-        audioPlayer?.numberOfLoops = -1
-        
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(playerItemDidReachEnd(notification:)),
-            name: .AVPlayerItemDidPlayToEndTime,
-            object: videoPlayer?.currentItem
-        )
-        
-        view.addSubview(mediaBackgroundView)
-        mediaBackgroundView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
-        
-        let playerLayer = AVPlayerLayer(player: videoPlayer)
-        playerLayer.videoGravity = .resizeAspectFill
-        playerLayer.frame = UIScreen.main.bounds
-        mediaBackgroundView.layer.addSublayer(playerLayer)
-    }
-    
-    @objc func playerItemDidReachEnd(notification: Notification) {
-        if let playerItem = notification.object as? AVPlayerItem {
-            playerItem.seek(to: CMTime.zero, completionHandler: nil)
-        }
     }
     
     private func configureMainScrollView() {
         mainScrollView.delegate = self
         
+        mainScrollView.backgroundColor = .clear
         view.addSubview(mainScrollView)
         mainScrollView.snp.makeConstraints {
             $0.edges.equalToSuperview()
@@ -104,8 +94,77 @@ class HomeViewController: UIViewController {
         }
     }
     
+    private func configureMediaCollectionView() {
+        mediaCollectionView = UICollectionView(
+            frame: .zero,
+            collectionViewLayout: makeMediaCollectionLayout()
+        )
+        mediaCollectionView?.delegate = self
+        mediaCollectionView?.register(
+            MediaCollectionViewCell.self,
+            forCellWithReuseIdentifier: MediaCollectionViewCell.identifier
+        )
+        mediaCollectionView?.addGestureRecognizer(UIPanGestureRecognizer(target: nil, action: nil))
+        mediaCollectionView?.contentInsetAdjustmentBehavior = .never
+        mediaCollectionView?.isPagingEnabled = true
+        
+        guard let mediaCollectionView = mediaCollectionView else { return }
+        mainScrollContentsView.addSubview(mediaCollectionView)
+        mediaCollectionView.snp.makeConstraints {
+            $0.edges.equalTo(view)
+        }
+    }
+    
+    private func makeMediaCollectionLayout() -> UICollectionViewLayout {
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .fractionalHeight(1)
+        )
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .fractionalHeight(1)
+        )
+        
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .paging
+        let layout = UICollectionViewCompositionalLayout(section: section)
+        return layout
+    }
+    
+    private func configureMediaControlBackgroundView() {
+        mainScrollContentsView.addSubview(mediaControlBackgroundView)
+        mediaControlBackgroundView.isUserInteractionEnabled = false
+
+        mediaControlBackgroundView.snp.makeConstraints {
+            $0.edges.equalTo(view)
+        }
+        
+        let playImageButton: UIButton = {
+            let button = UIButton()
+            button.setImage(UIImage(systemName: "play"), for: .normal)
+            button.backgroundColor = .gray.withAlphaComponent(0.5)
+            return button
+        }()
+        mediaControlBackgroundView.addSubview(playImageButton)
+        playImageButton.snp.makeConstraints {
+            $0.center.equalToSuperview()
+            $0.width.height.equalTo(60)
+        }
+        
+        mediaControlBackgroundView.addSubview(pageControl)
+        pageControl.backgroundColor = .gray.withAlphaComponent(1)
+        pageControl.snp.makeConstraints {
+            $0.top.equalTo(playImageButton.snp.bottom).offset(100)
+            $0.centerX.equalToSuperview()
+            $0.width.equalTo(100)
+            $0.height.equalTo(30)
+        }
+    }
+    
     private func configureTopView() {
-        view.addSubview(topView)
+        mainScrollContentsView.addSubview(topView)
         topView.snp.makeConstraints {
             $0.top.equalTo(view.snp.topMargin)
             $0.leading.trailing.equalToSuperview()
@@ -138,6 +197,24 @@ class HomeViewController: UIViewController {
         nowStateLabel.snp.makeConstraints {
             $0.top.equalTo(topView.snp.centerY)
             $0.leading.trailing.equalToSuperview().inset(16)
+        }
+        
+        let modeSwitch: UIButton = {
+            let button = UIButton()
+            button.addTarget(
+                self,
+                action: #selector(modeSwitchTouched(_:)),
+                for: .touchUpInside
+            )
+            button.backgroundColor = .gray.withAlphaComponent(0.5)
+            return button
+        }()
+        
+        topView.addSubview(modeSwitch)
+        modeSwitch.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.trailing.equalToSuperview().offset(-16)
+            $0.width.height.equalTo(40)
         }
     }
     
@@ -183,27 +260,77 @@ class HomeViewController: UIViewController {
         }
     }
     
-    private func configureMediaControllView() {
-        mediaControllView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(mediaButton(_:))))
-        mediaControllView.addGestureRecognizer(UIPanGestureRecognizer(target: nil, action: nil))
-        
-        mainScrollContentsView.addSubview(mediaControllView)
-        mediaControllView.snp.makeConstraints {
-            $0.height.equalTo(mediaControlViewHeight)
-            $0.leading.trailing.equalToSuperview()
-            $0.bottom.equalTo(bottomView.snp.top)
-        }
+    private func bindUI() {
+        bindUIWithMediaCollectionView()
+        bindUIWithViewModel()
     }
     
-    @objc private func mediaButton(_ sender: UITapGestureRecognizer) {
-        if isPlaying {
-            audioPlayer?.pause()
-            videoPlayer?.pause()
-        } else {
-            audioPlayer?.play()
-            videoPlayer?.play()
+    private func bindUIWithMediaCollectionView() {
+        guard let mediaCollectionView = mediaCollectionView else { return }
+        
+        Observable
+            .zip(
+                mediaCollectionView.rx.itemSelected,
+                mediaCollectionView.rx.modelSelected(String.self)
+            )
+            .bind { [weak self] indexPath, model in
+                guard let result = self?.mediaPlayButtonTouched(urlString: model),
+                      let cell = mediaCollectionView.cellForItem(at: indexPath) as? MediaCollectionViewCell
+                else {
+                    return
+                }
+                
+                result ? cell.playVideo() : cell.pauseVideo()
+            }
+            .disposed(by: bag)
+    }
+    
+    private func bindUIWithViewModel() {
+        guard let viewModel = viewModel,
+              let mediaCollectionView = mediaCollectionView
+        else {
+            return
         }
-        isPlaying.toggle()
+        
+        viewModel.isPlaying.bind(
+            onNext: { [weak self] state in
+                if state {
+                    self?.audioPlayer?.play()
+                    self?.videoPlayer?.play()
+                } else {
+                    self?.audioPlayer?.pause()
+                    self?.videoPlayer?.pause()
+                }
+            }
+        ).disposed(by: bag)
+        
+        viewModel.currentModeList.bind(
+            to: mediaCollectionView.rx.items(cellIdentifier: MediaCollectionViewCell.identifier)
+        ) { item, element, cell in
+            guard let cell = cell as? MediaCollectionViewCell,
+                  let videoURL = Bundle.main.url(forResource: element, withExtension: "mp4")
+            else {
+                return
+            }
+            cell.setVideo(videoURL: videoURL) // element.videoURL
+        }
+        .disposed(by: bag)
+        
+        viewModel.currentModeList
+            .map { $0.count }
+            .bind { [weak self] count in
+                self?.pageControl.currentPage = 0
+                self?.pageControl.numberOfPages = count
+            }
+            .disposed(by: bag)
+    }
+    
+    private func mediaPlayButtonTouched(urlString: String) -> Bool {
+        guard let viewModel = viewModel else {
+            return false
+        }
+        
+        return viewModel.mediaPlayButtonTouched(urlString: urlString)
     }
     
     @objc private func bottomViewDragged(_ sender: UIPanGestureRecognizer) {
@@ -227,8 +354,27 @@ class HomeViewController: UIViewController {
         }
     }
     
+    @objc private func modeSwitchTouched(_ sender: UIButton) {
+        viewModel?.modeSwitchTouched()
+    }
+    
     @objc private func focusButtonTouched(_ sender: UITapGestureRecognizer) {
+        guard let senderView = sender.view as? FocusButton,
+        let mode = senderView.mode
+        else {
+            return
+        }
         
+        switch mode {
+        case .normal:
+            print("normal") // 해당 ViewController 출력
+        case .pomodoro:
+            print("pomodoro") // 해당 ViewController 출력
+        case .infinity:
+            print("infinity") // 해당 ViewController 출력
+        case .breath:
+            print("breath") // 해당 ViewController 출력
+        }
     }
 }
 
@@ -248,8 +394,17 @@ extension HomeViewController: UIScrollViewDelegate {
                 $0.top.equalTo(view.snp.topMargin)
             }
         }
-        
-        mediaBackgroundView.alpha = currentTopBottomYGap / mediaControlViewHeight
+    }
+}
+
+extension HomeViewController: UICollectionViewDelegate {
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        if scrollView == mainScrollView {
+            return
+        }
+        print(#function)
+        let page = Int(targetContentOffset.pointee.x / view.frame.width)
+        self.pageControl.currentPage = page
     }
 }
 
