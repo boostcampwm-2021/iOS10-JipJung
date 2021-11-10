@@ -11,23 +11,23 @@ import RxSwift
 import RxRelay
 
 final class HomeViewModel {
-    let mediaListUseCase: MediaListUseCase
+    let contentsListUseCase: ContentsListUseCase
     let audioPlayUseCase: AudioPlayUseCase
     
     let bag = DisposeBag()
     let mode = BehaviorRelay<MediaMode>(value: .bright)
-    let currentModeList = BehaviorRelay<[String]>(value: [])
-    let brightMode = BehaviorRelay<[String]>(value: [])
-    let darknessMode = BehaviorRelay<[String]>(value: [])
-    let favoriteSoundList = BehaviorRelay<[String]>(value: [])
-    let recentPlayHistory = BehaviorRelay<[String]>(value: [])
+    let currentModeList = BehaviorRelay<[Media]>(value: [])
+    let brightMode = BehaviorRelay<[Media]>(value: [])
+    let darknessMode = BehaviorRelay<[Media]>(value: [])
+    let favoriteSoundList = BehaviorRelay<[Media]>(value: [])
+    let recentPlayHistory = BehaviorRelay<[Media]>(value: [])
     let isPlaying = BehaviorRelay(value: false)
     
     init(
-        mediaListUseCase: MediaListUseCase,
+        contentsListUseCase: ContentsListUseCase,
         audioPlayUseCase: AudioPlayUseCase
     ) {
-        self.mediaListUseCase = mediaListUseCase
+        self.contentsListUseCase = contentsListUseCase
         self.audioPlayUseCase = audioPlayUseCase
         
         Observable
@@ -39,7 +39,7 @@ final class HomeViewModel {
     }
     
     func viewControllerLoaded() {
-        mediaListUseCase.fetchModeSoundList(mode: .bright)
+        contentsListUseCase.fetchMediaList(mode: .bright)
             .subscribe { [weak self] in
                 self?.brightMode.accept($0)
             } onFailure: { error in
@@ -47,7 +47,7 @@ final class HomeViewModel {
             }
             .disposed(by: bag)
         
-        mediaListUseCase.fetchModeSoundList(mode: .darkness)
+        contentsListUseCase.fetchMediaList(mode: .darkness)
             .subscribe { [weak self] in
                 self?.darknessMode.accept($0)
             } onFailure: { error in
@@ -55,17 +55,17 @@ final class HomeViewModel {
             }
             .disposed(by: bag)
         
-        mediaListUseCase.fetchFavoriteSoundList()
+        contentsListUseCase.fetchRecentPlayHistory()
             .subscribe { [weak self] in
-                self?.favoriteSoundList.accept($0)
+                self?.recentPlayHistory.accept($0)
             } onFailure: { error in
                 print(error.localizedDescription)
             }
             .disposed(by: bag)
         
-        mediaListUseCase.fetchRecentPlayHistory()
+        contentsListUseCase.fetchFavoriteMediaList()
             .subscribe { [weak self] in
-                self?.recentPlayHistory.accept($0)
+                self?.favoriteSoundList.accept($0)
             } onFailure: { error in
                 print(error.localizedDescription)
             }

@@ -11,8 +11,6 @@ import RealmSwift
 import RxSwift
 
 class RealmDBManager: LocalDBManageable {
-    let shared = RealmDBManager()
-    private init() {}
     
     func search<T: Object>(with predicate: NSPredicate? = nil) -> Single<[T]> {
         let realm = try? Realm()
@@ -91,7 +89,34 @@ class RealmDBManager: LocalDBManageable {
         }
     }
     
-    func requestFavoriteMedia() -> Single<[Media]> {
+    func requestRecentPlayHistory() -> Single<[Media]> {
+        let realm = try? Realm()
+        return Single.create { single in
+            guard let realm = realm else {
+                single(.failure(RealmError.initError))
+                return Disposables.create()
+            }
+            
+            let playHistoryList = realm.objects(PlayHistory.self)
+            let playHistoryIDs = try? playHistoryList.compactMap({ element throws in element.id})
+            
+            guard let ids = playHistoryIDs else {
+                single(.failure(RealmError.searchError))
+                return Disposables.create()
+            }
+            
+            let filteredMedia = realm.objects(Media.self).filter("id IN %@", ids)
+            let result = try? filteredMedia.compactMap({ element throws in element})
+            if let result = result {
+                single(.success(result))
+            } else {
+                single(.failure(RealmError.searchError))
+            }
+            return Disposables.create()
+        }
+    }
+    
+    func requestFavoriteMediaList() -> Single<[Media]> {
         let realm = try? Realm()
         return Single.create { single in
             guard let realm = realm else {
@@ -118,7 +143,27 @@ class RealmDBManager: LocalDBManageable {
         }
     }
     
-    func requestFavoriteMaxim() -> Single<[Maxim]> {
+    func requestMaximList() -> Single<[Maxim]> {
+        let realm = try? Realm()
+        return Single.create { single in
+            guard let realm = realm else {
+                single(.failure(RealmError.initError))
+                return Disposables.create()
+            }
+            
+            let maximList = realm.objects(Maxim.self)
+            let result = try? maximList.compactMap({ element throws in element })
+            if let result = result {
+                single(.success(result))
+            } else {
+                single(.failure(RealmError.searchError))
+            }
+            
+            return Disposables.create()
+        }
+    }
+    
+    func requestFavoriteMaximList() -> Single<[Maxim]> {
         let realm = try? Realm()
         return Single.create { single in
             guard let realm = realm else {

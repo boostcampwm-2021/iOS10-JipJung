@@ -8,9 +8,6 @@
 import Foundation
 
 class LocalFileManager: LocalFileAccessible {
-    static let shared = LocalFileManager()
-    private init() {}
-    
     private let cachePath = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0]
     
     func read(_ fileName: String) throws -> Data {

@@ -15,6 +15,8 @@ protocol LocalDBManageable {
     func write(_ value: Object) -> Single<Bool>
     func delete(_ value: Object) -> Single<Bool>
     func requestMediaList(mode: MediaMode?) -> Single<[Media]>
+    func requestRecentPlayHistory() -> Single<[Media]>
     func requestFavoriteMediaList() -> Single<[Media]>
+    func requestMaximList() -> Single<[Maxim]>
     func requestFavoriteMaximList() -> Single<[Maxim]>
 }

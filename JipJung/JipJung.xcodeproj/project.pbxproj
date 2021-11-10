@@ -16,7 +16,10 @@
 		91655852273B618700C55CDC /* LocalFileEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91655851273B618700C55CDC /* LocalFileEnums.swift */; };
 		91655854273B6EE800C55CDC /* LocalDBManagable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91655853273B6EE800C55CDC /* LocalDBManagable.swift */; };
 		91655856273B6F0200C55CDC /* LocalDBEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91655855273B6F0200C55CDC /* LocalDBEnums.swift */; };
-		91655858273B773400C55CDC /* MediaListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91655857273B773400C55CDC /* MediaListUseCase.swift */; };
+		91655858273B773400C55CDC /* ContentsListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91655857273B773400C55CDC /* ContentsListUseCase.swift */; };
+		9165585A273B78A000C55CDC /* MediaListRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91655859273B78A000C55CDC /* MediaListRepository.swift */; };
+		9165585C273B8E6E00C55CDC /* PlayHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9165585B273B8E6E00C55CDC /* PlayHistory.swift */; };
+		9165585E273B8F5000C55CDC /* MaximListRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9165585D273B8F5000C55CDC /* MaximListRepository.swift */; };
 		9198DE952733863500EBAEC8 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9198DE942733863500EBAEC8 /* Common.swift */; };
 		91CE6F6F2739024800176AF2 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CE6F6E2739024800176AF2 /* Enums.swift */; };
 		91CE6F7327390AD200176AF2 /* FocusButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CE6F7227390AD200176AF2 /* FocusButton.swift */; };
@@ -94,7 +97,10 @@
 		91655851273B618700C55CDC /* LocalFileEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFileEnums.swift; sourceTree = "<group>"; };
 		91655853273B6EE800C55CDC /* LocalDBManagable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDBManagable.swift; sourceTree = "<group>"; };
 		91655855273B6F0200C55CDC /* LocalDBEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDBEnums.swift; sourceTree = "<group>"; };
-		91655857273B773400C55CDC /* MediaListUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaListUseCase.swift; sourceTree = "<group>"; };
+		91655857273B773400C55CDC /* ContentsListUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentsListUseCase.swift; sourceTree = "<group>"; };
+		91655859273B78A000C55CDC /* MediaListRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaListRepository.swift; sourceTree = "<group>"; };
+		9165585B273B8E6E00C55CDC /* PlayHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayHistory.swift; sourceTree = "<group>"; };
+		9165585D273B8F5000C55CDC /* MaximListRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaximListRepository.swift; sourceTree = "<group>"; };
 		9198DE942733863500EBAEC8 /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		91CE6F6E2739024800176AF2 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		91CE6F7227390AD200176AF2 /* FocusButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusButton.swift; sourceTree = "<group>"; };
@@ -192,6 +198,8 @@
 			isa = PBXGroup;
 			children = (
 				DF6B111027390F1900D9924E /* MediaResourceRepository.swift */,
+				91655859273B78A000C55CDC /* MediaListRepository.swift */,
+				9165585D273B8F5000C55CDC /* MaximListRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -227,7 +235,7 @@
 		91CE6F7627391FF700176AF2 /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
-				91655857273B773400C55CDC /* MediaListUseCase.swift */,
+				91655857273B773400C55CDC /* ContentsListUseCase.swift */,
 				91DABCBF273A4EF000E57AAE /* AudioPlayUseCase.swift */,
 			);
 			path = UseCases;
@@ -414,9 +422,10 @@
 			isa = PBXGroup;
 			children = (
 				DDB5CEAE273372A700E8F9EB /* Media.swift */,
-				DDB5CEB02733746600E8F9EB /* Maxim.swift */,
+				9165585B273B8E6E00C55CDC /* PlayHistory.swift */,
 				DDB5CEB22733752D00E8F9EB /* FavoriteMedia.swift */,
 				DDB5CEB72733765500E8F9EB /* FavoriteMaxim.swift */,
+				DDB5CEB02733746600E8F9EB /* Maxim.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -686,13 +695,14 @@
 				DDB92B9D2737BD5E00EE26F0 /* UIView+Extension.swift in Sources */,
 				DDB5CEB32733752D00E8F9EB /* FavoriteMedia.swift in Sources */,
 				DDB5CE9E27328E8300E8F9EB /* HomeViewController.swift in Sources */,
-				91CE6F782739203200176AF2 /* MediaListUseCase.swift in Sources */,
 				91EA47C827384EA500780C3E /* SystemConstants.swift in Sources */,
 				DDB5CEA827328EF400E8F9EB /* MeViewController.swift in Sources */,
 				DDB5CEB12733746600E8F9EB /* Maxim.swift in Sources */,
 				DDB92B9B2737A98B00EE26F0 /* MusicCollectionViewCell.swift in Sources */,
 				DDB5CEB82733765500E8F9EB /* FavoriteMaxim.swift in Sources */,
+				9165585A273B78A000C55CDC /* MediaListRepository.swift in Sources */,
 				DF6B111127390F1900D9924E /* MediaResourceRepository.swift in Sources */,
+				9165585C273B8E6E00C55CDC /* PlayHistory.swift in Sources */,
 				91655856273B6F0200C55CDC /* LocalDBEnums.swift in Sources */,
 				91655852273B618700C55CDC /* LocalFileEnums.swift in Sources */,
 				DDB5CEA227328EC300E8F9EB /* ExploreViewController.swift in Sources */,
@@ -706,12 +716,13 @@
 				B40D1FB7273B60A500881A49 /* Int+Extension.swift in Sources */,
 				B40D1FB3273B5F3500881A49 /* InfinityFocusViewModel.swift in Sources */,
 				91EA47C42738451100780C3E /* BlurEffect.swift in Sources */,
+				9165585E273B8F5000C55CDC /* MaximListRepository.swift in Sources */,
 				B40D1FAB273B5F2100881A49 /* DefaultFocusViewModel.swift in Sources */,
 				91DABCC0273A4EF000E57AAE /* AudioPlayUseCase.swift in Sources */,
 				DDB5CEBE2733A49A00E8F9EB /* RealmDBManager.swift in Sources */,
 				B40D1FB5273B5F3900881A49 /* GenerateTimerUseCase.swift in Sources */,
 				914E1D87273A191D000CA5FB /* MediaCollectionViewCell.swift in Sources */,
-				91655858273B773400C55CDC /* MediaListUseCase.swift in Sources */,
+				91655858273B773400C55CDC /* ContentsListUseCase.swift in Sources */,
 				91655850273B5F4800C55CDC /* RemoteServiceAccessible.swift in Sources */,
 				9165584E273B5F2000C55CDC /* NetworkEnums.swift in Sources */,
 				91EA47C6273846A800780C3E /* BlurCircleButton.swift in Sources */,
