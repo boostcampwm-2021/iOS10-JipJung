@@ -79,9 +79,12 @@
 		DDB92B9B2737A98B00EE26F0 /* MusicCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB92B9A2737A98B00EE26F0 /* MusicCardCollectionViewCell.swift */; };
 		DDB92B9D2737BD5E00EE26F0 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB92B9C2737BD5E00EE26F0 /* UIView+Extension.swift */; };
 		DDB92BA12737E36E00EE26F0 /* FocusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB92BA02737E36E00EE26F0 /* FocusViewController.swift */; };
-		DDB92BA32738021B00EE26F0 /* FocusTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB92BA22738021B00EE26F0 /* FocusTimeView.swift */; };
-		DDB92BA5273802D500EE26F0 /* FocusStartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB92BA4273802D500EE26F0 /* FocusStartView.swift */; };
+		DDB92BA32738021B00EE26F0 /* FocusTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB92BA22738021B00EE26F0 /* FocusTimerView.swift */; };
+		DDB92BA5273802D500EE26F0 /* DefaultFocusStartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB92BA4273802D500EE26F0 /* DefaultFocusStartView.swift */; };
 		DDB92BA7273803AA00EE26F0 /* FocusExtraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB92BA6273803AA00EE26F0 /* FocusExtraView.swift */; };
+		DDB92BA92738CC0B00EE26F0 /* FocusHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB92BA82738CC0B00EE26F0 /* FocusHeaderView.swift */; };
+		DF08B1DD2737F5010066518B /* RemoteServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF08B1DC2737F5010066518B /* RemoteServiceProvider.swift */; };
+		DF71D22F2734455600CD980E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DF71D22E2734455600CD980E /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -180,9 +183,12 @@
 		DDB92B9A2737A98B00EE26F0 /* MusicCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicCardCollectionViewCell.swift; sourceTree = "<group>"; };
 		DDB92B9C2737BD5E00EE26F0 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		DDB92BA02737E36E00EE26F0 /* FocusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusViewController.swift; sourceTree = "<group>"; };
-		DDB92BA22738021B00EE26F0 /* FocusTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusTimeView.swift; sourceTree = "<group>"; };
-		DDB92BA4273802D500EE26F0 /* FocusStartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusStartView.swift; sourceTree = "<group>"; };
+		DDB92BA22738021B00EE26F0 /* FocusTimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusTimerView.swift; sourceTree = "<group>"; };
+		DDB92BA4273802D500EE26F0 /* DefaultFocusStartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFocusStartView.swift; sourceTree = "<group>"; };
 		DDB92BA6273803AA00EE26F0 /* FocusExtraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusExtraView.swift; sourceTree = "<group>"; };
+		DDB92BA82738CC0B00EE26F0 /* FocusHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusHeaderView.swift; sourceTree = "<group>"; };
+		DF08B1DC2737F5010066518B /* RemoteServiceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteServiceProvider.swift; sourceTree = "<group>"; };
+		DF71D22E2734455600CD980E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -502,13 +508,16 @@
 			);
 			path = Network;
 			path = Common;
+			sourceTree = "<group>";
+		};
 		DDB92B9F2737E36300EE26F0 /* Focus */ = {
 			isa = PBXGroup;
 			children = (
 				DDB92BA02737E36E00EE26F0 /* FocusViewController.swift */,
-				DDB92BA22738021B00EE26F0 /* FocusTimeView.swift */,
-				DDB92BA4273802D500EE26F0 /* FocusStartView.swift */,
+				DDB92BA22738021B00EE26F0 /* FocusTimerView.swift */,
+				DDB92BA4273802D500EE26F0 /* DefaultFocusStartView.swift */,
 				DDB92BA6273803AA00EE26F0 /* FocusExtraView.swift */,
+				DDB92BA82738CC0B00EE26F0 /* FocusHeaderView.swift */,
 			);
 			path = Focus;
 			sourceTree = "<group>";
@@ -532,6 +541,12 @@
 				DF30FF04273CBC3B001C720E /* MusicPlayerButtons.swift */,
 			);
 			path = Views;
+		DF71D23027344AC700CD980E /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				DF08B1DC2737F5010066518B /* RemoteServiceProvider.swift */,
+			);
+			path = Network;
 			sourceTree = "<group>";
 		};
 		FC10DDE8A3B3F38BE43E9B68 /* Pods */ = {
@@ -767,6 +782,8 @@
 				91655854273B6EE800C55CDC /* LocalDBManagable.swift in Sources */,
 				DDB92B9D2737BD5E00EE26F0 /* UIView+Extension.swift in Sources */,
 				DDB5CEB32733752D00E8F9EB /* FavoriteMedia.swift in Sources */,
+				DDB92BA92738CC0B00EE26F0 /* FocusHeaderView.swift in Sources */,
+				DDB5CEB32733752D00E8F9EB /* FavoriteMusic.swift in Sources */,
 				DDB5CE9E27328E8300E8F9EB /* HomeViewController.swift in Sources */,
 				91CE6F782739203200176AF2 /* MediaListUseCase.swift in Sources */,
 				B4153945273B9676004EF80F /* FocusRecord.swift in Sources */,
@@ -789,8 +806,9 @@
 				DFED21CB2733702800E99641 /* MusicPlayerViewController.swift in Sources */,
 				DF6B111127390F1900D9924E /* MediaRepository.swift in Sources */,
 				DDB92BA32738021B00EE26F0 /* FocusTimeView.swift in Sources */,
+				DDB92BA32738021B00EE26F0 /* FocusTimerView.swift in Sources */,
 				DDB5CEA227328EC300E8F9EB /* ExploreViewController.swift in Sources */,
-				DDB92BA5273802D500EE26F0 /* FocusStartView.swift in Sources */,
+				DDB92BA5273802D500EE26F0 /* DefaultFocusStartView.swift in Sources */,
 				DD3902D1272FCA10009ECA82 /* AppDelegate.swift in Sources */,
 				DDB5CEAF273372A700E8F9EB /* Media.swift in Sources */,
 				B4F36B662733B8770073609C /* SearchViewController.swift in Sources */,
