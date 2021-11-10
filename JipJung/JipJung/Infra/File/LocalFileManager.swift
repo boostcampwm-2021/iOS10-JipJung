@@ -8,6 +8,7 @@
 import Foundation
 
 class LocalFileManager: LocalFileAccessible {
+    // TODO: [safe: 0] 적용하기
     private let cachePath = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0]
     
     func read(_ fileName: String) throws -> Data {

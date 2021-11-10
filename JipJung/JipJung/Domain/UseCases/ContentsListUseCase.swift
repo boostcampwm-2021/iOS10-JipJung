@@ -9,6 +9,9 @@ import Foundation
 
 import RxSwift
 
+// TODO: Media와 Maxim을 분리? 의논하기
+// TODO: Protocol을 이용한 의존성 제거
+
 class ContentsListUseCase {
     private let mediaListRepository: MediaListRepository
     private let maximListRepository: MaximListRepository

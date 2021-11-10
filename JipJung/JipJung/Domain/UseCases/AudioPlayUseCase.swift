@@ -8,6 +8,8 @@
 import AVKit
 import Foundation
 
+// TODO: Protocol을 이용한 의존성 제거
+
 class AudioPlayUseCase {
     enum AudioError: Error {
         case badURLError
@@ -39,15 +41,16 @@ class AudioPlayUseCase {
             throw AudioError.badURLError
         }
         
-//        do {
-//            let player = try AVAudioPlayer(contentsOf: url)
-//            self.url = url
-//            self.audioPlayer = player
-//            audioPlayer?.numberOfLoops = -1
-//            audioPlayer?.prepareToPlay()
-//        } catch {
-//            throw AudioError.badURLError
-//        }
+        // TODO: MediaResourceRepository를 이용한 음원 재생 기능 연결
+        //        do {
+        //            let player = try AVAudioPlayer(contentsOf: url)
+        //            self.url = url
+        //            self.audioPlayer = player
+        //            audioPlayer?.numberOfLoops = -1
+        //            audioPlayer?.prepareToPlay()
+        //        } catch {
+        //            throw AudioError.badURLError
+        //        }
     }
     
     func play() {
