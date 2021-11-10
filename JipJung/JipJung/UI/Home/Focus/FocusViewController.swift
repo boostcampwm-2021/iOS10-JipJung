@@ -9,6 +9,8 @@ import UIKit
 import RxSwift
 
 class FocusViewController: UIViewController {
+    // TODO: 팩토리가 여기 선언되있고 이 부분 코드는 나중에 수정할 예정입니다.
+    // TODO: 이 뷰와 관련된 구조체 또한 마찬가지입니다.
     enum Factory {
         static func makeDefaultTimer() -> DefaultFocusViewController {
             return DefaultFocusViewController(viewModel: DefaultFocusViewModel(generateTimerUseCase: GenerateTimerUseCase()))
