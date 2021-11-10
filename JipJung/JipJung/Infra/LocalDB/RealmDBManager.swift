@@ -66,6 +66,31 @@ class RealmDBManager: LocalDBManageable {
         }
     }
     
+    func requestMediaList(mode: MediaMode?) -> Single<[Media]> {
+        let realm = try? Realm()
+        return Single.create { single in
+            guard let realm = realm else {
+                single(.failure(RealmError.initError))
+                return Disposables.create()
+            }
+            
+            var mediaList = realm.objects(Media.self)
+            
+            if let mode = mode {
+                mediaList = mediaList.filter("mode == \(mode.rawValue)")
+            }
+            
+            let result = try? mediaList.compactMap({ element throws in element })
+            if let result = result {
+                single(.success(result))
+            } else {
+                single(.failure(RealmError.searchError))
+            }
+            
+            return Disposables.create()
+        }
+    }
+    
     func requestFavoriteMedia() -> Single<[Media]> {
         let realm = try? Realm()
         return Single.create { single in
@@ -83,10 +108,9 @@ class RealmDBManager: LocalDBManageable {
             }
             
             let filteredMedia = realm.objects(Media.self).filter("id IN %@", ids)
-            let filteredMediaList = try? filteredMedia.compactMap({ element throws in element})
-            
-            if let filteredMediaList = filteredMediaList {
-                single(.success(filteredMediaList))
+            let result = try? filteredMedia.compactMap({ element throws in element})
+            if let result = result {
+                single(.success(result))
             } else {
                 single(.failure(RealmError.searchError))
             }
@@ -110,11 +134,10 @@ class RealmDBManager: LocalDBManageable {
                 return Disposables.create()
             }
             
-            let filteredMaxin = realm.objects(Maxim.self).filter("id IN %@", ids)
-            let filteredMaximList = try? filteredMaxin.compactMap({ element throws in element})
-            
-            if let filteredMaximList = filteredMaximList {
-                single(.success(filteredMaximList))
+            let filteredMaxim = realm.objects(Maxim.self).filter("id IN %@", ids)
+            let result = try? filteredMaxim.compactMap({ element throws in element})
+            if let result = result {
+                single(.success(result))
             } else {
                 single(.failure(RealmError.searchError))
             }
