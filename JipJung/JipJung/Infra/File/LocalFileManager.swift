@@ -13,38 +13,39 @@ class LocalFileManager: LocalFileAccessible {
     
     private let cachePath = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0]
     
-    func read(_ fileName: String) -> Data? {
+    func read(_ fileName: String) throws -> Data {
         let fileURL = cachePath.appendingPathComponent(fileName)
-        return try? Data(contentsOf: fileURL)
+        do {
+            return try Data(contentsOf: fileURL)
+        } catch {
+            throw LocalFileError.fileNotFoundError
+        }
     }
     
-    func write(_ data: Data, at fileName: String) -> Bool {
+    func write(_ data: Data, at fileName: String) throws {
         let fileURL = cachePath.appendingPathComponent(fileName)
         do {
             try data.write(to: fileURL)
         } catch {
-            return false
+            throw LocalFileError.fileWriteError
         }
-        return true
     }
     
-    func move(from url: URL, to fileName: String) -> Bool {
+    func move(from url: URL, to fileName: String) throws {
         let fileURL = cachePath.appendingPathComponent(fileName)
         do {
             try FileManager.default.moveItem(at: url, to: fileURL)
         } catch {
-            return false
+            throw LocalFileError.fileCopyError
         }
-        return true
     }
     
-    func delete(_ fileName: String) -> Bool {
+    func delete(_ fileName: String) throws {
         let fileURL = cachePath.appendingPathComponent(fileName)
         do {
             try FileManager.default.removeItem(at: fileURL)
         } catch {
-            return false
+            throw LocalFileError.fileNotFoundError
         }
-        return true
     }
 }

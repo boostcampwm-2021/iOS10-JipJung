@@ -8,8 +8,8 @@
 import Foundation
 
 protocol LocalFileAccessible {
-    func read(_ fileName: String) -> Data?
-    func write(_ data: Data, at fileName: String) -> Bool
-    func move(from url: URL, to fileName: String) -> Bool
-    func delete(_ fileName: String) -> Bool
+    func read(_ fileName: String) throws -> Data
+    func write(_ data: Data, at fileName: String) throws
+    func move(from url: URL, to fileName: String) throws
+    func delete(_ fileName: String) throws
 }

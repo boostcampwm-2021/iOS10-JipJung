@@ -10,35 +10,19 @@ import Foundation
 import FirebaseStorage
 import RxSwift
 
-enum Media: String {
-    case audio
-    case image
-    case video
-}
-
-enum RemoteServiceError: Error {
-    case transportError
-    case serverSideError
-    case badURL
-}
-
-protocol RemoteServiceAccessible {
-    func request(key: String, type: Media) -> Single<URL>
-}
-
 final class RemoteServiceProvider: RemoteServiceAccessible {
     private let storage = Storage.storage()
     
-    func request(key: String, type: Media) -> Single<URL> {
+    func request(key: String, type: MediaType) -> Single<URL> {
         let fullPath = type.rawValue + "/" + key
         let reference = storage.reference(withPath: fullPath)
         
-        return Single<URL>.create { observer in
+        return Single<URL>.create { single in
             reference.downloadURL { url, error in
                 guard let url = url,
                       error == nil
                 else {
-                    observer(.failure(RemoteServiceError.badURL))
+                    single(.failure(RemoteServiceError.badURL))
                     return
                 }
                 
@@ -46,17 +30,17 @@ final class RemoteServiceProvider: RemoteServiceAccessible {
                     guard let url = url,
                           error == nil
                     else {
-                        observer(.failure(RemoteServiceError.transportError))
+                        single(.failure(RemoteServiceError.transportError))
                         return
                     }
                     
                     guard let response = response as? HTTPURLResponse,
                           (200 ..< 300) ~= response.statusCode
                     else {
-                        return observer(.failure(RemoteServiceError.serverSideError))
+                        return single(.failure(RemoteServiceError.serverSideError))
                     }
                     
-                    observer(.success(url))
+                    single(.success(url))
                 }.resume()
             }
             
