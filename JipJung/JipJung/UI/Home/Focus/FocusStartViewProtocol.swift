@@ -9,7 +9,6 @@ import UIKit
 
 protocol FocusStarViewDelegate: AnyObject {
     func startButtonDidClicked()
-    func endButtonDidClicked()
 }
 
 protocol FocusStartViewable: UIView {

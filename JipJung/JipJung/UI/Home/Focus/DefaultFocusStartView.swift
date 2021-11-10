@@ -52,8 +52,4 @@ class DefaultFocusStartView: UIView, FocusStartViewable {
     @IBAction func clickStartButton(_ sender: UIButton) {
         delegate?.startButtonDidClicked()
     }
-    
-    func logngtab(_ sender: UIButton) {
-        delegate?.endButtonDidClicked()
-    }
 }
