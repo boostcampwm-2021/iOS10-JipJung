@@ -1,5 +1,5 @@
 //
-//  RemoteServiceRepository.swift
+//  MediaResourceRepository.swift
 //  JipJung
 //
 //  Created by turu on 2021/11/08.
