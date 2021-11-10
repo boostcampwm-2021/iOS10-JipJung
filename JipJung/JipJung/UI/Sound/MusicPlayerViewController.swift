@@ -5,6 +5,7 @@
 //  Created by turu on 2021/11/04.
 //
 
+import AVKit
 import UIKit
 
 import SnapKit
@@ -12,6 +13,14 @@ import SnapKit
 class MusicPlayerViewController: UIViewController {
     // MARK: - View builder -> 임시 코드가 포함됨
     let dataSource = ["Relax", "Melody", "Meditation", "Etc"]
+    let navigationBar: UINavigationBar = {
+        let navigationBar = UINavigationBar()
+        return navigationBar
+    }()
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     
     let topView: UIView = {
         let view = UIView()
@@ -44,9 +53,9 @@ class MusicPlayerViewController: UIViewController {
     
     let playButton: UIButton = {
         let button = SolidButton()
-        button.backgroundColor = .gray
+        button.backgroundColor = .systemGray6
         button.setTitle("Play", for: .normal)
-        button.setTitleColor(.white, for: .normal)
+        button.setTitleColor(.gray, for: .normal)
         return button
     }()
     
@@ -54,11 +63,16 @@ class MusicPlayerViewController: UIViewController {
         let layout = LeftAlignCollectionViewFlowLayout()
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-//        collectionView.collectionViewLayout = layout
         collectionView.register(TagCell.self, forCellWithReuseIdentifier: TagCell.identifier)
         return collectionView
     }()
-
+    
+    var audioPlayer: AVAudioPlayer?
+    
+    var playerLooper: AVPlayerLooper?
+    var queuePlayer: AVQueuePlayer?
+    var playerLayer: AVPlayerLayer?
+    
     // MARK: - Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,9 +86,9 @@ class MusicPlayerViewController: UIViewController {
     }
     
     func configureUI() {
-        setNavigationBar()
         setTopView()
         setBottomView()
+        setNavigationBar()
     }
     
     // MARK: - Input vent from views
@@ -91,28 +105,43 @@ class MusicPlayerViewController: UIViewController {
     }
     
     @objc func backButtonTouched(_ sender: UIButton) {
-        print(#function, #line)
+        self.dismiss(animated: true, completion: nil)
     }
 }
 
 // MARK: - AddSubView + Constraints
 extension MusicPlayerViewController {
     func setNavigationBar() {
-        navigationItem.leftBarButtonItem = UIBarButtonItem(
-            image: UIImage(systemName: "chevron.backward"),
-            style: .done,
-            target: self,
-            action: #selector(backButtonTouched(_:))
-        )
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
-            image: UIImage(systemName: "heart"),
-            style: .plain,
-            target: self,
-            action: #selector(favoriteButtonTouched(_:))
-        )
+        self.view.addSubview(navigationBar)
+        navigationBar.isTranslucent = true
+        navigationBar.shadowImage = UIImage()
+        navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationBar.backgroundColor = .clear
+        
+        navigationBar.snp.makeConstraints { make in
+            make.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
+            make.height.equalTo(44)
+        }
+        
+        let navigationItem = UINavigationItem()
+        navigationBar.items = [navigationItem]
+        
+        let leftButton = PlayerBackButton()
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: leftButton)
+        leftButton.snp.makeConstraints { make in
+            make.size.equalTo(30)
+        }
+        
+        let rightButton = HeartButton()
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: rightButton)
+        rightButton.snp.makeConstraints { make in
+            make.size.equalTo(30)
+        }
     }
     
     func setTopView() {
+        setVideoView()
+                
         self.view.addSubview(topView)
         topView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
@@ -131,6 +160,41 @@ extension MusicPlayerViewController {
         }
     }
     
+    func setVideoView() {
+        guard let videoURL = Bundle.main.url(forResource: "sea", withExtension: "mp4")
+        else {
+            return
+        }
+
+        let playerItem = AVPlayerItem(url: videoURL)
+        queuePlayer = AVQueuePlayer(items: [playerItem])
+        playerLayer = AVPlayerLayer(player: self.queuePlayer)
+        
+        guard let playerLayer = playerLayer,
+              let queuePlayer = queuePlayer
+        else {
+            return
+        }
+        
+        playerLooper = AVPlayerLooper(player: queuePlayer, templateItem: playerItem)
+        playerLayer.videoGravity = .resizeAspectFill
+
+        let backgroundView = UIView()
+        topView.addSubview(backgroundView)
+        backgroundView.backgroundColor = .red
+        backgroundView.layer.addSublayer(playerLayer)
+        backgroundView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        queuePlayer.play()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        playerLayer?.frame = topView.bounds
+    }
+    
     func setBottomView() {
         self.view.addSubview(bottomView)
         bottomView.snp.makeConstraints { make in
@@ -141,7 +205,7 @@ extension MusicPlayerViewController {
         bottomView.addSubview(playButton)
         playButton.snp.makeConstraints { make in
             make.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide).inset(12)
-            make.height.equalTo(43)
+            make.height.equalTo(44)
         }
         
         bottomView.addSubview(maximView)
