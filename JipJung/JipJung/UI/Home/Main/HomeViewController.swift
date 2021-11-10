@@ -264,8 +264,6 @@ class HomeViewController: UIViewController {
             focusView.buttonClickListner = { [weak self] in
                 let focusViewController = mode.getFocusViewController()
                 self?.present(focusViewController, animated: true, completion: nil)
-//                self.present
-//                self?.navigationController?.pushViewController(focusViewController, animated: true)
             }
             focusButtonStackView.addArrangedSubview(focusView)
             focusView.snp.makeConstraints {
@@ -368,7 +366,6 @@ class HomeViewController: UIViewController {
             }
         }
     }
-    
     @objc private func modeSwitchTouched(_ sender: UIButton) {
         viewModel?.modeSwitchTouched()
     }
