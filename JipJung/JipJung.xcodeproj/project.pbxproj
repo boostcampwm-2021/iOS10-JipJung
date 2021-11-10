@@ -10,6 +10,7 @@
 		912A72042733B99300C1A37E /* LocalFileManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 912A72032733B99300C1A37E /* LocalFileManagerTests.swift */; };
 		912A720A2733B9AC00C1A37E /* LocalFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E4178827312FEB001BA0A6 /* LocalFileManager.swift */; };
 		914E1D87273A191D000CA5FB /* MediaCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914E1D86273A191D000CA5FB /* MediaCollectionViewCell.swift */; };
+		9165584C273B5D3F00C55CDC /* LocalFileAccessible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9165584B273B5D3F00C55CDC /* LocalFileAccessible.swift */; };
 		9198DE952733863500EBAEC8 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9198DE942733863500EBAEC8 /* Common.swift */; };
 		91CE6F6F2739024800176AF2 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CE6F6E2739024800176AF2 /* Enums.swift */; };
 		91CE6F7327390AD200176AF2 /* FocusButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CE6F7227390AD200176AF2 /* FocusButton.swift */; };
@@ -83,6 +84,7 @@
 		912A72012733B99300C1A37E /* LocalFileManagerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LocalFileManagerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		912A72032733B99300C1A37E /* LocalFileManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFileManagerTests.swift; sourceTree = "<group>"; };
 		914E1D86273A191D000CA5FB /* MediaCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaCollectionViewCell.swift; sourceTree = "<group>"; };
+		9165584B273B5D3F00C55CDC /* LocalFileAccessible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFileAccessible.swift; sourceTree = "<group>"; };
 		9198DE942733863500EBAEC8 /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		91CE6F6E2739024800176AF2 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		91CE6F7227390AD200176AF2 /* FocusButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusButton.swift; sourceTree = "<group>"; };
@@ -169,6 +171,41 @@
 			path = LocalFileManagerTests;
 			sourceTree = "<group>";
 		};
+		91655846273B5C9000C55CDC /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				91655847273B5C9E00C55CDC /* Repositories */,
+				9165584A273B5D2400C55CDC /* Interfaces */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		91655847273B5C9E00C55CDC /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				DF6B111027390F1900D9924E /* MediaRepository.swift */,
+			);
+			path = Repositories;
+			sourceTree = "<group>";
+		};
+		91655849273B5CF900C55CDC /* Dummy */ = {
+			isa = PBXGroup;
+			children = (
+				91DABCC1273A64FD00E57AAE /* test2.mp4 */,
+				91EA47BF27383DD200780C3E /* test.mp4 */,
+				91EA47BE27383DD100780C3E /* testSound.m4a */,
+			);
+			path = Dummy;
+			sourceTree = "<group>";
+		};
+		9165584A273B5D2400C55CDC /* Interfaces */ = {
+			isa = PBXGroup;
+			children = (
+				9165584B273B5D3F00C55CDC /* LocalFileAccessible.swift */,
+			);
+			path = Interfaces;
+			sourceTree = "<group>";
+		};
 		9198DE93273385D800EBAEC8 /* Localizing */ = {
 			isa = PBXGroup;
 			children = (
@@ -247,13 +284,12 @@
 		DD3902CF272FCA10009ECA82 /* JipJung */ = {
 			isa = PBXGroup;
 			children = (
-				91DABCC1273A64FD00E57AAE /* test2.mp4 */,
-				91EA47BF27383DD200780C3E /* test.mp4 */,
-				91EA47BE27383DD100780C3E /* testSound.m4a */,
-				DDB5CEAC2733727600E8F9EB /* Domain */,
+				91655849273B5CF900C55CDC /* Dummy */,
 				9198DE93273385D800EBAEC8 /* Localizing */,
 				DD3902FD272FE21D009ECA82 /* Application */,
 				DDB5CE9927328E5000E8F9EB /* UI */,
+				DDB5CEAC2733727600E8F9EB /* Domain */,
+				91655846273B5C9000C55CDC /* Data */,
 				91E4174C27312E5A001BA0A6 /* Infra */,
 				DD3902DE272FCA12009ECA82 /* Info.plist */,
 				DF71D22E2734455600CD980E /* GoogleService-Info.plist */,
@@ -400,7 +436,6 @@
 			isa = PBXGroup;
 			children = (
 				DF08B1DC2737F5010066518B /* RemoteServiceProvider.swift */,
-				DF6B111027390F1900D9924E /* MediaRepository.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -643,6 +678,7 @@
 				DDB5CEB82733765500E8F9EB /* FavoriteMaxim.swift in Sources */,
 				DF6B111127390F1900D9924E /* MediaRepository.swift in Sources */,
 				DDB5CEA227328EC300E8F9EB /* ExploreViewController.swift in Sources */,
+				9165584C273B5D3F00C55CDC /* LocalFileAccessible.swift in Sources */,
 				DD3902D1272FCA10009ECA82 /* AppDelegate.swift in Sources */,
 				DDB5CEAF273372A700E8F9EB /* Music.swift in Sources */,
 				B4F36B662733B8770073609C /* SearchViewController.swift in Sources */,
