@@ -8,7 +8,7 @@
 import Foundation
 
 enum LocalFileError: Error {
-    case fileNotFoundError
-    case fileCopyError
-    case fileWriteError
+    case notFoundError
+    case copyError
+    case writeError
 }

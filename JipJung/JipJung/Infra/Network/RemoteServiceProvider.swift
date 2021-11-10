@@ -22,7 +22,7 @@ final class RemoteServiceProvider: RemoteServiceAccessible {
                 guard let url = url,
                       error == nil
                 else {
-                    single(.failure(RemoteServiceError.badURL))
+                    single(.failure(RemoteServiceError.badURLError))
                     return
                 }
                 

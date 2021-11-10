@@ -16,5 +16,5 @@ enum MediaType: String {
 enum RemoteServiceError: Error {
     case transportError
     case serverSideError
-    case badURL
+    case badURLError
 }

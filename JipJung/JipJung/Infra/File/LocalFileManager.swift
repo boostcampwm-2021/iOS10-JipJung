@@ -18,7 +18,7 @@ class LocalFileManager: LocalFileAccessible {
         do {
             return try Data(contentsOf: fileURL)
         } catch {
-            throw LocalFileError.fileNotFoundError
+            throw LocalFileError.notFoundError
         }
     }
     
@@ -27,7 +27,7 @@ class LocalFileManager: LocalFileAccessible {
         do {
             try data.write(to: fileURL)
         } catch {
-            throw LocalFileError.fileWriteError
+            throw LocalFileError.writeError
         }
     }
     
@@ -36,7 +36,7 @@ class LocalFileManager: LocalFileAccessible {
         do {
             try FileManager.default.moveItem(at: url, to: fileURL)
         } catch {
-            throw LocalFileError.fileCopyError
+            throw LocalFileError.copyError
         }
     }
     
@@ -45,7 +45,7 @@ class LocalFileManager: LocalFileAccessible {
         do {
             try FileManager.default.removeItem(at: fileURL)
         } catch {
-            throw LocalFileError.fileNotFoundError
+            throw LocalFileError.notFoundError
         }
     }
 }
