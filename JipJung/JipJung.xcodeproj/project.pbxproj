@@ -43,6 +43,10 @@
 		B40D1FB5273B5F3900881A49 /* GenerateTimerUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40D1FB4273B5F3900881A49 /* GenerateTimerUseCase.swift */; };
 		B40D1FB7273B60A500881A49 /* Int+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40D1FB6273B60A500881A49 /* Int+Extension.swift */; };
 		B40D1FB9273B674F00881A49 /* InfinityFocusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40D1FB8273B674F00881A49 /* InfinityFocusViewController.swift */; };
+		B4153941273B93B0004EF80F /* SaveFocusTimeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4153940273B93B0004EF80F /* SaveFocusTimeUseCase.swift */; };
+		B4153945273B9676004EF80F /* FocusRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4153944273B9676004EF80F /* FocusRecord.swift */; };
+		B4153947273BA005004EF80F /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4153946273BA005004EF80F /* Date+Extension.swift */; };
+		B4153949273BA34A004EF80F /* FocusTimeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4153948273BA34A004EF80F /* FocusTimeRepository.swift */; };
 		B4F36B5127336EE20073609C /* UserDefaultsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F36B5027336EE20073609C /* UserDefaultsStorage.swift */; };
 		B4F36B5927338E9B0073609C /* UserDefaultsStorageTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F36B5827338E9B0073609C /* UserDefaultsStorageTest.swift */; };
 		B4F36B662733B8770073609C /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F36B652733B8770073609C /* SearchViewController.swift */; };
@@ -124,6 +128,10 @@
 		B40D1FB4273B5F3900881A49 /* GenerateTimerUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenerateTimerUseCase.swift; sourceTree = "<group>"; };
 		B40D1FB6273B60A500881A49 /* Int+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
 		B40D1FB8273B674F00881A49 /* InfinityFocusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfinityFocusViewController.swift; sourceTree = "<group>"; };
+		B4153940273B93B0004EF80F /* SaveFocusTimeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveFocusTimeUseCase.swift; sourceTree = "<group>"; };
+		B4153944273B9676004EF80F /* FocusRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusRecord.swift; sourceTree = "<group>"; };
+		B4153946273BA005004EF80F /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
+		B4153948273BA34A004EF80F /* FocusTimeRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusTimeRepository.swift; sourceTree = "<group>"; };
 		B4F36B5027336EE20073609C /* UserDefaultsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsStorage.swift; sourceTree = "<group>"; };
 		B4F36B5627338E9B0073609C /* UserDefaultsStorageTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UserDefaultsStorageTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4F36B5827338E9B0073609C /* UserDefaultsStorageTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsStorageTest.swift; sourceTree = "<group>"; };
@@ -370,6 +378,9 @@
 				B40D1FB4273B5F3900881A49 /* GenerateTimerUseCase.swift */,
 				91CE6F7427391E1C00176AF2 /* HomeViewModel.swift */,
 				914E1D86273A191D000CA5FB /* MediaCollectionViewCell.swift */,
+				B4153940273B93B0004EF80F /* SaveFocusTimeUseCase.swift */,
+				B4153948273BA34A004EF80F /* FocusTimeRepository.swift */,
+				B4153944273B9676004EF80F /* FocusRecord.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -449,6 +460,7 @@
 				91EA47C727384EA500780C3E /* SystemConstants.swift */,
 				91CE6F7227390AD200176AF2 /* FocusButton.swift */,
 				B40D1FB6273B60A500881A49 /* Int+Extension.swift */,
+				B4153946273BA005004EF80F /* Date+Extension.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -695,7 +707,10 @@
 				DDB92B9D2737BD5E00EE26F0 /* UIView+Extension.swift in Sources */,
 				DDB5CEB32733752D00E8F9EB /* FavoriteMedia.swift in Sources */,
 				DDB5CE9E27328E8300E8F9EB /* HomeViewController.swift in Sources */,
+				91CE6F782739203200176AF2 /* MediaListUseCase.swift in Sources */,
+				B4153945273B9676004EF80F /* FocusRecord.swift in Sources */,
 				91EA47C827384EA500780C3E /* SystemConstants.swift in Sources */,
+				B4153947273BA005004EF80F /* Date+Extension.swift in Sources */,
 				DDB5CEA827328EF400E8F9EB /* MeViewController.swift in Sources */,
 				DDB5CEB12733746600E8F9EB /* Maxim.swift in Sources */,
 				DDB92B9B2737A98B00EE26F0 /* MusicCollectionViewCell.swift in Sources */,
@@ -713,6 +728,8 @@
 				B4F36B5127336EE20073609C /* UserDefaultsStorage.swift in Sources */,
 				B40D1FAF273B5F2C00881A49 /* PomodoroFocusViewModel.swift in Sources */,
 				91CE6F6F2739024800176AF2 /* Home+Enums.swift in Sources */,
+				91CE6F6F2739024800176AF2 /* Enums.swift in Sources */,
+				B4153949273BA34A004EF80F /* FocusTimeRepository.swift in Sources */,
 				B40D1FB7273B60A500881A49 /* Int+Extension.swift in Sources */,
 				B40D1FB3273B5F3500881A49 /* InfinityFocusViewModel.swift in Sources */,
 				91EA47C42738451100780C3E /* BlurEffect.swift in Sources */,
@@ -731,6 +748,7 @@
 				B4015CD627391529006BD14A /* FavoriteMusicViewController.swift in Sources */,
 				91E4178927312FEB001BA0A6 /* LocalFileManager.swift in Sources */,
 				91CE6F7327390AD200176AF2 /* FocusButton.swift in Sources */,
+				B4153941273B93B0004EF80F /* SaveFocusTimeUseCase.swift in Sources */,
 				B4015CD82739270C006BD14A /* GenreCollectionViewCell.swift in Sources */,
 				9198DE952733863500EBAEC8 /* Common.swift in Sources */,
 				91CE6F7527391E1C00176AF2 /* HomeViewModel.swift in Sources */,

@@ -15,26 +15,32 @@ protocol InfinityFocusViewModelInput {
     func resetClockTimer()
     func startRotateAnimationTimer()
     func startWaveAnimationTimer()
+    func saveFocusRecord()
 }
 
 protocol InfinityFocusViewModelOutput {
     var clockTime: BehaviorRelay<Int> { get }
     var rotateAnimationTime: BehaviorRelay<Int> { get }
     var waveAnimationTime: BehaviorRelay<Int> { get }
+    var isFocusRecordSaved: BehaviorRelay<Bool> { get }
 }
 
 final class InfinityFocusViewModel: InfinityFocusViewModelInput, InfinityFocusViewModelOutput {
     var clockTime: BehaviorRelay<Int> = BehaviorRelay<Int>(value: 0)
     var rotateAnimationTime: BehaviorRelay<Int> = BehaviorRelay<Int>(value: 0)
     var waveAnimationTime: BehaviorRelay<Int> = BehaviorRelay<Int>(value: 0)
+    var isFocusRecordSaved: BehaviorRelay<Bool> = BehaviorRelay<Bool>(value: false)
     
     private var runningStateDisposeBag: DisposeBag = DisposeBag()
     private var disposeBag: DisposeBag = DisposeBag()
     
     private let generateTimerUseCase: GenerateTimerUseCaseProtocol
+    private let saveFocusTimeUseCase: SaveFocusTimeUseCaseProtocol
     
-    init(generateTimerUseCase: GenerateTimerUseCaseProtocol) {
+    init(generateTimerUseCase: GenerateTimerUseCaseProtocol,
+         saveFocusTimeUseCase: SaveFocusTimeUseCaseProtocol) {
         self.generateTimerUseCase = generateTimerUseCase
+        self.saveFocusTimeUseCase = saveFocusTimeUseCase
     }
     
     func startClockTimer() {
@@ -71,5 +77,15 @@ final class InfinityFocusViewModel: InfinityFocusViewModelInput, InfinityFocusVi
                 self.waveAnimationTime.accept(self.waveAnimationTime.value + 1)
             }
             .disposed(by: runningStateDisposeBag)
+    }
+    
+    func saveFocusRecord() {
+        saveFocusTimeUseCase.execute(seconds: clockTime.value)
+            .subscribe { [weak self] in
+                self?.isFocusRecordSaved.accept($0)
+            } onFailure: { [weak self] _ in
+                self?.isFocusRecordSaved.accept(false)
+            }
+            .disposed(by: disposeBag)
     }
 }

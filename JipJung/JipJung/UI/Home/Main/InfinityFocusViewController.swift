@@ -196,6 +196,7 @@ class InfinityFocusViewController: UIViewController {
                 guard let self = self else { return }
                 self.state.accept(.ready)
                 self.viewModel?.resetClockTimer()
+                self.viewModel?.saveFocusRecord()
             }
             .disposed(by: disposeBag)
         
