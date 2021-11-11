@@ -11,7 +11,6 @@
 		912A720A2733B9AC00C1A37E /* LocalFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E4178827312FEB001BA0A6 /* LocalFileManager.swift */; };
 		914E1D87273A191D000CA5FB /* MediaCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914E1D86273A191D000CA5FB /* MediaCollectionViewCell.swift */; };
 		9165584C273B5D3F00C55CDC /* LocalFileAccessible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9165584B273B5D3F00C55CDC /* LocalFileAccessible.swift */; };
-		9165584E273B5F2000C55CDC /* NetworkEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9165584D273B5F2000C55CDC /* NetworkEnums.swift */; };
 		91655850273B5F4800C55CDC /* RemoteServiceAccessible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9165584F273B5F4800C55CDC /* RemoteServiceAccessible.swift */; };
 		91655852273B618700C55CDC /* LocalFileEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91655851273B618700C55CDC /* LocalFileEnums.swift */; };
 		91655854273B6EE800C55CDC /* LocalDBManagable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91655853273B6EE800C55CDC /* LocalDBManagable.swift */; };
@@ -51,10 +50,15 @@
 		B4F36B5927338E9B0073609C /* UserDefaultsStorageTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F36B5827338E9B0073609C /* UserDefaultsStorageTest.swift */; };
 		B4F36B662733B8770073609C /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F36B652733B8770073609C /* SearchViewController.swift */; };
 		B4F36B682733D4210073609C /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F36B672733D4200073609C /* SearchTableViewCell.swift */; };
+		DD208D30273B55240089A2AB /* PulseAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD208D2F273B55240089A2AB /* PulseAnimation.swift */; };
+		DD208D36273BDD390089A2AB /* CALayer+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD208D35273BDD390089A2AB /* CALayer+Extension.swift */; };
 		DD3902D1272FCA10009ECA82 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3902D0272FCA10009ECA82 /* AppDelegate.swift */; };
 		DD3902D3272FCA10009ECA82 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3902D2272FCA10009ECA82 /* SceneDelegate.swift */; };
 		DD3902DA272FCA12009ECA82 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DD3902D9272FCA12009ECA82 /* Assets.xcassets */; };
 		DD3902DD272FCA12009ECA82 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DD3902DB272FCA12009ECA82 /* LaunchScreen.storyboard */; };
+		DD828092273D113200BB2A60 /* NetworkEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD828091273D113200BB2A60 /* NetworkEnums.swift */; };
+		DD82808C273CAE5F00BB2A60 /* FocusViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD82808B273CAE5F00BB2A60 /* FocusViewControllerFactory.swift */; };
+		DD82808E273CF07800BB2A60 /* CycleAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD82808D273CF07800BB2A60 /* CycleAnimation.swift */; };
 		DDAA3D3D5F09E051F5BE96A6 /* Pods_JipJung.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6ECB91629425C2E076873750 /* Pods_JipJung.framework */; };
 		DDB5CE9E27328E8300E8F9EB /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB5CE9D27328E8300E8F9EB /* HomeViewController.swift */; };
 		DDB5CEA227328EC300E8F9EB /* ExploreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB5CEA127328EC300E8F9EB /* ExploreViewController.swift */; };
@@ -64,8 +68,8 @@
 		DDB5CEB32733752D00E8F9EB /* FavoriteMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB5CEB22733752D00E8F9EB /* FavoriteMedia.swift */; };
 		DDB5CEB82733765500E8F9EB /* FavoriteMaxim.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB5CEB72733765500E8F9EB /* FavoriteMaxim.swift */; };
 		DDB5CEBE2733A49A00E8F9EB /* RealmDBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB5CEBD2733A49A00E8F9EB /* RealmDBManager.swift */; };
-		DDB92B9B2737A98B00EE26F0 /* MusicCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB92B9A2737A98B00EE26F0 /* MusicCollectionViewCell.swift */; };
 		DDB92B9D2737BD5E00EE26F0 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB92B9C2737BD5E00EE26F0 /* UIView+Extension.swift */; };
+		DDB92BB0273A263100EE26F0 /* MusicCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB92BAF273A263100EE26F0 /* MusicCollectionViewCell.swift */; };
 		DF08B1DD2737F5010066518B /* RemoteServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF08B1DC2737F5010066518B /* RemoteServiceProvider.swift */; };
 		DF30FEF9273A730F001C720E /* TagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF30FEF8273A730F001C720E /* TagCell.swift */; };
 		DF30FEFB273ADAA9001C720E /* CollectionView+MusicPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF30FEFA273ADAA9001C720E /* CollectionView+MusicPlayerViewController.swift */; };
@@ -144,6 +148,8 @@
 		B4F36B5827338E9B0073609C /* UserDefaultsStorageTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsStorageTest.swift; sourceTree = "<group>"; };
 		B4F36B652733B8770073609C /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		B4F36B672733D4200073609C /* SearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
+		DD208D2F273B55240089A2AB /* PulseAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulseAnimation.swift; sourceTree = "<group>"; };
+		DD208D35273BDD390089A2AB /* CALayer+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+Extension.swift"; sourceTree = "<group>"; };
 		DD3902CD272FCA10009ECA82 /* JipJung.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JipJung.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD3902D0272FCA10009ECA82 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DD3902D2272FCA10009ECA82 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -151,6 +157,9 @@
 		DD3902DC272FCA12009ECA82 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DD3902DE272FCA12009ECA82 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DD3902FC272FD388009ECA82 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		DD828091273D113200BB2A60 /* NetworkEnums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkEnums.swift; sourceTree = "<group>"; };
+		DD82808B273CAE5F00BB2A60 /* FocusViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusViewControllerFactory.swift; sourceTree = "<group>"; };
+		DD82808D273CF07800BB2A60 /* CycleAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CycleAnimation.swift; sourceTree = "<group>"; };
 		DDB5CE9D27328E8300E8F9EB /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		DDB5CEA127328EC300E8F9EB /* ExploreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreViewController.swift; sourceTree = "<group>"; };
 		DDB5CEA727328EF400E8F9EB /* MeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeViewController.swift; sourceTree = "<group>"; };
@@ -159,8 +168,8 @@
 		DDB5CEB22733752D00E8F9EB /* FavoriteMedia.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteMedia.swift; sourceTree = "<group>"; };
 		DDB5CEB72733765500E8F9EB /* FavoriteMaxim.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteMaxim.swift; sourceTree = "<group>"; };
 		DDB5CEBD2733A49A00E8F9EB /* RealmDBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmDBManager.swift; sourceTree = "<group>"; };
-		DDB92B9A2737A98B00EE26F0 /* MusicCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicCollectionViewCell.swift; sourceTree = "<group>"; };
 		DDB92B9C2737BD5E00EE26F0 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
+		DDB92BAF273A263100EE26F0 /* MusicCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicCollectionViewCell.swift; sourceTree = "<group>"; };
 		DF08B1DC2737F5010066518B /* RemoteServiceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteServiceProvider.swift; sourceTree = "<group>"; };
 		DF30FEF8273A730F001C720E /* TagCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCell.swift; sourceTree = "<group>"; };
 		DF30FEFA273ADAA9001C720E /* CollectionView+MusicPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CollectionView+MusicPlayerViewController.swift"; sourceTree = "<group>"; };
@@ -300,6 +309,16 @@
 			path = UserDefaultsStorageTest;
 			sourceTree = "<group>";
 		};
+		DD208D2E273B55100089A2AB /* Animation */ = {
+			isa = PBXGroup;
+			children = (
+				DD208D2F273B55240089A2AB /* PulseAnimation.swift */,
+				DD208D35273BDD390089A2AB /* CALayer+Extension.swift */,
+				DD82808D273CF07800BB2A60 /* CycleAnimation.swift */,
+			);
+			path = Animation;
+			sourceTree = "<group>";
+		};
 		DD3902C4272FCA10009ECA82 = {
 			isa = PBXGroup;
 			children = (
@@ -310,6 +329,7 @@
 				DD3902CE272FCA10009ECA82 /* Products */,
 				DD3902F8272FD248009ECA82 /* Frameworks */,
 				FC10DDE8A3B3F38BE43E9B68 /* Pods */,
+				DD828090273D103C00BB2A60 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -361,6 +381,7 @@
 		DDB5CE9927328E5000E8F9EB /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				DD208D2E273B55100089A2AB /* Animation */,
 				DDB92B992737A96600EE26F0 /* Common */,
 				DDB5CE9F27328EA900E8F9EB /* Explore */,
 				DDB5CEA327328ED900E8F9EB /* Me */,
@@ -375,6 +396,7 @@
 			children = (
 				91CE6F6E2739024800176AF2 /* Home+Enums.swift */,
 				DDB5CE9C27328E7600E8F9EB /* Main */,
+				DDB92B9F2737E36300EE26F0 /* Focus */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -385,13 +407,6 @@
 				DDB5CE9D27328E8300E8F9EB /* HomeViewController.swift */,
 				B4015CD32739151B006BD14A /* RecentMusicViewController.swift */,
 				B4015CD527391529006BD14A /* FavoriteMusicViewController.swift */,
-				B40D1FA8273B5F1900881A49 /* DefaultFocusViewController.swift */,
-				B40D1FAA273B5F2100881A49 /* DefaultFocusViewModel.swift */,
-				B40D1FAC273B5F2700881A49 /* PomodoroFocusViewController.swift */,
-				B40D1FAE273B5F2C00881A49 /* PomodoroFocusViewModel.swift */,
-				B40D1FB8273B674F00881A49 /* InfinityFocusViewController.swift */,
-				B40D1FB2273B5F3500881A49 /* InfinityFocusViewModel.swift */,
-				B40D1FB4273B5F3900881A49 /* GenerateTimerUseCase.swift */,
 				91CE6F7427391E1C00176AF2 /* HomeViewModel.swift */,
 				914E1D86273A191D000CA5FB /* MediaCollectionViewCell.swift */,
 				B4153940273B93B0004EF80F /* SaveFocusTimeUseCase.swift */,
@@ -469,7 +484,7 @@
 		DDB92B992737A96600EE26F0 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				DDB92B9A2737A98B00EE26F0 /* MusicCollectionViewCell.swift */,
+				DDB92BAF273A263100EE26F0 /* MusicCollectionViewCell.swift */,
 				DDB92B9C2737BD5E00EE26F0 /* UIView+Extension.swift */,
 				91EA47C32738451100780C3E /* BlurEffect.swift */,
 				91EA47C5273846A800780C3E /* BlurCircleButton.swift */,
@@ -481,10 +496,27 @@
 			path = Common;
 			sourceTree = "<group>";
 		};
+		DDB92B9F2737E36300EE26F0 /* Focus */ = {
+			isa = PBXGroup;
+			children = (
+				DDB92BA02737E36E00EE26F0 /* FocusViewController.swift */,
+				91CE6F6E2739024800176AF2 /* Enums.swift */,
+				B40D1FA8273B5F1900881A49 /* DefaultFocusViewController.swift */,
+				B40D1FAA273B5F2100881A49 /* DefaultFocusViewModel.swift */,
+				B40D1FAC273B5F2700881A49 /* PomodoroFocusViewController.swift */,
+				B40D1FAE273B5F2C00881A49 /* PomodoroFocusViewModel.swift */,
+				B40D1FB8273B674F00881A49 /* InfinityFocusViewController.swift */,
+				B40D1FB2273B5F3500881A49 /* InfinityFocusViewModel.swift */,
+				B40D1FB4273B5F3900881A49 /* GenerateTimerUseCase.swift */,
+				DD82808B273CAE5F00BB2A60 /* FocusViewControllerFactory.swift */,
+			);
+			path = Focus;
+			sourceTree = "<group>";
+		};
 		DF71D23027344AC700CD980E /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				9165584D273B5F2000C55CDC /* NetworkEnums.swift */,
+				DD828091273D113200BB2A60 /* NetworkEnums.swift */,
 				DF08B1DC2737F5010066518B /* RemoteServiceProvider.swift */,
 			);
 			path = Network;
@@ -744,15 +776,17 @@
 				91655854273B6EE800C55CDC /* LocalDBManagable.swift in Sources */,
 				DDB92B9D2737BD5E00EE26F0 /* UIView+Extension.swift in Sources */,
 				DDB5CEB32733752D00E8F9EB /* FavoriteMedia.swift in Sources */,
+				DDB92BA92738CC0B00EE26F0 /* FocusHeaderView.swift in Sources */,
+				DDB92BB0273A263100EE26F0 /* MusicCollectionViewCell.swift in Sources */,
+				DDB5CEB32733752D00E8F9EB /* FavoriteMedia.swift in Sources */,
+				DDB5CEB32733752D00E8F9EB /* FavoriteMusic.swift in Sources */,
+				DD82808E273CF07800BB2A60 /* CycleAnimation.swift in Sources */,
 				DDB5CE9E27328E8300E8F9EB /* HomeViewController.swift in Sources */,
-				91CE6F782739203200176AF2 /* MediaListUseCase.swift in Sources */,
 				B4153945273B9676004EF80F /* FocusRecord.swift in Sources */,
 				91EA47C827384EA500780C3E /* SystemConstants.swift in Sources */,
 				B4153947273BA005004EF80F /* Date+Extension.swift in Sources */,
-				DF30FEFF273C42B0001C720E /* PlayerBaseButton.swift in Sources */,
 				DDB5CEA827328EF400E8F9EB /* MeViewController.swift in Sources */,
 				DDB5CEB12733746600E8F9EB /* Maxim.swift in Sources */,
-				DDB92B9B2737A98B00EE26F0 /* MusicCollectionViewCell.swift in Sources */,
 				DF30FF05273CBC3B001C720E /* MusicPlayerButtons.swift in Sources */,
 				DDB5CEB82733765500E8F9EB /* FavoriteMaxim.swift in Sources */,
 				9165585A273B78A000C55CDC /* MediaListRepository.swift in Sources */,
@@ -763,14 +797,21 @@
 				DDB5CEA227328EC300E8F9EB /* ExploreViewController.swift in Sources */,
 				9165584C273B5D3F00C55CDC /* LocalFileAccessible.swift in Sources */,
 				DFED21CB2733702800E99641 /* MusicPlayerViewController.swift in Sources */,
+				DF6B111127390F1900D9924E /* MediaResourceRepository.swift in Sources */,
+				DDB92BA32738021B00EE26F0 /* DefaultFocusTimerView.swift in Sources */,
+				DDB92BA32738021B00EE26F0 /* DefaultFocusTimerView.swift in Sources */,
+				DDB5CEB82733765500E8F9EB /* FavoriteMaxim.swift in Sources */,
+				DD82808C273CAE5F00BB2A60 /* FocusViewControllerFactory.swift in Sources */,
+				DDB5CEA227328EC300E8F9EB /* ExploreViewController.swift in Sources */,
 				DD3902D1272FCA10009ECA82 /* AppDelegate.swift in Sources */,
 				DDB5CEAF273372A700E8F9EB /* Media.swift in Sources */,
 				B4F36B662733B8770073609C /* SearchViewController.swift in Sources */,
 				B4F36B5127336EE20073609C /* UserDefaultsStorage.swift in Sources */,
 				B40D1FAF273B5F2C00881A49 /* PomodoroFocusViewModel.swift in Sources */,
 				91CE6F6F2739024800176AF2 /* Home+Enums.swift in Sources */,
-				91CE6F6F2739024800176AF2 /* Enums.swift in Sources */,
+				91CE6F6F2739024800176AF2 /* Home+Enums.swift in Sources */,
 				B4153949273BA34A004EF80F /* FocusTimeRepository.swift in Sources */,
+				DD208D36273BDD390089A2AB /* CALayer+Extension.swift in Sources */,
 				B40D1FB7273B60A500881A49 /* Int+Extension.swift in Sources */,
 				B40D1FB3273B5F3500881A49 /* InfinityFocusViewModel.swift in Sources */,
 				91CE6F6F2739024800176AF2 /* Home+Enums.swift in Sources */,
@@ -783,11 +824,15 @@
 				914E1D87273A191D000CA5FB /* MediaCollectionViewCell.swift in Sources */,
 				91655858273B773400C55CDC /* ContentsListUseCase.swift in Sources */,
 				91655850273B5F4800C55CDC /* RemoteServiceAccessible.swift in Sources */,
-				9165584E273B5F2000C55CDC /* NetworkEnums.swift in Sources */,
 				91EA47C6273846A800780C3E /* BlurCircleButton.swift in Sources */,
 				B4015CD42739151B006BD14A /* RecentMusicViewController.swift in Sources */,
 				DFED21D02733931600E99641 /* MusicDescriptionView.swift in Sources */,
+				DDB92BA7273803AA00EE26F0 /* FocusExtraView.swift in Sources */,
+				DDB92BAB273921E100EE26F0 /* FocusTimerViewProtocol.swift in Sources */,
+				DD828092273D113200BB2A60 /* NetworkEnums.swift in Sources */,
+				DDB92BB4273A443600EE26F0 /* MediaRepository.swift in Sources */,
 				DD3902D3272FCA10009ECA82 /* SceneDelegate.swift in Sources */,
+				DD208D30273B55240089A2AB /* PulseAnimation.swift in Sources */,
 				B4015CD627391529006BD14A /* FavoriteMusicViewController.swift in Sources */,
 				91E4178927312FEB001BA0A6 /* LocalFileManager.swift in Sources */,
 				91CE6F7327390AD200176AF2 /* FocusButton.swift in Sources */,

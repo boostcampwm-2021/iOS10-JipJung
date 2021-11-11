@@ -240,7 +240,6 @@ class HomeViewController: UIViewController {
         
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(bottomViewDragged(_:)))
         panGesture.minimumNumberOfTouches = 1
-        panGesture.maximumNumberOfTouches = 1
         panGesture.delegate = self
         bottomView.addGestureRecognizer(panGesture)
         
@@ -258,12 +257,14 @@ class HomeViewController: UIViewController {
             $0.height.equalTo(90)
         }
         
+        view.isUserInteractionEnabled = true
         FocusMode.allCases.forEach { mode in
             let focusView = FocusButton()
             focusView.set(mode: mode)
-            focusView.addGestureRecognizer(
-                UITapGestureRecognizer(target: self, action: #selector(focusButtonTouched(_:)))
-            )
+            focusView.buttonClickListener = { [weak self] in
+                let focusViewController = mode.getFocusViewController()
+                self?.present(focusViewController, animated: true, completion: nil)
+            }
             focusButtonStackView.addArrangedSubview(focusView)
             focusView.snp.makeConstraints {
                 $0.width.equalTo(focusButtonSize.width)
@@ -365,28 +366,8 @@ class HomeViewController: UIViewController {
             }
         }
     }
-    
     @objc private func modeSwitchTouched(_ sender: UIButton) {
         viewModel?.modeSwitchTouched()
-    }
-    
-    @objc private func focusButtonTouched(_ sender: UITapGestureRecognizer) {
-        guard let senderView = sender.view as? FocusButton,
-        let mode = senderView.mode
-        else {
-            return
-        }
-        
-        switch mode {
-        case .normal:
-            print("normal") // 해당 ViewController 출력
-        case .pomodoro:
-            print("pomodoro") // 해당 ViewController 출력
-        case .infinity:
-            print("infinity") // 해당 ViewController 출력
-        case .breath:
-            print("breath") // 해당 ViewController 출력
-        }
     }
 }
 

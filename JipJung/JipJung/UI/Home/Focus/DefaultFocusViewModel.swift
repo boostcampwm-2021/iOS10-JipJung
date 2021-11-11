@@ -1,49 +1,46 @@
 //
-//  InfinityFocusViewModel.swift
+//  DefaultFocusViewModel.swift
 //  JipJung
 //
-//  Created by 오현식 on 2021/11/09.
+//  Created by 오현식 on 2021/11/10.
 //
 
 import Foundation
 import RxSwift
 import RxRelay
 
-protocol InfinityFocusViewModelInput {
+protocol DefaultFocusViewModelInput {
     func startClockTimer()
     func pauseClockTimer()
     func resetClockTimer()
-    func startRotateAnimationTimer()
     func startWaveAnimationTimer()
-    func saveFocusRecord()
 }
 
-protocol InfinityFocusViewModelOutput {
+protocol DefaultFocusViewModelOutput {
     var clockTime: BehaviorRelay<Int> { get }
-    var rotateAnimationTime: BehaviorRelay<Int> { get }
     var waveAnimationTime: BehaviorRelay<Int> { get }
-    var isFocusRecordSaved: BehaviorRelay<Bool> { get }
 }
 
-final class InfinityFocusViewModel: InfinityFocusViewModelInput, InfinityFocusViewModelOutput {
+final class DefaultFocusViewModel: DefaultFocusViewModelInput, DefaultFocusViewModelOutput {
     var clockTime: BehaviorRelay<Int> = BehaviorRelay<Int>(value: 0)
-    var rotateAnimationTime: BehaviorRelay<Int> = BehaviorRelay<Int>(value: 0)
     var waveAnimationTime: BehaviorRelay<Int> = BehaviorRelay<Int>(value: 0)
-    var isFocusRecordSaved: BehaviorRelay<Bool> = BehaviorRelay<Bool>(value: false)
+    var timerState: BehaviorRelay<TimerState> = BehaviorRelay<TimerState>(value: .ready)
     
     private var runningStateDisposeBag: DisposeBag = DisposeBag()
     private var disposeBag: DisposeBag = DisposeBag()
     
     private let generateTimerUseCase: GenerateTimerUseCaseProtocol
-    private let saveFocusTimeUseCase: SaveFocusTimeUseCaseProtocol
     
-    init(generateTimerUseCase: GenerateTimerUseCaseProtocol,
-         saveFocusTimeUseCase: SaveFocusTimeUseCaseProtocol) {
+    init(generateTimerUseCase: GenerateTimerUseCaseProtocol) {
         self.generateTimerUseCase = generateTimerUseCase
-        self.saveFocusTimeUseCase = saveFocusTimeUseCase
     }
     
     func startClockTimer() {
+        if timerState.value == .paused {
+            timerState.accept(.running(isContinue: true))
+        } else if timerState.value == .ready {
+            timerState.accept(.running(isContinue: false))
+        }
         generateTimerUseCase.execute(seconds: 1)
             .subscribe { [weak self] _ in
                 guard let self = self else { return }
@@ -53,21 +50,14 @@ final class InfinityFocusViewModel: InfinityFocusViewModelInput, InfinityFocusVi
     }
     
     func pauseClockTimer() {
+        timerState.accept(.paused)
         runningStateDisposeBag = DisposeBag()
     }
     
     func resetClockTimer() {
+        timerState.accept(.ready)
         clockTime.accept(0)
         runningStateDisposeBag = DisposeBag()
-    }
-    
-    func startRotateAnimationTimer() {
-        generateTimerUseCase.execute(milliseconds: 100)
-            .subscribe { [weak self] _ in
-                guard let self = self else { return }
-                self.rotateAnimationTime.accept(self.rotateAnimationTime.value + 1)
-            }
-            .disposed(by: disposeBag)
     }
     
     func startWaveAnimationTimer() {
@@ -77,15 +67,5 @@ final class InfinityFocusViewModel: InfinityFocusViewModelInput, InfinityFocusVi
                 self.waveAnimationTime.accept(self.waveAnimationTime.value + 1)
             }
             .disposed(by: runningStateDisposeBag)
-    }
-    
-    func saveFocusRecord() {
-        saveFocusTimeUseCase.execute(seconds: clockTime.value)
-            .subscribe { [weak self] in
-                self?.isFocusRecordSaved.accept($0)
-            } onFailure: { [weak self] _ in
-                self?.isFocusRecordSaved.accept(false)
-            }
-            .disposed(by: disposeBag)
     }
 }

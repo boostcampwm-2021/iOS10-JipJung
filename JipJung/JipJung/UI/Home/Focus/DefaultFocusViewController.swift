@@ -1,8 +1,8 @@
 //
-//  InfinityFocusViewController.swift
+//  DefaultFocusViewController.swift
 //  JipJung
 //
-//  Created by 오현식 on 2021/11/09.
+//  Created by 오현식 on 2021/11/10.
 //
 
 import UIKit
@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 import RxRelay
 
-class InfinityFocusViewController: UIViewController {
+final class DefaultFocusViewController: UIViewController {
     // MARK: - Subviews
     
     private lazy var timeLabel: UILabel = {
@@ -22,16 +22,24 @@ class InfinityFocusViewController: UIViewController {
     }()
     
     private lazy var circleShapeLayer: CAShapeLayer = {
-        let circleShapeLayer = createCircleShapeLayer(strokeColor: UIColor.systemGray,
-                                                      lineWidth: 3)
+        let circleShapeLayer = createCircleShapeLayer(
+            strokeColor: UIColor.systemGray,
+            lineWidth: 3
+        )
         return circleShapeLayer
     }()
     
-    private lazy var rotateAnimationLayer: CAShapeLayer = {
-        let rotateAnimationLayer = createCircleShapeLayer(strokeColor: UIColor.white,
-                                                          lineWidth: 3)
-        return rotateAnimationLayer
+    private lazy var timeProgressLayer: CAShapeLayer = {
+        let timeProgressLayer = createCircleShapeLayer(
+            strokeColor: .secondarySystemBackground,
+            lineWidth: 3,
+            startAngle: -CGFloat.pi / 2,
+            endAngle: 3 * CGFloat.pi / 2
+        )
+        timeProgressLayer.fillColor = nil
+        return timeProgressLayer
     }()
+    private let pulseGroupLayer = CALayer()
     
     private lazy var startButton: UIButton = {
         let startButton = UIButton()
@@ -85,34 +93,33 @@ class InfinityFocusViewController: UIViewController {
     
     // MARK: - Private Variables
     
-    private var viewModel: InfinityFocusViewModel?
+    private var viewModel: DefaultFocusViewModel?
     private var disposeBag: DisposeBag = DisposeBag()
-    private var state = BehaviorRelay<FocusState>(value: .ready)
     
     // MARK: - Lifecycle Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        viewModel?.startRotateAnimationTimer()
+        configurePulseLayer()
+        configureProgressBar()
         configureUI()
+        
         bindUI()
     }
     
     // MARK: - Initializer
 
-    convenience init(viewModel: InfinityFocusViewModel) {
+    convenience init(viewModel: DefaultFocusViewModel) {
         self.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
     }
     
     // MARK: - Helpers
     
-    func configureUI() {
-        view.backgroundColor = .gray
+    private func configureUI() {
+        view.makeBlurBackground()
                 
         view.layer.addSublayer(circleShapeLayer)
-        view.layer.addSublayer(rotateAnimationLayer)
         
         view.addSubview(timeLabel)
         timeLabel.snp.makeConstraints {
@@ -153,24 +160,23 @@ class InfinityFocusViewController: UIViewController {
         }
     }
     
-    func bindUI() {
-        state.bind { [weak self] in
-            guard let self = self else { return }
-            switch $0 {
-            case .ready:
-                self.changeStateToReady()
-            case .running:
-                self.changeStateToRunning()
-            case .paused:
-                self.changeStateToPaused()
-            }
+    private func configureProgressBar() {
+        view.layer.addSublayer(timeProgressLayer)
+    }
+    
+    private func configurePulseLayer() {
+        view.layer.addSublayer(pulseGroupLayer)
+        let pulseCount = 4
+        for _ in 0..<pulseCount {
+            let pulseLayer = createCircleShapeLayer(strokeColor: .secondarySystemBackground, lineWidth: 2)
+            pulseGroupLayer.addSublayer(pulseLayer)
         }
-        .disposed(by: disposeBag)
-        
+    }
+    
+    private func bindUI() {
         startButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
-                self.state.accept(.running)
                 self.viewModel?.startClockTimer()
             }
             .disposed(by: disposeBag)
@@ -178,7 +184,6 @@ class InfinityFocusViewController: UIViewController {
         pauseButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
-                self.state.accept(.paused)
                 self.viewModel?.pauseClockTimer()
             }
             .disposed(by: disposeBag)
@@ -186,7 +191,6 @@ class InfinityFocusViewController: UIViewController {
         continueButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
-                self.state.accept(.running)
                 self.viewModel?.startClockTimer()
             }
             .disposed(by: disposeBag)
@@ -194,52 +198,51 @@ class InfinityFocusViewController: UIViewController {
         exitButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
-                self.state.accept(.ready)
                 self.viewModel?.resetClockTimer()
-                self.viewModel?.saveFocusRecord()
             }
             .disposed(by: disposeBag)
         
         viewModel?.clockTime
             .bind(onNext: { [weak self] in
-                guard let self = self else { return }
+                guard let self = self, $0 > 0 else { return }
                 self.timeLabel.text = $0.digitalClockFormatted
+                self.startPulse(second: $0)
             })
             .disposed(by: disposeBag)
         
-        viewModel?.waveAnimationTime
-            .bind(onNext: { [weak self] in
-                guard let self = self else { return }
-                if $0 > 0 {
-                    self.animateWave()
-                }
-                if let sublayers = self.view.layer.sublayers,
-                   sublayers.count > 15 {
-                    self.view.layer.sublayers?.removeSubrange(10...sublayers.count-3)
-                }
-            })
-            .disposed(by: disposeBag)
-        
-        viewModel?.rotateAnimationTime
-            .bind(onNext: { [weak self] _ in
-                self?.animateRotation()
-            })
-            .disposed(by: disposeBag)
+        viewModel?.timerState.bind(onNext: { [weak self] in
+            guard let self = self else { return }
+            switch $0 {
+            case .ready:
+                self.changeStateToReady()
+                self.stopTimer()
+            case .running(let isContinue):
+                self.changeStateToRunning()
+                isContinue ? self.resumeTimerProgressBar() : self.startTimer()
+            case .paused:
+                self.changeStateToPaused()
+                self.pauseTimerProgressBar()
+            }
+        })
     }
     
-    func changeStateToReady() {
+    private func changeStateToReady() {
         pauseButton.isHidden = true
         
         UIView.animate(withDuration: 0.5) { [weak self] in
             guard let self = self else { return }
-            self.continueButton.frame = CGRect(x: self.startButton.frame.minX,
-                                               y: self.continueButton.frame.minY,
-                                               width: self.continueButton.frame.width,
-                                               height: self.continueButton.frame.height)
-            self.exitButton.frame = CGRect(x: self.startButton.frame.minX,
-                                           y: self.exitButton.frame.minY,
-                                           width: self.exitButton.frame.width,
-                                           height: self.exitButton.frame.height)
+            self.continueButton.frame = CGRect(
+                x: self.startButton.frame.minX,
+                y: self.continueButton.frame.minY,
+                width: self.continueButton.frame.width,
+                height: self.continueButton.frame.height
+            )
+            self.exitButton.frame = CGRect(
+                x: self.startButton.frame.minX,
+                y: self.exitButton.frame.minY,
+                width: self.exitButton.frame.width,
+                height: self.exitButton.frame.height
+            )
         } completion: { _ in
             self.continueButton.isHidden = true
             self.exitButton.isHidden = true
@@ -247,19 +250,23 @@ class InfinityFocusViewController: UIViewController {
         }
     }
     
-    func changeStateToRunning() {
+    private func changeStateToRunning() {
         startButton.isHidden = true
         
         UIView.animate(withDuration: 0.5) { [weak self] in
             guard let self = self else { return }
-            self.continueButton.frame = CGRect(x: self.startButton.frame.minX,
-                                               y: self.continueButton.frame.minY,
-                                               width: self.continueButton.frame.width,
-                                               height: self.continueButton.frame.height)
-            self.exitButton.frame = CGRect(x: self.startButton.frame.minX,
-                                           y: self.exitButton.frame.minY,
-                                           width: self.exitButton.frame.width,
-                                           height: self.exitButton.frame.height)
+            self.continueButton.frame = CGRect(
+                x: self.startButton.frame.minX,
+                y: self.continueButton.frame.minY,
+                width: self.continueButton.frame.width,
+                height: self.continueButton.frame.height
+            )
+            self.exitButton.frame = CGRect(
+                x: self.startButton.frame.minX,
+                y: self.exitButton.frame.minY,
+                width: self.exitButton.frame.width,
+                height: self.exitButton.frame.height
+            )
         } completion: { _ in
             self.continueButton.isHidden = true
             self.exitButton.isHidden = true
@@ -269,7 +276,7 @@ class InfinityFocusViewController: UIViewController {
         viewModel?.startWaveAnimationTimer()
     }
     
-    func changeStateToPaused() {
+    private func changeStateToPaused() {
         startButton.isHidden = true
         pauseButton.isHidden = true
 
@@ -277,23 +284,27 @@ class InfinityFocusViewController: UIViewController {
             guard let self = self else { return }
             self.continueButton.isHidden = false
             self.exitButton.isHidden = false
-            self.continueButton.frame = CGRect(x: self.continueButton.frame.minX * 0.45,
-                                               y: self.continueButton.frame.minY,
-                                               width: self.continueButton.frame.width,
-                                               height: self.continueButton.frame.height)
-            self.exitButton.frame = CGRect(x: self.exitButton.frame.minX * 1.55,
-                                           y: self.exitButton.frame.minY,
-                                           width: self.exitButton.frame.width,
-                                           height: self.exitButton.frame.height)
+            self.continueButton.frame = CGRect(
+                x: self.continueButton.frame.minX * 0.45,
+                y: self.continueButton.frame.minY,
+                width: self.continueButton.frame.width,
+                height: self.continueButton.frame.height
+            )
+            self.exitButton.frame = CGRect(
+                x: self.exitButton.frame.minX * 1.55,
+                y: self.exitButton.frame.minY,
+                width: self.exitButton.frame.width,
+                height: self.exitButton.frame.height
+            )
         }
     }
     
-    private func createCircleShapeLayer(strokeColor: UIColor, lineWidth: CGFloat) -> CAShapeLayer {
+    private func createCircleShapeLayer(strokeColor: UIColor, lineWidth: CGFloat, startAngle: CGFloat = 0, endAngle: CGFloat = 2 * CGFloat.pi) -> CAShapeLayer {
         let circleShapeLayer = CAShapeLayer()
         let circlePath = UIBezierPath(arcCenter: .zero,
                                       radius: 125,
-                                      startAngle: -CGFloat.pi / 2,
-                                      endAngle: 3 * CGFloat.pi / 2 ,
+                                      startAngle: startAngle,
+                                      endAngle: endAngle,
                                       clockwise: true)
         circleShapeLayer.path = circlePath.cgPath
         circleShapeLayer.strokeColor = strokeColor.cgColor
@@ -306,35 +317,31 @@ class InfinityFocusViewController: UIViewController {
         return circleShapeLayer
     }
     
-    func animateRotation() {
-        let rotateAnimationTime: CGFloat = CGFloat(viewModel?.rotateAnimationTime.value ?? 0) / 10
-        rotateAnimationLayer.strokeEnd = rotateAnimationTime/45 - CGFloat(Int(rotateAnimationTime/45))
-        
-        if self.rotateAnimationLayer.strokeEnd - 1/5 > 0 {
-            self.rotateAnimationLayer.strokeStart = self.rotateAnimationLayer.strokeEnd - 1/5
-        }
-        self.rotateAnimationLayer.strokeStart = self.rotateAnimationLayer.strokeEnd - 1/5 > 0 ? self.rotateAnimationLayer.strokeEnd - 1/5 : 0
+    private func startTimer() {
+        let animation = CABasicAnimation(keyPath: #keyPath(CAShapeLayer.strokeEnd))
+        animation.fromValue = 0
+        animation.toValue = 1
+        animation.duration = 100
+        animation.fillMode = .forwards
+        timeProgressLayer.add(animation, forKey: nil)
+        view.layer.addSublayer(timeProgressLayer)
     }
     
-    func animateWave() {
-        let waveAnimationLayer = createCircleShapeLayer(strokeColor: UIColor.white,
-                                                        lineWidth: 1)
-        view.layer.addSublayer(waveAnimationLayer)
-        
-        let waveAnimation = CABasicAnimation(keyPath: "transform.scale")
-        waveAnimation.toValue = 1.5
-        
-        let fadeOutAnimation = CABasicAnimation(keyPath: "opacity")
-        fadeOutAnimation.fromValue = 1
-        fadeOutAnimation.toValue = 0
-        
-        CATransaction.begin()
-        let animationGroup = CAAnimationGroup()
-        animationGroup.animations = [waveAnimation, fadeOutAnimation]
-        animationGroup.duration = 3
-        animationGroup.repeatCount = 1
-        animationGroup.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
-        waveAnimationLayer.add(animationGroup, forKey: "wave")
-        CATransaction.commit()
+    private func startPulse(second: Int) {
+        self.pulseGroupLayer.sublayers?[second % 4].add(PulseAnimation(), forKey: "pulse")
+    }
+    
+    private func pauseTimerProgressBar() {
+        timeProgressLayer.pauseLayer()
+    }
+    
+    private func resumeTimerProgressBar() {
+        timeProgressLayer.resumeLayer()
+    }
+    
+    private func stopTimer() {
+        timeProgressLayer.removeAllAnimations()
+        timeProgressLayer.removeFromSuperlayer()
+        pulseGroupLayer.sublayers?.forEach({ $0.removeAllAnimations() })
     }
 }
