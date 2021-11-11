@@ -4,7 +4,7 @@
 //
 //  Created by 윤상진 on 2021/11/01.
 //
-
+import AVKit
 import UIKit
 
 import Firebase
@@ -12,8 +12,19 @@ import Firebase
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
         FirebaseApp.configure()
+        
+        do {
+            try AVAudioSession.sharedInstance().setCategory(
+                AVAudioSession.Category.playback,
+                mode: AVAudioSession.Mode.default,
+                options: [.defaultToSpeaker, .allowAirPlay]
+            )
+            try AVAudioSession.sharedInstance().setActive(true)
+        } catch {
+            print(error)
+        }
+
         return true
     }
 
