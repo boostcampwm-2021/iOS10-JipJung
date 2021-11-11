@@ -9,7 +9,7 @@ import Foundation
 
 import RxSwift
 
-class MediaListUseCase {
+final class MediaListUseCase {
     private let mediaListRepository: MediaListRepositoryProtocol
     
     init(mediaListRepository: MediaListRepository) {

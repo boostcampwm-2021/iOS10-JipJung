@@ -12,7 +12,7 @@ import RxSwift
 
 // TODO: Protocol을 이용한 의존성 제거
 
-class AudioPlayUseCase {
+final class AudioPlayUseCase {
     enum AudioError: Error {
         case badURL
     }

@@ -7,6 +7,6 @@
 
 import Foundation
 
-class BaseDataUseCase {
+final class BaseDataUseCase {
     
 }

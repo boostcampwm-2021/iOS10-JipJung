@@ -13,10 +13,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
     
-    let localFileManager: LocalFileAccessible = LocalFileManager()
-    let localDBManager: LocalDBManageable = RealmDBManager()
-    let userDefaultsManager: UserDefaultsStorable = UserDefaultsStorage()
-    let remoteServiceProvider: RemoteServiceAccessible = RemoteServiceProvider()
+    private let localFileManager: LocalFileAccessible = LocalFileManager()
+    private let localDBManager: LocalDBManageable = RealmDBManager()
+    private let userDefaultsManager: UserDefaultsStorable = UserDefaultsStorage()
+    private let remoteServiceProvider: RemoteServiceAccessible = RemoteServiceProvider()
+    
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }

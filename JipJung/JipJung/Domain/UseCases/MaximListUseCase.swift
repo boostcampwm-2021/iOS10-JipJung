@@ -9,7 +9,7 @@ import Foundation
 
 import RxSwift
 
-class MaximListUseCase {
+final class MaximListUseCase {
     private let maximListRepository: MaximListRepositoryProtocol
     
     init(maximListRepository: MaximListRepository) {
