@@ -9,7 +9,7 @@ import Foundation
 
 import RxSwift
 
-final class MediaResourceRepository {
+final class MediaResourceRepository: MediaResourceRepositoryProtocol {
     private let localFileManager: LocalFileAccessible
     private let remoteServiceProvider: RemoteServiceAccessible
     

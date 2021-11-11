@@ -9,7 +9,7 @@ import Foundation
 
 import RxSwift
 
-final class MediaListRepository {
+final class MediaListRepository: MediaListRepositoryProtocol {
     private let localDBManager: LocalDBManageable
     
     init(localDBManager: LocalDBManageable) {

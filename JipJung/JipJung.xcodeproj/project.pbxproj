@@ -26,6 +26,9 @@
 		91D02268273CB5FD0073EA2A /* BrightMedia.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D02267273CB5FD0073EA2A /* BrightMedia.swift.swift */; };
 		91D0226A273CB6050073EA2A /* DarknessMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D02269273CB6050073EA2A /* DarknessMedia.swift */; };
 		91D0226C273CBA340073EA2A /* MediaListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D0226B273CBA340073EA2A /* MediaListUseCase.swift */; };
+		91D0226F273CBBD70073EA2A /* MediaResourceRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D0226E273CBBD70073EA2A /* MediaResourceRepositoryProtocol.swift */; };
+		91D02271273CBBF20073EA2A /* MediaListRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D02270273CBBF20073EA2A /* MediaListRepositoryProtocol.swift */; };
+		91D02273273CBC040073EA2A /* MaximListRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D02272273CBC040073EA2A /* MaximListRepositoryProtocol.swift */; };
 		91DABCC0273A4EF000E57AAE /* AudioPlayUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DABCBF273A4EF000E57AAE /* AudioPlayUseCase.swift */; };
 		91DABCC2273A651400E57AAE /* test2.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 91DABCC1273A64FD00E57AAE /* test2.mp4 */; };
 		91E4178927312FEB001BA0A6 /* LocalFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E4178827312FEB001BA0A6 /* LocalFileManager.swift */; };
@@ -126,6 +129,9 @@
 		91D02267273CB5FD0073EA2A /* BrightMedia.swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrightMedia.swift.swift; sourceTree = "<group>"; };
 		91D02269273CB6050073EA2A /* DarknessMedia.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarknessMedia.swift; sourceTree = "<group>"; };
 		91D0226B273CBA340073EA2A /* MediaListUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaListUseCase.swift; sourceTree = "<group>"; };
+		91D0226E273CBBD70073EA2A /* MediaResourceRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaResourceRepositoryProtocol.swift; sourceTree = "<group>"; };
+		91D02270273CBBF20073EA2A /* MediaListRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaListRepositoryProtocol.swift; sourceTree = "<group>"; };
+		91D02272273CBC040073EA2A /* MaximListRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaximListRepositoryProtocol.swift; sourceTree = "<group>"; };
 		91DABCBF273A4EF000E57AAE /* AudioPlayUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayUseCase.swift; sourceTree = "<group>"; };
 		91DABCC1273A64FD00E57AAE /* test2.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = test2.mp4; sourceTree = "<group>"; };
 		91E4178827312FEB001BA0A6 /* LocalFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFileManager.swift; sourceTree = "<group>"; };
@@ -279,6 +285,16 @@
 				91DABCBF273A4EF000E57AAE /* AudioPlayUseCase.swift */,
 			);
 			path = UseCases;
+			sourceTree = "<group>";
+		};
+		91D0226D273CBB590073EA2A /* Interfaces */ = {
+			isa = PBXGroup;
+			children = (
+				91D0226E273CBBD70073EA2A /* MediaResourceRepositoryProtocol.swift */,
+				91D02270273CBBF20073EA2A /* MediaListRepositoryProtocol.swift */,
+				91D02272273CBC040073EA2A /* MaximListRepositoryProtocol.swift */,
+			);
+			path = Interfaces;
 			sourceTree = "<group>";
 		};
 		91E4174C27312E5A001BA0A6 /* Infra */ = {
@@ -461,6 +477,7 @@
 		DDB5CEAC2733727600E8F9EB /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				91D0226D273CBB590073EA2A /* Interfaces */,
 				91CE6F7627391FF700176AF2 /* UseCases */,
 				DDB5CEAD2733728100E8F9EB /* Entities */,
 			);
@@ -774,6 +791,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				91D02271273CBBF20073EA2A /* MediaListRepositoryProtocol.swift in Sources */,
 				DF08B1DD2737F5010066518B /* RemoteServiceProvider.swift in Sources */,
 				B4F36B682733D4210073609C /* SearchTableViewCell.swift in Sources */,
 				B40D1FB9273B674F00881A49 /* InfinityFocusViewController.swift in Sources */,
@@ -783,6 +801,7 @@
 				DDB5CEB32733752D00E8F9EB /* FavoriteMedia.swift in Sources */,
 				91655854273B6EE800C55CDC /* LocalDBManagable.swift in Sources */,
 				DDB92B9D2737BD5E00EE26F0 /* UIView+Extension.swift in Sources */,
+				91D02273273CBC040073EA2A /* MaximListRepositoryProtocol.swift in Sources */,
 				DDB5CEB32733752D00E8F9EB /* FavoriteMedia.swift in Sources */,
 				DDB92BB0273A263100EE26F0 /* MusicCollectionViewCell.swift in Sources */,
 				DDB5CEB32733752D00E8F9EB /* FavoriteMedia.swift in Sources */,
@@ -824,6 +843,7 @@
 				91CE6F6F2739024800176AF2 /* Home+Enums.swift in Sources */,
 				91EA47C42738451100780C3E /* BlurEffect.swift in Sources */,
 				9165585E273B8F5000C55CDC /* MaximListRepository.swift in Sources */,
+				91D0226F273CBBD70073EA2A /* MediaResourceRepositoryProtocol.swift in Sources */,
 				B40D1FAB273B5F2100881A49 /* DefaultFocusViewModel.swift in Sources */,
 				91DABCC0273A4EF000E57AAE /* AudioPlayUseCase.swift in Sources */,
 				91D02268273CB5FD0073EA2A /* BrightMedia.swift.swift in Sources */,

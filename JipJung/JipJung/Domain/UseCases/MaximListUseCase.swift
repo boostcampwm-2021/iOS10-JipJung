@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 
 class MaximListUseCase {
-    private let maximListRepository: MaximListRepository
+    private let maximListRepository: MaximListRepositoryProtocol
     
     init(maximListRepository: MaximListRepository) {
         self.maximListRepository = maximListRepository

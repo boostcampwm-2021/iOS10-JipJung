@@ -43,7 +43,10 @@ class HomeViewController: UIViewController {
     private let bottomViewHeight = SystemConstants.deviceScreenSize.height
     private let focusButtonSize: (width: CGFloat, height: CGFloat) = (60, 90)
     
+    var localFileManager: LocalFileAccessible?
     var localDBManager: LocalDBManageable?
+    var userDefaultsManager: UserDefaultsStorable?
+    var remoteServiceProvider: RemoteServiceAccessible?
     
     private var viewModel: HomeViewModel?
     private var videoPlayer: AVPlayer?
@@ -63,7 +66,12 @@ class HomeViewController: UIViewController {
     }
     
     private func configureViewModel() {
-        guard let localDBManager = localDBManager else { return }
+        guard let localFileManager = localFileManager,
+              let localDBManager = localDBManager,
+              let remoteServiceProvider = remoteServiceProvider
+        else {
+            return
+        }
 
         let mediaListUseCase = MediaListUseCase(
             mediaListRepository: MediaListRepository(localDBManager: localDBManager)
@@ -73,7 +81,12 @@ class HomeViewController: UIViewController {
             maximListRepository: MaximListRepository(localDBManager: localDBManager)
         )
         
-        let audioPlayUseCase = AudioPlayUseCase()
+        let audioPlayUseCase = AudioPlayUseCase(
+            mediaResourceRepository: MediaResourceRepository(
+                localFileManager: localFileManager,
+                remoteServiceProvider: remoteServiceProvider
+            )
+        )
         
         viewModel = HomeViewModel(
             mediaListUseCase: mediaListUseCase,

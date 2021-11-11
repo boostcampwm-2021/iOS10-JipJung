@@ -15,6 +15,12 @@ class AudioPlayUseCase {
         case badURLError
     }
     
+    private let mediaResourceRepository: MediaResourceRepositoryProtocol
+    
+    init(mediaResourceRepository: MediaResourceRepositoryProtocol) {
+        self.mediaResourceRepository = mediaResourceRepository
+    }
+    
     private var url = URL(string: "")
     private(set) var audioPlayer: AVAudioPlayer?
     

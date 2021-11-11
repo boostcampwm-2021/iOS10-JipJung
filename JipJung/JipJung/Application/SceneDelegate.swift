@@ -55,7 +55,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let homeViewController = HomeViewController()
         homeViewController.tabBarItem = tabBarItem
+        homeViewController.localFileManager = localFileManager
         homeViewController.localDBManager = localDBManager
+        homeViewController.userDefaultsManager = userDefaultsManager
+        homeViewController.remoteServiceProvider = remoteServiceProvider
         return homeViewController
     }
     

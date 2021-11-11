@@ -9,14 +9,13 @@ import Foundation
 
 import RxSwift
 
-final class MaximListRepository {
+final class MaximListRepository: MaximListRepositoryProtocol {
     private let localDBManager: LocalDBManageable
     
     init(localDBManager: LocalDBManageable) {
         self.localDBManager = localDBManager
     }
     
-    // TODO: fetchAllMaximList로 변경
     func fetchAllMaximList() -> Single<[Maxim]> {
         return localDBManager.requestAllMaximList()
     }
