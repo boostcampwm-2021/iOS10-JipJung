@@ -29,6 +29,18 @@ class DefaultFocusViewController: UIViewController {
         return circleShapeLayer
     }()
     
+    private lazy var timeProgressLayer: CAShapeLayer = {
+        let timeProgressLayer = createCircleShapeLayer(
+            strokeColor: .secondarySystemBackground,
+            lineWidth: 3,
+            startAngle: -CGFloat.pi / 2,
+            endAngle: 3 * CGFloat.pi / 2
+        )
+        timeProgressLayer.fillColor = nil
+        return timeProgressLayer
+    }()
+    private let pulseGroupLayer = CALayer()
+    
     private lazy var startButton: UIButton = {
         let startButton = UIButton()
         startButton.tintColor = .gray
@@ -78,20 +90,6 @@ class DefaultFocusViewController: UIViewController {
         exitButton.layer.borderWidth = 2
         return exitButton
     }()
-    
-    private lazy var timeProgressLayer: CAShapeLayer = {
-        let timeProgressLayer = createCircleShapeLayer(
-            strokeColor: .secondarySystemBackground,
-            lineWidth: 3,
-            startAngle: -CGFloat.pi / 2,
-            endAngle: 3 * CGFloat.pi / 2
-        )
-        timeProgressLayer.fillColor = nil
-        return timeProgressLayer
-    }()
-    
-    private let pulsesLayer = CALayer()
-    private var pulseCreateSupportTimer: Timer?
     
     // MARK: - Private Variables
     
@@ -167,10 +165,11 @@ class DefaultFocusViewController: UIViewController {
     }
     
     private func configurePulseLayer() {
-        view.layer.addSublayer(pulsesLayer)
-        for _ in 1...4 {
+        view.layer.addSublayer(pulseGroupLayer)
+        let pulseCount = 4
+        for _ in 0..<pulseCount {
             let pulseLayer = createCircleShapeLayer(strokeColor: .secondarySystemBackground, lineWidth: 1)
-            pulsesLayer.addSublayer(pulseLayer)
+            pulseGroupLayer.addSublayer(pulseLayer)
         }
     }
     
@@ -217,7 +216,6 @@ class DefaultFocusViewController: UIViewController {
             case .ready:
                 self.changeStateToReady()
                 self.stopTimer()
-                print("stop")
             case .running(let isContinue):
                 self.changeStateToRunning()
                 isContinue ? self.resumeTimerProgressBar() : self.startTimer()
@@ -330,8 +328,7 @@ class DefaultFocusViewController: UIViewController {
     }
     
     private func startPulse(second: Int) {
-        print("hi")
-        self.pulsesLayer.sublayers?[second % 4].add(PulseAnimation(), forKey: "pulse")
+        self.pulseGroupLayer.sublayers?[second % 4].add(PulseAnimation(), forKey: "pulse")
     }
     
     private func pauseTimerProgressBar() {
@@ -345,6 +342,6 @@ class DefaultFocusViewController: UIViewController {
     private func stopTimer() {
         timeProgressLayer.removeAllAnimations()
         timeProgressLayer.removeFromSuperlayer()
-        pulsesLayer.sublayers?.forEach({ $0.removeAllAnimations() })
+        pulseGroupLayer.sublayers?.forEach({ $0.removeAllAnimations() })
     }
 }

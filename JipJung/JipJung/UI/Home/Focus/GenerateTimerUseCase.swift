@@ -16,7 +16,7 @@ protocol GenerateTimerUseCaseProtocol {
 final class GenerateTimerUseCase: GenerateTimerUseCaseProtocol {
     func execute(seconds interval: Int) -> Observable<Int> {
         return Observable<Int>.interval(RxTimeInterval.seconds(interval),
-                                                          scheduler: MainScheduler.instance)
+                                        scheduler: MainScheduler.instance)
     }
     
     func execute(milliseconds interval: Int) -> Observable<Int> {

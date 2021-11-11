@@ -10,8 +10,8 @@ import UIKit
 import SnapKit
 
 class BlurCircleButton: UIView {
-    typealias Listner = () -> Void
-    var buttonClickListner: Listner?
+    typealias Listener = () -> Void
+    var buttonClickListener: Listener?
     
     let iconBackground: UIView = {
         let view = UIView()
@@ -40,7 +40,6 @@ class BlurCircleButton: UIView {
         let gesture = UITapGestureRecognizer(target: self, action: #selector(buttonClicked(_:)))
         gesture.numberOfTapsRequired = 1
         addGestureRecognizer(gesture)
-        isUserInteractionEnabled = true
     }
     
     private func configureIconBackground() {
@@ -52,7 +51,6 @@ class BlurCircleButton: UIView {
     }
     
     @objc func buttonClicked(_ sender: UIGestureRecognizer) {
-        buttonClickListner?()
-        print("hi")
+        buttonClickListener?()
     }
 }

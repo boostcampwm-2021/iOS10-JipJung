@@ -261,7 +261,7 @@ class HomeViewController: UIViewController {
         FocusMode.allCases.forEach { mode in
             let focusView = FocusButton()
             focusView.set(mode: mode)
-            focusView.buttonClickListner = { [weak self] in
+            focusView.buttonClickListener = { [weak self] in
                 let focusViewController = mode.getFocusViewController()
                 self?.present(focusViewController, animated: true, completion: nil)
             }
