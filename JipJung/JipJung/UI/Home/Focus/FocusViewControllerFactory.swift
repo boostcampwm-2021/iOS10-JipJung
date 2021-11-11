@@ -12,7 +12,7 @@ enum FocusViewControllerFactory {
         return DefaultFocusViewController(viewModel: DefaultFocusViewModel(generateTimerUseCase: GenerateTimerUseCase()))
     }
     static func makePomodoroTimer() -> PomodoroFocusViewController {
-        return PomodoroFocusViewController(viewModel: nil)
+        return PomodoroFocusViewController(viewModel: PomodoroFocusViewModel(generateTimerUseCase: GenerateTimerUseCase()))
     }
     static func makeInfinityTimer() -> InfinityFocusViewController {
         let useCase = GenerateTimerUseCase()

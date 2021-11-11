@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 import RxRelay
 
-class DefaultFocusViewController: UIViewController {
+final class DefaultFocusViewController: UIViewController {
     // MARK: - Subviews
     
     private lazy var timeLabel: UILabel = {
@@ -116,8 +116,8 @@ class DefaultFocusViewController: UIViewController {
     
     // MARK: - Helpers
     
-    func configureUI() {
-        view.backgroundColor = .clear
+    private func configureUI() {
+        view.makeBlurBackground()
                 
         view.layer.addSublayer(circleShapeLayer)
         
@@ -173,7 +173,7 @@ class DefaultFocusViewController: UIViewController {
         }
     }
     
-    func bindUI() {
+    private func bindUI() {
         startButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
