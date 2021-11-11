@@ -42,6 +42,8 @@ final class HomeViewModel {
     }
     
     func viewControllerLoaded() {
+        // TODO: UserDefaults에서 현재 mode 정보 가져오기
+        
         mediaListUseCase.fetchMediaMyList(mode: .bright)
             .subscribe { [weak self] in
                 self?.brightMode.accept($0)
