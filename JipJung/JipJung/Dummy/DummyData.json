@@ -8,7 +8,7 @@
       "thumbnailImageFileName": "N000.jpg",
       "videoFileName": "N000.mp4",
       "videoFileSize": 11.9,
-      "audioFileName": "N000_LR.wav",
+      "audioFileName": "N000.wav",
       "audioFileSize": 5.4
     },
     {
@@ -19,7 +19,7 @@
       "thumbnailImageFileName": "N001.jpg",
       "videoFileName": "N001.mp4",
       "videoFileSize": 10.4,
-      "audioFileName": "N001_LR.wav",
+      "audioFileName": "N001.wav",
       "audioFileSize": 4.3
     },
     {
@@ -30,7 +30,7 @@
       "thumbnailImageFileName": "N002.jpg",
       "videoFileName": "N002.mp4",
       "videoFileSize": 14.1,
-      "audioFileName": "N002_LR.wav",
+      "audioFileName": "N002.wav",
       "audioFileSize": 4.9
     },
     {

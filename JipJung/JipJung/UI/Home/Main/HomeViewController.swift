@@ -316,7 +316,7 @@ class HomeViewController: UIViewController {
                 mediaCollectionView.rx.modelSelected(Media.self)
             )
             .bind { [weak self] indexPath, model in
-                guard let result = self?.mediaPlayButtonTouched(audioFileName: "fire_long_24sec.mp3"), // model.audioFileName
+                guard let result = self?.mediaPlayButtonTouched(audioFileName: model.audioFileName),
                       let cell = mediaCollectionView.cellForItem(at: indexPath) as? MediaCollectionViewCell
                 else {
                     return
