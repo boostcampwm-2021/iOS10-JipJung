@@ -39,7 +39,7 @@ final class HomeViewModel {
     }
     
     func viewControllerLoaded() {
-        contentsListUseCase.fetchMediaList(mode: .bright)
+        contentsListUseCase.fetchMediaMyList(mode: .bright)
             .subscribe { [weak self] in
                 self?.brightMode.accept($0)
             } onFailure: { error in
@@ -47,7 +47,7 @@ final class HomeViewModel {
             }
             .disposed(by: bag)
         
-        contentsListUseCase.fetchMediaList(mode: .darkness)
+        contentsListUseCase.fetchMediaMyList(mode: .darkness)
             .subscribe { [weak self] in
                 self?.darknessMode.accept($0)
             } onFailure: { error in

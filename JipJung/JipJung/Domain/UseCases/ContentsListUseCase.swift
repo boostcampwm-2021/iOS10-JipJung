@@ -24,8 +24,12 @@ class ContentsListUseCase {
         self.maximListRepository = maximListRepository
     }
     
-    func fetchMediaList(mode: MediaMode?) -> Single<[Media]> {
-        return mediaListRepository.fetchMediaList(mode: mode)
+    func fetchAllMediaList() -> Single<[Media]> {
+        return mediaListRepository.fetchAllMediaList()
+    }
+    
+    func fetchMediaMyList(mode: MediaMode) -> Single<[Media]> {
+        return mediaListRepository.fetchMediaMyList(mode: mode)
     }
     
     func fetchRecentPlayHistory() -> Single<[Media]> {

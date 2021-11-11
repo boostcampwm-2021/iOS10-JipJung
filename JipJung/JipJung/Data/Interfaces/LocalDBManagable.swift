@@ -14,7 +14,8 @@ protocol LocalDBManageable {
     func search<T: Object>(with predicate: NSPredicate?) -> Single<[T]>
     func write(_ value: Object) -> Single<Bool>
     func delete(_ value: Object) -> Single<Bool>
-    func requestMediaList(mode: MediaMode?) -> Single<[Media]>
+    func requestAllMediaList() -> Single<[Media]>
+    func requestMediaMyList(mode: MediaMode) -> Single<[Media]>
     func requestRecentPlayHistory() -> Single<[Media]>
     func requestFavoriteMediaList() -> Single<[Media]>
     func requestAllMaximList() -> Single<[Maxim]>
