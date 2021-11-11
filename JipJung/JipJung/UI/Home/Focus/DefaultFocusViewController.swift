@@ -398,6 +398,9 @@ extension DefaultFocusViewController: UIPickerViewDelegate {
     
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
         guard let minuteInfo = viewModel?.focusTimeList[row] else { return UILabel() }
+        timePickerView.subviews.forEach {
+            $0.backgroundColor = .clear
+        }
         var pickerLabel: UILabel = UILabel()
         pickerLabel = UILabel()
         pickerLabel.text = "\(minuteInfo)"
