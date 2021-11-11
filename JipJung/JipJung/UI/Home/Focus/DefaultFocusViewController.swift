@@ -13,9 +13,25 @@ import RxRelay
 final class DefaultFocusViewController: FocusViewController {
     // MARK: - Subviews
     
+    private lazy var timePickerView: UIPickerView = {
+        let timePickerView = UIPickerView()
+        timePickerView.delegate = self
+        timePickerView.dataSource = self
+        
+        return timePickerView
+    }()
+    
+    private lazy var minuteLabel: UILabel = {
+        let minuteLabel = UILabel()
+        minuteLabel.text = "min"
+        minuteLabel.textColor = .systemGray
+        
+        return minuteLabel
+    }()
+    
     private lazy var timeLabel: UILabel = {
         let timeLabel = UILabel()
-        timeLabel.text = "00:00"
+        timeLabel.text = "01:00"
         timeLabel.font = UIFont.boldSystemFont(ofSize: 35)
         timeLabel.textColor = .white
         return timeLabel
@@ -127,6 +143,17 @@ final class DefaultFocusViewController: FocusViewController {
             $0.centerX.equalToSuperview()
         }
         
+        view.addSubview(timePickerView)
+        timePickerView.snp.makeConstraints {
+            $0.center.equalTo(timeLabel)
+        }
+        
+        view.addSubview(minuteLabel)
+        minuteLabel.snp.makeConstraints {
+            $0.centerY.equalTo(timePickerView)
+            $0.centerX.equalTo(timePickerView.snp.centerX).offset(60)
+        }
+        
         view.addSubview(startButton)
         startButton.snp.makeConstraints {
             $0.top.equalTo(view.snp.centerY).multipliedBy(1.4)
@@ -204,8 +231,14 @@ final class DefaultFocusViewController: FocusViewController {
         
         viewModel?.clockTime
             .bind(onNext: { [weak self] in
-                guard let self = self, $0 > 0 else { return }
-                self.timeLabel.text = $0.digitalClockFormatted
+                guard let self = self, $0 > 0,
+                      let focusTime = self.viewModel?.focusTime
+                else { return }
+                if $0 == focusTime {
+                    self.viewModel?.resetClockTimer()
+                    return
+                }
+                self.timeLabel.text = (focusTime - $0).digitalClockFormatted
                 self.startPulse(second: $0)
             })
             .disposed(by: disposeBag)
@@ -227,7 +260,11 @@ final class DefaultFocusViewController: FocusViewController {
     }
     
     private func changeStateToReady() {
+        timeLabel.text = viewModel?.focusTime.digitalClockFormatted
         pauseButton.isHidden = true
+        timeLabel.isHidden = true
+        timePickerView.isHidden = false
+        minuteLabel.isHidden = false
         
         UIView.animate(withDuration: 0.5) { [weak self] in
             guard let self = self else { return }
@@ -252,6 +289,9 @@ final class DefaultFocusViewController: FocusViewController {
     
     private func changeStateToRunning() {
         startButton.isHidden = true
+        timeLabel.isHidden = false
+        timePickerView.isHidden = true
+        minuteLabel.isHidden = true
         
         UIView.animate(withDuration: 0.5) { [weak self] in
             guard let self = self else { return }
@@ -279,6 +319,9 @@ final class DefaultFocusViewController: FocusViewController {
     private func changeStateToPaused() {
         startButton.isHidden = true
         pauseButton.isHidden = true
+        timeLabel.isHidden = false
+        timePickerView.isHidden = true
+        minuteLabel.isHidden = true
 
         UIView.animate(withDuration: 0.5) { [weak self] in
             guard let self = self else { return }
@@ -345,3 +388,38 @@ final class DefaultFocusViewController: FocusViewController {
         pulseGroupLayer.sublayers?.forEach({ $0.removeAllAnimations() })
     }
 }
+
+extension DefaultFocusViewController: UIPickerViewDelegate {
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        let focusTime = (viewModel?.focusTimeList[row] ?? 0) * 60
+        viewModel?.setFocusTime(seconds: focusTime)
+        self.timeLabel.text = focusTime.digitalClockFormatted
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        guard let minuteInfo = viewModel?.focusTimeList[row] else { return UILabel() }
+        var pickerLabel: UILabel = UILabel()
+        pickerLabel = UILabel()
+        pickerLabel.text = "\(minuteInfo)"
+        pickerLabel.textColor = UIColor.white
+        pickerLabel.font = UIFont.systemFont(ofSize: 35)
+        pickerLabel.textAlignment = .center
+        
+        return pickerLabel
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
+        return 80
+    }
+}
+
+extension DefaultFocusViewController: UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+     
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return viewModel?.focusTimeList.count ?? 0
+    }
+}
+

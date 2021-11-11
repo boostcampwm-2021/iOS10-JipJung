@@ -14,17 +14,21 @@ protocol DefaultFocusViewModelInput {
     func pauseClockTimer()
     func resetClockTimer()
     func startWaveAnimationTimer()
+    func setFocusTime(seconds: Int)
 }
 
 protocol DefaultFocusViewModelOutput {
     var clockTime: BehaviorRelay<Int> { get }
     var waveAnimationTime: BehaviorRelay<Int> { get }
+    var focusTimeList: [Int] { get }
 }
 
 final class DefaultFocusViewModel: DefaultFocusViewModelInput, DefaultFocusViewModelOutput {
     var clockTime: BehaviorRelay<Int> = BehaviorRelay<Int>(value: 0)
     var waveAnimationTime: BehaviorRelay<Int> = BehaviorRelay<Int>(value: 0)
     var timerState: BehaviorRelay<TimerState> = BehaviorRelay<TimerState>(value: .ready)
+    var focusTimeList: [Int] = [1, 5, 8, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180]
+    var focusTime: Int = 0
     
     private var runningStateDisposeBag: DisposeBag = DisposeBag()
     private var disposeBag: DisposeBag = DisposeBag()
@@ -33,6 +37,7 @@ final class DefaultFocusViewModel: DefaultFocusViewModelInput, DefaultFocusViewM
     
     init(generateTimerUseCase: GenerateTimerUseCaseProtocol) {
         self.generateTimerUseCase = generateTimerUseCase
+        self.focusTime = focusTimeList[0] * 60
     }
     
     func startClockTimer() {
@@ -67,5 +72,9 @@ final class DefaultFocusViewModel: DefaultFocusViewModelInput, DefaultFocusViewM
                 self.waveAnimationTime.accept(self.waveAnimationTime.value + 1)
             }
             .disposed(by: runningStateDisposeBag)
+    }
+    
+    func setFocusTime(seconds: Int) {
+        focusTime = seconds
     }
 }
