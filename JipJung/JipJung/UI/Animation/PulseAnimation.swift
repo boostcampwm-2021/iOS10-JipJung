@@ -5,7 +5,7 @@
 //  Created by 윤상진 on 2021/11/10.
 //
 
-import UIKit
+import QuartzCore
 
 class PulseAnimation: CAAnimationGroup {
     override init() {

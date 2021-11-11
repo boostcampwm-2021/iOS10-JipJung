@@ -48,6 +48,11 @@ final class InfinityFocusViewModel: InfinityFocusViewModelInput, InfinityFocusVi
     }
     
     func startClockTimer() {
+        if timerState.value == .paused {
+            timerState.accept(.running(isContinue: true))
+        } else if timerState.value == .ready {
+            timerState.accept(.running(isContinue: false))
+        }
         generateTimerUseCase.execute(seconds: 1)
             .subscribe { [weak self] _ in
                 guard let self = self else { return }

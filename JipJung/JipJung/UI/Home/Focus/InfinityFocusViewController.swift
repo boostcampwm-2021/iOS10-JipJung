@@ -29,11 +29,8 @@ class InfinityFocusViewController: UIViewController {
         return circleShapeLayer
     }()
     
-    private lazy var cometAnimationLayer: CAShapeLayer = {
-        let rotateAnimationLayer = createCircleShapeLayer(
-            strokeColor: UIColor.white,
-            lineWidth: 3
-        )
+    private lazy var cometAnimationLayer: CALayer = {
+        let rotateAnimationLayer = createCometCircleShapeLayer(strokeColor: .white, lineWidth: 3, startAngle: 0, endAngle: 0.5 * CGFloat.pi)
         return rotateAnimationLayer
     }()
     
@@ -98,13 +95,17 @@ class InfinityFocusViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        viewModel?.startRotateAnimationTimer()
+    
         configurePulseLayer()
-//        configureProgressBar()
         configureUI()
-        
+        configureCometLayer()
         bindUI()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // MARK: viewDidLoad에 추가시 동작안함.., congfigureCometLayer에 같이 포함시키면 레이아웃이 틀어짐...
+        cometAnimationLayer.add(CycleAnimation(), forKey: nil)
     }
     
     // MARK: - Initializer
@@ -113,14 +114,12 @@ class InfinityFocusViewController: UIViewController {
         self.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
     }
-    
     // MARK: - Helpers
     
     func configureUI() {
         view.makeBlurBackground()
                 
         view.layer.addSublayer(circleShapeLayer)
-        view.layer.addSublayer(cometAnimationLayer)
         
         view.addSubview(timeLabel)
         timeLabel.snp.makeConstraints {
@@ -168,6 +167,10 @@ class InfinityFocusViewController: UIViewController {
             let pulseLayer = createCircleShapeLayer(strokeColor: .secondarySystemBackground, lineWidth: 1)
             pulseGroupLayer.addSublayer(pulseLayer)
         }
+    }
+    
+    private func configureCometLayer() {
+        view.layer.addSublayer(cometAnimationLayer)
     }
     
     func bindUI() {
@@ -225,7 +228,7 @@ class InfinityFocusViewController: UIViewController {
         
         viewModel?.rotateAnimationTime
             .bind(onNext: { [weak self] _ in
-                self?.animateRotation()
+//                self?.animateRotation()
             })
             .disposed(by: disposeBag)
     }
@@ -321,22 +324,7 @@ class InfinityFocusViewController: UIViewController {
         return circleShapeLayer
     }
     
-    func animateRotation() {
-        let rotateAnimationTime: CGFloat = CGFloat(viewModel?.rotateAnimationTime.value ?? 0) / 10
-        cometAnimationLayer.strokeEnd = rotateAnimationTime/45 - CGFloat(Int(rotateAnimationTime/45))
-        
-        if self.cometAnimationLayer.strokeEnd - 1/5 > 0 {
-            self.cometAnimationLayer.strokeStart = self.cometAnimationLayer.strokeEnd - 1/5
-        }
-        self.cometAnimationLayer.strokeStart = self.cometAnimationLayer.strokeEnd - 1/5 > 0 ? self.cometAnimationLayer.strokeEnd - 1/5 : 0
-    }
-    
     private func startTimer() {
-        let animation = CABasicAnimation(keyPath: #keyPath(CAShapeLayer.strokeEnd))
-        animation.fromValue = 0
-        animation.toValue = 1
-        animation.duration = 100
-        animation.fillMode = .forwards
     }
     
     private func startPulse(second: Int) {
@@ -351,5 +339,30 @@ class InfinityFocusViewController: UIViewController {
     
     private func stopTimer() {
         pulseGroupLayer.sublayers?.forEach({ $0.removeAllAnimations() })
+    }
+    
+    private func createCometCircleShapeLayer(strokeColor: UIColor, lineWidth: CGFloat, startAngle: CGFloat = 0, endAngle: CGFloat = 2 * CGFloat.pi) -> CALayer {
+        let circleShapeLayer = CAShapeLayer()
+        let circlePath = UIBezierPath(arcCenter: .zero,
+                                      radius: 125,
+                                      startAngle: startAngle,
+                                      endAngle: endAngle,
+                                      clockwise: true)
+        
+        circleShapeLayer.path = circlePath.cgPath
+        circleShapeLayer.strokeColor = strokeColor.cgColor
+        circleShapeLayer.lineCap = CAShapeLayerLineCap.round
+        circleShapeLayer.lineWidth = lineWidth
+        circleShapeLayer.fillColor = UIColor.clear.cgColor
+        let centerX = view.center.x
+        let centerY = view.center.y * 0.7
+        circleShapeLayer.position = CGPoint(x: centerX, y: centerY)
+        
+//        let gradient = CAGradientLayer()
+//        gradient.frame = UIScreen.main.bounds
+//        gradient.position = CGPoint(x: centerX, y: centerY)
+//        gradient.colors = [UIColor.clear.cgColor, UIColor.red.cgColor]
+//        gradient.mask = circleShapeLayer
+        return circleShapeLayer
     }
 }
