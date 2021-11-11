@@ -29,7 +29,11 @@ final class InfinityFocusViewModel: InfinityFocusViewModelInput, InfinityFocusVi
     var clockTime: BehaviorRelay<Int> = BehaviorRelay<Int>(value: 0)
     var rotateAnimationTime: BehaviorRelay<Int> = BehaviorRelay<Int>(value: 0)
     var waveAnimationTime: BehaviorRelay<Int> = BehaviorRelay<Int>(value: 0)
+<<<<<<< HEAD
     var isFocusRecordSaved: BehaviorRelay<Bool> = BehaviorRelay<Bool>(value: false)
+=======
+    var timerState: BehaviorRelay<TimerState> = BehaviorRelay<TimerState>(value: .ready)
+>>>>>>> 41591e0 (✨ InfinityFocusView 관련 로직 수정)
     
     private var runningStateDisposeBag: DisposeBag = DisposeBag()
     private var disposeBag: DisposeBag = DisposeBag()
@@ -53,10 +57,12 @@ final class InfinityFocusViewModel: InfinityFocusViewModelInput, InfinityFocusVi
     }
     
     func pauseClockTimer() {
+        timerState.accept(.paused)
         runningStateDisposeBag = DisposeBag()
     }
     
     func resetClockTimer() {
+        timerState.accept(.ready)
         clockTime.accept(0)
         runningStateDisposeBag = DisposeBag()
     }
