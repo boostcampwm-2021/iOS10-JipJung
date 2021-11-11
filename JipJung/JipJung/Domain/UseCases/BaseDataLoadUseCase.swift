@@ -19,7 +19,7 @@ class BaseDataLoadUseCase {
     }
     
     func load() {
-        guard let url = Bundle.main.url(forResource: "data", withExtension: "json"),
+        guard let url = Bundle.main.url(forResource: "DummyData", withExtension: "json"),
               let jsonData = try? JSONSerialization.jsonObject(with: Data(contentsOf: url))
         else {
             return

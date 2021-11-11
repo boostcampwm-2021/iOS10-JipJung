@@ -1,0 +1,150 @@
+{
+  "Media": [
+    {
+      "id": "N000",
+      "name": "귀뚜라미",
+      "mode": 0,
+      "tag": "자연/야외",
+      "thumbnailImageFileName": "귀뚜라미.jpg",
+      "videoFileName": "귀뚜라미.mp4",
+      "videoFileSize": 11.9,
+      "audioFileName": "귀뚜라미_LR.wav",
+      "audioFileSize": 5.4
+    },
+    {
+      "id": "N001",
+      "name": "낙엽밟는소리",
+      "mode": 0,
+      "tag": "자연/야외/가을",
+      "thumbnailImageFileName": "낙엽밟는소리.jpg",
+      "videoFileName": "낙엽밟는소리.mp4",
+      "videoFileSize": 10.4,
+      "audioFileName": "낙엽밟는소리_LR.wav",
+      "audioFileSize": 4.3
+    },
+    {
+      "id": "N002",
+      "name": "낙엽에떨어지는가을비소리",
+      "mode": 0,
+      "tag": "자연/야외/가을/비",
+      "thumbnailImageFileName": "낙엽에떨어지는가을비소리.jpg",
+      "videoFileName": "낙엽에떨어지는가을비소리.mp4",
+      "videoFileSize": 14.1,
+      "audioFileName": "낙엽에떨어지는가을비소리_LR.wav",
+      "audioFileSize": 4.9
+    },
+    {
+      "id": "N003",
+      "name": "파도갈매기소리",
+      "mode": 0,
+      "tag": "자연/야외/물/새",
+      "thumbnailImageFileName": "파도갈매기소리.jpg",
+      "videoFileName": "파도갈매기소리.mp4",
+      "videoFileSize": 9.2,
+      "audioFileName": "파도갈매기소리_LR.wav",
+      "audioFileSize": 5.1
+    },
+    {
+      "id": "N004",
+      "name": "시냇물과새소리",
+      "mode": 0,
+      "tag": "자연/야외/물/새",
+      "thumbnailImageFileName": "시냇물과새소리.jpg",
+      "videoFileName": "시냇물과새소리.mp4",
+      "videoFileSize": 14.1,
+      "audioFileName": "시냇물과새소리_LR.wav",
+      "audioFileSize": 6.1
+    },
+    {
+      "id": "N005",
+      "name": "아침숲속새소리",
+      "mode": 0,
+      "tag": "자연/야외/숲/새",
+      "thumbnailImageFileName": "아침숲속새소리.jpg",
+      "videoFileName": "아침숲속새소리.mp4",
+      "videoFileSize": 8.7,
+      "audioFileName": "아침숲속새소리_LR.wav",
+      "audioFileSize": 5.8
+    },
+    {
+      "id": "N006",
+      "name": "작은폭포소리",
+      "mode": 0,
+      "tag": "자연/야외/물",
+      "thumbnailImageFileName": "작은폭포소리.jpg",
+      "videoFileName": "작은폭포소리.mp4",
+      "videoFileSize": 13.5,
+      "audioFileName": "작은폭포소리_LR.wav",
+      "audioFileSize": 3.3
+    },
+    {
+      "id": "N007",
+      "name": "큰폭포소리",
+      "mode": 0,
+      "tag": "자연/야외/물",
+      "thumbnailImageFileName": "큰폭포소리.jpg",
+      "videoFileName": "큰폭포소리.mp4",
+      "videoFileSize": 5.2,
+      "audioFileName": "큰폭포소리_LR.wav",
+      "audioFileSize": 3.6
+    }
+  ],
+  "PlayHistory": [
+    {
+      "id": "N002",
+      "addDate": "2021-11-01T00:00:00.000Z"
+    },
+    {
+      "id": "N002",
+      "addDate": "2021-11-01T00:00:00.000Z"
+    },
+    {
+      "id": "N006",
+      "addDate": "2021-11-03T00:00:00.000Z"
+    },
+    {
+      "id": "N002",
+      "addDate": "2021-11-10T00:00:00.000Z"
+    },
+    {
+      "id": "N008",
+      "addDate": "2021-11-11T00:00:00.000Z"
+    }
+  ],
+  "FavoriteMedia": [
+    {
+      "id": "N001",
+      "addDate": "2021-11-01T00:00:00.000Z"
+    },
+    {
+      "id": "N002",
+      "addDate": "2021-11-01T00:00:00.000Z"
+    },
+    {
+      "id": "N003",
+      "addDate": "2021-11-03T00:00:00.000Z"
+    }
+  ],
+  "BrightMedia": [
+    {
+      "id": "N002"
+    },
+    {
+      "id": "N004"
+    },
+    {
+      "id": "N006"
+    }
+  ],
+  "DarknessMedia": [
+    {
+      "id": "N003"
+    },
+    {
+      "id": "N005"
+    },
+    {
+      "id": "N006"
+    }
+  ]
+}
