@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-class PlayerMaximView: UIView {
+class MusicPlayerMaximView: UIView {
     let maximLabel: UILabel = {
         let label = UILabel()
         let words = """

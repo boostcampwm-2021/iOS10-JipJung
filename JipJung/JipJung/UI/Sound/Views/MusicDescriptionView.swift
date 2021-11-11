@@ -76,9 +76,8 @@ class MusicDescriptionView: UIView {
         streamingButton.snp.makeConstraints { make in
             make.top.trailing.equalToSuperview()
             make.height.equalTo(titleLabel.snp.height)
-            make.width.equalTo(streamingButton.snp.height)
         }
-
+        
         titleLabel.snp.makeConstraints { make in
             make.leading.top.equalToSuperview()
             make.trailing.equalTo(streamingButton.snp.leading)

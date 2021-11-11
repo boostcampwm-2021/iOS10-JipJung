@@ -27,11 +27,11 @@ class MusicPlayerViewController: UIViewController {
     
     let musicDescriptionView = MusicDescriptionView()
 
-    let maximTextView = PlayerMaximView()
+    let maximTextView = MusicPlayerMaximView()
     
-    let backButton = PlayerBackButton()
+    let backButton = BackCircleButton()
     
-    let favoriteButton = FavoriteButton()
+    let favoriteButton = FavoriteCircleButton()
     
     let playButton: UIButton = {
         let button = UIButton(type: .system)
