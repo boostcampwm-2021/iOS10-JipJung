@@ -11,7 +11,8 @@ import RxSwift
 import RxRelay
 
 final class HomeViewModel {
-    let contentsListUseCase: ContentsListUseCase
+    let mediaListUseCase: MediaListUseCase
+    let maximListUseCase: MaximListUseCase
     let audioPlayUseCase: AudioPlayUseCase
     
     let bag = DisposeBag()
@@ -24,10 +25,12 @@ final class HomeViewModel {
     let isPlaying = BehaviorRelay(value: false)
     
     init(
-        contentsListUseCase: ContentsListUseCase,
+        mediaListUseCase: MediaListUseCase,
+        maximListUseCase: MaximListUseCase,
         audioPlayUseCase: AudioPlayUseCase
     ) {
-        self.contentsListUseCase = contentsListUseCase
+        self.mediaListUseCase = mediaListUseCase
+        self.maximListUseCase = maximListUseCase
         self.audioPlayUseCase = audioPlayUseCase
         
         Observable
@@ -39,7 +42,7 @@ final class HomeViewModel {
     }
     
     func viewControllerLoaded() {
-        contentsListUseCase.fetchMediaMyList(mode: .bright)
+        mediaListUseCase.fetchMediaMyList(mode: .bright)
             .subscribe { [weak self] in
                 self?.brightMode.accept($0)
             } onFailure: { error in
@@ -47,7 +50,7 @@ final class HomeViewModel {
             }
             .disposed(by: bag)
         
-        contentsListUseCase.fetchMediaMyList(mode: .darkness)
+        mediaListUseCase.fetchMediaMyList(mode: .darkness)
             .subscribe { [weak self] in
                 self?.darknessMode.accept($0)
             } onFailure: { error in
@@ -55,7 +58,7 @@ final class HomeViewModel {
             }
             .disposed(by: bag)
         
-        contentsListUseCase.fetchRecentPlayHistory()
+        mediaListUseCase.fetchRecentPlayHistory()
             .subscribe { [weak self] in
                 self?.recentPlayHistory.accept($0)
             } onFailure: { error in
@@ -63,7 +66,7 @@ final class HomeViewModel {
             }
             .disposed(by: bag)
         
-        contentsListUseCase.fetchFavoriteMediaList()
+        mediaListUseCase.fetchFavoriteMediaList()
             .subscribe { [weak self] in
                 self?.favoriteSoundList.accept($0)
             } onFailure: { error in

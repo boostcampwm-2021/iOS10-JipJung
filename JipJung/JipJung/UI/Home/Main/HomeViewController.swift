@@ -65,15 +65,19 @@ class HomeViewController: UIViewController {
     private func configureViewModel() {
         guard let localDBManager = localDBManager else { return }
 
-        let contentsListUseCase = ContentsListUseCase(
-            mediaListRepository: MediaListRepository(localDBManager: localDBManager),
+        let mediaListUseCase = MediaListUseCase(
+            mediaListRepository: MediaListRepository(localDBManager: localDBManager)
+        )
+        
+        let maximListUseCase = MaximListUseCase(
             maximListRepository: MaximListRepository(localDBManager: localDBManager)
         )
         
         let audioPlayUseCase = AudioPlayUseCase()
         
         viewModel = HomeViewModel(
-            contentsListUseCase: contentsListUseCase,
+            mediaListUseCase: mediaListUseCase,
+            maximListUseCase: maximListUseCase,
             audioPlayUseCase: audioPlayUseCase
         )
     }
