@@ -36,8 +36,8 @@ class ContentsListUseCase {
         return mediaListRepository.fetchFavoriteMediaList()
     }
     
-    func fetchMaximList() -> Single<[Maxim]> {
-        return maximListRepository.fetchMaximList()
+    func fetchAllMaximList() -> Single<[Maxim]> {
+        return maximListRepository.fetchAllMaximList()
     }
     
     func fetchFavoriteMaximList() -> Single<[Maxim]> {

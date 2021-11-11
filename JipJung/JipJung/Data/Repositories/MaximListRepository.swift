@@ -17,8 +17,8 @@ final class MaximListRepository {
     }
     
     // TODO: fetchAllMaximList로 변경
-    func fetchMaximList() -> Single<[Maxim]> {
-        return localDBManager.requestMaximList()
+    func fetchAllMaximList() -> Single<[Maxim]> {
+        return localDBManager.requestAllMaximList()
     }
     
     func fetchFavoriteMaximList() -> Single<[Maxim]> {

@@ -148,7 +148,7 @@ class RealmDBManager: LocalDBManageable {
         }
     }
     
-    func requestMaximList() -> Single<[Maxim]> {
+    func requestAllMaximList() -> Single<[Maxim]> {
         let realm = try? Realm()
         return Single.create { single in
             guard let realm = realm else {

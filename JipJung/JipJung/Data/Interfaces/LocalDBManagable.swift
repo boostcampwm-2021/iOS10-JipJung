@@ -17,6 +17,6 @@ protocol LocalDBManageable {
     func requestMediaList(mode: MediaMode?) -> Single<[Media]>
     func requestRecentPlayHistory() -> Single<[Media]>
     func requestFavoriteMediaList() -> Single<[Media]>
-    func requestMaximList() -> Single<[Maxim]>
+    func requestAllMaximList() -> Single<[Maxim]>
     func requestFavoriteMaximList() -> Single<[Maxim]>
 }
