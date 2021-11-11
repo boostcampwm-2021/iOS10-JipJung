@@ -9,7 +9,7 @@ import Foundation
 
 import RealmSwift
 
-class Media: Object {
+class Media: Object, Decodable {
     @Persisted(primaryKey: true) var id: String
     @Persisted var name: String
     @Persisted var mode: Int

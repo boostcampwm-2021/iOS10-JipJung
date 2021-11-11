@@ -6,9 +6,10 @@
 //
 
 import Foundation
+
 import RealmSwift
 
-class FavoriteMedia: Object {
+class FavoriteMedia: Object, Decodable {
     @Persisted(primaryKey: true) var id: String
     @Persisted var addDate: Date
     

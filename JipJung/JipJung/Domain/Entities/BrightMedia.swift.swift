@@ -6,9 +6,10 @@
 //
 
 import Foundation
+
 import RealmSwift
 
-class BrightMedia: Object {
+class BrightMedia: Object, Decodable {
     @Persisted(primaryKey: true) var id: String
     
     private override init() {

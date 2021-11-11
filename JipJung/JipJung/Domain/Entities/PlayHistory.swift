@@ -9,7 +9,7 @@ import Foundation
 
 import RealmSwift
 
-class PlayHistory: Object {
+class PlayHistory: Object, Decodable {
     @Persisted(primaryKey: true) var id: String
     @Persisted var addDate: Date
     

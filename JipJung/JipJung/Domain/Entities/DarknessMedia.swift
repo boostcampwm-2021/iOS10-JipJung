@@ -6,9 +6,10 @@
 //
 
 import Foundation
+
 import RealmSwift
 
-class DarknessMedia: Object {
+class DarknessMedia: Object, Decodable {
     @Persisted(primaryKey: true) var id: String
     
     private override init() {

@@ -6,9 +6,10 @@
 //
 
 import Foundation
+
 import RealmSwift
 
-class Maxim: Object {
+class Maxim: Object, Decodable {
     @Persisted(primaryKey: true) var id: String
     @Persisted var day: Date
     @Persisted var thumbnailImageFileName: String

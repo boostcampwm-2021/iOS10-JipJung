@@ -6,9 +6,10 @@
 //
 
 import Foundation
+
 import RealmSwift
 
-class FavoriteMaxim: Object {
+class FavoriteMaxim: Object, Decodable {
     @Persisted(primaryKey: true) var id: String
     @Persisted var addDate: Date
 
