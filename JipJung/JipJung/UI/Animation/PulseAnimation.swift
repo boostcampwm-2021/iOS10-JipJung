@@ -24,7 +24,7 @@ class PulseAnimation: CAAnimationGroup {
         scaleAnimation.toValue = 1.6
         
         let opacityAnimation = CABasicAnimation(keyPath: #keyPath(CALayer.opacity))
-        opacityAnimation.fromValue = 0.6
+        opacityAnimation.fromValue = 0.9
         opacityAnimation.toValue = 0
         
         self.animations = [scaleAnimation, opacityAnimation]

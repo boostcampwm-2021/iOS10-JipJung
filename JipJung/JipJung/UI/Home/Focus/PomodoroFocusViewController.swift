@@ -168,7 +168,7 @@ final class PomodoroFocusViewController: UIViewController {
         view.layer.addSublayer(pulseGroupLayer)
         let pulseCount = 4
         for _ in 0..<pulseCount {
-            let pulseLayer = createCircleShapeLayer(strokeColor: .secondarySystemBackground, lineWidth: 1)
+            let pulseLayer = createCircleShapeLayer(strokeColor: .secondarySystemBackground, lineWidth: 2)
             pulseGroupLayer.addSublayer(pulseLayer)
         }
     }

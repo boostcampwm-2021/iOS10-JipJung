@@ -15,8 +15,11 @@ enum FocusViewControllerFactory {
         return PomodoroFocusViewController(viewModel: PomodoroFocusViewModel(generateTimerUseCase: GenerateTimerUseCase()))
     }
     static func makeInfinityTimer() -> InfinityFocusViewController {
-        let useCase = GenerateTimerUseCase()
-        let viewModel = InfinityFocusViewModel(generateTimerUseCase: useCase)
+        let viewModel = InfinityFocusViewModel(
+            generateTimerUseCase: GenerateTimerUseCase(),
+            saveFocusTimeUseCase: SaveFocusTimeUseCase(
+                focusTimeRepository: FocusTimeRepository(
+                    realmDBManager: RealmDBManager())))
         return InfinityFocusViewController(viewModel: viewModel)
     }
 }
