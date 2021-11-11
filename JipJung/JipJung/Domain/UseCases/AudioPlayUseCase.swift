@@ -12,7 +12,7 @@ import Foundation
 
 class AudioPlayUseCase {
     enum AudioError: Error {
-        case badURLError
+        case badURL
     }
     
     private let mediaResourceRepository: MediaResourceRepositoryProtocol
@@ -44,7 +44,7 @@ class AudioPlayUseCase {
             audioPlayer?.numberOfLoops = -1
             audioPlayer?.prepareToPlay()
         } catch {
-            throw AudioError.badURLError
+            throw AudioError.badURL
         }
         
         // TODO: MediaResourceRepository를 이용한 음원 재생 기능 연결
