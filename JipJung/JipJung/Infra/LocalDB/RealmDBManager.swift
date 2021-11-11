@@ -94,7 +94,7 @@ class RealmDBManager: LocalDBManageable {
                 return Disposables.create()
             }
             
-            var mediaMyListIDs: [String]? = nil
+            var mediaMyListIDs: [String]?
             
             switch mode {
             case .bright:
@@ -130,7 +130,7 @@ class RealmDBManager: LocalDBManageable {
             }
             
             let playHistoryList = realm.objects(PlayHistory.self)
-            let playHistoryIDs = try? playHistoryList.compactMap({ element throws in element.id})
+            let playHistoryIDs = try? playHistoryList.compactMap({ element throws in element.mediaID})
             
             guard let ids = playHistoryIDs else {
                 single(.failure(RealmError.searchFailed))
