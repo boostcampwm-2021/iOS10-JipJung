@@ -16,7 +16,9 @@ class Media: Object {
     @Persisted var tag: String
     @Persisted var thumbnailImageFileName: String
     @Persisted var videoFileName: String
+    @Persisted var videoFileSize: Float
     @Persisted var audioFileName: String
+    @Persisted var audioFileSize: Float
     
     private override init() {
         super.init()
@@ -29,7 +31,9 @@ class Media: Object {
         tag: String,
         thumbnailImageFileName: String,
         videoFileName: String,
-        audioFileName: String
+        videoFileSize: Float,
+        audioFileName: String,
+        audioFileSize: Float
     ) {
         self.init()
         self.id = id
@@ -38,6 +42,8 @@ class Media: Object {
         self.tag = tag
         self.thumbnailImageFileName = thumbnailImageFileName
         self.videoFileName = videoFileName
+        self.videoFileSize = videoFileSize
         self.audioFileName = audioFileName
+        self.audioFileSize = audioFileSize
     }
 }
