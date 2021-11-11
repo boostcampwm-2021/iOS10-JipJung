@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 import RxRelay
 
-final class PomodoroFocusViewController: UIViewController {
+final class PomodoroFocusViewController: FocusViewController {
     // MARK: - Subviews
     
     private lazy var timeLabel: UILabel = {

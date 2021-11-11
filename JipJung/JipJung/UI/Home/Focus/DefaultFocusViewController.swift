@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 import RxRelay
 
-final class DefaultFocusViewController: UIViewController {
+final class DefaultFocusViewController: FocusViewController {
     // MARK: - Subviews
     
     private lazy var timeLabel: UILabel = {
