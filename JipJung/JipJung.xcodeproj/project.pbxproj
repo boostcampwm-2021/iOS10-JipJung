@@ -19,6 +19,7 @@
 		9165585A273B78A000C55CDC /* MediaListRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91655859273B78A000C55CDC /* MediaListRepository.swift */; };
 		9165585C273B8E6E00C55CDC /* PlayHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9165585B273B8E6E00C55CDC /* PlayHistory.swift */; };
 		9165585E273B8F5000C55CDC /* MaximListRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9165585D273B8F5000C55CDC /* MaximListRepository.swift */; };
+		918D19A5273D21B300A13954 /* sea.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 91184BB3273D1E01007A29C8 /* sea.mp4 */; };
 		9198DE952733863500EBAEC8 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9198DE942733863500EBAEC8 /* Common.swift */; };
 		91CE6F6F2739024800176AF2 /* Home+Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CE6F6E2739024800176AF2 /* Home+Enums.swift */; };
 		91CE6F7327390AD200176AF2 /* FocusButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CE6F7227390AD200176AF2 /* FocusButton.swift */; };
@@ -111,6 +112,7 @@
 		0483E2A7DEBBF1C6B76CF830 /* Pods-JipJung.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JipJung.debug.xcconfig"; path = "Target Support Files/Pods-JipJung/Pods-JipJung.debug.xcconfig"; sourceTree = "<group>"; };
 		0B8DD22FEC5E234B31F27E14 /* Pods-JipJung.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JipJung.release.xcconfig"; path = "Target Support Files/Pods-JipJung/Pods-JipJung.release.xcconfig"; sourceTree = "<group>"; };
 		6ECB91629425C2E076873750 /* Pods_JipJung.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_JipJung.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		91184BB3273D1E01007A29C8 /* sea.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = sea.mp4; sourceTree = "<group>"; };
 		912A72012733B99300C1A37E /* LocalFileManagerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LocalFileManagerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		912A72032733B99300C1A37E /* LocalFileManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFileManagerTests.swift; sourceTree = "<group>"; };
 		914E1D86273A191D000CA5FB /* MediaCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -254,6 +256,7 @@
 		91655849273B5CF900C55CDC /* Dummy */ = {
 			isa = PBXGroup;
 			children = (
+				91184BB3273D1E01007A29C8 /* sea.mp4 */,
 				91D02278273CDF610073EA2A /* DummyData.json */,
 			);
 			path = Dummy;
@@ -702,6 +705,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DD3902DD272FCA12009ECA82 /* LaunchScreen.storyboard in Resources */,
+				918D19A5273D21B300A13954 /* sea.mp4 in Resources */,
 				91D02279273CDF610073EA2A /* DummyData.json in Resources */,
 				DD3902DA272FCA12009ECA82 /* Assets.xcassets in Resources */,
 				DF71D22F2734455600CD980E /* GoogleService-Info.plist in Resources */,
