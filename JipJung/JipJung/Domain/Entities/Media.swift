@@ -9,25 +9,41 @@ import Foundation
 
 import RealmSwift
 
-class Media: Object {
+class Media: Object, Decodable {
     @Persisted(primaryKey: true) var id: String
     @Persisted var name: String
     @Persisted var mode: Int
-    @Persisted var thumbnailImageURL: String
-    @Persisted var videoURL: String
-    @Persisted var audioURL: String
+    @Persisted var tag: String
+    @Persisted var thumbnailImageFileName: String
+    @Persisted var videoFileName: String
+    @Persisted var videoFileSize: Float
+    @Persisted var audioFileName: String
+    @Persisted var audioFileSize: Float
     
     private override init() {
         super.init()
     }
     
-    convenience init(id: String, name: String, mode: Int, thumbnailImageURL: String, videoURL: String, audioURL: String) {
+    convenience init(
+        id: String,
+        name: String,
+        mode: Int,
+        tag: String,
+        thumbnailImageFileName: String,
+        videoFileName: String,
+        videoFileSize: Float,
+        audioFileName: String,
+        audioFileSize: Float
+    ) {
         self.init()
         self.id = id
         self.name = name
         self.mode = mode
-        self.thumbnailImageURL = thumbnailImageURL
-        self.videoURL = videoURL
-        self.audioURL = audioURL
+        self.tag = tag
+        self.thumbnailImageFileName = thumbnailImageFileName
+        self.videoFileName = videoFileName
+        self.videoFileSize = videoFileSize
+        self.audioFileName = audioFileName
+        self.audioFileSize = audioFileSize
     }
 }

@@ -55,6 +55,19 @@ class RealmDBManager: LocalDBManageable {
         }
     }
     
+    func writeData(_ value: Object) throws {
+        guard let realm = try? Realm() else {
+            throw RealmError.initFailed
+        }
+        do {
+            try realm.write({
+                realm.add(value, update: .all)
+            })
+        } catch {
+            throw RealmError.writeFailed
+        }
+    }
+    
     func delete(_ value: Object) -> Single<Bool> {
         let realm = try? Realm()
         return Single.create { single in
@@ -66,10 +79,7 @@ class RealmDBManager: LocalDBManageable {
 
     // TODO: NSPredicte를 활용한 Search 함수를 적극적으로 이용하기 - 기존 request 함수 대체
     
-    // TODO: requestAllMediaList 구현
-    
-    // TODO: requestMediaMyList로 변경
-    func requestMediaList(mode: MediaMode?) -> Single<[Media]> {
+    func requestAllMediaList() -> Single<[Media]> {
         let realm = try? Realm()
         return Single.create { single in
             guard let realm = realm else {
@@ -77,12 +87,7 @@ class RealmDBManager: LocalDBManageable {
                 return Disposables.create()
             }
             
-            var mediaList = realm.objects(Media.self)
-            
-            if let mode = mode {
-                mediaList = mediaList.filter("mode == \(mode.rawValue)")
-            }
-            
+            let mediaList = realm.objects(Media.self)
             let result = try? mediaList.compactMap({ element throws in element })
             if let result = result {
                 single(.success(result))
@@ -90,6 +95,41 @@ class RealmDBManager: LocalDBManageable {
                 single(.failure(RealmError.searchFailed))
             }
             
+            return Disposables.create()
+        }
+    }
+    
+    func requestMediaMyList(mode: MediaMode) -> Single<[Media]> {
+        let realm = try? Realm()
+        return Single.create { single in
+            guard let realm = realm else {
+                single(.failure(RealmError.initFailed))
+                return Disposables.create()
+            }
+            
+            var mediaMyListIDs: [String]?
+            
+            switch mode {
+            case .bright:
+                let mediaMyList = realm.objects(BrightMedia.self)
+                mediaMyListIDs = try? mediaMyList.compactMap({ element throws in element.id})
+            case .darkness:
+                let mediaMyList = realm.objects(DarknessMedia.self)
+                mediaMyListIDs = try? mediaMyList.compactMap({ element throws in element.id})
+            }
+            
+            guard let ids = mediaMyListIDs else {
+                single(.failure(RealmError.searchFailed))
+                return Disposables.create()
+            }
+            
+            let filteredMedia = realm.objects(Media.self).filter("id IN %@", ids)
+            let result = try? filteredMedia.compactMap({ element throws in element})
+            if let result = result {
+                single(.success(result))
+            } else {
+                single(.failure(RealmError.searchFailed))
+            }
             return Disposables.create()
         }
     }
@@ -103,7 +143,7 @@ class RealmDBManager: LocalDBManageable {
             }
             
             let playHistoryList = realm.objects(PlayHistory.self)
-            let playHistoryIDs = try? playHistoryList.compactMap({ element throws in element.id})
+            let playHistoryIDs = try? playHistoryList.compactMap({ element throws in element.mediaID})
             
             guard let ids = playHistoryIDs else {
                 single(.failure(RealmError.searchFailed))
@@ -148,7 +188,7 @@ class RealmDBManager: LocalDBManageable {
         }
     }
     
-    func requestMaximList() -> Single<[Maxim]> {
+    func requestAllMaximList() -> Single<[Maxim]> {
         let realm = try? Realm()
         return Single.create { single in
             guard let realm = realm else {

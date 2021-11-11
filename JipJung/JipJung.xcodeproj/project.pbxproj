@@ -15,19 +15,28 @@
 		91655852273B618700C55CDC /* LocalFileEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91655851273B618700C55CDC /* LocalFileEnums.swift */; };
 		91655854273B6EE800C55CDC /* LocalDBManagable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91655853273B6EE800C55CDC /* LocalDBManagable.swift */; };
 		91655856273B6F0200C55CDC /* LocalDBEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91655855273B6F0200C55CDC /* LocalDBEnums.swift */; };
-		91655858273B773400C55CDC /* ContentsListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91655857273B773400C55CDC /* ContentsListUseCase.swift */; };
+		91655858273B773400C55CDC /* MaximListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91655857273B773400C55CDC /* MaximListUseCase.swift */; };
 		9165585A273B78A000C55CDC /* MediaListRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91655859273B78A000C55CDC /* MediaListRepository.swift */; };
 		9165585C273B8E6E00C55CDC /* PlayHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9165585B273B8E6E00C55CDC /* PlayHistory.swift */; };
 		9165585E273B8F5000C55CDC /* MaximListRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9165585D273B8F5000C55CDC /* MaximListRepository.swift */; };
+		918D19A5273D21B300A13954 /* sea.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 91184BB3273D1E01007A29C8 /* sea.mp4 */; };
 		9198DE952733863500EBAEC8 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9198DE942733863500EBAEC8 /* Common.swift */; };
 		91CE6F6F2739024800176AF2 /* Home+Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CE6F6E2739024800176AF2 /* Home+Enums.swift */; };
 		91CE6F7327390AD200176AF2 /* FocusButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CE6F7227390AD200176AF2 /* FocusButton.swift */; };
 		91CE6F7527391E1C00176AF2 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CE6F7427391E1C00176AF2 /* HomeViewModel.swift */; };
+		91D02268273CB5FD0073EA2A /* BrightMedia.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D02267273CB5FD0073EA2A /* BrightMedia.swift.swift */; };
+		91D0226A273CB6050073EA2A /* DarknessMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D02269273CB6050073EA2A /* DarknessMedia.swift */; };
+		91D0226C273CBA340073EA2A /* MediaListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D0226B273CBA340073EA2A /* MediaListUseCase.swift */; };
+		91D0226F273CBBD70073EA2A /* MediaResourceRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D0226E273CBBD70073EA2A /* MediaResourceRepositoryProtocol.swift */; };
+		91D02271273CBBF20073EA2A /* MediaListRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D02270273CBBF20073EA2A /* MediaListRepositoryProtocol.swift */; };
+		91D02273273CBC040073EA2A /* MaximListRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D02272273CBC040073EA2A /* MaximListRepositoryProtocol.swift */; };
+		91D02275273CBF970073EA2A /* BaseDataUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D02274273CBF970073EA2A /* BaseDataUseCase.swift */; };
+		91D02279273CDF610073EA2A /* DummyData.json in Resources */ = {isa = PBXBuildFile; fileRef = 91D02278273CDF610073EA2A /* DummyData.json */; };
+		91D0227D273CE6F50073EA2A /* DBStructureForJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D0227C273CE6F50073EA2A /* DBStructureForJSON.swift */; };
+		91D0227F273CEE400073EA2A /* RealmSettingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D0227E273CEE400073EA2A /* RealmSettingRepository.swift */; };
+		91D02281273D0A320073EA2A /* VideoPlayUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D02280273D0A320073EA2A /* VideoPlayUseCase.swift */; };
 		91DABCC0273A4EF000E57AAE /* AudioPlayUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DABCBF273A4EF000E57AAE /* AudioPlayUseCase.swift */; };
-		91DABCC2273A651400E57AAE /* test2.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 91DABCC1273A64FD00E57AAE /* test2.mp4 */; };
 		91E4178927312FEB001BA0A6 /* LocalFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E4178827312FEB001BA0A6 /* LocalFileManager.swift */; };
-		91EA47C027383DE600780C3E /* test.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 91EA47BF27383DD200780C3E /* test.mp4 */; };
-		91EA47C127383DE600780C3E /* testSound.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 91EA47BE27383DD100780C3E /* testSound.m4a */; };
 		91EA47C42738451100780C3E /* BlurEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91EA47C32738451100780C3E /* BlurEffect.swift */; };
 		91EA47C6273846A800780C3E /* BlurCircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91EA47C5273846A800780C3E /* BlurCircleButton.swift */; };
 		91EA47C827384EA500780C3E /* SystemConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91EA47C727384EA500780C3E /* SystemConstants.swift */; };
@@ -74,7 +83,6 @@
 		DF08B1DD2737F5010066518B /* RemoteServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF08B1DC2737F5010066518B /* RemoteServiceProvider.swift */; };
 		DF30FEF9273A730F001C720E /* TagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF30FEF8273A730F001C720E /* TagCell.swift */; };
 		DF30FEFB273ADAA9001C720E /* CollectionView+MusicPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF30FEFA273ADAA9001C720E /* CollectionView+MusicPlayerViewController.swift */; };
-		DF30FEFD273AEBD3001C720E /* sea.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = DF30FEFC273AEB09001C720E /* sea.mp4 */; };
 		DF30FF05273CBC3B001C720E /* MusicPlayerButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF30FF04273CBC3B001C720E /* MusicPlayerButtons.swift */; };
 		DF6B111127390F1900D9924E /* MediaResourceRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6B111027390F1900D9924E /* MediaResourceRepository.swift */; };
 		DF71D22F2734455600CD980E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DF71D22E2734455600CD980E /* GoogleService-Info.plist */; };
@@ -104,6 +112,7 @@
 		0483E2A7DEBBF1C6B76CF830 /* Pods-JipJung.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JipJung.debug.xcconfig"; path = "Target Support Files/Pods-JipJung/Pods-JipJung.debug.xcconfig"; sourceTree = "<group>"; };
 		0B8DD22FEC5E234B31F27E14 /* Pods-JipJung.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JipJung.release.xcconfig"; path = "Target Support Files/Pods-JipJung/Pods-JipJung.release.xcconfig"; sourceTree = "<group>"; };
 		6ECB91629425C2E076873750 /* Pods_JipJung.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_JipJung.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		91184BB3273D1E01007A29C8 /* sea.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = sea.mp4; sourceTree = "<group>"; };
 		912A72012733B99300C1A37E /* LocalFileManagerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LocalFileManagerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		912A72032733B99300C1A37E /* LocalFileManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFileManagerTests.swift; sourceTree = "<group>"; };
 		914E1D86273A191D000CA5FB /* MediaCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -112,7 +121,7 @@
 		91655851273B618700C55CDC /* LocalFileEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFileEnums.swift; sourceTree = "<group>"; };
 		91655853273B6EE800C55CDC /* LocalDBManagable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDBManagable.swift; sourceTree = "<group>"; };
 		91655855273B6F0200C55CDC /* LocalDBEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDBEnums.swift; sourceTree = "<group>"; };
-		91655857273B773400C55CDC /* ContentsListUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentsListUseCase.swift; sourceTree = "<group>"; };
+		91655857273B773400C55CDC /* MaximListUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaximListUseCase.swift; sourceTree = "<group>"; };
 		91655859273B78A000C55CDC /* MediaListRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaListRepository.swift; sourceTree = "<group>"; };
 		9165585B273B8E6E00C55CDC /* PlayHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayHistory.swift; sourceTree = "<group>"; };
 		9165585D273B8F5000C55CDC /* MaximListRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaximListRepository.swift; sourceTree = "<group>"; };
@@ -120,11 +129,19 @@
 		91CE6F6E2739024800176AF2 /* Home+Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Home+Enums.swift"; sourceTree = "<group>"; };
 		91CE6F7227390AD200176AF2 /* FocusButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusButton.swift; sourceTree = "<group>"; };
 		91CE6F7427391E1C00176AF2 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		91D02267273CB5FD0073EA2A /* BrightMedia.swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrightMedia.swift.swift; sourceTree = "<group>"; };
+		91D02269273CB6050073EA2A /* DarknessMedia.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarknessMedia.swift; sourceTree = "<group>"; };
+		91D0226B273CBA340073EA2A /* MediaListUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaListUseCase.swift; sourceTree = "<group>"; };
+		91D0226E273CBBD70073EA2A /* MediaResourceRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaResourceRepositoryProtocol.swift; sourceTree = "<group>"; };
+		91D02270273CBBF20073EA2A /* MediaListRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaListRepositoryProtocol.swift; sourceTree = "<group>"; };
+		91D02272273CBC040073EA2A /* MaximListRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaximListRepositoryProtocol.swift; sourceTree = "<group>"; };
+		91D02274273CBF970073EA2A /* BaseDataUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseDataUseCase.swift; sourceTree = "<group>"; };
+		91D02278273CDF610073EA2A /* DummyData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = DummyData.json; sourceTree = "<group>"; };
+		91D0227C273CE6F50073EA2A /* DBStructureForJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBStructureForJSON.swift; sourceTree = "<group>"; };
+		91D0227E273CEE400073EA2A /* RealmSettingRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmSettingRepository.swift; sourceTree = "<group>"; };
+		91D02280273D0A320073EA2A /* VideoPlayUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayUseCase.swift; sourceTree = "<group>"; };
 		91DABCBF273A4EF000E57AAE /* AudioPlayUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayUseCase.swift; sourceTree = "<group>"; };
-		91DABCC1273A64FD00E57AAE /* test2.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = test2.mp4; sourceTree = "<group>"; };
 		91E4178827312FEB001BA0A6 /* LocalFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFileManager.swift; sourceTree = "<group>"; };
-		91EA47BE27383DD100780C3E /* testSound.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = testSound.m4a; sourceTree = "<group>"; };
-		91EA47BF27383DD200780C3E /* test.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = test.mp4; sourceTree = "<group>"; };
 		91EA47C32738451100780C3E /* BlurEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurEffect.swift; sourceTree = "<group>"; };
 		91EA47C5273846A800780C3E /* BlurCircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurCircleButton.swift; sourceTree = "<group>"; };
 		91EA47C727384EA500780C3E /* SystemConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemConstants.swift; sourceTree = "<group>"; };
@@ -174,7 +191,6 @@
 		DF08B1DC2737F5010066518B /* RemoteServiceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteServiceProvider.swift; sourceTree = "<group>"; };
 		DF30FEF8273A730F001C720E /* TagCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCell.swift; sourceTree = "<group>"; };
 		DF30FEFA273ADAA9001C720E /* CollectionView+MusicPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CollectionView+MusicPlayerViewController.swift"; sourceTree = "<group>"; };
-		DF30FEFC273AEB09001C720E /* sea.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = sea.mp4; sourceTree = "<group>"; };
 		DF30FF04273CBC3B001C720E /* MusicPlayerButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayerButtons.swift; sourceTree = "<group>"; };
 		DF6B111027390F1900D9924E /* MediaResourceRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaResourceRepository.swift; sourceTree = "<group>"; };
 		DF71D22E2734455600CD980E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -232,6 +248,7 @@
 				DF6B111027390F1900D9924E /* MediaResourceRepository.swift */,
 				91655859273B78A000C55CDC /* MediaListRepository.swift */,
 				9165585D273B8F5000C55CDC /* MaximListRepository.swift */,
+				91D0227E273CEE400073EA2A /* RealmSettingRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -239,10 +256,8 @@
 		91655849273B5CF900C55CDC /* Dummy */ = {
 			isa = PBXGroup;
 			children = (
-				DF30FEFC273AEB09001C720E /* sea.mp4 */,
-				91DABCC1273A64FD00E57AAE /* test2.mp4 */,
-				91EA47BF27383DD200780C3E /* test.mp4 */,
-				91EA47BE27383DD100780C3E /* testSound.m4a */,
+				91184BB3273D1E01007A29C8 /* sea.mp4 */,
+				91D02278273CDF610073EA2A /* DummyData.json */,
 			);
 			path = Dummy;
 			sourceTree = "<group>";
@@ -268,10 +283,23 @@
 		91CE6F7627391FF700176AF2 /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
-				91655857273B773400C55CDC /* ContentsListUseCase.swift */,
+				91D0226B273CBA340073EA2A /* MediaListUseCase.swift */,
+				91655857273B773400C55CDC /* MaximListUseCase.swift */,
 				91DABCBF273A4EF000E57AAE /* AudioPlayUseCase.swift */,
+				91D02274273CBF970073EA2A /* BaseDataUseCase.swift */,
+				91D02280273D0A320073EA2A /* VideoPlayUseCase.swift */,
 			);
 			path = UseCases;
+			sourceTree = "<group>";
+		};
+		91D0226D273CBB590073EA2A /* Interfaces */ = {
+			isa = PBXGroup;
+			children = (
+				91D0226E273CBBD70073EA2A /* MediaResourceRepositoryProtocol.swift */,
+				91D02270273CBBF20073EA2A /* MediaListRepositoryProtocol.swift */,
+				91D02272273CBC040073EA2A /* MaximListRepositoryProtocol.swift */,
+			);
+			path = Interfaces;
 			sourceTree = "<group>";
 		};
 		91E4174C27312E5A001BA0A6 /* Infra */ = {
@@ -454,6 +482,7 @@
 		DDB5CEAC2733727600E8F9EB /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				91D0226D273CBB590073EA2A /* Interfaces */,
 				91CE6F7627391FF700176AF2 /* UseCases */,
 				DDB5CEAD2733728100E8F9EB /* Entities */,
 			);
@@ -468,6 +497,9 @@
 				DDB5CEB22733752D00E8F9EB /* FavoriteMedia.swift */,
 				DDB5CEB72733765500E8F9EB /* FavoriteMaxim.swift */,
 				DDB5CEB02733746600E8F9EB /* Maxim.swift */,
+				91D02267273CB5FD0073EA2A /* BrightMedia.swift.swift */,
+				91D02269273CB6050073EA2A /* DarknessMedia.swift */,
+				91D0227C273CE6F50073EA2A /* DBStructureForJSON.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -672,11 +704,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				91DABCC2273A651400E57AAE /* test2.mp4 in Resources */,
-				91EA47C027383DE600780C3E /* test.mp4 in Resources */,
-				91EA47C127383DE600780C3E /* testSound.m4a in Resources */,
 				DD3902DD272FCA12009ECA82 /* LaunchScreen.storyboard in Resources */,
-				DF30FEFD273AEBD3001C720E /* sea.mp4 in Resources */,
+				918D19A5273D21B300A13954 /* sea.mp4 in Resources */,
+				91D02279273CDF610073EA2A /* DummyData.json in Resources */,
 				DD3902DA272FCA12009ECA82 /* Assets.xcassets in Resources */,
 				DF71D22F2734455600CD980E /* GoogleService-Info.plist in Resources */,
 			);
@@ -765,8 +795,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				91D02271273CBBF20073EA2A /* MediaListRepositoryProtocol.swift in Sources */,
 				DF08B1DD2737F5010066518B /* RemoteServiceProvider.swift in Sources */,
 				B4F36B682733D4210073609C /* SearchTableViewCell.swift in Sources */,
+				91D0227F273CEE400073EA2A /* RealmSettingRepository.swift in Sources */,
 				B40D1FB9273B674F00881A49 /* InfinityFocusViewController.swift in Sources */,
 				DDB92B9D2737BD5E00EE26F0 /* UIView+Extension.swift in Sources */,
 				B40D1FA9273B5F1900881A49 /* DefaultFocusViewController.swift in Sources */,
@@ -774,6 +806,7 @@
 				DDB5CEB32733752D00E8F9EB /* FavoriteMedia.swift in Sources */,
 				91655854273B6EE800C55CDC /* LocalDBManagable.swift in Sources */,
 				DDB92B9D2737BD5E00EE26F0 /* UIView+Extension.swift in Sources */,
+				91D02273273CBC040073EA2A /* MaximListRepositoryProtocol.swift in Sources */,
 				DDB5CEB32733752D00E8F9EB /* FavoriteMedia.swift in Sources */,
 				DDB92BB0273A263100EE26F0 /* MusicCollectionViewCell.swift in Sources */,
 				DDB5CEB32733752D00E8F9EB /* FavoriteMedia.swift in Sources */,
@@ -803,23 +836,27 @@
 				DDB5CEAF273372A700E8F9EB /* Media.swift in Sources */,
 				B4F36B662733B8770073609C /* SearchViewController.swift in Sources */,
 				B4F36B5127336EE20073609C /* UserDefaultsStorage.swift in Sources */,
+				91D02281273D0A320073EA2A /* VideoPlayUseCase.swift in Sources */,
 				B40D1FAF273B5F2C00881A49 /* PomodoroFocusViewModel.swift in Sources */,
 				91CE6F6F2739024800176AF2 /* Home+Enums.swift in Sources */,
 				91CE6F6F2739024800176AF2 /* Home+Enums.swift in Sources */,
 				B4153949273BA34A004EF80F /* FocusTimeRepository.swift in Sources */,
 				DD208D36273BDD390089A2AB /* CALayer+Extension.swift in Sources */,
 				DD828095273D1F8E00BB2A60 /* FocusViewController.swift in Sources */,
+				91D0226A273CB6050073EA2A /* DarknessMedia.swift in Sources */,
 				B40D1FB7273B60A500881A49 /* Int+Extension.swift in Sources */,
 				B40D1FB3273B5F3500881A49 /* InfinityFocusViewModel.swift in Sources */,
 				91CE6F6F2739024800176AF2 /* Home+Enums.swift in Sources */,
 				91EA47C42738451100780C3E /* BlurEffect.swift in Sources */,
 				9165585E273B8F5000C55CDC /* MaximListRepository.swift in Sources */,
+				91D0226F273CBBD70073EA2A /* MediaResourceRepositoryProtocol.swift in Sources */,
 				B40D1FAB273B5F2100881A49 /* DefaultFocusViewModel.swift in Sources */,
 				91DABCC0273A4EF000E57AAE /* AudioPlayUseCase.swift in Sources */,
+				91D02268273CB5FD0073EA2A /* BrightMedia.swift.swift in Sources */,
 				DDB5CEBE2733A49A00E8F9EB /* RealmDBManager.swift in Sources */,
 				B40D1FB5273B5F3900881A49 /* GenerateTimerUseCase.swift in Sources */,
 				914E1D87273A191D000CA5FB /* MediaCollectionViewCell.swift in Sources */,
-				91655858273B773400C55CDC /* ContentsListUseCase.swift in Sources */,
+				91655858273B773400C55CDC /* MaximListUseCase.swift in Sources */,
 				91655850273B5F4800C55CDC /* RemoteServiceAccessible.swift in Sources */,
 				91EA47C6273846A800780C3E /* BlurCircleButton.swift in Sources */,
 				B4015CD42739151B006BD14A /* RecentMusicViewController.swift in Sources */,
@@ -827,6 +864,9 @@
 				DD828092273D113200BB2A60 /* NetworkEnums.swift in Sources */,
 				DD3902D3272FCA10009ECA82 /* SceneDelegate.swift in Sources */,
 				DD208D30273B55240089A2AB /* PulseAnimation.swift in Sources */,
+				91D02275273CBF970073EA2A /* BaseDataUseCase.swift in Sources */,
+				91D0226C273CBA340073EA2A /* MediaListUseCase.swift in Sources */,
+				91D0227D273CE6F50073EA2A /* DBStructureForJSON.swift in Sources */,
 				B4015CD627391529006BD14A /* FavoriteMusicViewController.swift in Sources */,
 				91E4178927312FEB001BA0A6 /* LocalFileManager.swift in Sources */,
 				91CE6F7327390AD200176AF2 /* FocusButton.swift in Sources */,

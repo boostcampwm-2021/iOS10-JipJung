@@ -11,8 +11,11 @@ import RxSwift
 import RxRelay
 
 final class HomeViewModel {
-    let contentsListUseCase: ContentsListUseCase
+    let baseDataUseCase: BaseDataUseCase
+    let mediaListUseCase: MediaListUseCase
+    let maximListUseCase: MaximListUseCase
     let audioPlayUseCase: AudioPlayUseCase
+    let videoPlayUseCase: VideoPlayUseCase
     
     let bag = DisposeBag()
     let mode = BehaviorRelay<MediaMode>(value: .bright)
@@ -24,11 +27,17 @@ final class HomeViewModel {
     let isPlaying = BehaviorRelay(value: false)
     
     init(
-        contentsListUseCase: ContentsListUseCase,
-        audioPlayUseCase: AudioPlayUseCase
+        baseDataUseCase: BaseDataUseCase,
+        mediaListUseCase: MediaListUseCase,
+        maximListUseCase: MaximListUseCase,
+        audioPlayUseCase: AudioPlayUseCase,
+        videoPlayUseCase: VideoPlayUseCase
     ) {
-        self.contentsListUseCase = contentsListUseCase
+        self.baseDataUseCase = baseDataUseCase
+        self.mediaListUseCase = mediaListUseCase
+        self.maximListUseCase = maximListUseCase
         self.audioPlayUseCase = audioPlayUseCase
+        self.videoPlayUseCase = videoPlayUseCase
         
         Observable
             .combineLatest(mode, brightMode, darknessMode) { ($0, $1, $2) }
@@ -39,7 +48,11 @@ final class HomeViewModel {
     }
     
     func viewControllerLoaded() {
-        contentsListUseCase.fetchMediaList(mode: .bright)
+        // TODO: UserDefaults에서 현재 mode 정보 가져오기
+        
+        baseDataUseCase.load()
+        
+        mediaListUseCase.fetchMediaMyList(mode: .bright)
             .subscribe { [weak self] in
                 self?.brightMode.accept($0)
             } onFailure: { error in
@@ -47,7 +60,7 @@ final class HomeViewModel {
             }
             .disposed(by: bag)
         
-        contentsListUseCase.fetchMediaList(mode: .darkness)
+        mediaListUseCase.fetchMediaMyList(mode: .darkness)
             .subscribe { [weak self] in
                 self?.darknessMode.accept($0)
             } onFailure: { error in
@@ -55,7 +68,7 @@ final class HomeViewModel {
             }
             .disposed(by: bag)
         
-        contentsListUseCase.fetchRecentPlayHistory()
+        mediaListUseCase.fetchRecentPlayHistory()
             .subscribe { [weak self] in
                 self?.recentPlayHistory.accept($0)
             } onFailure: { error in
@@ -63,7 +76,7 @@ final class HomeViewModel {
             }
             .disposed(by: bag)
         
-        contentsListUseCase.fetchFavoriteMediaList()
+        mediaListUseCase.fetchFavoriteMediaList()
             .subscribe { [weak self] in
                 self?.favoriteSoundList.accept($0)
             } onFailure: { error in
@@ -76,15 +89,15 @@ final class HomeViewModel {
         mode.accept(mode.value == .bright ? .darkness : .bright)
     }
     
-    func mediaPlayButtonTouched(urlString: String) -> Bool {
+    func mediaPlayButtonTouched(_ audioFileName: String) -> Bool {
         isPlaying.accept(!isPlaying.value)
         
         if isPlaying.value {
             do {
-                try audioPlayUseCase.ready(urlString: urlString)
+                try audioPlayUseCase.ready(audioFileName)
                 audioPlayUseCase.play()
             } catch {
-                print(error.localizedDescription)
+                print(#function, error)
                 return false
             }
             return true
@@ -92,5 +105,9 @@ final class HomeViewModel {
             audioPlayUseCase.pause()
             return false
         }
+    }
+    
+    func mediaCollectionCellLoaded(_ videoFileName: String) -> Single<URL> {
+        return videoPlayUseCase.ready(videoFileName)
     }
 }

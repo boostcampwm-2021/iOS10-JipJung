@@ -9,17 +9,19 @@ import Foundation
 
 import RealmSwift
 
-class PlayHistory: Object {
-    @Persisted(primaryKey: true) var id: String
+class PlayHistory: Object, Decodable {
+    @Persisted(primaryKey: true) var id: Int
+    @Persisted var mediaID: String
     @Persisted var addDate: Date
     
     private override init() {
         super.init()
     }
     
-    convenience init(id: String, addDate: Date) {
+    convenience init(id: Int, mediaID: String, addDate: Date) {
         self.init()
         self.id = id
+        self.mediaID = mediaID
         self.addDate = addDate
     }
 }

@@ -9,18 +9,19 @@ import Foundation
 
 import RxSwift
 
-final class MediaListRepository {
+final class MediaListRepository: MediaListRepositoryProtocol {
     private let localDBManager: LocalDBManageable
     
     init(localDBManager: LocalDBManageable) {
         self.localDBManager = localDBManager
     }
     
-    // TODO: fetchAllMediaList 구현
+    func fetchAllMediaList() -> Single<[Media]> {
+        return localDBManager.requestAllMediaList()
+    }
     
-    // TODO: fetchMediaMyList로 변경
-    func fetchMediaList(mode: MediaMode?) -> Single<[Media]> {
-        return localDBManager.requestMediaList(mode: mode)
+    func fetchMediaMyList(mode: MediaMode) -> Single<[Media]> {
+        return localDBManager.requestMediaMyList(mode: mode)
     }
     
     func fetchFavoriteMediaList() -> Single<[Media]> {

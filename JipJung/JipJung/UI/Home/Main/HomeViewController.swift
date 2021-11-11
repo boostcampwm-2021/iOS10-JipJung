@@ -43,7 +43,12 @@ class HomeViewController: UIViewController {
     private let bottomViewHeight = SystemConstants.deviceScreenSize.height
     private let focusButtonSize: (width: CGFloat, height: CGFloat) = (60, 90)
     
+    var localFileManager: LocalFileAccessible?
     var localDBManager: LocalDBManageable?
+    var userDefaultsManager: UserDefaultsStorable?
+    var remoteServiceProvider: RemoteServiceAccessible?
+    // TODO: Protocol로 의존성 제거 필요
+    var audioPlayUseCase: AudioPlayUseCase?
     
     private var viewModel: HomeViewModel?
     private var videoPlayer: AVPlayer?
@@ -63,18 +68,39 @@ class HomeViewController: UIViewController {
     }
     
     private func configureViewModel() {
-        guard let localDBManager = localDBManager else { return }
-
-        let contentsListUseCase = ContentsListUseCase(
-            mediaListRepository: MediaListRepository(localDBManager: localDBManager),
+        guard let localFileManager = localFileManager,
+              let localDBManager = localDBManager,
+              let remoteServiceProvider = remoteServiceProvider,
+              let audioPlayUseCase = audioPlayUseCase
+        else {
+            return
+        }
+        
+        let baseDataUseCase = BaseDataUseCase(
+            realmSettingRepository: RealmSettingRepository(localDBManager: localDBManager)
+        )
+        
+        let mediaListUseCase = MediaListUseCase(
+            mediaListRepository: MediaListRepository(localDBManager: localDBManager)
+        )
+        
+        let maximListUseCase = MaximListUseCase(
             maximListRepository: MaximListRepository(localDBManager: localDBManager)
         )
         
-        let audioPlayUseCase = AudioPlayUseCase()
+        let videoPlayUseCase = VideoPlayUseCase(
+            mediaResourceRepository: MediaResourceRepository(
+                localFileManager: localFileManager,
+                remoteServiceProvider: remoteServiceProvider
+            )
+        )
         
         viewModel = HomeViewModel(
-            contentsListUseCase: contentsListUseCase,
-            audioPlayUseCase: audioPlayUseCase
+            baseDataUseCase: baseDataUseCase,
+            mediaListUseCase: mediaListUseCase,
+            maximListUseCase: maximListUseCase,
+            audioPlayUseCase: audioPlayUseCase,
+            videoPlayUseCase: videoPlayUseCase
         )
     }
     
@@ -148,7 +174,7 @@ class HomeViewController: UIViewController {
     private func configureMediaControlBackgroundView() {
         mainScrollContentsView.addSubview(mediaControlBackgroundView)
         mediaControlBackgroundView.isUserInteractionEnabled = false
-
+        
         mediaControlBackgroundView.snp.makeConstraints {
             $0.edges.equalTo(view)
         }
@@ -287,10 +313,10 @@ class HomeViewController: UIViewController {
         Observable
             .zip(
                 mediaCollectionView.rx.itemSelected,
-                mediaCollectionView.rx.modelSelected(String.self)
+                mediaCollectionView.rx.modelSelected(Media.self)
             )
             .bind { [weak self] indexPath, model in
-                guard let result = self?.mediaPlayButtonTouched(urlString: model),
+                guard let result = self?.mediaPlayButtonTouched(audioFileName: "fire_long_24sec.mp3"), // model.audioFileName
                       let cell = mediaCollectionView.cellForItem(at: indexPath) as? MediaCollectionViewCell
                 else {
                     return
@@ -322,18 +348,22 @@ class HomeViewController: UIViewController {
         
         viewModel.currentModeList.bind(
             to: mediaCollectionView.rx.items(cellIdentifier: MediaCollectionViewCell.identifier)
-        ) { item, element, cell in
-            guard let cell = cell as? MediaCollectionViewCell,
-                  let videoURL = Bundle.main.url(forResource: element.name, withExtension: "mp4")
-            else {
-                return
-            }
-            cell.setVideo(videoURL: videoURL) // element.videoURL
+        ) { [weak self] item, element, cell in
+            guard let self = self,
+                  let cell = cell as? MediaCollectionViewCell else {
+                      return
+                  }
+            viewModel.mediaCollectionCellLoaded(element.videoFileName)
+                .subscribe { url in
+                    cell.setVideo(videoURL: url)
+                }.disposed(by: self.bag)
         }
         .disposed(by: bag)
         
         viewModel.currentModeList
+            .distinctUntilChanged()
             .map { $0.count }
+            .filter { $0 != 0 }
             .bind { [weak self] count in
                 self?.pageControl.currentPage = 0
                 self?.pageControl.numberOfPages = count
@@ -341,12 +371,12 @@ class HomeViewController: UIViewController {
             .disposed(by: bag)
     }
     
-    private func mediaPlayButtonTouched(urlString: String) -> Bool {
+    private func mediaPlayButtonTouched(audioFileName: String) -> Bool {
         guard let viewModel = viewModel else {
             return false
         }
         
-        return viewModel.mediaPlayButtonTouched(urlString: urlString)
+        return viewModel.mediaPlayButtonTouched(audioFileName)
     }
     
     @objc private func bottomViewDragged(_ sender: UIPanGestureRecognizer) {
@@ -398,7 +428,6 @@ extension HomeViewController: UICollectionViewDelegate {
         if scrollView == mainScrollView {
             return
         }
-        print(#function)
         let page = Int(targetContentOffset.pointee.x / view.frame.width)
         self.pageControl.currentPage = page
     }
