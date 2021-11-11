@@ -74,7 +74,9 @@ class HomeViewController: UIViewController {
             return
         }
 
-        let baseDataUseCase = BaseDataUseCase()
+        let baseDataUseCase = BaseDataUseCase(
+            realmSettingRepository: RealmSettingRepository(localDBManager: localDBManager)
+        )
         
         let mediaListUseCase = MediaListUseCase(
             mediaListRepository: MediaListRepository(localDBManager: localDBManager)

@@ -55,6 +55,19 @@ class RealmDBManager: LocalDBManageable {
         }
     }
     
+    func writeData(_ value: Object) throws {
+        guard let realm = try? Realm() else {
+            throw RealmError.initFailed
+        }
+        do {
+            try realm.write({
+                realm.add(value, update: .all)
+            })
+        } catch {
+            throw RealmError.writeFailed
+        }
+    }
+    
     func delete(_ value: Object) -> Single<Bool> {
         let realm = try? Realm()
         return Single.create { single in

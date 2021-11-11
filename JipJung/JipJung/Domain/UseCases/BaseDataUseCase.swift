@@ -7,12 +7,17 @@
 
 import Foundation
 
+import RxSwift
+
 final class BaseDataUseCase {
-//    private let mediaListRepository: MediaListRepositoryProtocol
-//    
-//    init(mediaListRepository: MediaListRepository) {
-//        self.mediaListRepository = mediaListRepository
-//    }
+    // TODO: Protocol로 의존성 제거
+    private let realmSettingRepository: RealmSettingRepository
+    
+    let bag = DisposeBag()
+    
+    init(realmSettingRepository: RealmSettingRepository) {
+        self.realmSettingRepository = realmSettingRepository
+    }
     
     func isLoaded() -> Bool {
         return false
@@ -25,6 +30,15 @@ final class BaseDataUseCase {
         else {
             return
         }
-        print(jsonValue)
+        
+        do {
+            try realmSettingRepository.migrate(dataList: jsonValue.allMediaList)
+            try realmSettingRepository.migrate(dataList: jsonValue.brightModeList)
+            try realmSettingRepository.migrate(dataList: jsonValue.darknessModeList)
+            try realmSettingRepository.migrate(dataList: jsonValue.playHistoryList)
+            try realmSettingRepository.migrate(dataList: jsonValue.favoriteMediaList)
+        } catch {
+            print(error)
+        }
     }
 }

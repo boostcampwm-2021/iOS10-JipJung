@@ -49,37 +49,37 @@ final class HomeViewModel {
         
         baseDataUseCase.load()
         
-//        mediaListUseCase.fetchMediaMyList(mode: .bright)
-//            .subscribe { [weak self] in
-//                self?.brightMode.accept($0)
-//            } onFailure: { error in
-//                print(error.localizedDescription)
-//            }
-//            .disposed(by: bag)
-//        
-//        mediaListUseCase.fetchMediaMyList(mode: .darkness)
-//            .subscribe { [weak self] in
-//                self?.darknessMode.accept($0)
-//            } onFailure: { error in
-//                print(error.localizedDescription)
-//            }
-//            .disposed(by: bag)
-//        
-//        mediaListUseCase.fetchRecentPlayHistory()
-//            .subscribe { [weak self] in
-//                self?.recentPlayHistory.accept($0)
-//            } onFailure: { error in
-//                print(error.localizedDescription)
-//            }
-//            .disposed(by: bag)
-//        
-//        mediaListUseCase.fetchFavoriteMediaList()
-//            .subscribe { [weak self] in
-//                self?.favoriteSoundList.accept($0)
-//            } onFailure: { error in
-//                print(error.localizedDescription)
-//            }
-//            .disposed(by: bag)
+        mediaListUseCase.fetchMediaMyList(mode: .bright)
+            .subscribe { [weak self] in
+                self?.brightMode.accept($0)
+            } onFailure: { error in
+                print(error.localizedDescription)
+            }
+            .disposed(by: bag)
+        
+        mediaListUseCase.fetchMediaMyList(mode: .darkness)
+            .subscribe { [weak self] in
+                self?.darknessMode.accept($0)
+            } onFailure: { error in
+                print(error.localizedDescription)
+            }
+            .disposed(by: bag)
+        
+        mediaListUseCase.fetchRecentPlayHistory()
+            .subscribe { [weak self] in
+                self?.recentPlayHistory.accept($0)
+            } onFailure: { error in
+                print(error.localizedDescription)
+            }
+            .disposed(by: bag)
+        
+        mediaListUseCase.fetchFavoriteMediaList()
+            .subscribe { [weak self] in
+                self?.favoriteSoundList.accept($0)
+            } onFailure: { error in
+                print(error.localizedDescription)
+            }
+            .disposed(by: bag)
     }
     
     func modeSwitchTouched() {

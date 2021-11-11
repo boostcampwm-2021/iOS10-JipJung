@@ -13,6 +13,7 @@ import RxSwift
 protocol LocalDBManageable {
     func search<T: Object>(with predicate: NSPredicate?) -> Single<[T]>
     func write(_ value: Object) -> Single<Bool>
+    func writeData(_ value: Object) throws
     func delete(_ value: Object) -> Single<Bool>
     func requestAllMediaList() -> Single<[Media]>
     func requestMediaMyList(mode: MediaMode) -> Single<[Media]>
