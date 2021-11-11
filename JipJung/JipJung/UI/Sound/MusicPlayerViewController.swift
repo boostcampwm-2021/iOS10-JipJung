@@ -20,28 +20,11 @@ class MusicPlayerViewController: UIViewController {
     let themeColor = CGColor(red: 34.0/255.0, green: 48.0/255.0, blue: 74.0/255.0, alpha: 1)
     
     let navigationBar = UINavigationBar()
-    
-    let topView = UIView()
-
-    let bottomView = UIView()
-    
-    let musicDescriptionView = MusicDescriptionView()
-
-    let maximTextView = MusicPlayerMaximView()
-    
     let backButton = BackCircleButton()
-    
     let favoriteButton = FavoriteCircleButton()
     
-    let playButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.titleLabel?.font = .boldSystemFont(ofSize: 16)
-        button.backgroundColor = .white
-        button.setTitle("Download To Play", for: .normal)
-        button.layer.cornerRadius = 8
-        return button
-    }()
-        
+    let topView = UIView()
+    let musicDescriptionView = MusicDescriptionView()
     let tagCollectionView: UICollectionView = {
         let layout = LeftAlignCollectionViewFlowLayout()
         
@@ -51,6 +34,17 @@ class MusicPlayerViewController: UIViewController {
         return collectionView
     }()
     
+    let bottomView = UIView()
+    let maximTextView = MusicPlayerMaximView()
+    let playButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.titleLabel?.font = .boldSystemFont(ofSize: 16)
+        button.backgroundColor = .white
+        button.setTitle("Download To Play", for: .normal)
+        button.layer.cornerRadius = 8
+        return button
+    }()
+
     var audioPlayer: AVAudioPlayer?
     
     var playerLooper: AVPlayerLooper?
