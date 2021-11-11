@@ -45,7 +45,7 @@ enum FocusMode: CaseIterable {
         }
     }
     
-    func getFocusViewController() -> UIViewController {
+    func getFocusViewController() -> FocusViewController {
         switch self {
         case .normal:
             return FocusViewControllerFactory.makeDefaultTimer()
@@ -54,7 +54,7 @@ enum FocusMode: CaseIterable {
         case .infinity:
             return FocusViewControllerFactory.makeInfinityTimer()
         case .breath:
-            return UIViewController()
+            return FocusViewController()
         }
     }
 }

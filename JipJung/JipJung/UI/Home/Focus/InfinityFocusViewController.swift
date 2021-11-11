@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 import RxRelay
 
-class InfinityFocusViewController: UIViewController {
+class InfinityFocusViewController: FocusViewController {
     // MARK: - Subviews
     
     private lazy var timeLabel: UILabel = {
@@ -225,12 +225,6 @@ class InfinityFocusViewController: UIViewController {
                 self.pauseTimerProgressBar()
             }
         })
-        
-        viewModel?.rotateAnimationTime
-            .bind(onNext: { [weak self] _ in
-//                self?.animateRotation()
-            })
-            .disposed(by: disposeBag)
     }
     
     private func changeStateToReady() {

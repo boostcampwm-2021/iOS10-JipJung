@@ -258,11 +258,14 @@ class HomeViewController: UIViewController {
         }
         
         view.isUserInteractionEnabled = true
-        FocusMode.allCases.forEach { mode in
+        FocusMode.allCases.forEach { focusMode in
             let focusView = FocusButton()
-            focusView.set(mode: mode)
+            focusView.set(mode: focusMode)
             focusView.buttonClickListener = { [weak self] in
-                let focusViewController = mode.getFocusViewController()
+                let focusViewController = focusMode.getFocusViewController()
+                focusViewController.delegate = self
+                focusViewController.modalPresentationStyle = .overCurrentContext
+                focusViewController.modalTransitionStyle = .crossDissolve
                 self?.present(focusViewController, animated: true, completion: nil)
             }
             focusButtonStackView.addArrangedSubview(focusView)
@@ -407,5 +410,11 @@ extension HomeViewController: UIGestureRecognizerDelegate {
         shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer
     ) -> Bool {
         return true
+    }
+}
+
+extension HomeViewController: FocusViewControllerDelegate {
+    func closeButtonDidClicked(_ sender: UIViewController) {
+        sender.dismiss(animated: true, completion: nil)
     }
 }
