@@ -8,6 +8,8 @@
 import AVKit
 import Foundation
 
+import RxSwift
+
 // TODO: Protocol을 이용한 의존성 제거
 
 class AudioPlayUseCase {
@@ -15,48 +17,32 @@ class AudioPlayUseCase {
         case badURL
     }
     
+    private let bag = DisposeBag()
+    private var audioFileName = ""
+    private(set) var audioPlayer: AVAudioPlayer?
+    
     private let mediaResourceRepository: MediaResourceRepositoryProtocol
     
     init(mediaResourceRepository: MediaResourceRepositoryProtocol) {
         self.mediaResourceRepository = mediaResourceRepository
     }
     
-    private var url = URL(string: "")
-    private(set) var audioPlayer: AVAudioPlayer?
-    
-    func ready(urlString: String) throws {
-        guard let newURL = URL(string: urlString),
-              self.url != newURL
-        else {
+    func ready(audioFileName: String) throws {
+        if self.audioFileName == audioFileName {
             return
         }
         
-        // Test Code
-        
-        guard let soundURL = Bundle.main.url(forResource: "testSound", withExtension: "m4a") else {
-            return
-        }
-        
-        do {
-            let player = try AVAudioPlayer(contentsOf: soundURL)
-            self.url = newURL
-            self.audioPlayer = player
-            audioPlayer?.numberOfLoops = -1
-            audioPlayer?.prepareToPlay()
-        } catch {
-            throw AudioError.badURL
-        }
-        
-        // TODO: MediaResourceRepository를 이용한 음원 재생 기능 연결
-        //        do {
-        //            let player = try AVAudioPlayer(contentsOf: url)
-        //            self.url = url
-        //            self.audioPlayer = player
-        //            audioPlayer?.numberOfLoops = -1
-        //            audioPlayer?.prepareToPlay()
-        //        } catch {
-        //            throw AudioError.badURLError
-        //        }
+        mediaResourceRepository.getMediaURL(fileName: audioFileName, type: .audio)
+            .subscribe { [weak self] url in
+                guard let player = try? AVAudioPlayer(contentsOf: url) else { return }
+                self?.audioFileName = audioFileName
+                self?.audioPlayer = player
+                self?.audioPlayer?.numberOfLoops = -1
+                self?.audioPlayer?.prepareToPlay()
+            } onFailure: { error in
+                print(error.localizedDescription)
+            }
+            .disposed(by: bag)
     }
     
     func play() {
