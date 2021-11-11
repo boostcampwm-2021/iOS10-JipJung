@@ -74,6 +74,8 @@ class HomeViewController: UIViewController {
             return
         }
 
+        let baseDataUseCase = BaseDataUseCase()
+        
         let mediaListUseCase = MediaListUseCase(
             mediaListRepository: MediaListRepository(localDBManager: localDBManager)
         )
@@ -83,6 +85,7 @@ class HomeViewController: UIViewController {
         )
         
         viewModel = HomeViewModel(
+            baseDataUseCase: baseDataUseCase,
             mediaListUseCase: mediaListUseCase,
             maximListUseCase: maximListUseCase,
             audioPlayUseCase: audioPlayUseCase

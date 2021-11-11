@@ -93,40 +93,41 @@
     {
       "id": 0,
       "mediaID": "N002",
-      "addDate": "2021-11-01T00:00:00.000Z"
+      "addDate": 0
     },
     {
       "id": 1,
       "mediaID": "N002",
-      "addDate": "2021-11-01T00:00:00.000Z"
+      "addDate": 0
     },
     {
       "id": 2,
       "mediaID": "N002",
-      "addDate": "2021-11-03T00:00:00.000Z"
+      "addDate": 0
     },
     {
       "id": 3,
       "mediaID": "N002",
-      "addDate": "2021-11-10T00:00:00.000Z"
+      "addDate": 0
     },
     {
-      "id": "N008",
-      "addDate": "2021-11-11T00:00:00.000Z"
+      "id": 4,
+      "mediaID": "N008",
+      "addDate": 0
     }
   ],
   "FavoriteMedia": [
     {
       "id": "N001",
-      "addDate": "2021-11-01T00:00:00.000Z"
+      "addDate": 0
     },
     {
       "id": "N002",
-      "addDate": "2021-11-01T00:00:00.000Z"
+      "addDate": 0
     },
     {
       "id": "N003",
-      "addDate": "2021-11-03T00:00:00.000Z"
+      "addDate": 0
     }
   ],
   "BrightMedia": [

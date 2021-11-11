@@ -21,6 +21,7 @@ class PlayHistory: Object, Decodable {
     convenience init(id: Int, mediaID: String, addDate: Date) {
         self.init()
         self.id = id
+        self.mediaID = mediaID
         self.addDate = addDate
     }
 }

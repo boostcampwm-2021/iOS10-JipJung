@@ -11,6 +11,7 @@ import RxSwift
 import RxRelay
 
 final class HomeViewModel {
+    let baseDataUseCase: BaseDataUseCase
     let mediaListUseCase: MediaListUseCase
     let maximListUseCase: MaximListUseCase
     let audioPlayUseCase: AudioPlayUseCase
@@ -25,10 +26,12 @@ final class HomeViewModel {
     let isPlaying = BehaviorRelay(value: false)
     
     init(
+        baseDataUseCase: BaseDataUseCase,
         mediaListUseCase: MediaListUseCase,
         maximListUseCase: MaximListUseCase,
         audioPlayUseCase: AudioPlayUseCase
     ) {
+        self.baseDataUseCase = baseDataUseCase
         self.mediaListUseCase = mediaListUseCase
         self.maximListUseCase = maximListUseCase
         self.audioPlayUseCase = audioPlayUseCase
@@ -44,37 +47,39 @@ final class HomeViewModel {
     func viewControllerLoaded() {
         // TODO: UserDefaults에서 현재 mode 정보 가져오기
         
-        mediaListUseCase.fetchMediaMyList(mode: .bright)
-            .subscribe { [weak self] in
-                self?.brightMode.accept($0)
-            } onFailure: { error in
-                print(error.localizedDescription)
-            }
-            .disposed(by: bag)
+        baseDataUseCase.load()
         
-        mediaListUseCase.fetchMediaMyList(mode: .darkness)
-            .subscribe { [weak self] in
-                self?.darknessMode.accept($0)
-            } onFailure: { error in
-                print(error.localizedDescription)
-            }
-            .disposed(by: bag)
-        
-        mediaListUseCase.fetchRecentPlayHistory()
-            .subscribe { [weak self] in
-                self?.recentPlayHistory.accept($0)
-            } onFailure: { error in
-                print(error.localizedDescription)
-            }
-            .disposed(by: bag)
-        
-        mediaListUseCase.fetchFavoriteMediaList()
-            .subscribe { [weak self] in
-                self?.favoriteSoundList.accept($0)
-            } onFailure: { error in
-                print(error.localizedDescription)
-            }
-            .disposed(by: bag)
+//        mediaListUseCase.fetchMediaMyList(mode: .bright)
+//            .subscribe { [weak self] in
+//                self?.brightMode.accept($0)
+//            } onFailure: { error in
+//                print(error.localizedDescription)
+//            }
+//            .disposed(by: bag)
+//        
+//        mediaListUseCase.fetchMediaMyList(mode: .darkness)
+//            .subscribe { [weak self] in
+//                self?.darknessMode.accept($0)
+//            } onFailure: { error in
+//                print(error.localizedDescription)
+//            }
+//            .disposed(by: bag)
+//        
+//        mediaListUseCase.fetchRecentPlayHistory()
+//            .subscribe { [weak self] in
+//                self?.recentPlayHistory.accept($0)
+//            } onFailure: { error in
+//                print(error.localizedDescription)
+//            }
+//            .disposed(by: bag)
+//        
+//        mediaListUseCase.fetchFavoriteMediaList()
+//            .subscribe { [weak self] in
+//                self?.favoriteSoundList.accept($0)
+//            } onFailure: { error in
+//                print(error.localizedDescription)
+//            }
+//            .disposed(by: bag)
     }
     
     func modeSwitchTouched() {
