@@ -48,7 +48,7 @@ class MusicCollectionViewCell: UICollectionViewCell {
     }
     
     func configureUI() {
-        backgroundColor = .systemCyan.withAlphaComponent(0.5)
+        backgroundColor = .cyan.withAlphaComponent(0.5)
         addSubview(imageView)
         let frame = self.frame
         imageView.snp.makeConstraints { make in
