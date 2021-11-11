@@ -10,5 +10,6 @@ import Foundation
 import RxSwift
 
 protocol MediaResourceRepositoryProtocol {
-    func fetch(fileName: String, type: MediaType) -> Single<Data>
+    func getMediaURL(fileName: String, type: MediaType) -> Single<URL>
+    func fetchData(fileName: String, type: MediaType) -> Single<Data>
 }
