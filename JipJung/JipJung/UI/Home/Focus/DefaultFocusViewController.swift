@@ -233,14 +233,18 @@ class DefaultFocusViewController: UIViewController {
         
         UIView.animate(withDuration: 0.5) { [weak self] in
             guard let self = self else { return }
-            self.continueButton.frame = CGRect(x: self.startButton.frame.minX,
-                                               y: self.continueButton.frame.minY,
-                                               width: self.continueButton.frame.width,
-                                               height: self.continueButton.frame.height)
-            self.exitButton.frame = CGRect(x: self.startButton.frame.minX,
-                                           y: self.exitButton.frame.minY,
-                                           width: self.exitButton.frame.width,
-                                           height: self.exitButton.frame.height)
+            self.continueButton.frame = CGRect(
+                x: self.startButton.frame.minX,
+                y: self.continueButton.frame.minY,
+                width: self.continueButton.frame.width,
+                height: self.continueButton.frame.height
+            )
+            self.exitButton.frame = CGRect(
+                x: self.startButton.frame.minX,
+                y: self.exitButton.frame.minY,
+                width: self.exitButton.frame.width,
+                height: self.exitButton.frame.height
+            )
         } completion: { _ in
             self.continueButton.isHidden = true
             self.exitButton.isHidden = true
@@ -253,14 +257,18 @@ class DefaultFocusViewController: UIViewController {
         
         UIView.animate(withDuration: 0.5) { [weak self] in
             guard let self = self else { return }
-            self.continueButton.frame = CGRect(x: self.startButton.frame.minX,
-                                               y: self.continueButton.frame.minY,
-                                               width: self.continueButton.frame.width,
-                                               height: self.continueButton.frame.height)
-            self.exitButton.frame = CGRect(x: self.startButton.frame.minX,
-                                           y: self.exitButton.frame.minY,
-                                           width: self.exitButton.frame.width,
-                                           height: self.exitButton.frame.height)
+            self.continueButton.frame = CGRect(
+                x: self.startButton.frame.minX,
+                y: self.continueButton.frame.minY,
+                width: self.continueButton.frame.width,
+                height: self.continueButton.frame.height
+            )
+            self.exitButton.frame = CGRect(
+                x: self.startButton.frame.minX,
+                y: self.exitButton.frame.minY,
+                width: self.exitButton.frame.width,
+                height: self.exitButton.frame.height
+            )
         } completion: { _ in
             self.continueButton.isHidden = true
             self.exitButton.isHidden = true
@@ -278,14 +286,18 @@ class DefaultFocusViewController: UIViewController {
             guard let self = self else { return }
             self.continueButton.isHidden = false
             self.exitButton.isHidden = false
-            self.continueButton.frame = CGRect(x: self.continueButton.frame.minX * 0.45,
-                                               y: self.continueButton.frame.minY,
-                                               width: self.continueButton.frame.width,
-                                               height: self.continueButton.frame.height)
-            self.exitButton.frame = CGRect(x: self.exitButton.frame.minX * 1.55,
-                                           y: self.exitButton.frame.minY,
-                                           width: self.exitButton.frame.width,
-                                           height: self.exitButton.frame.height)
+            self.continueButton.frame = CGRect(
+                x: self.continueButton.frame.minX * 0.45,
+                y: self.continueButton.frame.minY,
+                width: self.continueButton.frame.width,
+                height: self.continueButton.frame.height
+            )
+            self.exitButton.frame = CGRect(
+                x: self.exitButton.frame.minX * 1.55,
+                y: self.exitButton.frame.minY,
+                width: self.exitButton.frame.width,
+                height: self.exitButton.frame.height
+            )
         }
     }
     

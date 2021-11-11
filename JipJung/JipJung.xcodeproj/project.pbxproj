@@ -57,6 +57,7 @@
 		DD3902DA272FCA12009ECA82 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DD3902D9272FCA12009ECA82 /* Assets.xcassets */; };
 		DD3902DD272FCA12009ECA82 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DD3902DB272FCA12009ECA82 /* LaunchScreen.storyboard */; };
 		DD828092273D113200BB2A60 /* NetworkEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD828091273D113200BB2A60 /* NetworkEnums.swift */; };
+		DD82808C273CAE5F00BB2A60 /* FocusViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD82808B273CAE5F00BB2A60 /* FocusViewControllerFactory.swift */; };
 		DDAA3D3D5F09E051F5BE96A6 /* Pods_JipJung.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6ECB91629425C2E076873750 /* Pods_JipJung.framework */; };
 		DDB5CE9E27328E8300E8F9EB /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB5CE9D27328E8300E8F9EB /* HomeViewController.swift */; };
 		DDB5CEA227328EC300E8F9EB /* ExploreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB5CEA127328EC300E8F9EB /* ExploreViewController.swift */; };
@@ -67,13 +68,6 @@
 		DDB5CEB82733765500E8F9EB /* FavoriteMaxim.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB5CEB72733765500E8F9EB /* FavoriteMaxim.swift */; };
 		DDB5CEBE2733A49A00E8F9EB /* RealmDBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB5CEBD2733A49A00E8F9EB /* RealmDBManager.swift */; };
 		DDB92B9D2737BD5E00EE26F0 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB92B9C2737BD5E00EE26F0 /* UIView+Extension.swift */; };
-		DDB92BA12737E36E00EE26F0 /* FocusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB92BA02737E36E00EE26F0 /* FocusViewController.swift */; };
-		DDB92BA32738021B00EE26F0 /* DefaultFocusTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB92BA22738021B00EE26F0 /* DefaultFocusTimerView.swift */; };
-		DDB92BA5273802D500EE26F0 /* DefaultFocusStartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB92BA4273802D500EE26F0 /* DefaultFocusStartView.swift */; };
-		DDB92BA7273803AA00EE26F0 /* FocusExtraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB92BA6273803AA00EE26F0 /* FocusExtraView.swift */; };
-		DDB92BA92738CC0B00EE26F0 /* FocusHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB92BA82738CC0B00EE26F0 /* FocusHeaderView.swift */; };
-		DDB92BAB273921E100EE26F0 /* FocusTimerViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB92BAA273921E100EE26F0 /* FocusTimerViewProtocol.swift */; };
-		DDB92BAD2739611B00EE26F0 /* FocusStartViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB92BAC2739611B00EE26F0 /* FocusStartViewProtocol.swift */; };
 		DDB92BB0273A263100EE26F0 /* MusicCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB92BAF273A263100EE26F0 /* MusicCollectionViewCell.swift */; };
 		DF08B1DD2737F5010066518B /* RemoteServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF08B1DC2737F5010066518B /* RemoteServiceProvider.swift */; };
 		DF30FEF9273A730F001C720E /* TagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF30FEF8273A730F001C720E /* TagCell.swift */; };
@@ -163,6 +157,7 @@
 		DD3902DE272FCA12009ECA82 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DD3902FC272FD388009ECA82 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		DD828091273D113200BB2A60 /* NetworkEnums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkEnums.swift; sourceTree = "<group>"; };
+		DD82808B273CAE5F00BB2A60 /* FocusViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusViewControllerFactory.swift; sourceTree = "<group>"; };
 		DDB5CE9D27328E8300E8F9EB /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		DDB5CEA127328EC300E8F9EB /* ExploreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreViewController.swift; sourceTree = "<group>"; };
 		DDB5CEA727328EF400E8F9EB /* MeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeViewController.swift; sourceTree = "<group>"; };
@@ -172,13 +167,6 @@
 		DDB5CEB72733765500E8F9EB /* FavoriteMaxim.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteMaxim.swift; sourceTree = "<group>"; };
 		DDB5CEBD2733A49A00E8F9EB /* RealmDBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmDBManager.swift; sourceTree = "<group>"; };
 		DDB92B9C2737BD5E00EE26F0 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
-		DDB92BA02737E36E00EE26F0 /* FocusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusViewController.swift; sourceTree = "<group>"; };
-		DDB92BA22738021B00EE26F0 /* DefaultFocusTimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFocusTimerView.swift; sourceTree = "<group>"; };
-		DDB92BA4273802D500EE26F0 /* DefaultFocusStartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFocusStartView.swift; sourceTree = "<group>"; };
-		DDB92BA6273803AA00EE26F0 /* FocusExtraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusExtraView.swift; sourceTree = "<group>"; };
-		DDB92BA82738CC0B00EE26F0 /* FocusHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusHeaderView.swift; sourceTree = "<group>"; };
-		DDB92BAA273921E100EE26F0 /* FocusTimerViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusTimerViewProtocol.swift; sourceTree = "<group>"; };
-		DDB92BAC2739611B00EE26F0 /* FocusStartViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusStartViewProtocol.swift; sourceTree = "<group>"; };
 		DDB92BAF273A263100EE26F0 /* MusicCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicCollectionViewCell.swift; sourceTree = "<group>"; };
 		DF08B1DC2737F5010066518B /* RemoteServiceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteServiceProvider.swift; sourceTree = "<group>"; };
 		DF30FEF8273A730F001C720E /* TagCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCell.swift; sourceTree = "<group>"; };
@@ -509,6 +497,7 @@
 			isa = PBXGroup;
 			children = (
 				DDB92BA02737E36E00EE26F0 /* FocusViewController.swift */,
+				91CE6F6E2739024800176AF2 /* Enums.swift */,
 				B40D1FA8273B5F1900881A49 /* DefaultFocusViewController.swift */,
 				B40D1FAA273B5F2100881A49 /* DefaultFocusViewModel.swift */,
 				B40D1FAC273B5F2700881A49 /* PomodoroFocusViewController.swift */,
@@ -516,12 +505,7 @@
 				B40D1FB8273B674F00881A49 /* InfinityFocusViewController.swift */,
 				B40D1FB2273B5F3500881A49 /* InfinityFocusViewModel.swift */,
 				B40D1FB4273B5F3900881A49 /* GenerateTimerUseCase.swift */,
-				DDB92BA22738021B00EE26F0 /* DefaultFocusTimerView.swift */,
-				DDB92BA4273802D500EE26F0 /* DefaultFocusStartView.swift */,
-				DDB92BA6273803AA00EE26F0 /* FocusExtraView.swift */,
-				DDB92BA82738CC0B00EE26F0 /* FocusHeaderView.swift */,
-				DDB92BAA273921E100EE26F0 /* FocusTimerViewProtocol.swift */,
-				DDB92BAC2739611B00EE26F0 /* FocusStartViewProtocol.swift */,
+				DD82808B273CAE5F00BB2A60 /* FocusViewControllerFactory.swift */,
 			);
 			path = Focus;
 			sourceTree = "<group>";
@@ -797,8 +781,6 @@
 				91EA47C827384EA500780C3E /* SystemConstants.swift in Sources */,
 				B4153947273BA005004EF80F /* Date+Extension.swift in Sources */,
 				DDB5CEA827328EF400E8F9EB /* MeViewController.swift in Sources */,
-				DDB92BA12737E36E00EE26F0 /* FocusViewController.swift in Sources */,
-				DDB92BAD2739611B00EE26F0 /* FocusStartViewProtocol.swift in Sources */,
 				DDB5CEB12733746600E8F9EB /* Maxim.swift in Sources */,
 				DF30FF05273CBC3B001C720E /* MusicPlayerButtons.swift in Sources */,
 				DDB5CEB82733765500E8F9EB /* FavoriteMaxim.swift in Sources */,
@@ -814,11 +796,8 @@
 				DDB92BA32738021B00EE26F0 /* DefaultFocusTimerView.swift in Sources */,
 				DDB92BA32738021B00EE26F0 /* DefaultFocusTimerView.swift in Sources */,
 				DDB5CEB82733765500E8F9EB /* FavoriteMaxim.swift in Sources */,
-				DDB92BA32738021B00EE26F0 /* DefaultFocusTimerView.swift in Sources */,
-				DDB92BA32738021B00EE26F0 /* DefaultFocusTimerView.swift in Sources */,
-				DDB92BA32738021B00EE26F0 /* DefaultFocusTimerView.swift in Sources */,
+				DD82808C273CAE5F00BB2A60 /* FocusViewControllerFactory.swift in Sources */,
 				DDB5CEA227328EC300E8F9EB /* ExploreViewController.swift in Sources */,
-				DDB92BA5273802D500EE26F0 /* DefaultFocusStartView.swift in Sources */,
 				DD3902D1272FCA10009ECA82 /* AppDelegate.swift in Sources */,
 				DDB5CEAF273372A700E8F9EB /* Media.swift in Sources */,
 				B4F36B662733B8770073609C /* SearchViewController.swift in Sources */,
@@ -846,6 +825,7 @@
 				DDB92BA7273803AA00EE26F0 /* FocusExtraView.swift in Sources */,
 				DDB92BAB273921E100EE26F0 /* FocusTimerViewProtocol.swift in Sources */,
 				DD828092273D113200BB2A60 /* NetworkEnums.swift in Sources */,
+				DDB92BB4273A443600EE26F0 /* MediaRepository.swift in Sources */,
 				DD3902D3272FCA10009ECA82 /* SceneDelegate.swift in Sources */,
 				DD208D30273B55240089A2AB /* PulseAnimation.swift in Sources */,
 				B4015CD627391529006BD14A /* FavoriteMusicViewController.swift in Sources */,
