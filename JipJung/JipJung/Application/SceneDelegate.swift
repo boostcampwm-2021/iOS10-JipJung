@@ -12,6 +12,11 @@ import SnapKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    
+    let localFileManager: LocalFileAccessible = LocalFileManager()
+    let localDBManager: LocalDBManageable = RealmDBManager()
+    let userDefaultsManager: UserDefaultsStorable = UserDefaultsStorage()
+    let remoteServiceProvider: RemoteServiceAccessible = RemoteServiceProvider()
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
@@ -38,13 +43,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         tabBar.barTintColor = .clear
         tabBar.tintColor = .black
         tabBar.unselectedItemTintColor = .gray
-        
-        let blurEffect = UIBlurEffect(style: .light) // here you can change blur style
-        let blurView = UIVisualEffectView(effect: blurEffect)
-        tabBar.insertSubview(blurView, at: 0)
-        blurView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
+        tabBar.makeBlurBackground()
     }
     
     private func createHomeViewController() -> UIViewController {
@@ -56,6 +55,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let homeViewController = HomeViewController()
         homeViewController.tabBarItem = tabBarItem
+        homeViewController.localDBManager = localDBManager
         return homeViewController
     }
     

@@ -8,7 +8,7 @@
 import Foundation
 import CoreGraphics
 
-enum SoundMode {
+enum MediaMode: Int {
     case bright, darkness
 }
 

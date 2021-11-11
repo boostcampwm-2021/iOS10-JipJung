@@ -7,50 +7,43 @@
 
 import Foundation
 
-protocol LocalFileAccessible {
-  func read(_ fileName: String) -> Data?
-  func write(_ data: Data, at fileName: String) -> Bool
-  func delete(_ fileName: String) -> Bool
-}
-
 class LocalFileManager: LocalFileAccessible {
-  static let shared = LocalFileManager()
-  private init() {}
-  
-  private let cachePath = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0]
-  
-  func read(_ fileName: String) -> Data? {
-    let fileURL = cachePath.appendingPathComponent(fileName)
-    return try? Data(contentsOf: fileURL)
-  }
-  
-  func write(_ data: Data, at fileName: String) -> Bool {
-    let fileURL = cachePath.appendingPathComponent(fileName)
-    do {
-      try data.write(to: fileURL)
-    } catch {
-      return false
-    }
-    return true
-  }
+    // TODO: [safe: 0] 적용하기
+    private let cachePath = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0]
     
-    func move(from: URL, fileName: String) -> Bool {
-        let path = cachePath.appendingPathComponent(fileName)
+    func read(_ fileName: String) throws -> Data {
+        let fileURL = cachePath.appendingPathComponent(fileName)
         do {
-            try FileManager.default.moveItem(at: from, to: path)
+            return try Data(contentsOf: fileURL)
         } catch {
-            return false
+            throw LocalFileError.notFound
         }
-        return true
     }
     
-  func delete(_ fileName: String) -> Bool {
-    let fileURL = cachePath.appendingPathComponent(fileName)
-    do {
-      try FileManager.default.removeItem(at: fileURL)
-    } catch {
-      return false
+    func write(_ data: Data, at fileName: String) throws {
+        let fileURL = cachePath.appendingPathComponent(fileName)
+        do {
+            try data.write(to: fileURL)
+        } catch {
+            throw LocalFileError.writeFailed
+        }
     }
-    return true
-  }
+    
+    func move(from url: URL, to fileName: String) throws {
+        let fileURL = cachePath.appendingPathComponent(fileName)
+        do {
+            try FileManager.default.moveItem(at: url, to: fileURL)
+        } catch {
+            throw LocalFileError.copyFailed
+        }
+    }
+    
+    func delete(_ fileName: String) throws {
+        let fileURL = cachePath.appendingPathComponent(fileName)
+        do {
+            try FileManager.default.removeItem(at: fileURL)
+        } catch {
+            throw LocalFileError.notFound
+        }
+    }
 }
