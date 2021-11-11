@@ -27,7 +27,7 @@ final class AudioPlayUseCase {
         self.mediaResourceRepository = mediaResourceRepository
     }
     
-    func ready(audioFileName: String) throws {
+    func ready(_ audioFileName: String) throws {
         if self.audioFileName == audioFileName {
             return
         }

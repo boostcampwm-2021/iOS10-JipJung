@@ -47,6 +47,8 @@ class HomeViewController: UIViewController {
     var localDBManager: LocalDBManageable?
     var userDefaultsManager: UserDefaultsStorable?
     var remoteServiceProvider: RemoteServiceAccessible?
+    // TODO: Protocol로 의존성 제거 필요
+    var audioPlayUseCase: AudioPlayUseCase?
     
     private var viewModel: HomeViewModel?
     private var videoPlayer: AVPlayer?
@@ -66,9 +68,8 @@ class HomeViewController: UIViewController {
     }
     
     private func configureViewModel() {
-        guard let localFileManager = localFileManager,
-              let localDBManager = localDBManager,
-              let remoteServiceProvider = remoteServiceProvider
+        guard let localDBManager = localDBManager,
+              let audioPlayUseCase = audioPlayUseCase
         else {
             return
         }
@@ -79,13 +80,6 @@ class HomeViewController: UIViewController {
         
         let maximListUseCase = MaximListUseCase(
             maximListRepository: MaximListRepository(localDBManager: localDBManager)
-        )
-        
-        let audioPlayUseCase = AudioPlayUseCase(
-            mediaResourceRepository: MediaResourceRepository(
-                localFileManager: localFileManager,
-                remoteServiceProvider: remoteServiceProvider
-            )
         )
         
         viewModel = HomeViewModel(
@@ -307,7 +301,7 @@ class HomeViewController: UIViewController {
                 mediaCollectionView.rx.modelSelected(String.self)
             )
             .bind { [weak self] indexPath, model in
-                guard let result = self?.mediaPlayButtonTouched(urlString: model),
+                guard let result = self?.mediaPlayButtonTouched(audioFileName: model),
                       let cell = mediaCollectionView.cellForItem(at: indexPath) as? MediaCollectionViewCell
                 else {
                     return
@@ -358,12 +352,12 @@ class HomeViewController: UIViewController {
             .disposed(by: bag)
     }
     
-    private func mediaPlayButtonTouched(urlString: String) -> Bool {
+    private func mediaPlayButtonTouched(audioFileName: String) -> Bool {
         guard let viewModel = viewModel else {
             return false
         }
         
-        return viewModel.mediaPlayButtonTouched(urlString: urlString)
+        return viewModel.mediaPlayButtonTouched(audioFileName)
     }
     
     @objc private func bottomViewDragged(_ sender: UIPanGestureRecognizer) {

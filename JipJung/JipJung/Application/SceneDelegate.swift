@@ -17,7 +17,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     private let localDBManager: LocalDBManageable = RealmDBManager()
     private let userDefaultsManager: UserDefaultsStorable = UserDefaultsStorage()
     private let remoteServiceProvider: RemoteServiceAccessible = RemoteServiceProvider()
-    
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
@@ -31,8 +30,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let tabBarController = UITabBarController()
         self.configure(tabBarController.tabBar)
         
+        let audioPlayUseCase = AudioPlayUseCase(
+            mediaResourceRepository: MediaResourceRepository(
+                localFileManager: localFileManager,
+                remoteServiceProvider: remoteServiceProvider
+            )
+        )
+        
         tabBarController.viewControllers = [
-            createHomeViewController(),
+            createHomeViewController(audioPlayUseCase),
             createExploreNavigationViewController(),
             createMeViewController()
         ]
@@ -47,7 +53,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         tabBar.makeBlurBackground()
     }
     
-    private func createHomeViewController() -> UIViewController {
+    // TODO: Protocol로 의존성 제거 필요
+    private func createHomeViewController(_ audioPlayUseCase: AudioPlayUseCase) -> UIViewController {
         let tabBarItem = UITabBarItem(
             title: TabBarItems.Home.title,
             image: UIImage(systemName: TabBarItems.Home.image),
@@ -60,6 +67,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         homeViewController.localDBManager = localDBManager
         homeViewController.userDefaultsManager = userDefaultsManager
         homeViewController.remoteServiceProvider = remoteServiceProvider
+        homeViewController.audioPlayUseCase = audioPlayUseCase
         return homeViewController
     }
     

@@ -79,12 +79,12 @@ final class HomeViewModel {
         mode.accept(mode.value == .bright ? .darkness : .bright)
     }
     
-    func mediaPlayButtonTouched(urlString: String) -> Bool {
+    func mediaPlayButtonTouched(_ audioFileName: String) -> Bool {
         isPlaying.accept(!isPlaying.value)
         
         if isPlaying.value {
             do {
-                try audioPlayUseCase.ready(urlString: urlString)
+                try audioPlayUseCase.ready(audioFileName)
                 audioPlayUseCase.play()
             } catch {
                 print(error.localizedDescription)
