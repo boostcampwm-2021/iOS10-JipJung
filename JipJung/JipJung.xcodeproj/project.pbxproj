@@ -33,11 +33,9 @@
 		91D02279273CDF610073EA2A /* DummyData.json in Resources */ = {isa = PBXBuildFile; fileRef = 91D02278273CDF610073EA2A /* DummyData.json */; };
 		91D0227D273CE6F50073EA2A /* DBStructureForJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D0227C273CE6F50073EA2A /* DBStructureForJSON.swift */; };
 		91D0227F273CEE400073EA2A /* RealmSettingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D0227E273CEE400073EA2A /* RealmSettingRepository.swift */; };
+		91D02281273D0A320073EA2A /* VideoPlayUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D02280273D0A320073EA2A /* VideoPlayUseCase.swift */; };
 		91DABCC0273A4EF000E57AAE /* AudioPlayUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DABCBF273A4EF000E57AAE /* AudioPlayUseCase.swift */; };
-		91DABCC2273A651400E57AAE /* test2.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 91DABCC1273A64FD00E57AAE /* test2.mp4 */; };
 		91E4178927312FEB001BA0A6 /* LocalFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E4178827312FEB001BA0A6 /* LocalFileManager.swift */; };
-		91EA47C027383DE600780C3E /* test.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 91EA47BF27383DD200780C3E /* test.mp4 */; };
-		91EA47C127383DE600780C3E /* testSound.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 91EA47BE27383DD100780C3E /* testSound.m4a */; };
 		91EA47C42738451100780C3E /* BlurEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91EA47C32738451100780C3E /* BlurEffect.swift */; };
 		91EA47C6273846A800780C3E /* BlurCircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91EA47C5273846A800780C3E /* BlurCircleButton.swift */; };
 		91EA47C827384EA500780C3E /* SystemConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91EA47C727384EA500780C3E /* SystemConstants.swift */; };
@@ -140,11 +138,9 @@
 		91D02278273CDF610073EA2A /* DummyData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = DummyData.json; sourceTree = "<group>"; };
 		91D0227C273CE6F50073EA2A /* DBStructureForJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBStructureForJSON.swift; sourceTree = "<group>"; };
 		91D0227E273CEE400073EA2A /* RealmSettingRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmSettingRepository.swift; sourceTree = "<group>"; };
+		91D02280273D0A320073EA2A /* VideoPlayUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayUseCase.swift; sourceTree = "<group>"; };
 		91DABCBF273A4EF000E57AAE /* AudioPlayUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayUseCase.swift; sourceTree = "<group>"; };
-		91DABCC1273A64FD00E57AAE /* test2.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = test2.mp4; sourceTree = "<group>"; };
 		91E4178827312FEB001BA0A6 /* LocalFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFileManager.swift; sourceTree = "<group>"; };
-		91EA47BE27383DD100780C3E /* testSound.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = testSound.m4a; sourceTree = "<group>"; };
-		91EA47BF27383DD200780C3E /* test.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = test.mp4; sourceTree = "<group>"; };
 		91EA47C32738451100780C3E /* BlurEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurEffect.swift; sourceTree = "<group>"; };
 		91EA47C5273846A800780C3E /* BlurCircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurCircleButton.swift; sourceTree = "<group>"; };
 		91EA47C727384EA500780C3E /* SystemConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemConstants.swift; sourceTree = "<group>"; };
@@ -294,6 +290,7 @@
 				91655857273B773400C55CDC /* MaximListUseCase.swift */,
 				91DABCBF273A4EF000E57AAE /* AudioPlayUseCase.swift */,
 				91D02274273CBF970073EA2A /* BaseDataUseCase.swift */,
+				91D02280273D0A320073EA2A /* VideoPlayUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -710,9 +707,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				91DABCC2273A651400E57AAE /* test2.mp4 in Resources */,
-				91EA47C027383DE600780C3E /* test.mp4 in Resources */,
-				91EA47C127383DE600780C3E /* testSound.m4a in Resources */,
 				DD3902DD272FCA12009ECA82 /* LaunchScreen.storyboard in Resources */,
 				DF30FEFD273AEBD3001C720E /* sea.mp4 in Resources */,
 				91D02279273CDF610073EA2A /* DummyData.json in Resources */,
@@ -845,6 +839,7 @@
 				DDB5CEAF273372A700E8F9EB /* Media.swift in Sources */,
 				B4F36B662733B8770073609C /* SearchViewController.swift in Sources */,
 				B4F36B5127336EE20073609C /* UserDefaultsStorage.swift in Sources */,
+				91D02281273D0A320073EA2A /* VideoPlayUseCase.swift in Sources */,
 				B40D1FAF273B5F2C00881A49 /* PomodoroFocusViewModel.swift in Sources */,
 				91CE6F6F2739024800176AF2 /* Home+Enums.swift in Sources */,
 				91CE6F6F2739024800176AF2 /* Home+Enums.swift in Sources */,

@@ -5,10 +5,10 @@
       "name": "귀뚜라미",
       "mode": 0,
       "tag": "자연/야외",
-      "thumbnailImageFileName": "귀뚜라미.jpg",
-      "videoFileName": "귀뚜라미.mp4",
+      "thumbnailImageFileName": "N000.jpg",
+      "videoFileName": "N000.mp4",
       "videoFileSize": 11.9,
-      "audioFileName": "귀뚜라미_LR.wav",
+      "audioFileName": "N000_LR.wav",
       "audioFileSize": 5.4
     },
     {
@@ -16,10 +16,10 @@
       "name": "낙엽밟는소리",
       "mode": 0,
       "tag": "자연/야외/가을",
-      "thumbnailImageFileName": "낙엽밟는소리.jpg",
-      "videoFileName": "낙엽밟는소리.mp4",
+      "thumbnailImageFileName": "N001.jpg",
+      "videoFileName": "N001.mp4",
       "videoFileSize": 10.4,
-      "audioFileName": "낙엽밟는소리_LR.wav",
+      "audioFileName": "N001_LR.wav",
       "audioFileSize": 4.3
     },
     {
@@ -27,10 +27,10 @@
       "name": "낙엽에떨어지는가을비소리",
       "mode": 0,
       "tag": "자연/야외/가을/비",
-      "thumbnailImageFileName": "낙엽에떨어지는가을비소리.jpg",
-      "videoFileName": "낙엽에떨어지는가을비소리.mp4",
+      "thumbnailImageFileName": "N002.jpg",
+      "videoFileName": "N002.mp4",
       "videoFileSize": 14.1,
-      "audioFileName": "낙엽에떨어지는가을비소리_LR.wav",
+      "audioFileName": "N002_LR.wav",
       "audioFileSize": 4.9
     },
     {
@@ -132,13 +132,13 @@
   ],
   "BrightMedia": [
     {
+      "id": "N000"
+    },
+    {
+      "id": "N001"
+    },
+    {
       "id": "N002"
-    },
-    {
-      "id": "N004"
-    },
-    {
-      "id": "N006"
     }
   ],
   "DarknessMedia": [

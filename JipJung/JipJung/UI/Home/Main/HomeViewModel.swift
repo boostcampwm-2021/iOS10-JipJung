@@ -15,6 +15,7 @@ final class HomeViewModel {
     let mediaListUseCase: MediaListUseCase
     let maximListUseCase: MaximListUseCase
     let audioPlayUseCase: AudioPlayUseCase
+    let videoPlayUseCase: VideoPlayUseCase
     
     let bag = DisposeBag()
     let mode = BehaviorRelay<MediaMode>(value: .bright)
@@ -29,12 +30,14 @@ final class HomeViewModel {
         baseDataUseCase: BaseDataUseCase,
         mediaListUseCase: MediaListUseCase,
         maximListUseCase: MaximListUseCase,
-        audioPlayUseCase: AudioPlayUseCase
+        audioPlayUseCase: AudioPlayUseCase,
+        videoPlayUseCase: VideoPlayUseCase
     ) {
         self.baseDataUseCase = baseDataUseCase
         self.mediaListUseCase = mediaListUseCase
         self.maximListUseCase = maximListUseCase
         self.audioPlayUseCase = audioPlayUseCase
+        self.videoPlayUseCase = videoPlayUseCase
         
         Observable
             .combineLatest(mode, brightMode, darknessMode) { ($0, $1, $2) }
@@ -94,7 +97,7 @@ final class HomeViewModel {
                 try audioPlayUseCase.ready(audioFileName)
                 audioPlayUseCase.play()
             } catch {
-                print(error.localizedDescription)
+                print(#function, error)
                 return false
             }
             return true
@@ -102,5 +105,9 @@ final class HomeViewModel {
             audioPlayUseCase.pause()
             return false
         }
+    }
+    
+    func mediaCollectionCellLoaded(_ videoFileName: String) -> Single<URL> {
+        return videoPlayUseCase.ready(videoFileName)
     }
 }
