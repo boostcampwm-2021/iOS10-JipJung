@@ -7,7 +7,7 @@
 
 import UIKit
 import RxSwift
-import RxCocoa
+//import RxCocoa
 import RxRelay
 
 class InfinityFocusViewController: FocusViewController {
@@ -30,7 +30,7 @@ class InfinityFocusViewController: FocusViewController {
     }()
     
     private lazy var cometAnimationLayer: CALayer = {
-        let rotateAnimationLayer = createCometCircleShapeLayer(strokeColor: .white, lineWidth: 3, startAngle: 0, endAngle: 0.5 * CGFloat.pi)
+        let rotateAnimationLayer = createCometCircleShapeLayer(strokeColor: .white, lineWidth: 3)
         return rotateAnimationLayer
     }()
     
@@ -336,12 +336,12 @@ class InfinityFocusViewController: FocusViewController {
         pulseGroupLayer.sublayers?.forEach({ $0.removeAllAnimations() })
     }
     
-    private func createCometCircleShapeLayer(strokeColor: UIColor, lineWidth: CGFloat, startAngle: CGFloat = 0, endAngle: CGFloat = 2 * CGFloat.pi) -> CALayer {
+    private func createCometCircleShapeLayer(strokeColor: UIColor, lineWidth: CGFloat) -> CALayer {
         let circleShapeLayer = CAShapeLayer()
         let circlePath = UIBezierPath(arcCenter: .zero,
                                       radius: 125,
-                                      startAngle: startAngle,
-                                      endAngle: endAngle,
+                                      startAngle: 0,
+                                      endAngle: 2 * CGFloat.pi,
                                       clockwise: true)
         
         circleShapeLayer.path = circlePath.cgPath
@@ -351,13 +351,17 @@ class InfinityFocusViewController: FocusViewController {
         circleShapeLayer.fillColor = UIColor.clear.cgColor
         let centerX = view.center.x
         let centerY = view.center.y * 0.7
-        circleShapeLayer.position = CGPoint(x: centerX, y: centerY)
+        circleShapeLayer.position = view.center
         
-//        let gradient = CAGradientLayer()
-//        gradient.frame = UIScreen.main.bounds
-//        gradient.position = CGPoint(x: centerX, y: centerY)
-//        gradient.colors = [UIColor.clear.cgColor, UIColor.red.cgColor]
-//        gradient.mask = circleShapeLayer
-        return circleShapeLayer
+        let gradient = CAGradientLayer()
+        gradient.frame = UIScreen.main.bounds
+        gradient.position = CGPoint(x: centerX, y: centerY)
+        gradient.colors = [UIColor.systemGray.cgColor, strokeColor.cgColor]
+        gradient.startPoint = CGPoint(x: 0.5, y: 0.5)
+        gradient.endPoint = CGPoint(x: 1.0, y: 1)
+        gradient.locations = [0.8, 1]
+        gradient.type = .conic
+        gradient.mask = circleShapeLayer
+        return gradient
     }
 }
