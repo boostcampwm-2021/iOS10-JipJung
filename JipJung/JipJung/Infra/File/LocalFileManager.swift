@@ -17,7 +17,10 @@ class LocalFileManager {
     )[safe: 0]
     
     func isExsit(_ fileName: String) -> URL? {
-        let fileURL = cachePath.appendingPathComponent(fileName)
+        guard let fileURL = cachePath?.appendingPathComponent(fileName) else {
+            return nil
+        }
+        
         if FileManager.default.fileExists(atPath: fileURL.path) {
             return fileURL
         } else {
@@ -34,7 +37,10 @@ class LocalFileManager {
     }
     
     func read(_ fileName: String) throws -> Data {
-        let fileURL = cachePath.appendingPathComponent(fileName)
+        guard let fileURL = cachePath?.appendingPathComponent(fileName) else {
+            throw LocalFileError.notFound
+        }
+        
         do {
             return try Data(contentsOf: fileURL)
         } catch {
@@ -51,7 +57,10 @@ class LocalFileManager {
     }
     
     func write(_ data: Data, at fileName: String) throws {
-        let fileURL = cachePath.appendingPathComponent(fileName)
+        guard let fileURL = cachePath?.appendingPathComponent(fileName) else {
+            throw LocalFileError.notFound
+        }
+        
         do {
             try data.write(to: fileURL)
         } catch {
@@ -60,7 +69,10 @@ class LocalFileManager {
     }
     
     func move(from url: URL, to fileName: String) throws -> URL {
-        let fileURL = cachePath.appendingPathComponent(fileName)
+        guard let fileURL = cachePath?.appendingPathComponent(fileName) else {
+            throw LocalFileError.notFound
+        }
+        
         do {
             try FileManager.default.moveItem(at: url, to: fileURL)
         } catch {
@@ -70,7 +82,10 @@ class LocalFileManager {
     }
     
     func delete(_ fileName: String) throws {
-        let fileURL = cachePath.appendingPathComponent(fileName)
+        guard let fileURL = cachePath?.appendingPathComponent(fileName) else {
+            throw LocalFileError.notFound
+        }
+        
         do {
             try FileManager.default.removeItem(at: fileURL)
         } catch {
