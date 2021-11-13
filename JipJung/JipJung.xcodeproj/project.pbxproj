@@ -13,10 +13,7 @@
 		9131514127400FBB001E7125 /* UIApplication+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9131514027400FBB001E7125 /* UIApplication+Extension.swift */; };
 		9131514327401200001E7125 /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9131514227401200001E7125 /* Array+Extension.swift */; };
 		914E1D87273A191D000CA5FB /* MediaCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914E1D86273A191D000CA5FB /* MediaCollectionViewCell.swift */; };
-		9165584C273B5D3F00C55CDC /* LocalFileAccessible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9165584B273B5D3F00C55CDC /* LocalFileAccessible.swift */; };
-		91655850273B5F4800C55CDC /* RemoteServiceAccessible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9165584F273B5F4800C55CDC /* RemoteServiceAccessible.swift */; };
 		91655852273B618700C55CDC /* LocalFileEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91655851273B618700C55CDC /* LocalFileEnums.swift */; };
-		91655854273B6EE800C55CDC /* LocalDBManagable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91655853273B6EE800C55CDC /* LocalDBManagable.swift */; };
 		91655856273B6F0200C55CDC /* LocalDBEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91655855273B6F0200C55CDC /* LocalDBEnums.swift */; };
 		91655858273B773400C55CDC /* MaximListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91655857273B773400C55CDC /* MaximListUseCase.swift */; };
 		9165585A273B78A000C55CDC /* MediaListRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91655859273B78A000C55CDC /* MediaListRepository.swift */; };
@@ -30,9 +27,6 @@
 		91D02268273CB5FD0073EA2A /* BrightMedia.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D02267273CB5FD0073EA2A /* BrightMedia.swift.swift */; };
 		91D0226A273CB6050073EA2A /* DarknessMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D02269273CB6050073EA2A /* DarknessMedia.swift */; };
 		91D0226C273CBA340073EA2A /* MediaListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D0226B273CBA340073EA2A /* MediaListUseCase.swift */; };
-		91D0226F273CBBD70073EA2A /* MediaResourceRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D0226E273CBBD70073EA2A /* MediaResourceRepositoryProtocol.swift */; };
-		91D02271273CBBF20073EA2A /* MediaListRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D02270273CBBF20073EA2A /* MediaListRepositoryProtocol.swift */; };
-		91D02273273CBC040073EA2A /* MaximListRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D02272273CBC040073EA2A /* MaximListRepositoryProtocol.swift */; };
 		91D02275273CBF970073EA2A /* BaseDataUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D02274273CBF970073EA2A /* BaseDataUseCase.swift */; };
 		91D02279273CDF610073EA2A /* DummyData.json in Resources */ = {isa = PBXBuildFile; fileRef = 91D02278273CDF610073EA2A /* DummyData.json */; };
 		91D0227D273CE6F50073EA2A /* DBStructureForJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D0227C273CE6F50073EA2A /* DBStructureForJSON.swift */; };
@@ -120,10 +114,7 @@
 		9131514027400FBB001E7125 /* UIApplication+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Extension.swift"; sourceTree = "<group>"; };
 		9131514227401200001E7125 /* Array+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extension.swift"; sourceTree = "<group>"; };
 		914E1D86273A191D000CA5FB /* MediaCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaCollectionViewCell.swift; sourceTree = "<group>"; };
-		9165584B273B5D3F00C55CDC /* LocalFileAccessible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFileAccessible.swift; sourceTree = "<group>"; };
-		9165584F273B5F4800C55CDC /* RemoteServiceAccessible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteServiceAccessible.swift; sourceTree = "<group>"; };
 		91655851273B618700C55CDC /* LocalFileEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFileEnums.swift; sourceTree = "<group>"; };
-		91655853273B6EE800C55CDC /* LocalDBManagable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDBManagable.swift; sourceTree = "<group>"; };
 		91655855273B6F0200C55CDC /* LocalDBEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDBEnums.swift; sourceTree = "<group>"; };
 		91655857273B773400C55CDC /* MaximListUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaximListUseCase.swift; sourceTree = "<group>"; };
 		91655859273B78A000C55CDC /* MediaListRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaListRepository.swift; sourceTree = "<group>"; };
@@ -136,9 +127,6 @@
 		91D02267273CB5FD0073EA2A /* BrightMedia.swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrightMedia.swift.swift; sourceTree = "<group>"; };
 		91D02269273CB6050073EA2A /* DarknessMedia.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarknessMedia.swift; sourceTree = "<group>"; };
 		91D0226B273CBA340073EA2A /* MediaListUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaListUseCase.swift; sourceTree = "<group>"; };
-		91D0226E273CBBD70073EA2A /* MediaResourceRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaResourceRepositoryProtocol.swift; sourceTree = "<group>"; };
-		91D02270273CBBF20073EA2A /* MediaListRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaListRepositoryProtocol.swift; sourceTree = "<group>"; };
-		91D02272273CBC040073EA2A /* MaximListRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaximListRepositoryProtocol.swift; sourceTree = "<group>"; };
 		91D02274273CBF970073EA2A /* BaseDataUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseDataUseCase.swift; sourceTree = "<group>"; };
 		91D02278273CDF610073EA2A /* DummyData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = DummyData.json; sourceTree = "<group>"; };
 		91D0227C273CE6F50073EA2A /* DBStructureForJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBStructureForJSON.swift; sourceTree = "<group>"; };
@@ -239,7 +227,6 @@
 			isa = PBXGroup;
 			children = (
 				91655847273B5C9E00C55CDC /* Repositories */,
-				9165584A273B5D2400C55CDC /* Interfaces */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -264,16 +251,6 @@
 			path = Dummy;
 			sourceTree = "<group>";
 		};
-		9165584A273B5D2400C55CDC /* Interfaces */ = {
-			isa = PBXGroup;
-			children = (
-				9165584B273B5D3F00C55CDC /* LocalFileAccessible.swift */,
-				9165584F273B5F4800C55CDC /* RemoteServiceAccessible.swift */,
-				91655853273B6EE800C55CDC /* LocalDBManagable.swift */,
-			);
-			path = Interfaces;
-			sourceTree = "<group>";
-		};
 		9198DE93273385D800EBAEC8 /* Localizing */ = {
 			isa = PBXGroup;
 			children = (
@@ -292,16 +269,6 @@
 				91D02280273D0A320073EA2A /* VideoPlayUseCase.swift */,
 			);
 			path = UseCases;
-			sourceTree = "<group>";
-		};
-		91D0226D273CBB590073EA2A /* Interfaces */ = {
-			isa = PBXGroup;
-			children = (
-				91D0226E273CBBD70073EA2A /* MediaResourceRepositoryProtocol.swift */,
-				91D02270273CBBF20073EA2A /* MediaListRepositoryProtocol.swift */,
-				91D02272273CBC040073EA2A /* MaximListRepositoryProtocol.swift */,
-			);
-			path = Interfaces;
 			sourceTree = "<group>";
 		};
 		91E4174C27312E5A001BA0A6 /* Infra */ = {
@@ -484,7 +451,6 @@
 		DDB5CEAC2733727600E8F9EB /* Domain */ = {
 			isa = PBXGroup;
 			children = (
-				91D0226D273CBB590073EA2A /* Interfaces */,
 				91CE6F7627391FF700176AF2 /* UseCases */,
 				DDB5CEAD2733728100E8F9EB /* Entities */,
 			);
@@ -798,7 +764,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				91D02271273CBBF20073EA2A /* MediaListRepositoryProtocol.swift in Sources */,
 				DF08B1DD2737F5010066518B /* RemoteServiceProvider.swift in Sources */,
 				B4F36B682733D4210073609C /* SearchTableViewCell.swift in Sources */,
 				91D0227F273CEE400073EA2A /* RealmSettingRepository.swift in Sources */,
@@ -807,10 +772,8 @@
 				B40D1FA9273B5F1900881A49 /* DefaultFocusViewController.swift in Sources */,
 				B40D1FAD273B5F2800881A49 /* PomodoroFocusViewController.swift in Sources */,
 				DDB5CEB32733752D00E8F9EB /* FavoriteMedia.swift in Sources */,
-				91655854273B6EE800C55CDC /* LocalDBManagable.swift in Sources */,
 				9131513F27400C26001E7125 /* UIScreen+Extension.swift in Sources */,
 				DDB92B9D2737BD5E00EE26F0 /* UIView+Extension.swift in Sources */,
-				91D02273273CBC040073EA2A /* MaximListRepositoryProtocol.swift in Sources */,
 				DDB5CEB32733752D00E8F9EB /* FavoriteMedia.swift in Sources */,
 				DDB92BB0273A263100EE26F0 /* MusicCollectionViewCell.swift in Sources */,
 				DDB5CEB32733752D00E8F9EB /* FavoriteMedia.swift in Sources */,
@@ -829,7 +792,6 @@
 				91655856273B6F0200C55CDC /* LocalDBEnums.swift in Sources */,
 				91655852273B618700C55CDC /* LocalFileEnums.swift in Sources */,
 				DDB5CEA227328EC300E8F9EB /* ExploreViewController.swift in Sources */,
-				9165584C273B5D3F00C55CDC /* LocalFileAccessible.swift in Sources */,
 				DFED21CB2733702800E99641 /* MusicPlayerViewController.swift in Sources */,
 				9131514127400FBB001E7125 /* UIApplication+Extension.swift in Sources */,
 				DF6B111127390F1900D9924E /* MediaResourceRepository.swift in Sources */,
@@ -852,7 +814,6 @@
 				B40D1FB3273B5F3500881A49 /* InfinityFocusViewModel.swift in Sources */,
 				91CE6F6F2739024800176AF2 /* Home+Enums.swift in Sources */,
 				9165585E273B8F5000C55CDC /* MaximListRepository.swift in Sources */,
-				91D0226F273CBBD70073EA2A /* MediaResourceRepositoryProtocol.swift in Sources */,
 				B40D1FAB273B5F2100881A49 /* DefaultFocusViewModel.swift in Sources */,
 				91DABCC0273A4EF000E57AAE /* AudioPlayUseCase.swift in Sources */,
 				91D02268273CB5FD0073EA2A /* BrightMedia.swift.swift in Sources */,
@@ -860,7 +821,6 @@
 				B40D1FB5273B5F3900881A49 /* GenerateTimerUseCase.swift in Sources */,
 				914E1D87273A191D000CA5FB /* MediaCollectionViewCell.swift in Sources */,
 				91655858273B773400C55CDC /* MaximListUseCase.swift in Sources */,
-				91655850273B5F4800C55CDC /* RemoteServiceAccessible.swift in Sources */,
 				91EA47C6273846A800780C3E /* BlurCircleButton.swift in Sources */,
 				B4015CD42739151B006BD14A /* RecentMusicViewController.swift in Sources */,
 				DFED21D02733931600E99641 /* MusicDescriptionView.swift in Sources */,
