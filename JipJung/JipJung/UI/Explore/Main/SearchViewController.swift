@@ -53,7 +53,7 @@ class SearchViewController: UIViewController {
     // MARK: - Private Variables
     
     private var disposeBag: DisposeBag = DisposeBag()
-    private var userDefaultStorage: UserDefaultsStorage = UserDefaultsStorage()
+    private var userDefaultStorage: UserDefaultsStorage = UserDefaultsStorage.shared
     
     // MARK: - Lifecycle Methods
     
