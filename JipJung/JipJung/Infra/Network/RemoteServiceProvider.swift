@@ -10,7 +10,10 @@ import Foundation
 import FirebaseStorage
 import RxSwift
 
-final class RemoteServiceProvider: RemoteServiceAccessible {
+final class RemoteServiceProvider {
+    static let shared = RemoteServiceProvider()
+    private init() {}
+    
     private let storage = Storage.storage()
     
     func request(key: String, type: MediaType) -> Single<URL> {

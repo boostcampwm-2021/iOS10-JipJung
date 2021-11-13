@@ -9,12 +9,8 @@ import Foundation
 
 import RxSwift
 
-final class MediaListRepository: MediaListRepositoryProtocol {
-    private let localDBManager: LocalDBManageable
-    
-    init(localDBManager: LocalDBManageable) {
-        self.localDBManager = localDBManager
-    }
+final class MediaListRepository {
+    private let localDBManager = RealmDBManager.shared
     
     func fetchAllMediaList() -> Single<[Media]> {
         return localDBManager.requestAllMediaList()

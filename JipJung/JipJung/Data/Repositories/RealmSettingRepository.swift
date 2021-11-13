@@ -11,11 +11,7 @@ import RxSwift
 import RealmSwift
 
 final class RealmSettingRepository {
-    private let localDBManager: LocalDBManageable
-    
-    init(localDBManager: LocalDBManageable) {
-        self.localDBManager = localDBManager
-    }
+    private let localDBManager = RealmDBManager.shared
     
     func migrate<T: Object>(dataList: [T]) throws {
         for data in dataList {

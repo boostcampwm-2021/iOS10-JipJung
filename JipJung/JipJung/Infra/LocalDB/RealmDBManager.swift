@@ -10,7 +10,9 @@ import Foundation
 import RealmSwift
 import RxSwift
 
-class RealmDBManager: LocalDBManageable {
+class RealmDBManager {
+    static let shared = RealmDBManager()
+    private init() {}
     
     func search<T: Object>(with predicate: NSPredicate? = nil) -> Single<[T]> {
         let realm = try? Realm()
