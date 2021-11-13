@@ -7,12 +7,14 @@
 
 import Foundation
 
-class LocalFileManager: LocalFileAccessible {
+class LocalFileManager {
     static let shared = LocalFileManager()
     private init() {}
     
-    // TODO: [safe: 0] 적용하기
-    private let cachePath = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0]
+    private let cachePath = FileManager.default.urls(
+        for: .cachesDirectory,
+           in: .userDomainMask
+    )[safe: 0]
     
     func isExsit(_ fileName: String) -> URL? {
         let fileURL = cachePath.appendingPathComponent(fileName)

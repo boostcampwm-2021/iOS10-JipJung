@@ -11,6 +11,7 @@
 		912A720A2733B9AC00C1A37E /* LocalFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E4178827312FEB001BA0A6 /* LocalFileManager.swift */; };
 		9131513F27400C26001E7125 /* UIScreen+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9131513E27400C26001E7125 /* UIScreen+Extension.swift */; };
 		9131514127400FBB001E7125 /* UIApplication+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9131514027400FBB001E7125 /* UIApplication+Extension.swift */; };
+		9131514327401200001E7125 /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9131514227401200001E7125 /* Array+Extension.swift */; };
 		914E1D87273A191D000CA5FB /* MediaCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914E1D86273A191D000CA5FB /* MediaCollectionViewCell.swift */; };
 		9165584C273B5D3F00C55CDC /* LocalFileAccessible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9165584B273B5D3F00C55CDC /* LocalFileAccessible.swift */; };
 		91655850273B5F4800C55CDC /* RemoteServiceAccessible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9165584F273B5F4800C55CDC /* RemoteServiceAccessible.swift */; };
@@ -117,6 +118,7 @@
 		912A72032733B99300C1A37E /* LocalFileManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFileManagerTests.swift; sourceTree = "<group>"; };
 		9131513E27400C26001E7125 /* UIScreen+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+Extension.swift"; sourceTree = "<group>"; };
 		9131514027400FBB001E7125 /* UIApplication+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Extension.swift"; sourceTree = "<group>"; };
+		9131514227401200001E7125 /* Array+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extension.swift"; sourceTree = "<group>"; };
 		914E1D86273A191D000CA5FB /* MediaCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaCollectionViewCell.swift; sourceTree = "<group>"; };
 		9165584B273B5D3F00C55CDC /* LocalFileAccessible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFileAccessible.swift; sourceTree = "<group>"; };
 		9165584F273B5F4800C55CDC /* RemoteServiceAccessible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteServiceAccessible.swift; sourceTree = "<group>"; };
@@ -524,6 +526,7 @@
 				B4153946273BA005004EF80F /* Date+Extension.swift */,
 				9131513E27400C26001E7125 /* UIScreen+Extension.swift */,
 				9131514027400FBB001E7125 /* UIApplication+Extension.swift */,
+				9131514227401200001E7125 /* Array+Extension.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -868,6 +871,7 @@
 				91D0226C273CBA340073EA2A /* MediaListUseCase.swift in Sources */,
 				91D0227D273CE6F50073EA2A /* DBStructureForJSON.swift in Sources */,
 				B4015CD627391529006BD14A /* FavoriteMusicViewController.swift in Sources */,
+				9131514327401200001E7125 /* Array+Extension.swift in Sources */,
 				91E4178927312FEB001BA0A6 /* LocalFileManager.swift in Sources */,
 				91CE6F7327390AD200176AF2 /* FocusButton.swift in Sources */,
 				B4153941273B93B0004EF80F /* SaveFocusTimeUseCase.swift in Sources */,
