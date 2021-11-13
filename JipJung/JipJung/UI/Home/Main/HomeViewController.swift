@@ -43,14 +43,8 @@ class HomeViewController: UIViewController {
     private let bottomViewHeight = SystemConstants.deviceScreenSize.height
     private let focusButtonSize: (width: CGFloat, height: CGFloat) = (60, 90)
     
-    var localFileManager: LocalFileAccessible?
-    var localDBManager: LocalDBManageable?
-    var userDefaultsManager: UserDefaultsStorable?
-    var remoteServiceProvider: RemoteServiceAccessible?
-    // TODO: Protocol로 의존성 제거 필요
-    var audioPlayUseCase: AudioPlayUseCase?
+    private let viewModel = HomeViewModel()
     
-    private var viewModel: HomeViewModel?
     private var videoPlayer: AVPlayer?
     private var audioPlayer: AVAudioPlayer?
     private var isAttached = false
@@ -60,48 +54,10 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configureViewModel()
         configureUI()
         bindUI()
         
-        viewModel?.viewControllerLoaded()
-    }
-    
-    private func configureViewModel() {
-        guard let localFileManager = localFileManager,
-              let localDBManager = localDBManager,
-              let remoteServiceProvider = remoteServiceProvider,
-              let audioPlayUseCase = audioPlayUseCase
-        else {
-            return
-        }
-        
-        let baseDataUseCase = BaseDataUseCase(
-            realmSettingRepository: RealmSettingRepository(localDBManager: localDBManager)
-        )
-        
-        let mediaListUseCase = MediaListUseCase(
-            mediaListRepository: MediaListRepository(localDBManager: localDBManager)
-        )
-        
-        let maximListUseCase = MaximListUseCase(
-            maximListRepository: MaximListRepository(localDBManager: localDBManager)
-        )
-        
-        let videoPlayUseCase = VideoPlayUseCase(
-            mediaResourceRepository: MediaResourceRepository(
-                localFileManager: localFileManager,
-                remoteServiceProvider: remoteServiceProvider
-            )
-        )
-        
-        viewModel = HomeViewModel(
-            baseDataUseCase: baseDataUseCase,
-            mediaListUseCase: mediaListUseCase,
-            maximListUseCase: maximListUseCase,
-            audioPlayUseCase: audioPlayUseCase,
-            videoPlayUseCase: videoPlayUseCase
-        )
+        viewModel.viewControllerLoaded()
     }
     
     private func configureUI() {
