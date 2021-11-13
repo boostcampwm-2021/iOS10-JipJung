@@ -14,11 +14,7 @@ final class VideoPlayUseCase {
         case badURL
     }
     
-    private let mediaResourceRepository: MediaResourceRepositoryProtocol
-    
-    init(mediaResourceRepository: MediaResourceRepositoryProtocol) {
-        self.mediaResourceRepository = mediaResourceRepository
-    }
+    private let mediaResourceRepository = MediaResourceRepository()
     
     func ready(_ videoFileName: String) -> Single<URL> {
         mediaResourceRepository.getMediaURL(fileName: videoFileName, type: .video)

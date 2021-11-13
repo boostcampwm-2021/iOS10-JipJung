@@ -10,8 +10,7 @@ import Foundation
 import RxSwift
 
 final class BaseDataUseCase {
-    // TODO: Protocol로 의존성 제거
-    private let realmSettingRepository: RealmSettingRepository
+    private let realmSettingRepository = RealmSettingRepository()
     
     let bag = DisposeBag()
     

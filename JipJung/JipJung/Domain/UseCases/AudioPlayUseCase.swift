@@ -10,8 +10,6 @@ import Foundation
 
 import RxSwift
 
-// TODO: Protocol을 이용한 의존성 제거
-
 final class AudioPlayUseCase {
     enum AudioError: Error {
         case badURL
@@ -21,11 +19,7 @@ final class AudioPlayUseCase {
     private var audioFileName = ""
     private(set) var audioPlayer: AVAudioPlayer?
     
-    private let mediaResourceRepository: MediaResourceRepositoryProtocol
-    
-    init(mediaResourceRepository: MediaResourceRepositoryProtocol) {
-        self.mediaResourceRepository = mediaResourceRepository
-    }
+    private let mediaResourceRepository = MediaResourceRepository()
     
     func ready(_ audioFileName: String) throws {
         if self.audioFileName == audioFileName {
