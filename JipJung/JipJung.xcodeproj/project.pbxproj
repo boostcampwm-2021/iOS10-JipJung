@@ -39,9 +39,7 @@
 		91D02281273D0A320073EA2A /* VideoPlayUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D02280273D0A320073EA2A /* VideoPlayUseCase.swift */; };
 		91DABCC0273A4EF000E57AAE /* AudioPlayUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DABCBF273A4EF000E57AAE /* AudioPlayUseCase.swift */; };
 		91E4178927312FEB001BA0A6 /* LocalFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E4178827312FEB001BA0A6 /* LocalFileManager.swift */; };
-		91EA47C42738451100780C3E /* BlurEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91EA47C32738451100780C3E /* BlurEffect.swift */; };
 		91EA47C6273846A800780C3E /* BlurCircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91EA47C5273846A800780C3E /* BlurCircleButton.swift */; };
-		91EA47C827384EA500780C3E /* SystemConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91EA47C727384EA500780C3E /* SystemConstants.swift */; };
 		B4015CD42739151B006BD14A /* RecentMusicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4015CD32739151B006BD14A /* RecentMusicViewController.swift */; };
 		B4015CD627391529006BD14A /* FavoriteMusicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4015CD527391529006BD14A /* FavoriteMusicViewController.swift */; };
 		B4015CD82739270C006BD14A /* GenreCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4015CD72739270C006BD14A /* GenreCollectionViewCell.swift */; };
@@ -146,9 +144,7 @@
 		91D02280273D0A320073EA2A /* VideoPlayUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayUseCase.swift; sourceTree = "<group>"; };
 		91DABCBF273A4EF000E57AAE /* AudioPlayUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayUseCase.swift; sourceTree = "<group>"; };
 		91E4178827312FEB001BA0A6 /* LocalFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFileManager.swift; sourceTree = "<group>"; };
-		91EA47C32738451100780C3E /* BlurEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurEffect.swift; sourceTree = "<group>"; };
 		91EA47C5273846A800780C3E /* BlurCircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurCircleButton.swift; sourceTree = "<group>"; };
-		91EA47C727384EA500780C3E /* SystemConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemConstants.swift; sourceTree = "<group>"; };
 		B4015CD32739151B006BD14A /* RecentMusicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentMusicViewController.swift; sourceTree = "<group>"; };
 		B4015CD527391529006BD14A /* FavoriteMusicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteMusicViewController.swift; sourceTree = "<group>"; };
 		B4015CD72739270C006BD14A /* GenreCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -522,9 +518,7 @@
 			children = (
 				DDB92BAF273A263100EE26F0 /* MusicCollectionViewCell.swift */,
 				DDB92B9C2737BD5E00EE26F0 /* UIView+Extension.swift */,
-				91EA47C32738451100780C3E /* BlurEffect.swift */,
 				91EA47C5273846A800780C3E /* BlurCircleButton.swift */,
-				91EA47C727384EA500780C3E /* SystemConstants.swift */,
 				91CE6F7227390AD200176AF2 /* FocusButton.swift */,
 				B40D1FB6273B60A500881A49 /* Int+Extension.swift */,
 				B4153946273BA005004EF80F /* Date+Extension.swift */,
@@ -821,7 +815,6 @@
 				DD82808E273CF07800BB2A60 /* CycleAnimation.swift in Sources */,
 				DDB5CE9E27328E8300E8F9EB /* HomeViewController.swift in Sources */,
 				B4153945273B9676004EF80F /* FocusRecord.swift in Sources */,
-				91EA47C827384EA500780C3E /* SystemConstants.swift in Sources */,
 				B4153947273BA005004EF80F /* Date+Extension.swift in Sources */,
 				DDB5CEA827328EF400E8F9EB /* MeViewController.swift in Sources */,
 				DDB5CEB12733746600E8F9EB /* Maxim.swift in Sources */,
@@ -855,7 +848,6 @@
 				B40D1FB7273B60A500881A49 /* Int+Extension.swift in Sources */,
 				B40D1FB3273B5F3500881A49 /* InfinityFocusViewModel.swift in Sources */,
 				91CE6F6F2739024800176AF2 /* Home+Enums.swift in Sources */,
-				91EA47C42738451100780C3E /* BlurEffect.swift in Sources */,
 				9165585E273B8F5000C55CDC /* MaximListRepository.swift in Sources */,
 				91D0226F273CBBD70073EA2A /* MediaResourceRepositoryProtocol.swift in Sources */,
 				B40D1FAB273B5F2100881A49 /* DefaultFocusViewModel.swift in Sources */,

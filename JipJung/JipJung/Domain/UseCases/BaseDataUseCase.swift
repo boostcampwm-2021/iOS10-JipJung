@@ -14,10 +14,6 @@ final class BaseDataUseCase {
     
     let bag = DisposeBag()
     
-    init(realmSettingRepository: RealmSettingRepository) {
-        self.realmSettingRepository = realmSettingRepository
-    }
-    
     func isLoaded() -> Bool {
         return false
     }
