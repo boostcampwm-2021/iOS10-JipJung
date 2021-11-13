@@ -284,8 +284,7 @@ class HomeViewController: UIViewController {
     }
     
     private func bindUIWithViewModel() {
-        guard let viewModel = viewModel,
-              let mediaCollectionView = mediaCollectionView
+        guard let mediaCollectionView = mediaCollectionView
         else {
             return
         }
@@ -306,10 +305,11 @@ class HomeViewController: UIViewController {
             to: mediaCollectionView.rx.items(cellIdentifier: MediaCollectionViewCell.identifier)
         ) { [weak self] item, element, cell in
             guard let self = self,
-                  let cell = cell as? MediaCollectionViewCell else {
-                      return
-                  }
-            viewModel.mediaCollectionCellLoaded(element.videoFileName)
+                  let cell = cell as? MediaCollectionViewCell
+            else {
+                return
+            }
+            self.viewModel.mediaCollectionCellLoaded(element.videoFileName)
                 .subscribe { url in
                     cell.setVideo(videoURL: url)
                 }.disposed(by: self.bag)
@@ -328,10 +328,6 @@ class HomeViewController: UIViewController {
     }
     
     private func mediaPlayButtonTouched(audioFileName: String) -> Bool {
-        guard let viewModel = viewModel else {
-            return false
-        }
-        
         return viewModel.mediaPlayButtonTouched(audioFileName)
     }
     
@@ -356,7 +352,7 @@ class HomeViewController: UIViewController {
         }
     }
     @objc private func modeSwitchTouched(_ sender: UIButton) {
-        viewModel?.modeSwitchTouched()
+        viewModel.modeSwitchTouched()
     }
 }
 
