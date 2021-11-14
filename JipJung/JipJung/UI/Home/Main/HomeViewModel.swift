@@ -11,13 +11,13 @@ import RxSwift
 import RxRelay
 
 final class HomeViewModel {
-    let baseDataUseCase: BaseDataUseCase
-    let mediaListUseCase: MediaListUseCase
-    let maximListUseCase: MaximListUseCase
-    let audioPlayUseCase: AudioPlayUseCase
-    let videoPlayUseCase: VideoPlayUseCase
+    private let baseDataUseCase = BaseDataUseCase()
+    private let mediaListUseCase = MediaListUseCase()
+    private let maximListUseCase = MaximListUseCase()
+    private let audioPlayUseCase = AudioPlayUseCase()
+    private let videoPlayUseCase = VideoPlayUseCase()
+    private let bag = DisposeBag()
     
-    let bag = DisposeBag()
     let mode = BehaviorRelay<MediaMode>(value: .bright)
     let currentModeList = BehaviorRelay<[Media]>(value: [])
     let brightMode = BehaviorRelay<[Media]>(value: [])
@@ -26,19 +26,7 @@ final class HomeViewModel {
     let recentPlayHistory = BehaviorRelay<[Media]>(value: [])
     let isPlaying = BehaviorRelay(value: false)
     
-    init(
-        baseDataUseCase: BaseDataUseCase,
-        mediaListUseCase: MediaListUseCase,
-        maximListUseCase: MaximListUseCase,
-        audioPlayUseCase: AudioPlayUseCase,
-        videoPlayUseCase: VideoPlayUseCase
-    ) {
-        self.baseDataUseCase = baseDataUseCase
-        self.mediaListUseCase = mediaListUseCase
-        self.maximListUseCase = maximListUseCase
-        self.audioPlayUseCase = audioPlayUseCase
-        self.videoPlayUseCase = videoPlayUseCase
-        
+    init() {
         Observable
             .combineLatest(mode, brightMode, darknessMode) { ($0, $1, $2) }
             .subscribe { [weak self] (mode, brightModeList, darknessModeList) in

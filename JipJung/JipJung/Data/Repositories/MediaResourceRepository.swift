@@ -9,17 +9,9 @@ import Foundation
 
 import RxSwift
 
-final class MediaResourceRepository: MediaResourceRepositoryProtocol {
-    private let localFileManager: LocalFileAccessible
-    private let remoteServiceProvider: RemoteServiceAccessible
-    
-    init(
-        localFileManager: LocalFileAccessible,
-        remoteServiceProvider: RemoteServiceAccessible
-    ) {
-        self.localFileManager = localFileManager
-        self.remoteServiceProvider = remoteServiceProvider
-    }
+final class MediaResourceRepository {
+    private let localFileManager = LocalFileManager.shared
+    private let remoteServiceProvider = RemoteServiceProvider.shared
     
     func getMediaURL(fileName: String, type: MediaType) -> Single<URL> {
         let localFileManager = self.localFileManager

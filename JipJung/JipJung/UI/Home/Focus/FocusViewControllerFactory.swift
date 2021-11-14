@@ -18,8 +18,9 @@ enum FocusViewControllerFactory {
         let viewModel = InfinityFocusViewModel(
             generateTimerUseCase: GenerateTimerUseCase(),
             saveFocusTimeUseCase: SaveFocusTimeUseCase(
-                focusTimeRepository: FocusTimeRepository(
-                    realmDBManager: RealmDBManager())))
+                focusTimeRepository: FocusTimeRepository()
+            )
+        )
         return InfinityFocusViewController(viewModel: viewModel)
     }
 }

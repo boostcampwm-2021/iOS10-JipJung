@@ -38,19 +38,8 @@ class HomeViewController: UIViewController {
     private let topView = UIView()
     private let bottomView = UIView()
     
-    private let topViewHeight = SystemConstants.deviceScreenSize.width / 3
-    private let mediaControlViewHeight = SystemConstants.deviceScreenSize.height / 2
-    private let bottomViewHeight = SystemConstants.deviceScreenSize.height
-    private let focusButtonSize: (width: CGFloat, height: CGFloat) = (60, 90)
+    private let viewModel = HomeViewModel()
     
-    var localFileManager: LocalFileAccessible?
-    var localDBManager: LocalDBManageable?
-    var userDefaultsManager: UserDefaultsStorable?
-    var remoteServiceProvider: RemoteServiceAccessible?
-    // TODO: Protocol로 의존성 제거 필요
-    var audioPlayUseCase: AudioPlayUseCase?
-    
-    private var viewModel: HomeViewModel?
     private var videoPlayer: AVPlayer?
     private var audioPlayer: AVAudioPlayer?
     private var isAttached = false
@@ -60,48 +49,10 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configureViewModel()
         configureUI()
         bindUI()
         
-        viewModel?.viewControllerLoaded()
-    }
-    
-    private func configureViewModel() {
-        guard let localFileManager = localFileManager,
-              let localDBManager = localDBManager,
-              let remoteServiceProvider = remoteServiceProvider,
-              let audioPlayUseCase = audioPlayUseCase
-        else {
-            return
-        }
-        
-        let baseDataUseCase = BaseDataUseCase(
-            realmSettingRepository: RealmSettingRepository(localDBManager: localDBManager)
-        )
-        
-        let mediaListUseCase = MediaListUseCase(
-            mediaListRepository: MediaListRepository(localDBManager: localDBManager)
-        )
-        
-        let maximListUseCase = MaximListUseCase(
-            maximListRepository: MaximListRepository(localDBManager: localDBManager)
-        )
-        
-        let videoPlayUseCase = VideoPlayUseCase(
-            mediaResourceRepository: MediaResourceRepository(
-                localFileManager: localFileManager,
-                remoteServiceProvider: remoteServiceProvider
-            )
-        )
-        
-        viewModel = HomeViewModel(
-            baseDataUseCase: baseDataUseCase,
-            mediaListUseCase: mediaListUseCase,
-            maximListUseCase: maximListUseCase,
-            audioPlayUseCase: audioPlayUseCase,
-            videoPlayUseCase: videoPlayUseCase
-        )
+        viewModel.viewControllerLoaded()
     }
     
     private func configureUI() {
@@ -206,7 +157,7 @@ class HomeViewController: UIViewController {
         topView.snp.makeConstraints {
             $0.top.equalTo(view.snp.topMargin)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(topViewHeight)
+            $0.height.equalTo(HomeMainViewSize.topViewHeight)
         }
         
         let helloLabel: UILabel = {
@@ -259,9 +210,11 @@ class HomeViewController: UIViewController {
     private func configureBottomView() {
         mainScrollContentsView.addSubview(bottomView)
         bottomView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(mediaControlViewHeight + topViewHeight)
+            $0.top.equalToSuperview().offset(
+                HomeMainViewSize.mediaControlViewHeight + HomeMainViewSize.topViewHeight
+            )
             $0.leading.trailing.bottom.equalToSuperview()
-            $0.height.equalTo(bottomViewHeight)
+            $0.height.equalTo(HomeMainViewSize.bottomViewHeight)
         }
         
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(bottomViewDragged(_:)))
@@ -296,8 +249,8 @@ class HomeViewController: UIViewController {
             }
             focusButtonStackView.addArrangedSubview(focusView)
             focusView.snp.makeConstraints {
-                $0.width.equalTo(focusButtonSize.width)
-                $0.height.equalTo(focusButtonSize.height)
+                $0.width.equalTo(HomeMainViewSize.focusButtonSize.width)
+                $0.height.equalTo(HomeMainViewSize.focusButtonSize.height)
             }
         }
     }
@@ -328,8 +281,7 @@ class HomeViewController: UIViewController {
     }
     
     private func bindUIWithViewModel() {
-        guard let viewModel = viewModel,
-              let mediaCollectionView = mediaCollectionView
+        guard let mediaCollectionView = mediaCollectionView
         else {
             return
         }
@@ -350,10 +302,11 @@ class HomeViewController: UIViewController {
             to: mediaCollectionView.rx.items(cellIdentifier: MediaCollectionViewCell.identifier)
         ) { [weak self] item, element, cell in
             guard let self = self,
-                  let cell = cell as? MediaCollectionViewCell else {
-                      return
-                  }
-            viewModel.mediaCollectionCellLoaded(element.videoFileName)
+                  let cell = cell as? MediaCollectionViewCell
+            else {
+                return
+            }
+            self.viewModel.mediaCollectionCellLoaded(element.videoFileName)
                 .subscribe { url in
                     cell.setVideo(videoURL: url)
                 }.disposed(by: self.bag)
@@ -372,10 +325,6 @@ class HomeViewController: UIViewController {
     }
     
     private func mediaPlayButtonTouched(audioFileName: String) -> Bool {
-        guard let viewModel = viewModel else {
-            return false
-        }
-        
         return viewModel.mediaPlayButtonTouched(audioFileName)
     }
     
@@ -387,7 +336,7 @@ class HomeViewController: UIViewController {
         if (self.isAttached && moveY > 0) || (!self.isAttached && moveY < 0) {
             self.isAttached = true
             self.mainScrollView.setContentOffset(
-                CGPoint(x: 0, y: self.mediaControlViewHeight - SystemConstants.statusBarHeight),
+                CGPoint(x: 0, y: HomeMainViewSize.mediaControlViewHeight - UIApplication.statusBarHeight),
                 animated: true
             )
         } else {
@@ -395,19 +344,19 @@ class HomeViewController: UIViewController {
             
             if moveY > 0 {
                 self.isAttached = false
-                self.mainScrollView.setContentOffset(CGPoint(x: 0, y: -SystemConstants.statusBarHeight), animated: true)
+                self.mainScrollView.setContentOffset(CGPoint(x: 0, y: -UIApplication.statusBarHeight), animated: true)
             }
         }
     }
     @objc private func modeSwitchTouched(_ sender: UIButton) {
-        viewModel?.modeSwitchTouched()
+        viewModel.modeSwitchTouched()
     }
 }
 
 extension HomeViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let currentContentsOffsetY = scrollView.contentOffset.y
-        let currentTopBottomYGap = mediaControlViewHeight - (currentContentsOffsetY + SystemConstants.statusBarHeight)
+        let currentTopBottomYGap = HomeMainViewSize.mediaControlViewHeight - (currentContentsOffsetY + UIApplication.statusBarHeight)
         
         if currentTopBottomYGap <= 0 {
             isAttached = true

@@ -13,12 +13,8 @@ protocol FocusTimeRepositoryProtocol {
 }
 
 final class FocusTimeRepository: FocusTimeRepositoryProtocol {
-    private let realmDBManager: LocalDBManageable
+    private let realmDBManager = RealmDBManager.shared
     private var disposeBag: DisposeBag = DisposeBag()
-    
-    init(realmDBManager: LocalDBManageable) {
-        self.realmDBManager = realmDBManager
-    }
     
     func save(record: FocusRecord) -> Single<Bool> {
         return realmDBManager.write(record) 

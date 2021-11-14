@@ -9,12 +9,8 @@ import Foundation
 
 import RxSwift
 
-final class MaximListRepository: MaximListRepositoryProtocol {
-    private let localDBManager: LocalDBManageable
-    
-    init(localDBManager: LocalDBManageable) {
-        self.localDBManager = localDBManager
-    }
+final class MaximListRepository {
+    private let localDBManager = RealmDBManager.shared
     
     func fetchAllMaximList() -> Single<[Maxim]> {
         return localDBManager.requestAllMaximList()

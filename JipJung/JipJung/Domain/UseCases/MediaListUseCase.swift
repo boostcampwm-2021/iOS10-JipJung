@@ -10,11 +10,7 @@ import Foundation
 import RxSwift
 
 final class MediaListUseCase {
-    private let mediaListRepository: MediaListRepositoryProtocol
-    
-    init(mediaListRepository: MediaListRepository) {
-        self.mediaListRepository = mediaListRepository
-    }
+    private let mediaListRepository = MediaListRepository()
     
     func fetchAllMediaList() -> Single<[Media]> {
         return mediaListRepository.fetchAllMediaList()
