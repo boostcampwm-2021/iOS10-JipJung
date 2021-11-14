@@ -43,7 +43,6 @@
 		B40D1FAD273B5F2800881A49 /* PomodoroFocusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40D1FAC273B5F2700881A49 /* PomodoroFocusViewController.swift */; };
 		B40D1FAF273B5F2C00881A49 /* PomodoroFocusViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40D1FAE273B5F2C00881A49 /* PomodoroFocusViewModel.swift */; };
 		B40D1FB3273B5F3500881A49 /* InfinityFocusViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40D1FB2273B5F3500881A49 /* InfinityFocusViewModel.swift */; };
-		B40D1FB5273B5F3900881A49 /* GenerateTimerUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40D1FB4273B5F3900881A49 /* GenerateTimerUseCase.swift */; };
 		B40D1FB7273B60A500881A49 /* Int+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40D1FB6273B60A500881A49 /* Int+Extension.swift */; };
 		B40D1FB9273B674F00881A49 /* InfinityFocusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40D1FB8273B674F00881A49 /* InfinityFocusViewController.swift */; };
 		B4153941273B93B0004EF80F /* SaveFocusTimeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4153940273B93B0004EF80F /* SaveFocusTimeUseCase.swift */; };
@@ -146,7 +145,6 @@
 		B40D1FAC273B5F2700881A49 /* PomodoroFocusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PomodoroFocusViewController.swift; sourceTree = "<group>"; };
 		B40D1FAE273B5F2C00881A49 /* PomodoroFocusViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PomodoroFocusViewModel.swift; sourceTree = "<group>"; };
 		B40D1FB2273B5F3500881A49 /* InfinityFocusViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfinityFocusViewModel.swift; sourceTree = "<group>"; };
-		B40D1FB4273B5F3900881A49 /* GenerateTimerUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenerateTimerUseCase.swift; sourceTree = "<group>"; };
 		B40D1FB6273B60A500881A49 /* Int+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
 		B40D1FB8273B674F00881A49 /* InfinityFocusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfinityFocusViewController.swift; sourceTree = "<group>"; };
 		B4153940273B93B0004EF80F /* SaveFocusTimeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveFocusTimeUseCase.swift; sourceTree = "<group>"; };
@@ -515,7 +513,6 @@
 				B40D1FAE273B5F2C00881A49 /* PomodoroFocusViewModel.swift */,
 				B40D1FB8273B674F00881A49 /* InfinityFocusViewController.swift */,
 				B40D1FB2273B5F3500881A49 /* InfinityFocusViewModel.swift */,
-				B40D1FB4273B5F3900881A49 /* GenerateTimerUseCase.swift */,
 				DD82808B273CAE5F00BB2A60 /* FocusViewControllerFactory.swift */,
 				DD828094273D1F8E00BB2A60 /* FocusViewController.swift */,
 			);
@@ -829,7 +826,6 @@
 				91DABCC0273A4EF000E57AAE /* AudioPlayUseCase.swift in Sources */,
 				91D02268273CB5FD0073EA2A /* BrightMedia.swift.swift in Sources */,
 				DDB5CEBE2733A49A00E8F9EB /* RealmDBManager.swift in Sources */,
-				B40D1FB5273B5F3900881A49 /* GenerateTimerUseCase.swift in Sources */,
 				914E1D87273A191D000CA5FB /* MediaCollectionViewCell.swift in Sources */,
 				91655858273B773400C55CDC /* MaximListUseCase.swift in Sources */,
 				91EA47C6273846A800780C3E /* BlurCircleButton.swift in Sources */,
