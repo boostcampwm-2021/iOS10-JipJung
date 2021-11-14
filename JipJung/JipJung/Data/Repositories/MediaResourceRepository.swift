@@ -16,6 +16,10 @@ final class MediaResourceRepository {
     func getMediaURL(fileName: String, type: MediaType) -> Single<URL> {
         let localFileManager = self.localFileManager
         
+        if let fileURL = BundleManager.shared.findURL(fileNameWithExtension: fileName) {
+            return Single.just(fileURL)
+        }
+        
         if let fileURL = localFileManager.isExsit(fileName) {
             return Single.just(fileURL)
         }
@@ -26,6 +30,12 @@ final class MediaResourceRepository {
     
     func fetchData(fileName: String, type: MediaType) -> Single<Data> {
         let localFileManager = self.localFileManager
+        
+        if let fileURL = BundleManager.shared.findURL(fileNameWithExtension: fileName) {
+            return Single.just(fileURL)
+                .map { try Data(contentsOf: $0) }
+        }
+        
         if let localFileData = try? localFileManager.read(fileName) {
             return Single.just(localFileData)
         }
