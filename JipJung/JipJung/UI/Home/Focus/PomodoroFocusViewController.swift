@@ -211,19 +211,20 @@ final class PomodoroFocusViewController: FocusViewController {
             .disposed(by: disposeBag)
         
         viewModel?.timerState.bind(onNext: { [weak self] in
-            guard let self = self else { return }
-            switch $0 {
-            case .ready:
-                self.changeStateToReady()
-                self.stopTimer()
-            case .running(let isContinue):
-                self.changeStateToRunning()
-                isContinue ? self.resumeTimerProgressBar() : self.startTimer()
-            case .paused:
-                self.changeStateToPaused()
-                self.pauseTimerProgressBar()
-            }
-        })
+                guard let self = self else { return }
+                switch $0 {
+                case .ready:
+                    self.changeStateToReady()
+                    self.stopTimer()
+                case .running(let isContinue):
+                    self.changeStateToRunning()
+                    isContinue ? self.resumeTimerProgressBar() : self.startTimer()
+                case .paused:
+                    self.changeStateToPaused()
+                    self.pauseTimerProgressBar()
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
     private func changeStateToReady() {
