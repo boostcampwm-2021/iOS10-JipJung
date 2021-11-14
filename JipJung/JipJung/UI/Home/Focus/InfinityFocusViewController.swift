@@ -205,30 +205,44 @@ final class InfinityFocusViewController: FocusViewController {
     }
     
     private func bindUI() {
+        viewModel?.timerState.bind(onNext: { [weak self] in
+                guard let self = self else { return }
+                switch $0 {
+                case .ready:
+                    self.changeStateToReady()
+                case .running(let isContinue):
+                    self.changeStateToRunning()
+                case .paused:
+                    self.changeStateToPaused()
+                }
+            })
+            .disposed(by: disposeBag)
+        
         startButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
-                self.viewModel?.startClockTimer()
+                self.viewModel?.changeTimerState(to: .running(isContinue: false))
             }
             .disposed(by: disposeBag)
         
         pauseButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
-                self.viewModel?.pauseClockTimer()
+                self.viewModel?.changeTimerState(to: .paused)
             }
             .disposed(by: disposeBag)
         
         continueButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
-                self.viewModel?.startClockTimer()
+                self.viewModel?.changeTimerState(to: .running(isContinue: true))
             }
             .disposed(by: disposeBag)
         
         exitButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
+                self.viewModel?.changeTimerState(to: .ready)
                 self.viewModel?.resetClockTimer()
                 self.viewModel?.saveFocusRecord()
             }
@@ -238,23 +252,7 @@ final class InfinityFocusViewController: FocusViewController {
             .bind(onNext: { [weak self] in
                 guard let self = self, $0 > 0 else { return }
                 self.timeLabel.text = $0.digitalClockFormatted
-                self.startPulse(second: $0)
-            })
-            .disposed(by: disposeBag)
-        
-        viewModel?.timerState.bind(onNext: { [weak self] in
-                guard let self = self else { return }
-                switch $0 {
-                case .ready:
-                    self.changeStateToReady()
-                    self.stopTimer()
-                case .running(let isContinue):
-                    self.changeStateToRunning()
-                    isContinue ? self.resumeTimerProgressBar() : self.startTimer()
-                case .paused:
-                    self.changeStateToPaused()
-                    self.pauseTimerProgressBar()
-                }
+                self.startPulseAnimation(second: $0)
             })
             .disposed(by: disposeBag)
     }
@@ -262,6 +260,7 @@ final class InfinityFocusViewController: FocusViewController {
     private func changeStateToReady() {
         pauseButton.isHidden = true
         timeLabel.text = 0.digitalClockFormatted
+        removePulseAnimation()
         
         UIView.animate(withDuration: 0.5) { [weak self] in
             guard let self = self else { return }
@@ -286,6 +285,7 @@ final class InfinityFocusViewController: FocusViewController {
     
     private func changeStateToRunning() {
         startButton.isHidden = true
+        viewModel?.startClockTimer()
         
         UIView.animate(withDuration: 0.5) { [weak self] in
             guard let self = self else { return }
@@ -306,13 +306,12 @@ final class InfinityFocusViewController: FocusViewController {
             self.exitButton.isHidden = true
             self.pauseButton.isHidden = false
         }
-        
-        viewModel?.startWaveAnimationTimer()
     }
     
     private func changeStateToPaused() {
         startButton.isHidden = true
         pauseButton.isHidden = true
+        viewModel?.pauseClockTimer()
 
         UIView.animate(withDuration: 0.5) { [weak self] in
             guard let self = self else { return }
@@ -348,21 +347,12 @@ final class InfinityFocusViewController: FocusViewController {
         circleShapeLayer.position = timerView.center
         return circleShapeLayer
     }
-    
-    private func startTimer() {
-    }
-    
-    private func startPulse(second: Int) {
+
+    private func startPulseAnimation(second: Int) {
         self.pulseGroupLayer.sublayers?[second % 4].add(PulseAnimation(), forKey: "pulse")
     }
-    
-    private func pauseTimerProgressBar() {
-    }
-    
-    private func resumeTimerProgressBar() {
-    }
-    
-    private func stopTimer() {
+
+    private func removePulseAnimation() {
         pulseGroupLayer.sublayers?.forEach({ $0.removeAllAnimations() })
     }
     
