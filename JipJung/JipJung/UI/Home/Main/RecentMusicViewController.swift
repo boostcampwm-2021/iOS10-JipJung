@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class RecentMusicViewController: UIViewController {
+final class RecentMusicViewController: UIViewController {
     // MARK: - Subviews
     
     private lazy var scrollView: UIScrollView = UIScrollView()

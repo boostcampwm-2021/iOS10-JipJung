@@ -23,4 +23,3 @@ extension UITableView {
         return self.dequeueReusableCell(withIdentifier: identifier, for: indexPath)
     }
 }
-

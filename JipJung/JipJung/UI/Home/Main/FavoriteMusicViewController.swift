@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class FavoriteMusicViewController: UIViewController {
+final class FavoriteMusicViewController: UIViewController {
     // MARK: - Subviews
     
     private lazy var scrollView: UIScrollView = UIScrollView()

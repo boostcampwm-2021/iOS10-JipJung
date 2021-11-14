@@ -10,7 +10,7 @@ import SnapKit
 import RxSwift
 import RxCocoa
 
-class SearchViewController: UIViewController {
+final class SearchViewController: UIViewController {
     // MARK: - Subviews
     
     private lazy var searchBar: UISearchBar = {

@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class ExploreViewController: UIViewController {
+final class ExploreViewController: UIViewController {
     // MARK: - Subviews
     
     private lazy var scrollView: UIScrollView = UIScrollView()

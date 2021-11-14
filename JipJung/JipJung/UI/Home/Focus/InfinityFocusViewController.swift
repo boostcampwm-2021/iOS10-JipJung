@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 import RxRelay
 
-class InfinityFocusViewController: FocusViewController {
+final class InfinityFocusViewController: FocusViewController {
     // MARK: - Subviews
     private lazy var timerView: UIView = {
         let timerView = UIView(frame: UIScreen.main.bounds)
