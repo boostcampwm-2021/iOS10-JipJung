@@ -52,7 +52,48 @@ class HomeViewController: UIViewController {
         configureUI()
         bindUI()
         
-        viewModel.viewControllerLoaded()
+        viewModel?.viewControllerLoaded()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+    }
+    
+    private func configureViewModel() {
+        guard let localFileManager = localFileManager,
+              let localDBManager = localDBManager,
+              let remoteServiceProvider = remoteServiceProvider,
+              let audioPlayUseCase = audioPlayUseCase
+        else {
+            return
+        }
+        
+        let baseDataUseCase = BaseDataUseCase(
+            realmSettingRepository: RealmSettingRepository(localDBManager: localDBManager)
+        )
+        
+        let mediaListUseCase = MediaListUseCase(
+            mediaListRepository: MediaListRepository(localDBManager: localDBManager)
+        )
+        
+        let maximListUseCase = MaximListUseCase(
+            maximListRepository: MaximListRepository(localDBManager: localDBManager)
+        )
+        
+        let videoPlayUseCase = VideoPlayUseCase(
+            mediaResourceRepository: MediaResourceRepository(
+                localFileManager: localFileManager,
+                remoteServiceProvider: remoteServiceProvider
+            )
+        )
+        
+        viewModel = HomeViewModel(
+            baseDataUseCase: baseDataUseCase,
+            mediaListUseCase: mediaListUseCase,
+            maximListUseCase: maximListUseCase,
+            audioPlayUseCase: audioPlayUseCase,
+            videoPlayUseCase: videoPlayUseCase
+        )
     }
     
     private func configureUI() {
@@ -243,8 +284,8 @@ class HomeViewController: UIViewController {
             focusView.buttonClickListener = { [weak self] in
                 let focusViewController = focusMode.getFocusViewController()
                 focusViewController.delegate = self
-                focusViewController.modalPresentationStyle = .overCurrentContext
-                focusViewController.modalTransitionStyle = .crossDissolve
+                focusViewController.modalPresentationStyle = .custom
+                focusViewController.transitioningDelegate = self
                 self?.present(focusViewController, animated: true, completion: nil)
             }
             focusButtonStackView.addArrangedSubview(focusView)
@@ -394,5 +435,15 @@ extension HomeViewController: UIGestureRecognizerDelegate {
 extension HomeViewController: FocusViewControllerDelegate {
     func closeButtonDidClicked(_ sender: UIViewController) {
         sender.dismiss(animated: true, completion: nil)
+    }
+}
+
+extension HomeViewController: UIViewControllerTransitioningDelegate {
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return SlowPresent(duration: 0.5, animationType: .present)
+    }
+    
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return SlowPresent(duration: 0.5, animationType: .dismiss)
     }
 }

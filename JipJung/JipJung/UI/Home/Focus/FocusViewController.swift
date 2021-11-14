@@ -35,7 +35,7 @@ class FocusViewController: UIViewController {
     }
     
     @objc func closeButtonClicked(_: UIButton) {
-        delegate?.closeButtonDidClicked(self)
+        dismiss(animated: true, completion: nil)
     }
 }
 
