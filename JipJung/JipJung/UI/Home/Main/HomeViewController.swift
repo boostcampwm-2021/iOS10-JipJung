@@ -51,49 +51,12 @@ class HomeViewController: UIViewController {
         
         configureUI()
         bindUI()
-        
-        viewModel?.viewControllerLoaded()
+
+        viewModel.viewControllerLoaded()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-    }
-    
-    private func configureViewModel() {
-        guard let localFileManager = localFileManager,
-              let localDBManager = localDBManager,
-              let remoteServiceProvider = remoteServiceProvider,
-              let audioPlayUseCase = audioPlayUseCase
-        else {
-            return
-        }
-        
-        let baseDataUseCase = BaseDataUseCase(
-            realmSettingRepository: RealmSettingRepository(localDBManager: localDBManager)
-        )
-        
-        let mediaListUseCase = MediaListUseCase(
-            mediaListRepository: MediaListRepository(localDBManager: localDBManager)
-        )
-        
-        let maximListUseCase = MaximListUseCase(
-            maximListRepository: MaximListRepository(localDBManager: localDBManager)
-        )
-        
-        let videoPlayUseCase = VideoPlayUseCase(
-            mediaResourceRepository: MediaResourceRepository(
-                localFileManager: localFileManager,
-                remoteServiceProvider: remoteServiceProvider
-            )
-        )
-        
-        viewModel = HomeViewModel(
-            baseDataUseCase: baseDataUseCase,
-            mediaListUseCase: mediaListUseCase,
-            maximListUseCase: maximListUseCase,
-            audioPlayUseCase: audioPlayUseCase,
-            videoPlayUseCase: videoPlayUseCase
-        )
     }
     
     private func configureUI() {

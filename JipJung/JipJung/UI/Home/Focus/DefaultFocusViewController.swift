@@ -12,6 +12,11 @@ import RxRelay
 
 final class DefaultFocusViewController: FocusViewController {
     // MARK: - Subviews
+    private lazy var timerView: UIView = {
+        let timerView = UIView(frame: UIScreen.main.bounds)
+        timerView.isUserInteractionEnabled = false
+        return timerView
+    }()
     
     private lazy var timePickerView: UIPickerView = {
         let timePickerView = UIPickerView()
@@ -47,7 +52,7 @@ final class DefaultFocusViewController: FocusViewController {
     
     private lazy var timeProgressLayer: CAShapeLayer = {
         let timeProgressLayer = createCircleShapeLayer(
-            strokeColor: .secondarySystemBackground,
+            strokeColor: .white,
             lineWidth: 3,
             startAngle: -CGFloat.pi / 2,
             endAngle: 3 * CGFloat.pi / 2
@@ -55,6 +60,7 @@ final class DefaultFocusViewController: FocusViewController {
         timeProgressLayer.fillColor = nil
         return timeProgressLayer
     }()
+    
     private let pulseGroupLayer = CALayer()
     
     private lazy var startButton: UIButton = {
@@ -112,17 +118,6 @@ final class DefaultFocusViewController: FocusViewController {
     private var viewModel: DefaultFocusViewModel?
     private var disposeBag: DisposeBag = DisposeBag()
     
-    // MARK: - Lifecycle Methods
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        configurePulseLayer()
-        configureProgressBar()
-        configureUI()
-        
-        bindUI()
-    }
-    
     // MARK: - Initializer
 
     convenience init(viewModel: DefaultFocusViewModel) {
@@ -130,29 +125,65 @@ final class DefaultFocusViewController: FocusViewController {
         self.viewModel = viewModel
     }
     
-    // MARK: - Helpers
+    // MARK: - Lifecycle Methods
     
-    private func configureUI() {
-        view.makeBlurBackground()
-                
-        view.layer.addSublayer(circleShapeLayer)
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        configureUI()
+        configureTimerUI()
+        bindUI()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
-        view.addSubview(timeLabel)
+        self.startButton.alpha = 0
+        self.timerView.alpha = 0
+        let viewCenter = view.center
+        self.timerView.center = CGPoint(x: viewCenter.x, y: viewCenter.y * 0.9)
+        UIView.animate(withDuration: 0.6, delay: 0.3, options: []) { [weak self] in
+            self?.timerView.alpha = 1
+            self?.timerView.center = CGPoint(x: viewCenter.x, y: viewCenter.y * 0.8)
+            self?.startButton.alpha = 1
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        let viewCenter = view.center
+        UIView.animate(withDuration: 0.6) { [weak self] in
+            self?.timerView.center = viewCenter
+            self?.startButton.alpha = 0
+        }
+    }
+    
+    func configureTimerUI() {
+        view.addSubview(timerView)
+        configurePulseLayer()
+        
+        timerView.layer.addSublayer(circleShapeLayer)
+        timerView.addSubview(timeLabel)
         timeLabel.snp.makeConstraints {
-            $0.top.equalTo(view.snp.centerY).multipliedBy(0.65)
-            $0.centerX.equalToSuperview()
+            $0.center.equalToSuperview()
         }
         
-        view.addSubview(timePickerView)
+        timerView.addSubview(timePickerView)
         timePickerView.snp.makeConstraints {
             $0.center.equalTo(timeLabel)
         }
+        timePickerView.isUserInteractionEnabled = true
         
-        view.addSubview(minuteLabel)
+        timerView.addSubview(minuteLabel)
         minuteLabel.snp.makeConstraints {
             $0.centerY.equalTo(timePickerView)
             $0.centerX.equalTo(timePickerView.snp.centerX).offset(60)
         }
+    }
+    
+    // MARK: - Helpers
+    
+    private func configureUI() {
+        view.makeBlurBackground()
         
         view.addSubview(startButton)
         startButton.snp.makeConstraints {
@@ -187,15 +218,11 @@ final class DefaultFocusViewController: FocusViewController {
         }
     }
     
-    private func configureProgressBar() {
-        view.layer.addSublayer(timeProgressLayer)
-    }
-    
     private func configurePulseLayer() {
-        view.layer.addSublayer(pulseGroupLayer)
+        timerView.layer.addSublayer(pulseGroupLayer)
         let pulseCount = 4
         for _ in 0..<pulseCount {
-            let pulseLayer = createCircleShapeLayer(strokeColor: .secondarySystemBackground, lineWidth: 2)
+            let pulseLayer = createCircleShapeLayer(strokeColor: .white, lineWidth: 2)
             pulseGroupLayer.addSublayer(pulseLayer)
         }
     }
@@ -354,9 +381,7 @@ final class DefaultFocusViewController: FocusViewController {
         circleShapeLayer.lineCap = CAShapeLayerLineCap.round
         circleShapeLayer.lineWidth = lineWidth
         circleShapeLayer.fillColor = UIColor.clear.cgColor
-        let centerX = view.center.x
-        let centerY = view.center.y * 0.7
-        circleShapeLayer.position = CGPoint(x: centerX, y: centerY)
+        circleShapeLayer.position = timerView.center
         return circleShapeLayer
     }
     
@@ -365,9 +390,9 @@ final class DefaultFocusViewController: FocusViewController {
         animation.fromValue = 0
         animation.toValue = 1
         animation.duration = 100
-        animation.fillMode = .forwards
+        animation.fillMode = .backwards
         timeProgressLayer.add(animation, forKey: nil)
-        view.layer.addSublayer(timeProgressLayer)
+        timerView.layer.addSublayer(timeProgressLayer)
     }
     
     private func startPulse(second: Int) {
@@ -425,4 +450,3 @@ extension DefaultFocusViewController: UIPickerViewDataSource {
         return viewModel?.focusTimeList.count ?? 0
     }
 }
-
