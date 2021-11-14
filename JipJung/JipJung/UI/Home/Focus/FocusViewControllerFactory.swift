@@ -9,14 +9,23 @@ import Foundation
 
 enum FocusViewControllerFactory {
     static func makeDefaultTimer() -> DefaultFocusViewController {
-        return DefaultFocusViewController(viewModel: DefaultFocusViewModel(generateTimerUseCase: GenerateTimerUseCase()))
+        let viewModel = DefaultFocusViewModel(
+            saveFocusTimeUseCase: SaveFocusTimeUseCase(
+                focusTimeRepository: FocusTimeRepository()
+            )
+        )
+        return DefaultFocusViewController(viewModel: viewModel)
     }
     static func makePomodoroTimer() -> PomodoroFocusViewController {
-        return PomodoroFocusViewController(viewModel: PomodoroFocusViewModel(generateTimerUseCase: GenerateTimerUseCase()))
+        let viewModel = PomodoroFocusViewModel(
+            saveFocusTimeUseCase: SaveFocusTimeUseCase(
+                focusTimeRepository: FocusTimeRepository()
+            )
+        )
+        return PomodoroFocusViewController(viewModel: viewModel)
     }
     static func makeInfinityTimer() -> InfinityFocusViewController {
         let viewModel = InfinityFocusViewModel(
-            generateTimerUseCase: GenerateTimerUseCase(),
             saveFocusTimeUseCase: SaveFocusTimeUseCase(
                 focusTimeRepository: FocusTimeRepository()
             )
