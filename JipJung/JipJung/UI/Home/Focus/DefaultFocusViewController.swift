@@ -228,31 +228,46 @@ final class DefaultFocusViewController: FocusViewController {
     }
     
     private func bindUI() {
+        viewModel?.timerState.bind(onNext: { [weak self] in
+                guard let self = self else { return }
+                switch $0 {
+                case .ready:
+                    self.changeStateToReady()
+                case .running(let isContinue):
+                    self.changeStateToRunning()
+                case .paused:
+                    self.changeStateToPaused()
+                }
+            })
+            .disposed(by: disposeBag)
+        
         startButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
-                self.viewModel?.startClockTimer()
+                self.viewModel?.changeTimerState(to: .running(isContinue: false))
             }
             .disposed(by: disposeBag)
         
         pauseButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
-                self.viewModel?.pauseClockTimer()
+                self.viewModel?.changeTimerState(to: .paused)
             }
             .disposed(by: disposeBag)
         
         continueButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
-                self.viewModel?.startClockTimer()
+                self.viewModel?.changeTimerState(to: .running(isContinue: true))
             }
             .disposed(by: disposeBag)
         
         exitButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
+                self.viewModel?.changeTimerState(to: .ready)
                 self.viewModel?.resetClockTimer()
+                self.viewModel?.saveFocusRecord()
             }
             .disposed(by: disposeBag)
         
@@ -266,23 +281,7 @@ final class DefaultFocusViewController: FocusViewController {
                     return
                 }
                 self.timeLabel.text = (focusTime - $0).digitalClockFormatted
-                self.startPulse(second: $0)
-            })
-            .disposed(by: disposeBag)
-        
-        viewModel?.timerState.bind(onNext: { [weak self] in
-                guard let self = self else { return }
-                switch $0 {
-                case .ready:
-                    self.changeStateToReady()
-                    self.stopTimer()
-                case .running(let isContinue):
-                    self.changeStateToRunning()
-                    isContinue ? self.resumeTimerProgressBar() : self.startTimer()
-                case .paused:
-                    self.changeStateToPaused()
-                    self.pauseTimerProgressBar()
-                }
+                self.startPulseAnimation(second: $0)
             })
             .disposed(by: disposeBag)
     }
@@ -293,6 +292,7 @@ final class DefaultFocusViewController: FocusViewController {
         timeLabel.isHidden = true
         timePickerView.isHidden = false
         minuteLabel.isHidden = false
+        removeAllAnimations()
         
         UIView.animate(withDuration: 0.5) { [weak self] in
             guard let self = self else { return }
@@ -320,6 +320,15 @@ final class DefaultFocusViewController: FocusViewController {
         timeLabel.isHidden = false
         timePickerView.isHidden = true
         minuteLabel.isHidden = true
+        viewModel?.startClockTimer()
+        switch viewModel?.timerState.value {
+        case .running(isContinue: true):
+            resumeTimerProgressAnimation()
+        case .running(isContinue: false):
+            startTimeProgressAnimation()
+        default:
+            break
+        }
         
         UIView.animate(withDuration: 0.5) { [weak self] in
             guard let self = self else { return }
@@ -340,8 +349,6 @@ final class DefaultFocusViewController: FocusViewController {
             self.exitButton.isHidden = true
             self.pauseButton.isHidden = false
         }
-        
-        viewModel?.startWaveAnimationTimer()
     }
     
     private func changeStateToPaused() {
@@ -350,6 +357,8 @@ final class DefaultFocusViewController: FocusViewController {
         timeLabel.isHidden = false
         timePickerView.isHidden = true
         minuteLabel.isHidden = true
+        viewModel?.pauseClockTimer()
+        pauseTimerProgressAnimation()
 
         UIView.animate(withDuration: 0.5) { [weak self] in
             guard let self = self else { return }
@@ -386,7 +395,7 @@ final class DefaultFocusViewController: FocusViewController {
         return circleShapeLayer
     }
     
-    private func startTimer() {
+    private func startTimeProgressAnimation() {
         let animation = CABasicAnimation(keyPath: #keyPath(CAShapeLayer.strokeEnd))
         animation.fromValue = 0
         animation.toValue = 1
@@ -396,19 +405,19 @@ final class DefaultFocusViewController: FocusViewController {
         timerView.layer.addSublayer(timeProgressLayer)
     }
     
-    private func startPulse(second: Int) {
+    private func startPulseAnimation(second: Int) {
         self.pulseGroupLayer.sublayers?[second % 4].add(PulseAnimation(), forKey: "pulse")
     }
     
-    private func pauseTimerProgressBar() {
+    private func pauseTimerProgressAnimation() {
         timeProgressLayer.pauseLayer()
     }
     
-    private func resumeTimerProgressBar() {
+    private func resumeTimerProgressAnimation() {
         timeProgressLayer.resumeLayer()
     }
     
-    private func stopTimer() {
+    private func removeAllAnimations() {
         timeProgressLayer.removeAllAnimations()
         timeProgressLayer.removeFromSuperlayer()
         pulseGroupLayer.sublayers?.forEach({ $0.removeAllAnimations() })
