@@ -1,22 +1,23 @@
 //
-//  RealmSettingRepository.swift
+//  LocalDBMigrator.swift
 //  JipJung
 //
-//  Created by Soohyeon Lee on 2021/11/11.
+//  Created by turu on 2021/11/14.
 //
 
 import Foundation
 
-import RxSwift
 import RealmSwift
+import RxSwift
 
-final class RealmSettingRepository {
-    private let localDBManager = RealmDBManager.shared
+final class LocalDBMigrator {
+    static let shared = LocalDBMigrator()
+    private init() {}
     
     func migrate<T: Object>(dataList: [T]) throws {
         for data in dataList {
             do {
-                try localDBManager.writeData(data)
+                try RealmDBManager.shared.writeData(data)
             } catch {
                 throw error
             }

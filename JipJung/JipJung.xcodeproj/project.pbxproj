@@ -27,10 +27,8 @@
 		91D02268273CB5FD0073EA2A /* BrightMedia.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D02267273CB5FD0073EA2A /* BrightMedia.swift.swift */; };
 		91D0226A273CB6050073EA2A /* DarknessMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D02269273CB6050073EA2A /* DarknessMedia.swift */; };
 		91D0226C273CBA340073EA2A /* MediaListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D0226B273CBA340073EA2A /* MediaListUseCase.swift */; };
-		91D02275273CBF970073EA2A /* BaseDataUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D02274273CBF970073EA2A /* BaseDataUseCase.swift */; };
 		91D02279273CDF610073EA2A /* DummyData.json in Resources */ = {isa = PBXBuildFile; fileRef = 91D02278273CDF610073EA2A /* DummyData.json */; };
 		91D0227D273CE6F50073EA2A /* DBStructureForJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D0227C273CE6F50073EA2A /* DBStructureForJSON.swift */; };
-		91D0227F273CEE400073EA2A /* RealmSettingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D0227E273CEE400073EA2A /* RealmSettingRepository.swift */; };
 		91D02281273D0A320073EA2A /* VideoPlayUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D02280273D0A320073EA2A /* VideoPlayUseCase.swift */; };
 		91DABCC0273A4EF000E57AAE /* AudioPlayUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DABCBF273A4EF000E57AAE /* AudioPlayUseCase.swift */; };
 		91E4178927312FEB001BA0A6 /* LocalFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E4178827312FEB001BA0A6 /* LocalFileManager.swift */; };
@@ -81,6 +79,11 @@
 		DDB92BB0273A263100EE26F0 /* MusicCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB92BAF273A263100EE26F0 /* MusicCollectionViewCell.swift */; };
 		DF08B1DD2737F5010066518B /* RemoteServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF08B1DC2737F5010066518B /* RemoteServiceProvider.swift */; };
 		DF30FEF9273A730F001C720E /* TagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF30FEF8273A730F001C720E /* TagCollectionViewCell.swift */; };
+		DF1722B22740FD2300F06140 /* ApplicationLaunch.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF1722B12740FD2300F06140 /* ApplicationLaunch.swift */; };
+		DF1722B42741013600F06140 /* LocalDBMigrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF1722B32741013600F06140 /* LocalDBMigrator.swift */; };
+		DF1722B72741036C00F06140 /* BundleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF1722B62741036C00F06140 /* BundleManager.swift */; };
+		DF1722BA27410FBB00F06140 /* Utiles+Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF1722B927410FBB00F06140 /* Utiles+Enums.swift */; };
+		DF30FEF9273A730F001C720E /* TagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF30FEF8273A730F001C720E /* TagCell.swift */; };
 		DF30FEFB273ADAA9001C720E /* CollectionView+MusicPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF30FEFA273ADAA9001C720E /* CollectionView+MusicPlayerViewController.swift */; };
 		DF30FF05273CBC3B001C720E /* MusicPlayerButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF30FF04273CBC3B001C720E /* MusicPlayerButtons.swift */; };
 		DF6B111127390F1900D9924E /* MediaResourceRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6B111027390F1900D9924E /* MediaResourceRepository.swift */; };
@@ -131,10 +134,8 @@
 		91D02267273CB5FD0073EA2A /* BrightMedia.swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrightMedia.swift.swift; sourceTree = "<group>"; };
 		91D02269273CB6050073EA2A /* DarknessMedia.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarknessMedia.swift; sourceTree = "<group>"; };
 		91D0226B273CBA340073EA2A /* MediaListUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaListUseCase.swift; sourceTree = "<group>"; };
-		91D02274273CBF970073EA2A /* BaseDataUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseDataUseCase.swift; sourceTree = "<group>"; };
 		91D02278273CDF610073EA2A /* DummyData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = DummyData.json; sourceTree = "<group>"; };
 		91D0227C273CE6F50073EA2A /* DBStructureForJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBStructureForJSON.swift; sourceTree = "<group>"; };
-		91D0227E273CEE400073EA2A /* RealmSettingRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmSettingRepository.swift; sourceTree = "<group>"; };
 		91D02280273D0A320073EA2A /* VideoPlayUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayUseCase.swift; sourceTree = "<group>"; };
 		91DABCBF273A4EF000E57AAE /* AudioPlayUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayUseCase.swift; sourceTree = "<group>"; };
 		91E4178827312FEB001BA0A6 /* LocalFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFileManager.swift; sourceTree = "<group>"; };
@@ -188,6 +189,11 @@
 		DDB92BAF273A263100EE26F0 /* MusicCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicCollectionViewCell.swift; sourceTree = "<group>"; };
 		DF08B1DC2737F5010066518B /* RemoteServiceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteServiceProvider.swift; sourceTree = "<group>"; };
 		DF30FEF8273A730F001C720E /* TagCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCollectionViewCell.swift; sourceTree = "<group>"; };
+		DF1722B12740FD2300F06140 /* ApplicationLaunch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationLaunch.swift; sourceTree = "<group>"; };
+		DF1722B32741013600F06140 /* LocalDBMigrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDBMigrator.swift; sourceTree = "<group>"; };
+		DF1722B62741036C00F06140 /* BundleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleManager.swift; sourceTree = "<group>"; };
+		DF1722B927410FBB00F06140 /* Utiles+Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Utiles+Enums.swift"; sourceTree = "<group>"; };
+		DF30FEF8273A730F001C720E /* TagCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCell.swift; sourceTree = "<group>"; };
 		DF30FEFA273ADAA9001C720E /* CollectionView+MusicPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CollectionView+MusicPlayerViewController.swift"; sourceTree = "<group>"; };
 		DF30FF04273CBC3B001C720E /* MusicPlayerButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayerButtons.swift; sourceTree = "<group>"; };
 		DF6B111027390F1900D9924E /* MediaResourceRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaResourceRepository.swift; sourceTree = "<group>"; };
@@ -245,7 +251,6 @@
 				DF6B111027390F1900D9924E /* MediaResourceRepository.swift */,
 				91655859273B78A000C55CDC /* MediaListRepository.swift */,
 				9165585D273B8F5000C55CDC /* MaximListRepository.swift */,
-				91D0227E273CEE400073EA2A /* RealmSettingRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -273,7 +278,6 @@
 				91D0226B273CBA340073EA2A /* MediaListUseCase.swift */,
 				91655857273B773400C55CDC /* MaximListUseCase.swift */,
 				91DABCBF273A4EF000E57AAE /* AudioPlayUseCase.swift */,
-				91D02274273CBF970073EA2A /* BaseDataUseCase.swift */,
 				91D02280273D0A320073EA2A /* VideoPlayUseCase.swift */,
 			);
 			path = UseCases;
@@ -282,6 +286,7 @@
 		91E4174C27312E5A001BA0A6 /* Infra */ = {
 			isa = PBXGroup;
 			children = (
+				DF1722B52741035F00F06140 /* Bundle */,
 				DF71D23027344AC700CD980E /* Network */,
 				B4F36B4F27336EBD0073609C /* UserDefaults */,
 				DDB5CEBC2733A3A200E8F9EB /* LocalDB */,
@@ -352,6 +357,7 @@
 		DD3902CF272FCA10009ECA82 /* JipJung */ = {
 			isa = PBXGroup;
 			children = (
+				DF1722B02740FD1300F06140 /* Utils */,
 				91655849273B5CF900C55CDC /* Dummy */,
 				9198DE93273385D800EBAEC8 /* Localizing */,
 				DD3902FD272FE21D009ECA82 /* Application */,
@@ -523,6 +529,24 @@
 				DD828094273D1F8E00BB2A60 /* FocusViewController.swift */,
 			);
 			path = Focus;
+			sourceTree = "<group>";
+		};
+		DF1722B02740FD1300F06140 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				DF1722B12740FD2300F06140 /* ApplicationLaunch.swift */,
+				DF1722B32741013600F06140 /* LocalDBMigrator.swift */,
+				DF1722B927410FBB00F06140 /* Utiles+Enums.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		DF1722B52741035F00F06140 /* Bundle */ = {
+			isa = PBXGroup;
+			children = (
+				DF1722B62741036C00F06140 /* BundleManager.swift */,
+			);
+			path = Bundle;
 			sourceTree = "<group>";
 		};
 		DF71D23027344AC700CD980E /* Network */ = {
@@ -778,7 +802,6 @@
 			files = (
 				DF08B1DD2737F5010066518B /* RemoteServiceProvider.swift in Sources */,
 				B4F36B682733D4210073609C /* SearchTableViewCell.swift in Sources */,
-				91D0227F273CEE400073EA2A /* RealmSettingRepository.swift in Sources */,
 				B40D1FB9273B674F00881A49 /* InfinityFocusViewController.swift in Sources */,
 				DDB92B9D2737BD5E00EE26F0 /* UIView+Extension.swift in Sources */,
 				B40D1FA9273B5F1900881A49 /* DefaultFocusViewController.swift in Sources */,
@@ -786,6 +809,7 @@
 				DDB5CEB32733752D00E8F9EB /* FavoriteMedia.swift in Sources */,
 				9131513F27400C26001E7125 /* UIScreen+Extension.swift in Sources */,
 				DDB92B9D2737BD5E00EE26F0 /* UIView+Extension.swift in Sources */,
+				DF1722B72741036C00F06140 /* BundleManager.swift in Sources */,
 				DDB5CEB32733752D00E8F9EB /* FavoriteMedia.swift in Sources */,
 				DDB92BB0273A263100EE26F0 /* MusicCollectionViewCell.swift in Sources */,
 				DDB5CEB32733752D00E8F9EB /* FavoriteMedia.swift in Sources */,
@@ -798,6 +822,7 @@
 				DDB5CEB12733746600E8F9EB /* Maxim.swift in Sources */,
 				DF30FF05273CBC3B001C720E /* MusicPlayerButtons.swift in Sources */,
 				B4B780DF2741F6FA0080DC28 /* BreathFocusViewController.swift in Sources */,
+				DF1722BA27410FBB00F06140 /* Utiles+Enums.swift in Sources */,
 				DDB5CEB82733765500E8F9EB /* FavoriteMaxim.swift in Sources */,
 				9165585A273B78A000C55CDC /* MediaListRepository.swift in Sources */,
 				DF6B111127390F1900D9924E /* MediaResourceRepository.swift in Sources */,
@@ -843,8 +868,8 @@
 				DD828092273D113200BB2A60 /* NetworkEnums.swift in Sources */,
 				DD3902D3272FCA10009ECA82 /* SceneDelegate.swift in Sources */,
 				DD208D30273B55240089A2AB /* PulseAnimation.swift in Sources */,
-				91D02275273CBF970073EA2A /* BaseDataUseCase.swift in Sources */,
 				91D0226C273CBA340073EA2A /* MediaListUseCase.swift in Sources */,
+				DF1722B42741013600F06140 /* LocalDBMigrator.swift in Sources */,
 				91D0227D273CE6F50073EA2A /* DBStructureForJSON.swift in Sources */,
 				B4015CD627391529006BD14A /* FavoriteMusicViewController.swift in Sources */,
 				9131514327401200001E7125 /* Array+Extension.swift in Sources */,
@@ -853,6 +878,7 @@
 				B4153941273B93B0004EF80F /* SaveFocusTimeUseCase.swift in Sources */,
 				B4015CD82739270C006BD14A /* GenreCollectionViewCell.swift in Sources */,
 				9198DE952733863500EBAEC8 /* Common.swift in Sources */,
+				DF1722B22740FD2300F06140 /* ApplicationLaunch.swift in Sources */,
 				91CE6F7527391E1C00176AF2 /* HomeViewModel.swift in Sources */,
 				DF30FEFB273ADAA9001C720E /* CollectionView+MusicPlayerViewController.swift in Sources */,
 				DFED21D92733AE8400E99641 /* MusicPlayerMaximView.swift in Sources */,
