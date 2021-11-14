@@ -9,8 +9,7 @@ import UIKit
 
 import SnapKit
 
-class TagCell: UICollectionViewCell {
-    static let identifier = "TagCell"
+class TagCollectionViewCell: UICollectionViewCell {
     
     let tagLabel: UILabel = {
         let label = UILabel()

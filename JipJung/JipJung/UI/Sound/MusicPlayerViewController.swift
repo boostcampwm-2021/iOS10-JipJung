@@ -30,7 +30,7 @@ class MusicPlayerViewController: UIViewController {
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
-        collectionView.register(TagCell.self, forCellWithReuseIdentifier: TagCell.identifier)
+        collectionView.register(TagCollectionViewCell.self, forCellWithReuseIdentifier: UICollectionView.CellIdentifier.tag.value)
         return collectionView
     }()
     

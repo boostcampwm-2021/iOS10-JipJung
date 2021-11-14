@@ -9,10 +9,6 @@ import UIKit
 import SnapKit
 
 class GenreCollectionViewCell: UICollectionViewCell {
-
-    // MARK: - Static Constants
-    
-    static let id = "GenreCollectionViewCell"
     
     // MARK: - Subviews
     

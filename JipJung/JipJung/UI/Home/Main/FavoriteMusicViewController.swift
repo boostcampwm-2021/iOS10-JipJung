@@ -36,7 +36,7 @@ class FavoriteMusicViewController: UIViewController {
         favoriteMusicCollectionView.dataSource = self
         favoriteMusicCollectionView.register(
             MusicCollectionViewCell.self,
-            forCellWithReuseIdentifier: MusicCollectionViewCell.id)
+            forCellWithReuseIdentifier: UICollectionView.CellIdentifier.music.value)
         return favoriteMusicCollectionView
     }()
     
@@ -95,7 +95,7 @@ extension FavoriteMusicViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MusicCollectionViewCell.id, for: indexPath) as? MusicCollectionViewCell else { return  UICollectionViewCell() }
+        guard let cell = collectionView.cell(identifier: UICollectionView.CellIdentifier.music.value, for: indexPath) as? MusicCollectionViewCell else { return  UICollectionViewCell() }
         
         return cell
     }

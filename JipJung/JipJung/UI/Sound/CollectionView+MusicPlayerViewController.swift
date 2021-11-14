@@ -14,9 +14,9 @@ extension MusicPlayerViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: TagCell.identifier,
+            withReuseIdentifier: UICollectionView.CellIdentifier.tag.value,
             for: indexPath
-        ) as? TagCell
+        ) as? TagCollectionViewCell
         else {
             return UICollectionViewCell()
         }
