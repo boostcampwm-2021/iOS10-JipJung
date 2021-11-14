@@ -67,7 +67,7 @@ class SearchViewController: UIViewController {
     
     // MARK: - Helpers
     
-    func configureUI() {
+    private func configureUI() {
         view.addSubview(searchStackView)
         searchStackView.snp.makeConstraints {
             $0.topMargin.equalToSuperview().offset(20)
@@ -82,7 +82,7 @@ class SearchViewController: UIViewController {
         }
     }
     
-    func bindUI() {
+    private func bindUI() {
         cancelButton.rx.tap
             .bind {
                 self.dismiss(animated: true, completion: nil)

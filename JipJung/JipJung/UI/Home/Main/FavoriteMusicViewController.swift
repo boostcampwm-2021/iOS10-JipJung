@@ -50,7 +50,7 @@ class FavoriteMusicViewController: UIViewController {
     
     // MARK: - Helpers
     
-    func configureUI() {
+    private func configureUI() {
         view.addSubview(scrollView)
         scrollView.snp.makeConstraints {
             $0.topMargin.leading.trailing.bottomMargin.equalToSuperview()

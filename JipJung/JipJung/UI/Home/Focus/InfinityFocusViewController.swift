@@ -204,7 +204,7 @@ class InfinityFocusViewController: FocusViewController {
         timerView.layer.addSublayer(cometAnimationLayer)
     }
     
-    func bindUI() {
+    private func bindUI() {
         startButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
