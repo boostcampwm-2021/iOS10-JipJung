@@ -116,9 +116,10 @@ class HomeViewController: UIViewController {
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .paging
         // Reference: https://developer.apple.com/documentation/uikit/nscollectionlayoutsectionvisibleitemsinvalidationhandler
-        section.visibleItemsInvalidationHandler = { [weak self] items, offset, environment in
-            let page = Int(offset.x / (self?.view.frame.width ?? 1))
-            self?.pageControl.currentPage = page
+        section.visibleItemsInvalidationHandler = { [weak self] _, offset, _ in
+            guard let self = self else { return }
+            let page = round(offset.x / self.view.frame.width)
+            self.pageControl.currentPage = Int(page)
         }
         let layout = UICollectionViewCompositionalLayout(section: section)
         return layout
