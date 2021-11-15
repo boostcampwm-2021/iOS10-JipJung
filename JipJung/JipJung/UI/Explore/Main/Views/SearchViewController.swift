@@ -50,6 +50,24 @@ final class SearchViewController: UIViewController {
         return searchHistoryTableView
     }()
     
+    private lazy var soundCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        layout.minimumInteritemSpacing = 10
+        layout.minimumLineSpacing = 10
+
+        let soundContentsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        soundContentsCollectionView.backgroundColor = .black
+        soundContentsCollectionView.showsHorizontalScrollIndicator = false
+        soundContentsCollectionView.delegate = self
+        soundContentsCollectionView.dataSource = self
+        soundContentsCollectionView.register(
+            MusicCollectionViewCell.self,
+            forCellWithReuseIdentifier: UICollectionView.CellIdentifier.music.value)
+        return soundContentsCollectionView
+    }()
+    
     // MARK: - Private Variables
     
     private var disposeBag: DisposeBag = DisposeBag()
@@ -84,6 +102,12 @@ final class SearchViewController: UIViewController {
             $0.height.equalTo(50)
         }
         
+        view.addSubview(soundCollectionView)
+        soundCollectionView.snp.makeConstraints {
+            $0.top.equalTo(searchStackView.snp.bottom).offset(20)
+            $0.leading.trailing.bottom.equalToSuperview()
+        }
+        
         view.addSubview(searchHistoryTableView)
         searchHistoryTableView.snp.makeConstraints {
             $0.top.equalTo(searchStackView.snp.bottom).offset(20)
@@ -103,6 +127,13 @@ final class SearchViewController: UIViewController {
                 self?.searchHistoryTableView.reloadData()
             })
             .disposed(by: disposeBag)
+        
+        viewModel?.searchResult
+            .bind(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                self.soundCollectionView.reloadData()
+            })
+            .disposed(by: disposeBag)
     }
 }
 
@@ -113,7 +144,9 @@ extension SearchViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let keyword = searchBar.text else { return }
+        self.searchHistoryTableView.isHidden = true
         viewModel?.saveSearchKeyword(keyword: keyword)
+        viewModel?.search(keyword: keyword)
         dismissKeyboard()
     }
 }
@@ -152,6 +185,28 @@ extension SearchViewController: UITableViewDataSource {
                 self?.viewModel?.removeSearchHistory(at: indexPath.item)
             }
             .disposed(by: cellDisposeBag)
+        return cell
+    }
+}
+
+extension SearchViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 180, height: 200)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 1
+    }
+}
+
+extension SearchViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return viewModel?.searchResult.value.count ?? 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.cell(identifier: UICollectionView.CellIdentifier.music.value, for: indexPath) as? MusicCollectionViewCell else { return  UICollectionViewCell() }
+        cell.titleView.text = viewModel?.searchResult.value[indexPath.item].name
         return cell
     }
 }

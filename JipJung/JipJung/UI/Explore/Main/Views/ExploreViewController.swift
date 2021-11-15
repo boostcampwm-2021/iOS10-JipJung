@@ -119,7 +119,7 @@ extension ExploreViewController: UISearchBarDelegate {
 
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         dismissKeyboard()
-        navigationController?.pushViewController(SearchViewController(viewModel: SearchViewModel(searchHistoryUseCase: SearchHistoryUseCase())),
+        navigationController?.pushViewController(SearchViewController(viewModel: SearchViewModel(searchHistoryUseCase: SearchHistoryUseCase(), searchMediaUseCase: SearchMediaUseCase())),
                                                  animated: true)
     }
 }
