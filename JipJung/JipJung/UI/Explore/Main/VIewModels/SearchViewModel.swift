@@ -13,21 +13,27 @@ protocol SearchViewModelInput {
     func saveSearchKeyword(keyword: String)
     func loadSearchHistory()
     func removeSearchHistory(at index: Int)
+    func search(keyword: String)
 }
 
 protocol SearchViewModelOutput {
     var searchHistory: BehaviorRelay<[String]> { get }
+    var searchResult: BehaviorRelay<[Media]> { get }
 }
 
 final class SearchViewModel: SearchViewModelInput, SearchViewModelOutput {
     var searchHistory: BehaviorRelay<[String]> = BehaviorRelay<[String]>(value: [])
+    var searchResult: BehaviorRelay<[Media]> = BehaviorRelay<[Media]>(value: [])
     
     private var disposeBag: DisposeBag = DisposeBag()
     
     private let searchHistoryUseCase: SearchHistoryUseCase
+    private let searchMediaUseCase: SearchMediaUseCase
     
-    init(searchHistoryUseCase: SearchHistoryUseCase) {
+    init(searchHistoryUseCase: SearchHistoryUseCase,
+         searchMediaUseCase: SearchMediaUseCase) {
         self.searchHistoryUseCase = searchHistoryUseCase
+        self.searchMediaUseCase = searchMediaUseCase
     }
 
     func saveSearchKeyword(keyword: String) {
@@ -49,5 +55,15 @@ final class SearchViewModel: SearchViewModelInput, SearchViewModelOutput {
         searchHistory.remove(at: index)
         self.searchHistory.accept(searchHistory)
         searchHistoryUseCase.save(searchHistory: searchHistory)
+    }
+    
+    func search(keyword: String) {
+        searchMediaUseCase.searchResult
+            .bind { [weak self] in
+                self?.searchResult.accept($0)
+            }
+            .disposed(by: disposeBag)
+        
+        searchMediaUseCase.search(keyword: keyword)
     }
 }
