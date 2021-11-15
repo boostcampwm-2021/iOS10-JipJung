@@ -110,8 +110,6 @@ final class BreathFocusViewController: FocusViewController {
     // MARK: - Private Variables
     
     private var viewModel: BreathFocusViewModel?
-    private var disposeBag: DisposeBag = DisposeBag()
-    
     // MARK: - Lifecycle Methods
     
     override func viewDidLoad() {

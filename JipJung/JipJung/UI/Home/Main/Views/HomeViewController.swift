@@ -252,7 +252,6 @@ class HomeViewController: UIViewController {
             focusView.set(mode: focusMode)
             focusView.buttonClickListener = { [weak self] in
                 let focusViewController = focusMode.getFocusViewController()
-                focusViewController.delegate = self
                 focusViewController.modalPresentationStyle = .custom
                 focusViewController.transitioningDelegate = self
                 self?.present(focusViewController, animated: true, completion: nil)
@@ -411,12 +410,6 @@ extension HomeViewController: UIGestureRecognizerDelegate {
         shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer
     ) -> Bool {
         return true
-    }
-}
-
-extension HomeViewController: FocusViewControllerDelegate {
-    func closeButtonDidClicked(_ sender: UIViewController) {
-        sender.dismiss(animated: true, completion: nil)
     }
 }
 

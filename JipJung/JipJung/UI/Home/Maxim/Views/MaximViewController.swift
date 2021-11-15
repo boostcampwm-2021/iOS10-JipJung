@@ -64,7 +64,7 @@ class MaximViewController: UIViewController {
         return speakerNameLabel
     }()
     
-    private var disposeBag: DisposeBag = DisposeBag()
+    private var disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -136,7 +136,7 @@ class MaximViewController: UIViewController {
     
     private func bindUI() {
         closeButton.rx.tap.bind { [weak self] in
-            self?.dismiss(animated: true, completion: nil)
+            self?.dismiss(animated: true)
         }.disposed(by: disposeBag)
     }
 }

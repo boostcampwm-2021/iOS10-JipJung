@@ -6,21 +6,20 @@
 //
 
 import UIKit
-
-protocol FocusViewControllerDelegate: AnyObject {
-    func closeButtonDidClicked(_ sender: UIViewController)
-}
+import RxSwift
+import RxCocoa
 
 class FocusViewController: UIViewController {
-    private lazy var closeButton: UIButton = {
-        let button = CloseButton()
-        button.addTarget(self, action: #selector(closeButtonClicked(_:)), for: .touchUpInside)
-        return button
-    }()
-    weak var delegate: FocusViewControllerDelegate?
+    private let closeButton = CloseButton()
+    var disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureCloseButton()
+        bindCloseButton()
+    }
+    
+    private func configureCloseButton() {
         view.addSubview(closeButton)
         closeButton.snp.makeConstraints { make in
             make.width.equalTo(30)
@@ -30,8 +29,11 @@ class FocusViewController: UIViewController {
         }
     }
     
-    @objc func closeButtonClicked(_: UIButton) {
-        dismiss(animated: true, completion: nil)
+    private func bindCloseButton() {
+        closeButton.rx.tap.bind { [weak self] _ in
+            self?.dismiss(animated: true, completion: nil)
+        }
+        .disposed(by: disposeBag)
     }
 }
 
