@@ -144,7 +144,7 @@ class InfinityFocusViewController: FocusViewController {
     }
     // MARK: - Helpers
     
-    func configureTimerUI() {
+    private func configureTimerUI() {
         view.addSubview(timerView)
         configurePulseLayer()
         timerView.layer.addSublayer(circleShapeLayer)
@@ -155,7 +155,7 @@ class InfinityFocusViewController: FocusViewController {
         configureCometLayer()
     }
     
-    func configureUI() {
+    private func configureUI() {
         view.makeBlurBackground()
         
         view.addSubview(startButton)

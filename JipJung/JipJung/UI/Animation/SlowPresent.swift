@@ -49,7 +49,7 @@ extension SlowPresent: UIViewControllerAnimatedTransitioning {
         print(transitionCompleted)
     }
     
-    func presentAnimation(with transitionContext: UIViewControllerContextTransitioning, toView: UIView) {
+    private func presentAnimation(with transitionContext: UIViewControllerContextTransitioning, toView: UIView) {
         let animationDuration = transitionDuration(using: transitionContext)
         toView.alpha = 0
         UIView.animate(
@@ -62,7 +62,7 @@ extension SlowPresent: UIViewControllerAnimatedTransitioning {
             })
     }
     
-    func dismissAnimation(with transitionContext: UIViewControllerContextTransitioning, fromView: UIView) {
+    private func dismissAnimation(with transitionContext: UIViewControllerContextTransitioning, fromView: UIView) {
         let animationDuration = transitionDuration(using: transitionContext)
         UIView.animate(
             withDuration: animationDuration,

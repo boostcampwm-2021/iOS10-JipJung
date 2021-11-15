@@ -157,7 +157,7 @@ final class DefaultFocusViewController: FocusViewController {
         }
     }
     
-    func configureTimerUI() {
+    private func configureTimerUI() {
         view.addSubview(timerView)
         configurePulseLayer()
         
