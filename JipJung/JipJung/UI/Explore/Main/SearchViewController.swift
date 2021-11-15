@@ -10,7 +10,7 @@ import SnapKit
 import RxSwift
 import RxCocoa
 
-class SearchViewController: UIViewController {
+final class SearchViewController: UIViewController {
     // MARK: - Subviews
     
     private lazy var searchBar: UISearchBar = {
@@ -45,7 +45,7 @@ class SearchViewController: UIViewController {
         searchHistoryTableView.backgroundColor = .black
         searchHistoryTableView.delegate = self
         searchHistoryTableView.dataSource = self
-        searchHistoryTableView.register(SearchTableViewCell.self, forCellReuseIdentifier: SearchTableViewCell.id)
+        searchHistoryTableView.register(SearchTableViewCell.self, forCellReuseIdentifier: UITableView.CellIdentifier.search.value)
         
         return searchHistoryTableView
     }()
@@ -67,7 +67,7 @@ class SearchViewController: UIViewController {
     
     // MARK: - Helpers
     
-    func configureUI() {
+    private func configureUI() {
         view.addSubview(searchStackView)
         searchStackView.snp.makeConstraints {
             $0.topMargin.equalToSuperview().offset(20)
@@ -82,7 +82,7 @@ class SearchViewController: UIViewController {
         }
     }
     
-    func bindUI() {
+    private func bindUI() {
         cancelButton.rx.tap
             .bind {
                 self.dismiss(animated: true, completion: nil)
@@ -131,7 +131,7 @@ extension SearchViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = searchHistoryTableView.dequeueReusableCell(withIdentifier: SearchTableViewCell.id) as? SearchTableViewCell,
+        guard let cell = tableView.cell(identifier: UITableView.CellIdentifier.search.value, for: indexPath) as? SearchTableViewCell,
               var searchHistory: [String] = userDefaultStorage.load(for: UserDefaultsKeys.searchHistory)
         else { return UITableViewCell() }
         

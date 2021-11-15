@@ -54,7 +54,7 @@ enum FocusMode: CaseIterable {
         case .infinity:
             return FocusViewControllerFactory.makeInfinityTimer()
         case .breath:
-            return FocusViewController()
+            return FocusViewControllerFactory.makeBreathTimer()
         }
     }
 }

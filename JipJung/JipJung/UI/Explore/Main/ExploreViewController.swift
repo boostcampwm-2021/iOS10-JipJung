@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class ExploreViewController: UIViewController {
+final class ExploreViewController: UIViewController {
     // MARK: - Subviews
     
     private lazy var scrollView: UIScrollView = UIScrollView()
@@ -37,7 +37,7 @@ class ExploreViewController: UIViewController {
         categoryCollectionView.dataSource = self
         categoryCollectionView.register(
             GenreCollectionViewCell.self,
-            forCellWithReuseIdentifier: GenreCollectionViewCell.id)
+            forCellWithReuseIdentifier: UICollectionView.CellIdentifier.genre.value)
         return categoryCollectionView
     }()
 
@@ -55,7 +55,7 @@ class ExploreViewController: UIViewController {
         soundContentsCollectionView.dataSource = self
         soundContentsCollectionView.register(
             MusicCollectionViewCell.self,
-            forCellWithReuseIdentifier: MusicCollectionViewCell.id)
+            forCellWithReuseIdentifier: UICollectionView.CellIdentifier.music.value)
         return soundContentsCollectionView
     }()
     
@@ -150,12 +150,12 @@ extension ExploreViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == genreCollectionView {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GenreCollectionViewCell.id, for: indexPath) as? GenreCollectionViewCell else { return  UICollectionViewCell() }
+            guard let cell = collectionView.cell(identifier: UICollectionView.CellIdentifier.genre.value, for: indexPath) as? GenreCollectionViewCell else { return  UICollectionViewCell() }
             cell.genreLabel.text = category[indexPath.item]
             return cell
         }
         else if collectionView == soundCollectionView {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MusicCollectionViewCell.id, for: indexPath) as? MusicCollectionViewCell else { return  UICollectionViewCell() }
+            guard let cell = collectionView.cell(identifier: UICollectionView.CellIdentifier.music.value, for: indexPath) as? MusicCollectionViewCell else { return  UICollectionViewCell() }
             return cell
         }
         else {

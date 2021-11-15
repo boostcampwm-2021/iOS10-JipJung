@@ -9,10 +9,6 @@ import UIKit
 import SnapKit
 
 class SearchTableViewCell: UITableViewCell {
-
-    // MARK: - Static Constants
-    
-    static let id = "SearchTableViewCell"
     
     // MARK: - Subviews
     

@@ -1,8 +1,8 @@
 //
-//  DefaultFocusViewController.swift
+//  BreathFocusViewController.swift
 //  JipJung
 //
-//  Created by 오현식 on 2021/11/10.
+//  Created by 오현식 on 2021/11/15.
 //
 
 import UIKit
@@ -10,13 +10,8 @@ import RxSwift
 import RxCocoa
 import RxRelay
 
-final class DefaultFocusViewController: FocusViewController {
+final class BreathFocusViewController: FocusViewController {
     // MARK: - Subviews
-    private lazy var timerView: UIView = {
-        let timerView = UIView(frame: UIScreen.main.bounds)
-        timerView.isUserInteractionEnabled = false
-        return timerView
-    }()
     
     private lazy var timePickerView: UIPickerView = {
         let timePickerView = UIPickerView()
@@ -52,7 +47,7 @@ final class DefaultFocusViewController: FocusViewController {
     
     private lazy var timeProgressLayer: CAShapeLayer = {
         let timeProgressLayer = createCircleShapeLayer(
-            strokeColor: .white,
+            strokeColor: .secondarySystemBackground,
             lineWidth: 3,
             startAngle: -CGFloat.pi / 2,
             endAngle: 3 * CGFloat.pi / 2
@@ -60,7 +55,6 @@ final class DefaultFocusViewController: FocusViewController {
         timeProgressLayer.fillColor = nil
         return timeProgressLayer
     }()
-    
     private let pulseGroupLayer = CALayer()
     
     private lazy var startButton: UIButton = {
@@ -115,75 +109,50 @@ final class DefaultFocusViewController: FocusViewController {
     
     // MARK: - Private Variables
     
-    private var viewModel: DefaultFocusViewModel?
+    private var viewModel: BreathFocusViewModel?
     private var disposeBag: DisposeBag = DisposeBag()
-    
-    // MARK: - Initializer
-
-    convenience init(viewModel: DefaultFocusViewModel) {
-        self.init(nibName: nil, bundle: nil)
-        self.viewModel = viewModel
-    }
     
     // MARK: - Lifecycle Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configurePulseLayer()
+        configureProgressBar()
         configureUI()
-        configureTimerUI()
+        
         bindUI()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        self.startButton.alpha = 0
-        self.timerView.alpha = 0
-        let viewCenter = view.center
-        self.timerView.center = CGPoint(x: viewCenter.x, y: viewCenter.y * 0.9)
-        UIView.animate(withDuration: 0.6, delay: 0.3, options: []) { [weak self] in
-            self?.timerView.alpha = 1
-            self?.timerView.center = CGPoint(x: viewCenter.x, y: viewCenter.y * 0.8)
-            self?.startButton.alpha = 1
-        }
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        let viewCenter = view.center
-        UIView.animate(withDuration: 0.6) { [weak self] in
-            self?.timerView.center = viewCenter
-            self?.startButton.alpha = 0
-        }
-    }
-    
-    private func configureTimerUI() {
-        view.addSubview(timerView)
-        configurePulseLayer()
-        
-        timerView.layer.addSublayer(circleShapeLayer)
-        timerView.addSubview(timeLabel)
-        timeLabel.snp.makeConstraints {
-            $0.center.equalToSuperview()
-        }
-        
-        timerView.addSubview(timePickerView)
-        timePickerView.snp.makeConstraints {
-            $0.center.equalTo(timeLabel)
-        }
-        timePickerView.isUserInteractionEnabled = true
-        
-        timerView.addSubview(minuteLabel)
-        minuteLabel.snp.makeConstraints {
-            $0.centerY.equalTo(timePickerView)
-            $0.centerX.equalTo(timePickerView.snp.centerX).offset(60)
-        }
+    // MARK: - Initializer
+
+    convenience init(viewModel: BreathFocusViewModel) {
+        self.init(nibName: nil, bundle: nil)
+        self.viewModel = viewModel
     }
     
     // MARK: - Helpers
     
     private func configureUI() {
         view.makeBlurBackground()
+                
+        view.layer.addSublayer(circleShapeLayer)
+        
+        view.addSubview(timeLabel)
+        timeLabel.snp.makeConstraints {
+            $0.top.equalTo(view.snp.centerY).multipliedBy(0.65)
+            $0.centerX.equalToSuperview()
+        }
+        
+        view.addSubview(timePickerView)
+        timePickerView.snp.makeConstraints {
+            $0.center.equalTo(timeLabel)
+        }
+        
+        view.addSubview(minuteLabel)
+        minuteLabel.snp.makeConstraints {
+            $0.centerY.equalTo(timePickerView)
+            $0.centerX.equalTo(timePickerView.snp.centerX).offset(60)
+        }
         
         view.addSubview(startButton)
         startButton.snp.makeConstraints {
@@ -218,11 +187,15 @@ final class DefaultFocusViewController: FocusViewController {
         }
     }
     
+    private func configureProgressBar() {
+        view.layer.addSublayer(timeProgressLayer)
+    }
+    
     private func configurePulseLayer() {
-        timerView.layer.addSublayer(pulseGroupLayer)
+        view.layer.addSublayer(pulseGroupLayer)
         let pulseCount = 4
         for _ in 0..<pulseCount {
-            let pulseLayer = createCircleShapeLayer(strokeColor: .white, lineWidth: 2)
+            let pulseLayer = createCircleShapeLayer(strokeColor: .secondarySystemBackground, lineWidth: 2)
             pulseGroupLayer.addSublayer(pulseLayer)
         }
     }
@@ -391,7 +364,9 @@ final class DefaultFocusViewController: FocusViewController {
         circleShapeLayer.lineCap = CAShapeLayerLineCap.round
         circleShapeLayer.lineWidth = lineWidth
         circleShapeLayer.fillColor = UIColor.clear.cgColor
-        circleShapeLayer.position = timerView.center
+        let centerX = view.center.x
+        let centerY = view.center.y * 0.7
+        circleShapeLayer.position = CGPoint(x: centerX, y: centerY)
         return circleShapeLayer
     }
     
@@ -400,9 +375,9 @@ final class DefaultFocusViewController: FocusViewController {
         animation.fromValue = 0
         animation.toValue = 1
         animation.duration = 100
-        animation.fillMode = .backwards
+        animation.fillMode = .forwards
         timeProgressLayer.add(animation, forKey: nil)
-        timerView.layer.addSublayer(timeProgressLayer)
+        view.layer.addSublayer(timeProgressLayer)
     }
     
     private func startPulseAnimation(second: Int) {
@@ -424,7 +399,7 @@ final class DefaultFocusViewController: FocusViewController {
     }
 }
 
-extension DefaultFocusViewController: UIPickerViewDelegate {
+extension BreathFocusViewController: UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         let focusTime = (viewModel?.focusTimeList[row] ?? 0) * 60
         viewModel?.setFocusTime(seconds: focusTime)
@@ -451,7 +426,7 @@ extension DefaultFocusViewController: UIPickerViewDelegate {
     }
 }
 
-extension DefaultFocusViewController: UIPickerViewDataSource {
+extension BreathFocusViewController: UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }

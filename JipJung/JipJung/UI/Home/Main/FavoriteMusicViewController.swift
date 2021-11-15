@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class FavoriteMusicViewController: UIViewController {
+final class FavoriteMusicViewController: UIViewController {
     // MARK: - Subviews
     
     private lazy var scrollView: UIScrollView = UIScrollView()
@@ -36,7 +36,7 @@ class FavoriteMusicViewController: UIViewController {
         favoriteMusicCollectionView.dataSource = self
         favoriteMusicCollectionView.register(
             MusicCollectionViewCell.self,
-            forCellWithReuseIdentifier: MusicCollectionViewCell.id)
+            forCellWithReuseIdentifier: UICollectionView.CellIdentifier.music.value)
         return favoriteMusicCollectionView
     }()
     
@@ -50,7 +50,7 @@ class FavoriteMusicViewController: UIViewController {
     
     // MARK: - Helpers
     
-    func configureUI() {
+    private func configureUI() {
         view.addSubview(scrollView)
         scrollView.snp.makeConstraints {
             $0.topMargin.leading.trailing.bottomMargin.equalToSuperview()
@@ -95,7 +95,7 @@ extension FavoriteMusicViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MusicCollectionViewCell.id, for: indexPath) as? MusicCollectionViewCell else { return  UICollectionViewCell() }
+        guard let cell = collectionView.cell(identifier: UICollectionView.CellIdentifier.music.value, for: indexPath) as? MusicCollectionViewCell else { return  UICollectionViewCell() }
         
         return cell
     }

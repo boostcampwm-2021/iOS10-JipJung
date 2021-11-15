@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class RecentMusicViewController: UIViewController {
+final class RecentMusicViewController: UIViewController {
     // MARK: - Subviews
     
     private lazy var scrollView: UIScrollView = UIScrollView()
@@ -35,7 +35,7 @@ class RecentMusicViewController: UIViewController {
         recentMusicCollectionView.delegate = self
         recentMusicCollectionView.dataSource = self
         recentMusicCollectionView.register(MusicCollectionViewCell.self,
-                                forCellWithReuseIdentifier: MusicCollectionViewCell.id)
+                                           forCellWithReuseIdentifier: UICollectionView.CellIdentifier.music.value)
         return recentMusicCollectionView
     }()
     
@@ -49,7 +49,7 @@ class RecentMusicViewController: UIViewController {
     
     // MARK: - Helpers
     
-    func configureUI() {
+    private func configureUI() {
         view.addSubview(scrollView)
         scrollView.snp.makeConstraints {
             $0.topMargin.leading.trailing.bottomMargin.equalToSuperview()
@@ -94,7 +94,7 @@ extension RecentMusicViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MusicCollectionViewCell.id, for: indexPath) as? MusicCollectionViewCell else { return  UICollectionViewCell() }
+        guard let cell = collectionView.cell(identifier: UICollectionView.CellIdentifier.music.value, for: indexPath) as? MusicCollectionViewCell else { return  UICollectionViewCell() }
         
         return cell
     }
