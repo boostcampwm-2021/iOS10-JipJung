@@ -79,10 +79,10 @@
 		DDB92BB0273A263100EE26F0 /* MusicCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB92BAF273A263100EE26F0 /* MusicCollectionViewCell.swift */; };
 		DF08B1DD2737F5010066518B /* RemoteServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF08B1DC2737F5010066518B /* RemoteServiceProvider.swift */; };
 		DF30FEF9273A730F001C720E /* TagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF30FEF8273A730F001C720E /* TagCollectionViewCell.swift */; };
+		DF09E9B52741FAC700F5F739 /* Utils+Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF09E9B42741FAC700F5F739 /* Utils+Enums.swift */; };
 		DF1722B22740FD2300F06140 /* ApplicationLaunch.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF1722B12740FD2300F06140 /* ApplicationLaunch.swift */; };
 		DF1722B42741013600F06140 /* LocalDBMigrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF1722B32741013600F06140 /* LocalDBMigrator.swift */; };
 		DF1722B72741036C00F06140 /* BundleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF1722B62741036C00F06140 /* BundleManager.swift */; };
-		DF1722BA27410FBB00F06140 /* Utiles+Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF1722B927410FBB00F06140 /* Utiles+Enums.swift */; };
 		DF30FEF9273A730F001C720E /* TagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF30FEF8273A730F001C720E /* TagCell.swift */; };
 		DF30FEFB273ADAA9001C720E /* CollectionView+MusicPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF30FEFA273ADAA9001C720E /* CollectionView+MusicPlayerViewController.swift */; };
 		DF30FF05273CBC3B001C720E /* MusicPlayerButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF30FF04273CBC3B001C720E /* MusicPlayerButtons.swift */; };
@@ -189,10 +189,10 @@
 		DDB92BAF273A263100EE26F0 /* MusicCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicCollectionViewCell.swift; sourceTree = "<group>"; };
 		DF08B1DC2737F5010066518B /* RemoteServiceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteServiceProvider.swift; sourceTree = "<group>"; };
 		DF30FEF8273A730F001C720E /* TagCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCollectionViewCell.swift; sourceTree = "<group>"; };
+		DF09E9B42741FAC700F5F739 /* Utils+Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Utils+Enums.swift"; sourceTree = "<group>"; };
 		DF1722B12740FD2300F06140 /* ApplicationLaunch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationLaunch.swift; sourceTree = "<group>"; };
 		DF1722B32741013600F06140 /* LocalDBMigrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDBMigrator.swift; sourceTree = "<group>"; };
 		DF1722B62741036C00F06140 /* BundleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleManager.swift; sourceTree = "<group>"; };
-		DF1722B927410FBB00F06140 /* Utiles+Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Utiles+Enums.swift"; sourceTree = "<group>"; };
 		DF30FEF8273A730F001C720E /* TagCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCell.swift; sourceTree = "<group>"; };
 		DF30FEFA273ADAA9001C720E /* CollectionView+MusicPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CollectionView+MusicPlayerViewController.swift"; sourceTree = "<group>"; };
 		DF30FF04273CBC3B001C720E /* MusicPlayerButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayerButtons.swift; sourceTree = "<group>"; };
@@ -536,7 +536,7 @@
 			children = (
 				DF1722B12740FD2300F06140 /* ApplicationLaunch.swift */,
 				DF1722B32741013600F06140 /* LocalDBMigrator.swift */,
-				DF1722B927410FBB00F06140 /* Utiles+Enums.swift */,
+				DF09E9B42741FAC700F5F739 /* Utils+Enums.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -816,6 +816,7 @@
 				DDB5CEB32733752D00E8F9EB /* FavoriteMedia.swift in Sources */,
 				DD82808E273CF07800BB2A60 /* CycleAnimation.swift in Sources */,
 				DDB5CE9E27328E8300E8F9EB /* HomeViewController.swift in Sources */,
+				DF09E9B52741FAC700F5F739 /* Utils+Enums.swift in Sources */,
 				B4153945273B9676004EF80F /* FocusRecord.swift in Sources */,
 				B4153947273BA005004EF80F /* Date+Extension.swift in Sources */,
 				DDB5CEA827328EF400E8F9EB /* MeViewController.swift in Sources */,

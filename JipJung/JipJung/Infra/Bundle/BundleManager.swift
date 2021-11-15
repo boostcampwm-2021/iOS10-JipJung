@@ -13,11 +13,6 @@ class BundleManager {
     private init() {}
     
     func findURL(fileNameWithExtension path: String) -> URL? {
-        guard let url = Bundle.main.url(forResource: path, withExtension: "")
-        else {
-            return nil
-        }
-        
-        return url
+        return Bundle.main.url(forResource: path, withExtension: "")
     }
 }

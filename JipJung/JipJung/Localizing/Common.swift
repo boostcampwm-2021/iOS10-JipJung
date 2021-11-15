@@ -24,7 +24,7 @@ enum TabBarItems {
 
 enum UserDefaultsKeys {
     static let searchHistory = "SearchHistory"
-    static let wasLaunchedBefore = "wasLaunchedBefore"
+    static let wasLaunchedBefore = "WasLaunchedBefore"
 }
 
 enum Genre {

@@ -1,8 +1,8 @@
 //
-//  Utiles+Enums.swift
+//  Utils+Enums.swift
 //  JipJung
 //
-//  Created by turu on 2021/11/14.
+//  Created by turu on 2021/11/15.
 //
 
 import Foundation
