@@ -16,10 +16,7 @@ class HomeViewController: UIViewController {
         scrollView.showsVerticalScrollIndicator = false
         return scrollView
     }()
-    private let mainScrollContentsView: UIView = {
-        let view = UIView()
-        return view
-    }()
+    private let mainScrollContentsView = UIView()
     private var mediaCollectionView: UICollectionView?
     private let mediaControlBackgroundView: UIView = {
         let view = UIView()
@@ -29,10 +26,8 @@ class HomeViewController: UIViewController {
     private let pageControl: UIPageControl = {
         let pageControl = UIPageControl()
         pageControl.isUserInteractionEnabled = false
-        pageControl.pageIndicatorTintColor = .red.withAlphaComponent(0.5)
-        pageControl.currentPageIndicatorTintColor = .blue
-        pageControl.hidesForSinglePage = true
-        pageControl.currentPage = 0
+        pageControl.pageIndicatorTintColor = .white.withAlphaComponent(0.5)
+        pageControl.currentPageIndicatorTintColor = .white
         return pageControl
     }()
     private let topView = UIView()
@@ -49,7 +44,7 @@ class HomeViewController: UIViewController {
         
         configureUI()
         bindUI()
-
+        
         viewModel.viewControllerLoaded()
     }
     
@@ -89,17 +84,16 @@ class HomeViewController: UIViewController {
             frame: .zero,
             collectionViewLayout: makeMediaCollectionLayout()
         )
-        mediaCollectionView?.backgroundColor = .gray.withAlphaComponent(0.3)
-        mediaCollectionView?.delegate = self
-        mediaCollectionView?.register(
+        
+        guard let mediaCollectionView = mediaCollectionView else { return }
+        
+        mediaCollectionView.register(
             MediaCollectionViewCell.self,
             forCellWithReuseIdentifier: MediaCollectionViewCell.identifier
         )
-        mediaCollectionView?.addGestureRecognizer(UIPanGestureRecognizer(target: nil, action: nil))
-        mediaCollectionView?.contentInsetAdjustmentBehavior = .never
-        mediaCollectionView?.isPagingEnabled = true
+        mediaCollectionView.addGestureRecognizer(UIPanGestureRecognizer(target: nil, action: nil))
+        mediaCollectionView.contentInsetAdjustmentBehavior = .never
         
-        guard let mediaCollectionView = mediaCollectionView else { return }
         mainScrollContentsView.addSubview(mediaCollectionView)
         mediaCollectionView.snp.makeConstraints {
             $0.edges.equalTo(view)
@@ -120,6 +114,11 @@ class HomeViewController: UIViewController {
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .paging
+        // Reference: https://developer.apple.com/documentation/uikit/nscollectionlayoutsectionvisibleitemsinvalidationhandler
+        section.visibleItemsInvalidationHandler = { [weak self] items, offset, environment in
+            let page = Int(offset.x / (self?.view.frame.width ?? 1))
+            self?.pageControl.currentPage = page
+        }
         let layout = UICollectionViewCompositionalLayout(section: section)
         return layout
     }
@@ -134,22 +133,23 @@ class HomeViewController: UIViewController {
         
         let playImageButton: UIButton = {
             let button = UIButton()
-            button.setImage(UIImage(systemName: "play"), for: .normal)
-            button.backgroundColor = .gray.withAlphaComponent(0.5)
+            let configuration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 45))
+            button.setImage(UIImage(systemName: "play.fill", withConfiguration: configuration), for: .normal)
+            button.tintColor = .white.withAlphaComponent(0.5)
             return button
         }()
         mediaControlBackgroundView.addSubview(playImageButton)
         playImageButton.snp.makeConstraints {
-            $0.center.equalToSuperview()
+            $0.top.equalToSuperview().offset(UIScreen.deviceScreenSize.height * 0.4)
+            $0.centerX.equalToSuperview()
             $0.width.height.equalTo(60)
         }
         
         mediaControlBackgroundView.addSubview(pageControl)
-        pageControl.backgroundColor = .gray.withAlphaComponent(1)
         pageControl.snp.makeConstraints {
-            $0.top.equalTo(playImageButton.snp.bottom).offset(100)
+            $0.bottom.equalToSuperview().offset(-UIScreen.deviceScreenSize.height * 0.3)
             $0.centerX.equalToSuperview()
-            $0.width.equalTo(100)
+            $0.width.equalToSuperview()
             $0.height.equalTo(30)
         }
     }
@@ -290,11 +290,11 @@ class HomeViewController: UIViewController {
             )
             .bind { [weak self] indexPath, model in
                 guard let self = self,
-                    let cell = mediaCollectionView.cellForItem(at: indexPath) as? MediaCollectionViewCell
+                      let cell = mediaCollectionView.cellForItem(at: indexPath) as? MediaCollectionViewCell
                 else {
                     return
                 }
-                      
+                
                 self.mediaPlayButtonTouched(audioFileName: model.audioFileName)
                     .subscribe { state in
                         state ? cell.playVideo() : cell.pauseVideo()
@@ -310,20 +310,22 @@ class HomeViewController: UIViewController {
             return
         }
         
-        viewModel.currentModeList.bind(
-            to: mediaCollectionView.rx.items(cellIdentifier: MediaCollectionViewCell.identifier)
-        ) { [weak self] item, element, cell in
-            guard let self = self,
-                  let cell = cell as? MediaCollectionViewCell
-            else {
-                return
+        viewModel.currentModeList
+            .distinctUntilChanged()
+            .bind(
+                to: mediaCollectionView.rx.items(cellIdentifier: MediaCollectionViewCell.identifier)
+            ) { [weak self] _, element, cell in
+                guard let self = self,
+                      let cell = cell as? MediaCollectionViewCell
+                else {
+                    return
+                }
+                self.viewModel.mediaCollectionCellLoaded(element.videoFileName)
+                    .subscribe { url in
+                        cell.setVideo(videoURL: url)
+                    }.disposed(by: self.bag)
             }
-            self.viewModel.mediaCollectionCellLoaded(element.videoFileName)
-                .subscribe { url in
-                    cell.setVideo(videoURL: url)
-                }.disposed(by: self.bag)
-        }
-        .disposed(by: bag)
+            .disposed(by: bag)
         
         viewModel.currentModeList
             .distinctUntilChanged()
@@ -381,16 +383,6 @@ extension HomeViewController: UIScrollViewDelegate {
                 $0.top.equalTo(view.snp.topMargin)
             }
         }
-    }
-}
-
-extension HomeViewController: UICollectionViewDelegate {
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        if scrollView == mainScrollView {
-            return
-        }
-        let page = Int(targetContentOffset.pointee.x / view.frame.width)
-        self.pageControl.currentPage = page
     }
 }
 
