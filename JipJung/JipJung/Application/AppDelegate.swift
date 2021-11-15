@@ -12,18 +12,8 @@ import Firebase
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        FirebaseApp.configure()
         
-        do {
-            try AVAudioSession.sharedInstance().setCategory(
-                AVAudioSession.Category.playback,
-                mode: AVAudioSession.Mode.default,
-                options: [.defaultToSpeaker, .allowAirPlay]
-            )
-            try AVAudioSession.sharedInstance().setActive(true)
-        } catch {
-            print(error)
-        }
+        ApplicationLaunch().start()
 
         return true
     }

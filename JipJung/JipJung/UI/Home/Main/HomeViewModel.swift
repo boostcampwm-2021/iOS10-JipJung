@@ -11,7 +11,6 @@ import RxSwift
 import RxRelay
 
 final class HomeViewModel {
-    private let baseDataUseCase = BaseDataUseCase()
     private let mediaListUseCase = MediaListUseCase()
     private let maximListUseCase = MaximListUseCase()
     private let audioPlayUseCase = AudioPlayUseCase()
@@ -37,8 +36,6 @@ final class HomeViewModel {
     
     func viewControllerLoaded() {
         // TODO: UserDefaults에서 현재 mode 정보 가져오기
-        
-        baseDataUseCase.load()
         
         mediaListUseCase.fetchMediaMyList(mode: .bright)
             .subscribe { [weak self] in
