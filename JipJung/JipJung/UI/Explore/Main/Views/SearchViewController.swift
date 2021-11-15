@@ -85,8 +85,8 @@ final class SearchViewController: UIViewController {
     
     private func bindUI() {
         cancelButton.rx.tap
-            .bind {
-                self.dismiss(animated: true, completion: nil)
+            .bind { [weak self] in
+                self?.navigationController?.popViewController(animated: true)
             }
             .disposed(by: disposeBag)
     }
