@@ -155,7 +155,13 @@ class HomeViewController: UIViewController {
             $0.height.equalTo(30)
         }
     }
-    
+    private lazy var maximButton: UIButton = {
+        let maximButton = UIButton()
+        maximButton.setTitle("명언", for: .normal)
+        maximButton.titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
+        maximButton.backgroundColor = .red
+        return maximButton
+    }()
     private func configureTopView() {
         mainScrollContentsView.addSubview(topView)
         topView.snp.makeConstraints {
@@ -256,6 +262,19 @@ class HomeViewController: UIViewController {
                 $0.width.equalTo(HomeMainViewSize.focusButtonSize.width)
                 $0.height.equalTo(HomeMainViewSize.focusButtonSize.height)
             }
+        }
+        
+        bottomView.addSubview(maximButton)
+        maximButton.snp.makeConstraints {
+            $0.width.equalTo(focusButtonStackView.snp.width)
+            $0.top.equalTo(focusButtonStackView.snp.bottom).offset(16)
+            $0.leading.equalTo(focusButtonStackView.snp.leading)
+            $0.height.equalTo(50)
+        }
+        maximButton.rx.tap.bind {
+            let maximViewController = MaximViewController()
+            maximViewController.modalPresentationStyle = .fullScreen
+            self.present(maximViewController, animated: true, completion: nil)
         }
     }
     
