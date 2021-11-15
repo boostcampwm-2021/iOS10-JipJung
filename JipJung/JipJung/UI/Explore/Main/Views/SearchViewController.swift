@@ -54,7 +54,7 @@ final class SearchViewController: UIViewController {
     
     private var disposeBag: DisposeBag = DisposeBag()
     private var cellDisposeBag: DisposeBag = DisposeBag()
-    private var userDefaultStorage: UserDefaultsStorage = UserDefaultsStorage.shared
+    private var viewModel: SearchViewModel?
     
     // MARK: - Lifecycle Methods
     
@@ -64,6 +64,14 @@ final class SearchViewController: UIViewController {
         view.backgroundColor = .black
         configureUI()
         bindUI()
+        viewModel?.loadSearchHistory()
+    }
+    
+    // MARK: - Initializer
+
+    convenience init(viewModel: SearchViewModel) {
+        self.init(nibName: nil, bundle: nil)
+        self.viewModel = viewModel
     }
     
     // MARK: - Helpers
@@ -89,6 +97,12 @@ final class SearchViewController: UIViewController {
                 self?.navigationController?.popViewController(animated: true)
             }
             .disposed(by: disposeBag)
+        
+        viewModel?.searchHistory
+            .bind(onNext: { [weak self] _ in
+                self?.searchHistoryTableView.reloadData()
+            })
+            .disposed(by: disposeBag)
     }
 }
 
@@ -99,14 +113,7 @@ extension SearchViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let keyword = searchBar.text else { return }
-        var searchHistory: [String] = []
-        if let data: [String] = userDefaultStorage.load(for: UserDefaultsKeys.searchHistory) {
-            searchHistory = data
-        }
-        searchHistory.append(keyword)
-        userDefaultStorage.save(for: UserDefaultsKeys.searchHistory, value: searchHistory)
-        searchHistoryTableView.reloadData()
-        
+        viewModel?.saveSearchKeyword(keyword: keyword)
         dismissKeyboard()
     }
 }
@@ -127,25 +134,22 @@ extension SearchViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let searchHistory: [String] = userDefaultStorage.load(for: UserDefaultsKeys.searchHistory) else { return 0 }
-        return searchHistory.count
+        return viewModel?.searchHistory.value.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.cell(identifier: UITableView.CellIdentifier.search.value, for: indexPath) as? SearchTableViewCell,
-              var searchHistory: [String] = userDefaultStorage.load(for: UserDefaultsKeys.searchHistory)
+        guard let cell = tableView.cell(identifier: UITableView.CellIdentifier.search.value, for: indexPath) as? SearchTableViewCell
         else { return UITableViewCell() }
         
-        cell.searchHistory.text = searchHistory[indexPath.item]
+        cell.searchHistory.text = viewModel?.searchHistory.value[indexPath.item]
+        
         if indexPath.item == 0 {
             cellDisposeBag = DisposeBag()
         }
+        
         cell.deleteButton.rx.tap
             .bind { [weak self] _ in
-                guard let self = self else { return }
-                searchHistory.remove(at: indexPath.item)
-                self.userDefaultStorage.save(for: UserDefaultsKeys.searchHistory, value: searchHistory)
-                self.searchHistoryTableView.reloadData()
+                self?.viewModel?.removeSearchHistory(at: indexPath.item)
             }
             .disposed(by: cellDisposeBag)
         return cell
