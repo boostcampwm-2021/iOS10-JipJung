@@ -53,6 +53,7 @@ final class SearchViewController: UIViewController {
     // MARK: - Private Variables
     
     private var disposeBag: DisposeBag = DisposeBag()
+    private var cellDisposeBag: DisposeBag = DisposeBag()
     private var userDefaultStorage: UserDefaultsStorage = UserDefaultsStorage.shared
     
     // MARK: - Lifecycle Methods
@@ -136,12 +137,17 @@ extension SearchViewController: UITableViewDataSource {
         else { return UITableViewCell() }
         
         cell.searchHistory.text = searchHistory[indexPath.item]
-        cell.deleteButtonTapHandler = { [weak self] in
-            searchHistory.remove(at: indexPath.item)
-            self?.userDefaultStorage.save(for: UserDefaultsKeys.searchHistory, value: searchHistory)
-            self?.searchHistoryTableView.reloadData()
+        if indexPath.item == 0 {
+            cellDisposeBag = DisposeBag()
         }
-        cell.bindUI()
+        cell.deleteButton.rx.tap
+            .bind { [weak self] _ in
+                guard let self = self else { return }
+                searchHistory.remove(at: indexPath.item)
+                self.userDefaultStorage.save(for: UserDefaultsKeys.searchHistory, value: searchHistory)
+                self.searchHistoryTableView.reloadData()
+            }
+            .disposed(by: cellDisposeBag)
         return cell
     }
 }
