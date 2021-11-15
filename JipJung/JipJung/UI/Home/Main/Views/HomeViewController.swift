@@ -254,7 +254,7 @@ class HomeViewController: UIViewController {
                 let focusViewController = focusMode.getFocusViewController()
                 focusViewController.modalPresentationStyle = .custom
                 focusViewController.transitioningDelegate = self
-                self?.present(focusViewController, animated: true, completion: nil)
+                self?.present(focusViewController, animated: true)
             }
             focusButtonStackView.addArrangedSubview(focusView)
             focusView.snp.makeConstraints {
@@ -273,7 +273,7 @@ class HomeViewController: UIViewController {
         maximButton.rx.tap.bind {
             let maximViewController = MaximViewController()
             maximViewController.modalPresentationStyle = .fullScreen
-            self.present(maximViewController, animated: true, completion: nil)
+            self.present(maximViewController, animated: true)
         }
     }
     
