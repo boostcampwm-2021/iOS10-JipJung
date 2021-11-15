@@ -19,11 +19,7 @@ class HomeViewController: UIViewController {
     }()
     private let mainScrollContentsView = UIView()
     private var mediaCollectionView: UICollectionView?
-    private let mediaControlBackgroundView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .clear
-        return view
-    }()
+    private let mediaControlBackgroundView = UIView()
     private let pageControl: UIPageControl = {
         let pageControl = UIPageControl()
         pageControl.isUserInteractionEnabled = false
@@ -54,7 +50,7 @@ class HomeViewController: UIViewController {
     }
     
     private func configureUI() {
-        view.backgroundColor = .white
+        view.backgroundColor = .lightGray
         
         configureMainScrollView()
         configureMediaCollectionView()
@@ -66,13 +62,11 @@ class HomeViewController: UIViewController {
     private func configureMainScrollView() {
         mainScrollView.delegate = self
         
-        mainScrollView.backgroundColor = .clear
         view.addSubview(mainScrollView)
         mainScrollView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
         
-        mainScrollContentsView.backgroundColor = .clear
         mainScrollView.addSubview(mainScrollContentsView)
         mainScrollContentsView.snp.makeConstraints {
             $0.centerX.width.equalToSuperview()
@@ -88,6 +82,7 @@ class HomeViewController: UIViewController {
         
         guard let mediaCollectionView = mediaCollectionView else { return }
         
+        mediaCollectionView.backgroundColor = .clear
         mediaCollectionView.register(
             MediaCollectionViewCell.self,
             forCellWithReuseIdentifier: UICollectionView.CellIdentifier.media.value
@@ -116,10 +111,35 @@ class HomeViewController: UIViewController {
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .paging
         // Reference: https://developer.apple.com/documentation/uikit/nscollectionlayoutsectionvisibleitemsinvalidationhandler
-        section.visibleItemsInvalidationHandler = { [weak self] _, offset, _ in
-            guard let self = self else { return }
-            let page = round(offset.x / self.view.frame.width)
-            self.pageControl.currentPage = Int(page)
+        section.visibleItemsInvalidationHandler = { [weak self] items, offset, environment in
+            guard let self = self,
+                  let mediaCollectionView = self.mediaCollectionView
+            else {
+                return
+            }
+            
+            let pageOffset = offset.x / self.view.frame.width
+            let nearestPage = round(pageOffset)
+            
+            // Reference: iOS05-Escaper의 3주차 데모 발표 QnA
+            items.forEach { item in
+                guard let cell = mediaCollectionView.cellForItem(at: item.indexPath) else { return }
+                
+                if pageOffset == nearestPage {
+                    cell.layer.masksToBounds = false
+                    cell.layer.cornerRadius = 0
+                    cell.transform = CGAffineTransform.identity
+                } else {
+                    let distance = abs(nearestPage - pageOffset)
+                    let distanceRatio = min(0.1, distance)
+                    
+                    cell.layer.masksToBounds = true
+                    cell.layer.cornerRadius = 40 * (distanceRatio * 10)
+                    cell.transform = CGAffineTransform(scaleX: 1 - distanceRatio, y: 1 - distanceRatio)
+                }
+            }
+            
+            self.pageControl.currentPage = Int(nearestPage)
         }
         let layout = UICollectionViewCompositionalLayout(section: section)
         return layout
