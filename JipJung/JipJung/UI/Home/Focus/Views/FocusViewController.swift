@@ -13,11 +13,7 @@ protocol FocusViewControllerDelegate: AnyObject {
 
 class FocusViewController: UIViewController {
     private lazy var closeButton: UIButton = {
-        let button = UIButton(type: .custom)
-        button.setBackgroundImage(UIImage(systemName: "xmark"), for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 24)
-        button.tintColor = UIColor.systemGray
-        button.backgroundColor = .clear
+        let button = CloseButton()
         button.addTarget(self, action: #selector(closeButtonClicked(_:)), for: .touchUpInside)
         return button
     }()
