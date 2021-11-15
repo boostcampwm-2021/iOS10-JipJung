@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		911D7F7E27428430003B7C3B /* AudioPlayManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 911D7F7D27428430003B7C3B /* AudioPlayManager.swift */; };
+		911D7F8027428473003B7C3B /* Audio+Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 911D7F7F27428473003B7C3B /* Audio+Enums.swift */; };
 		912A72042733B99300C1A37E /* LocalFileManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 912A72032733B99300C1A37E /* LocalFileManagerTests.swift */; };
 		912A720A2733B9AC00C1A37E /* LocalFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E4178827312FEB001BA0A6 /* LocalFileManager.swift */; };
 		9131513F27400C26001E7125 /* UIScreen+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9131513E27400C26001E7125 /* UIScreen+Extension.swift */; };
@@ -125,6 +127,8 @@
 		0B8DD22FEC5E234B31F27E14 /* Pods-JipJung.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JipJung.release.xcconfig"; path = "Target Support Files/Pods-JipJung/Pods-JipJung.release.xcconfig"; sourceTree = "<group>"; };
 		6ECB91629425C2E076873750 /* Pods_JipJung.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_JipJung.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		91184BB3273D1E01007A29C8 /* sea.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = sea.mp4; sourceTree = "<group>"; };
+		911D7F7D27428430003B7C3B /* AudioPlayManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayManager.swift; sourceTree = "<group>"; };
+		911D7F7F27428473003B7C3B /* Audio+Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Audio+Enums.swift"; sourceTree = "<group>"; };
 		912A72012733B99300C1A37E /* LocalFileManagerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LocalFileManagerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		912A72032733B99300C1A37E /* LocalFileManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFileManagerTests.swift; sourceTree = "<group>"; };
 		9131513E27400C26001E7125 /* UIScreen+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+Extension.swift"; sourceTree = "<group>"; };
@@ -443,6 +447,8 @@
 				B4153940273B93B0004EF80F /* SaveFocusTimeUseCase.swift */,
 				B4EF13B42742933F0086D8CD /* SearchHistoryUseCase.swift */,
 				B4EF13B827429A0F0086D8CD /* SearchMediaUseCase.swift */,
+				911D7F7D27428430003B7C3B /* AudioPlayManager.swift */,
+				911D7F7F27428473003B7C3B /* Audio+Enums.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -987,6 +993,7 @@
 				DDB5CEA227328EC300E8F9EB /* ExploreViewController.swift in Sources */,
 				DD3902D1272FCA10009ECA82 /* AppDelegate.swift in Sources */,
 				DDB5CEAF273372A700E8F9EB /* Media.swift in Sources */,
+				911D7F7E27428430003B7C3B /* AudioPlayManager.swift in Sources */,
 				B4F36B662733B8770073609C /* SearchViewController.swift in Sources */,
 				B4F36B5127336EE20073609C /* UserDefaultsStorage.swift in Sources */,
 				91D02281273D0A320073EA2A /* VideoPlayUseCase.swift in Sources */,
@@ -1028,6 +1035,7 @@
 				9131514327401200001E7125 /* Array+Extension.swift in Sources */,
 				91E4178927312FEB001BA0A6 /* LocalFileManager.swift in Sources */,
 				91CE6F7327390AD200176AF2 /* FocusButton.swift in Sources */,
+				911D7F8027428473003B7C3B /* Audio+Enums.swift in Sources */,
 				B4153941273B93B0004EF80F /* SaveFocusTimeUseCase.swift in Sources */,
 				B4015CD82739270C006BD14A /* GenreCollectionViewCell.swift in Sources */,
 				9198DE952733863500EBAEC8 /* Common.swift in Sources */,
