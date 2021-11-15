@@ -32,4 +32,12 @@ enum FocusViewControllerFactory {
         )
         return InfinityFocusViewController(viewModel: viewModel)
     }
+    static func makeBreathTimer() -> BreathFocusViewController {
+        let viewModel = BreathFocusViewModel(
+            saveFocusTimeUseCase: SaveFocusTimeUseCase(
+                focusTimeRepository: FocusTimeRepository()
+            )
+        )
+        return BreathFocusViewController(viewModel: viewModel)
+    }
 }
