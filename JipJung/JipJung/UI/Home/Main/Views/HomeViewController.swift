@@ -7,6 +7,7 @@
 import AVKit
 import UIKit
 
+import RxCocoa
 import RxSwift
 import SnapKit
 
@@ -184,14 +185,15 @@ class HomeViewController: UIViewController {
         
         let modeSwitch: UIButton = {
             let button = UIButton()
-            button.addTarget(
-                self,
-                action: #selector(modeSwitchTouched(_:)),
-                for: .touchUpInside
-            )
             button.backgroundColor = .gray.withAlphaComponent(0.5)
             return button
         }()
+        
+        modeSwitch.rx.tap
+            .bind { [weak self] in
+                self?.viewModel.modeSwitchTouched()
+            }
+            .disposed(by: bag)
         
         topView.addSubview(modeSwitch)
         modeSwitch.snp.makeConstraints {
@@ -347,9 +349,6 @@ class HomeViewController: UIViewController {
                 self.mainScrollView.setContentOffset(CGPoint(x: 0, y: -UIApplication.statusBarHeight), animated: true)
             }
         }
-    }
-    @objc private func modeSwitchTouched(_ sender: UIButton) {
-        viewModel.modeSwitchTouched()
     }
 }
 
