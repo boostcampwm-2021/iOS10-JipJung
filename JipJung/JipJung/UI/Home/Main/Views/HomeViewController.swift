@@ -89,7 +89,7 @@ class HomeViewController: UIViewController {
         
         mediaCollectionView.register(
             MediaCollectionViewCell.self,
-            forCellWithReuseIdentifier: MediaCollectionViewCell.identifier
+            forCellWithReuseIdentifier: UICollectionView.CellIdentifier.media.value
         )
         mediaCollectionView.addGestureRecognizer(UIPanGestureRecognizer(target: nil, action: nil))
         mediaCollectionView.contentInsetAdjustmentBehavior = .never
@@ -129,20 +129,6 @@ class HomeViewController: UIViewController {
         
         mediaControlBackgroundView.snp.makeConstraints {
             $0.edges.equalTo(view)
-        }
-        
-        let playImageButton: UIButton = {
-            let button = UIButton()
-            let configuration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 45))
-            button.setImage(UIImage(systemName: "play.fill", withConfiguration: configuration), for: .normal)
-            button.tintColor = .white.withAlphaComponent(0.5)
-            return button
-        }()
-        mediaControlBackgroundView.addSubview(playImageButton)
-        playImageButton.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(UIScreen.deviceScreenSize.height * 0.4)
-            $0.centerX.equalToSuperview()
-            $0.width.height.equalTo(60)
         }
         
         mediaControlBackgroundView.addSubview(pageControl)
@@ -313,7 +299,7 @@ class HomeViewController: UIViewController {
         viewModel.currentModeList
             .distinctUntilChanged()
             .bind(
-                to: mediaCollectionView.rx.items(cellIdentifier: MediaCollectionViewCell.identifier)
+                to: mediaCollectionView.rx.items(cellIdentifier: UICollectionView.CellIdentifier.media.value)
             ) { [weak self] _, element, cell in
                 guard let self = self,
                       let cell = cell as? MediaCollectionViewCell

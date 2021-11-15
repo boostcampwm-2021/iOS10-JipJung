@@ -12,6 +12,7 @@ extension UICollectionView {
         case music
         case genre
         case tag
+        case media
         
         var value: String {
             switch self {
@@ -21,6 +22,8 @@ extension UICollectionView {
                 return String(describing: GenreCollectionViewCell.self)
             case .tag:
                 return String(describing: TagCollectionViewCell.self)
+            case .media:
+                return String(describing: MediaCollectionViewCell.self)
             }
         }
     }
