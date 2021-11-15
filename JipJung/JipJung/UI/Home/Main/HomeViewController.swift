@@ -51,8 +51,12 @@ class HomeViewController: UIViewController {
         
         configureUI()
         bindUI()
-        
+
         viewModel.viewControllerLoaded()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
     }
     
     private func configureUI() {
@@ -243,8 +247,8 @@ class HomeViewController: UIViewController {
             focusView.buttonClickListener = { [weak self] in
                 let focusViewController = focusMode.getFocusViewController()
                 focusViewController.delegate = self
-                focusViewController.modalPresentationStyle = .overCurrentContext
-                focusViewController.modalTransitionStyle = .crossDissolve
+                focusViewController.modalPresentationStyle = .custom
+                focusViewController.transitioningDelegate = self
                 self?.present(focusViewController, animated: true, completion: nil)
             }
             focusButtonStackView.addArrangedSubview(focusView)
@@ -394,5 +398,15 @@ extension HomeViewController: UIGestureRecognizerDelegate {
 extension HomeViewController: FocusViewControllerDelegate {
     func closeButtonDidClicked(_ sender: UIViewController) {
         sender.dismiss(animated: true, completion: nil)
+    }
+}
+
+extension HomeViewController: UIViewControllerTransitioningDelegate {
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return SlowPresent(duration: 0.5, animationType: .present)
+    }
+    
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return SlowPresent(duration: 0.5, animationType: .dismiss)
     }
 }

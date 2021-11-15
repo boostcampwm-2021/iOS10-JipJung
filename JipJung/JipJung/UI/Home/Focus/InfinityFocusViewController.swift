@@ -7,11 +7,16 @@
 
 import UIKit
 import RxSwift
-//import RxCocoa
+import RxCocoa
 import RxRelay
 
 class InfinityFocusViewController: FocusViewController {
     // MARK: - Subviews
+    private lazy var timerView: UIView = {
+        let timerView = UIView(frame: UIScreen.main.bounds)
+        timerView.isUserInteractionEnabled = false
+        return timerView
+    }()
     
     private lazy var timeLabel: UILabel = {
         let timeLabel = UILabel()
@@ -95,17 +100,40 @@ class InfinityFocusViewController: FocusViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
-        configurePulseLayer()
+        configureTimerUI()
         configureUI()
-        configureCometLayer()
         bindUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        // MARK: viewDidLoad에 추가시 동작안함.., congfigureCometLayer에 같이 포함시키면 레이아웃이 틀어짐...
-        cometAnimationLayer.add(CycleAnimation(), forKey: nil)
+        
+        self.startButton.alpha = 0
+        self.timerView.alpha = 0
+        let viewCenter = view.center
+        self.timerView.center = CGPoint(x: viewCenter.x, y: viewCenter.y * 0.9)
+        UIView.animate(withDuration: 0.6, delay: 0.3, options: []) { [weak self] in
+            self?.timerView.alpha = 1
+            self?.timerView.center = CGPoint(x: viewCenter.x, y: viewCenter.y * 0.8)
+            self?.startButton.alpha = 1
+        } completion: { [weak self] in
+            if $0 {
+                self?.cometAnimationLayer.add(CycleAnimation(), forKey: nil)
+            }
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        let viewCenter = view.center
+        UIView.animate(withDuration: 0.6) { [weak self] in
+            self?.timerView.center = viewCenter
+            self?.startButton.alpha = 0
+        } completion: { [weak self] in
+            if $0 {
+                self?.cometAnimationLayer.add(CycleAnimation(), forKey: nil)
+            }
+        }
     }
     
     // MARK: - Initializer
@@ -116,16 +144,19 @@ class InfinityFocusViewController: FocusViewController {
     }
     // MARK: - Helpers
     
-    func configureUI() {
-        view.makeBlurBackground()
-                
-        view.layer.addSublayer(circleShapeLayer)
-        
-        view.addSubview(timeLabel)
+    private func configureTimerUI() {
+        view.addSubview(timerView)
+        configurePulseLayer()
+        timerView.layer.addSublayer(circleShapeLayer)
+        timerView.addSubview(timeLabel)
         timeLabel.snp.makeConstraints {
-            $0.top.equalTo(view.snp.centerY).multipliedBy(0.65)
-            $0.centerX.equalToSuperview()
+            $0.center.equalToSuperview()
         }
+        configureCometLayer()
+    }
+    
+    private func configureUI() {
+        view.makeBlurBackground()
         
         view.addSubview(startButton)
         startButton.snp.makeConstraints {
@@ -161,7 +192,7 @@ class InfinityFocusViewController: FocusViewController {
     }
     
     private func configurePulseLayer() {
-        view.layer.addSublayer(pulseGroupLayer)
+        timerView.layer.addSublayer(pulseGroupLayer)
         let pulseCount = 4
         for _ in 0..<pulseCount {
             let pulseLayer = createCircleShapeLayer(strokeColor: .secondarySystemBackground, lineWidth: 2)
@@ -170,7 +201,7 @@ class InfinityFocusViewController: FocusViewController {
     }
     
     private func configureCometLayer() {
-        view.layer.addSublayer(cometAnimationLayer)
+        timerView.layer.addSublayer(cometAnimationLayer)
     }
     
     func bindUI() {
@@ -313,9 +344,7 @@ class InfinityFocusViewController: FocusViewController {
         circleShapeLayer.lineCap = CAShapeLayerLineCap.round
         circleShapeLayer.lineWidth = lineWidth
         circleShapeLayer.fillColor = UIColor.clear.cgColor
-        let centerX = view.center.x
-        let centerY = view.center.y * 0.7
-        circleShapeLayer.position = CGPoint(x: centerX, y: centerY)
+        circleShapeLayer.position = timerView.center
         return circleShapeLayer
     }
     
@@ -345,17 +374,15 @@ class InfinityFocusViewController: FocusViewController {
                                       clockwise: true)
         
         circleShapeLayer.path = circlePath.cgPath
-        circleShapeLayer.strokeColor = strokeColor.cgColor
+        circleShapeLayer.strokeColor = UIColor.red.cgColor
         circleShapeLayer.lineCap = CAShapeLayerLineCap.round
         circleShapeLayer.lineWidth = lineWidth
         circleShapeLayer.fillColor = UIColor.clear.cgColor
-        let centerX = view.center.x
-        let centerY = view.center.y * 0.7
         circleShapeLayer.position = view.center
         
         let gradient = CAGradientLayer()
-        gradient.frame = UIScreen.main.bounds
-        gradient.position = CGPoint(x: centerX, y: centerY)
+        gradient.frame = timerView.bounds
+        gradient.position = view.center
         gradient.colors = [UIColor.systemGray.cgColor, strokeColor.cgColor]
         gradient.startPoint = CGPoint(x: 0.5, y: 0.5)
         gradient.endPoint = CGPoint(x: 1.0, y: 1)
