@@ -20,11 +20,12 @@ class SearchTableViewCell: UITableViewCell {
     }()
     
     lazy var deleteButton: UIButton = {
-        let cancelButton = UIButton()
-        cancelButton.tintColor = .white
-        cancelButton.setImage(UIImage(systemName: "xmark.circle.fill"), for: .normal)
+        let deleteButton = UIButton(type: .custom)
+        deleteButton.tintColor = .darkGray
+        deleteButton.setImage(UIImage(systemName: "xmark"), for: .normal)
+        deleteButton.backgroundColor = .clear
         
-        return cancelButton
+        return deleteButton
     }()
     
     lazy var searchHistoryStackView: UIStackView = {
