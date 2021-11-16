@@ -123,12 +123,14 @@ final class SearchViewController: UIViewController {
             .disposed(by: disposeBag)
         
         viewModel?.searchHistory
+            .distinctUntilChanged()
             .bind(onNext: { [weak self] _ in
                 self?.searchHistoryTableView.reloadData()
             })
             .disposed(by: disposeBag)
         
         viewModel?.searchResult
+            .distinctUntilChanged()
             .bind(onNext: { [weak self] _ in
                 guard let self = self else { return }
                 self.soundCollectionView.reloadData()

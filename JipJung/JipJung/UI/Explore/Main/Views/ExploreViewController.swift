@@ -125,6 +125,7 @@ final class ExploreViewController: UIViewController {
     
     private func bindUI() {
         viewModel?.searchResult
+            .distinctUntilChanged()
             .bind(onNext: { [weak self] _ in
                 guard let self = self else { return }
                 self.soundCollectionView.reloadData()
