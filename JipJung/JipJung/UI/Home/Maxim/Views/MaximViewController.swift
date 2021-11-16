@@ -9,7 +9,7 @@ import UIKit
 import RxCocoa
 import RxSwift
 
-class MaximViewController: UIViewController {
+final class MaximViewController: UIViewController {
     private lazy var closeButton: UIButton = {
         let button = CloseButton()
         button.tintColor = .white
