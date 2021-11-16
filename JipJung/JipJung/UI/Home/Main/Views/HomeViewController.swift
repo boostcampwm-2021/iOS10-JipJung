@@ -7,6 +7,7 @@
 import AVKit
 import UIKit
 
+import RxCocoa
 import RxSwift
 import SnapKit
 
@@ -16,23 +17,15 @@ class HomeViewController: UIViewController {
         scrollView.showsVerticalScrollIndicator = false
         return scrollView
     }()
-    private let mainScrollContentsView: UIView = {
-        let view = UIView()
-        return view
-    }()
+    private let mainScrollContentsView = UIView()
     private var mediaCollectionView: UICollectionView?
-    private let mediaControlBackgroundView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .clear
-        return view
-    }()
+    private let mediaControlBackgroundView = UIView()
     private let pageControl: UIPageControl = {
         let pageControl = UIPageControl()
         pageControl.isUserInteractionEnabled = false
-        pageControl.pageIndicatorTintColor = .red.withAlphaComponent(0.5)
-        pageControl.currentPageIndicatorTintColor = .blue
+        pageControl.pageIndicatorTintColor = .white.withAlphaComponent(0.5)
+        pageControl.currentPageIndicatorTintColor = .white
         pageControl.hidesForSinglePage = true
-        pageControl.currentPage = 0
         return pageControl
     }()
     private let topView = UIView()
@@ -49,7 +42,7 @@ class HomeViewController: UIViewController {
         
         configureUI()
         bindUI()
-
+        
         viewModel.viewControllerLoaded()
     }
     
@@ -58,7 +51,7 @@ class HomeViewController: UIViewController {
     }
     
     private func configureUI() {
-        view.backgroundColor = .white
+        view.backgroundColor = .lightGray
         
         configureMainScrollView()
         configureMediaCollectionView()
@@ -70,13 +63,11 @@ class HomeViewController: UIViewController {
     private func configureMainScrollView() {
         mainScrollView.delegate = self
         
-        mainScrollView.backgroundColor = .clear
         view.addSubview(mainScrollView)
         mainScrollView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
         
-        mainScrollContentsView.backgroundColor = .clear
         mainScrollView.addSubview(mainScrollContentsView)
         mainScrollContentsView.snp.makeConstraints {
             $0.centerX.width.equalToSuperview()
@@ -89,17 +80,17 @@ class HomeViewController: UIViewController {
             frame: .zero,
             collectionViewLayout: makeMediaCollectionLayout()
         )
-        mediaCollectionView?.backgroundColor = .gray.withAlphaComponent(0.3)
-        mediaCollectionView?.delegate = self
-        mediaCollectionView?.register(
-            MediaCollectionViewCell.self,
-            forCellWithReuseIdentifier: MediaCollectionViewCell.identifier
-        )
-        mediaCollectionView?.addGestureRecognizer(UIPanGestureRecognizer(target: nil, action: nil))
-        mediaCollectionView?.contentInsetAdjustmentBehavior = .never
-        mediaCollectionView?.isPagingEnabled = true
         
         guard let mediaCollectionView = mediaCollectionView else { return }
+        
+        mediaCollectionView.backgroundColor = .clear
+        mediaCollectionView.register(
+            MediaCollectionViewCell.self,
+            forCellWithReuseIdentifier: UICollectionView.CellIdentifier.media.value
+        )
+        mediaCollectionView.addGestureRecognizer(UIPanGestureRecognizer(target: nil, action: nil))
+        mediaCollectionView.contentInsetAdjustmentBehavior = .never
+        
         mainScrollContentsView.addSubview(mediaCollectionView)
         mediaCollectionView.snp.makeConstraints {
             $0.edges.equalTo(view)
@@ -120,6 +111,71 @@ class HomeViewController: UIViewController {
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .paging
+        
+        // Reference: https://developer.apple.com/documentation/uikit/nscollectionlayoutsectionvisibleitemsinvalidationhandler
+        section.visibleItemsInvalidationHandler = { [weak self] items, offset, environment in
+            guard let self = self,
+                  let mediaCollectionView = self.mediaCollectionView
+            else {
+                return
+            }
+            
+            let cellCount = mediaCollectionView.numberOfItems(inSection: 0)
+            let pageOffset = offset.x / self.view.frame.width
+            let nearestPage = round(pageOffset)
+            let startPage = 0
+            let firstContentsPage = 1
+            let lastContentsPage = cellCount - 2
+            let endPage = cellCount - 1
+            
+            if cellCount == 1 {
+                self.pageControl.currentPage = 0
+            } else {
+                
+                var currentContentsPage = Int(nearestPage)
+                if currentContentsPage == startPage {
+                    currentContentsPage = lastContentsPage
+                } else if currentContentsPage == endPage {
+                    currentContentsPage = firstContentsPage
+                }
+                let visiblePageindex = currentContentsPage - 1
+                /*
+                 nearestPage -> currentContentsPage -> pageControl CurrentPage
+                 0 -> 3 -> 2
+                 1 -> 1 -> 0
+                 2 -> 2 -> 1
+                 3 -> 3 -> 2
+                 4 -> 1 -> 0
+                 */
+                self.pageControl.currentPage = visiblePageindex
+            }
+            
+            // Reference: iOS05-Escaper의 3주차 데모 발표 QnA
+            items.forEach { item in
+                guard let cell = mediaCollectionView.cellForItem(at: item.indexPath)
+                else { return }
+                
+                if pageOffset == nearestPage {
+                    cell.layer.masksToBounds = false
+                    cell.layer.cornerRadius = 0
+                    cell.transform = CGAffineTransform.identity
+                    
+                    if Int(pageOffset) == startPage {
+                        mediaCollectionView.scrollToItem(at: [0, lastContentsPage], at: .right, animated: false)
+                    } else if Int(pageOffset) == endPage {
+                        mediaCollectionView.scrollToItem(at: [0, firstContentsPage], at: .left, animated: false)
+                    }
+                    
+                } else {
+                    let distance = abs(nearestPage - pageOffset)
+                    let distanceRatio = min(0.1, distance)
+                    
+                    cell.layer.masksToBounds = true
+                    cell.layer.cornerRadius = 40 * (distanceRatio * 10)
+                    cell.transform = CGAffineTransform(scaleX: 1 - distanceRatio, y: 1 - distanceRatio)
+                }
+            }
+        }
         let layout = UICollectionViewCompositionalLayout(section: section)
         return layout
     }
@@ -132,24 +188,11 @@ class HomeViewController: UIViewController {
             $0.edges.equalTo(view)
         }
         
-        let playImageButton: UIButton = {
-            let button = UIButton()
-            button.setImage(UIImage(systemName: "play"), for: .normal)
-            button.backgroundColor = .gray.withAlphaComponent(0.5)
-            return button
-        }()
-        mediaControlBackgroundView.addSubview(playImageButton)
-        playImageButton.snp.makeConstraints {
-            $0.center.equalToSuperview()
-            $0.width.height.equalTo(60)
-        }
-        
         mediaControlBackgroundView.addSubview(pageControl)
-        pageControl.backgroundColor = .gray.withAlphaComponent(1)
         pageControl.snp.makeConstraints {
-            $0.top.equalTo(playImageButton.snp.bottom).offset(100)
+            $0.bottom.equalToSuperview().offset(-UIScreen.deviceScreenSize.height * 0.3)
             $0.centerX.equalToSuperview()
-            $0.width.equalTo(100)
+            $0.width.equalToSuperview()
             $0.height.equalTo(30)
         }
     }
@@ -198,14 +241,15 @@ class HomeViewController: UIViewController {
         
         let modeSwitch: UIButton = {
             let button = UIButton()
-            button.addTarget(
-                self,
-                action: #selector(modeSwitchTouched(_:)),
-                for: .touchUpInside
-            )
             button.backgroundColor = .gray.withAlphaComponent(0.5)
             return button
         }()
+        
+        modeSwitch.rx.tap
+            .bind { [weak self] in
+                self?.viewModel.modeSwitchTouched()
+            }
+            .disposed(by: bag)
         
         topView.addSubview(modeSwitch)
         modeSwitch.snp.makeConstraints {
@@ -290,11 +334,11 @@ class HomeViewController: UIViewController {
             )
             .bind { [weak self] indexPath, model in
                 guard let self = self,
-                    let cell = mediaCollectionView.cellForItem(at: indexPath) as? MediaCollectionViewCell
+                      let cell = mediaCollectionView.cellForItem(at: indexPath) as? MediaCollectionViewCell
                 else {
                     return
                 }
-                      
+                
                 self.mediaPlayButtonTouched(audioFileName: model.audioFileName)
                     .subscribe { state in
                         state ? cell.playVideo() : cell.pauseVideo()
@@ -310,28 +354,33 @@ class HomeViewController: UIViewController {
             return
         }
         
-        viewModel.currentModeList.bind(
-            to: mediaCollectionView.rx.items(cellIdentifier: MediaCollectionViewCell.identifier)
-        ) { [weak self] item, element, cell in
-            guard let self = self,
-                  let cell = cell as? MediaCollectionViewCell
-            else {
-                return
+        viewModel.currentModeList
+            .distinctUntilChanged()
+            .bind(
+                to: mediaCollectionView.rx.items(cellIdentifier: UICollectionView.CellIdentifier.media.value)
+            ) { [weak self] _, element, cell in
+                guard let self = self,
+                      let cell = cell as? MediaCollectionViewCell
+                else {
+                    return
+                }
+                self.viewModel.mediaCollectionCellLoaded(element.videoFileName)
+                    .subscribe { url in
+                        cell.setVideo(videoURL: url)
+                    }.disposed(by: self.bag)
             }
-            self.viewModel.mediaCollectionCellLoaded(element.videoFileName)
-                .subscribe { url in
-                    cell.setVideo(videoURL: url)
-                }.disposed(by: self.bag)
-        }
-        .disposed(by: bag)
+            .disposed(by: bag)
         
         viewModel.currentModeList
             .distinctUntilChanged()
             .map { $0.count }
             .filter { $0 != 0 }
             .bind { [weak self] count in
-                self?.pageControl.currentPage = 0
-                self?.pageControl.numberOfPages = count
+                self?.view.layoutIfNeeded()
+                let contentsPages = count == 1 ? 1 : count - 2
+                self?.pageControl.numberOfPages = contentsPages
+                self?.mediaCollectionView?.scrollToItem(at: [0, count/2], at: .left, animated: false)
+                self?.pageControl.currentPage = contentsPages / 2
             }
             .disposed(by: bag)
     }
@@ -360,9 +409,6 @@ class HomeViewController: UIViewController {
             }
         }
     }
-    @objc private func modeSwitchTouched(_ sender: UIButton) {
-        viewModel.modeSwitchTouched()
-    }
 }
 
 extension HomeViewController: UIScrollViewDelegate {
@@ -381,16 +427,6 @@ extension HomeViewController: UIScrollViewDelegate {
                 $0.top.equalTo(view.snp.topMargin)
             }
         }
-    }
-}
-
-extension HomeViewController: UICollectionViewDelegate {
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        if scrollView == mainScrollView {
-            return
-        }
-        let page = Int(targetContentOffset.pointee.x / view.frame.width)
-        self.pageControl.currentPage = page
     }
 }
 

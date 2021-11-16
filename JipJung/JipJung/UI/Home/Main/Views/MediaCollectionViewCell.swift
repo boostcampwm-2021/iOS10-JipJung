@@ -9,66 +9,76 @@ import AVKit
 import UIKit
 
 final class MediaCollectionViewCell: UICollectionViewCell {
-    static let identifier = "MediaCollectionViewCell"
-    
-    private var videoPlayer: AVPlayer? {
+    private lazy var playButton: UIButton = {
+        let button = UIButton()
+        let configuration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 45))
+        button.setImage(UIImage(systemName: "play.fill", withConfiguration: configuration), for: .normal)
+        button.tintColor = .white.withAlphaComponent(0.5)
+        return button
+    }()
+    private var playerLooper: AVPlayerLooper?
+    private var videoPlayer: AVQueuePlayer? {
         didSet {
             let playerLayer = AVPlayerLayer(player: videoPlayer)
             playerLayer.videoGravity = .resizeAspectFill
             playerLayer.frame = UIScreen.main.bounds
-            layer.addSublayer(playerLayer)
+            layer.sublayers = [playerLayer, playButton.layer]
         }
     }
+    private var videoURL: URL?
     
     override func prepareForReuse() {
         super.prepareForReuse()
         
-        NotificationCenter.default.removeObserver(
-            self,
-            name: .AVPlayerItemDidPlayToEndTime,
-            object: videoPlayer?.currentItem
-        )
-        layer.sublayers?.forEach {
-            $0.removeFromSuperlayer()
-        }
-        videoPlayer = nil
+        playButton.isHidden = false
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
+        configureUI()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+        
+        configureUI()
     }
     
     func playVideo() {
         guard let videoPlayer = videoPlayer else { return }
         videoPlayer.currentItem?.seek(to: .zero, completionHandler: nil)
         videoPlayer.play()
+        playButton.isHidden = true
     }
     
     func pauseVideo() {
         guard let videoPlayer = videoPlayer else { return }
         videoPlayer.pause()
+        playButton.isHidden = false
     }
     
     func setVideo(videoURL: URL) {
-        videoPlayer = AVPlayer(url: videoURL)
-        videoPlayer?.actionAtItemEnd = .none
-        videoPlayer?.isMuted = true
+        if videoURL == self.videoURL {
+            return
+        }
         
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(playerItemDidReachEnd(notification:)),
-            name: .AVPlayerItemDidPlayToEndTime,
-            object: videoPlayer?.currentItem
-        )
+        self.videoURL = videoURL
+        let playerItem = AVPlayerItem(url: videoURL)
+        videoPlayer = AVQueuePlayer(playerItem: playerItem)
+        
+        if let videoPlayer = videoPlayer {
+            videoPlayer.isMuted = true
+            playerLooper = AVPlayerLooper(player: videoPlayer, templateItem: playerItem)
+        }
     }
     
-    @objc func playerItemDidReachEnd(notification: Notification) {
-        if let playerItem = notification.object as? AVPlayerItem {
-            playerItem.seek(to: CMTime.zero, completionHandler: nil)
+    private func configureUI() {
+        addSubview(playButton)
+        playButton.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(UIScreen.deviceScreenSize.height * 0.4)
+            $0.centerX.equalToSuperview()
+            $0.width.height.equalTo(60)
         }
     }
 }
