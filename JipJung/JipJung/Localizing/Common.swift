@@ -27,15 +27,34 @@ enum UserDefaultsKeys {
     static let wasLaunchedBefore = "WasLaunchedBefore"
 }
 
-enum Genre {
-    static let All = "All"
-    static let Melody = "Melody"
-    static let Nature = "Nature"
-    static let Urban = "Urban"
-    static let Relax = "Relax"
-    static let Techno = "Techno"
-    static let House = "House"
-    static let Hiphop = "Hiphop"
-    static let Jazz = "Jazz"
-    static let Disco = "Disco"
+enum SoundTag: CaseIterable {
+    case all
+    case nature
+    case urban
+    case relax
+    case focus
+    case cafe
+    case lounge
+    case club
+    
+    var value: String {
+        switch self {
+        case .all:
+            return "All"
+        case .nature:
+            return "Nature"
+        case .urban:
+            return "Urban"
+        case .relax:
+            return "Relax"
+        case .focus:
+            return "Focus"
+        case .cafe:
+            return "Cafe"
+        case .lounge:
+            return "Lounge"
+        case .club:
+            return "Club"
+        }
+    }
 }

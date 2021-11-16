@@ -90,7 +90,7 @@ class MusicPlayerViewController: UIViewController {
     }
     
     @objc func backButtonTouched(_ sender: UIButton) {
-        self.dismiss(animated: true, completion: nil)
+        navigationController?.popViewController(animated: true)
     }
 }
 

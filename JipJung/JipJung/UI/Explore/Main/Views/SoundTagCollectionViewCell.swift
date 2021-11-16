@@ -8,15 +8,15 @@
 import UIKit
 import SnapKit
 
-class GenreCollectionViewCell: UICollectionViewCell {
+class SoundTagCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Subviews
     
-    lazy var genreLabel: UILabel = {
-        let genreLabel = UILabel()
-        genreLabel.textColor = .white
+    lazy var soundTagLabel: UILabel = {
+        let soundTagLabel = UILabel()
+        soundTagLabel.textColor = .white
         
-        return genreLabel
+        return soundTagLabel
     }()
     
     // MARK: - Initializers
@@ -32,8 +32,8 @@ class GenreCollectionViewCell: UICollectionViewCell {
     }
     
     private func configureUI() {
-        addSubview(genreLabel)
-        genreLabel.snp.makeConstraints {
+        addSubview(soundTagLabel)
+        soundTagLabel.snp.makeConstraints {
             $0.top.leading.trailing.bottom.equalToSuperview()
         }
     }
