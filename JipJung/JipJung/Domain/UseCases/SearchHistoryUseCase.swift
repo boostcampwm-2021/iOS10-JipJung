@@ -10,7 +10,7 @@ import Foundation
 final class SearchHistoryUseCase {
     private let searchHistoryRepository = SearchHistoryRepository()
 
-    func save(searchHistory: [String]) {
+    func save(_ searchHistory: [String]) {
         return searchHistoryRepository.save(searchHistory: searchHistory)
     }
     

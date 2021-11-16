@@ -39,7 +39,7 @@ final class SearchViewModel: SearchViewModelInput, SearchViewModelOutput {
     func saveSearchKeyword(keyword: String) {
         var searchHistory = searchHistoryUseCase.load()
         searchHistory.append(keyword)
-        searchHistoryUseCase.save(searchHistory: searchHistory)
+        searchHistoryUseCase.save(searchHistory)
         
         self.searchHistory.accept(searchHistory)
     }
@@ -53,7 +53,7 @@ final class SearchViewModel: SearchViewModelInput, SearchViewModelOutput {
         guard self.searchHistory.value.count > index else { return }
         var searchHistory = self.searchHistory.value
         searchHistory.remove(at: index)
-        searchHistoryUseCase.save(searchHistory: searchHistory)
+        searchHistoryUseCase.save(searchHistory)
         self.searchHistory.accept(searchHistoryUseCase.load())
     }
     
