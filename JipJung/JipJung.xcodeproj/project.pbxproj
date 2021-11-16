@@ -263,6 +263,13 @@
 			path = LocalFileManagerTests;
 			sourceTree = "<group>";
 		};
+		913C31FA2743993800F82CCF /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
 		91655846273B5C9000C55CDC /* Data */ = {
 			isa = PBXGroup;
 			children = (
@@ -530,6 +537,7 @@
 		DD3902CF272FCA10009ECA82 /* JipJung */ = {
 			isa = PBXGroup;
 			children = (
+				913C31FA2743993800F82CCF /* Resource */,
 				91655849273B5CF900C55CDC /* Dummy */,
 				9198DE93273385D800EBAEC8 /* Localizing */,
 				DD3902FD272FE21D009ECA82 /* Application */,
