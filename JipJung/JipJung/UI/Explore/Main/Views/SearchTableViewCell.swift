@@ -20,10 +20,12 @@ class SearchTableViewCell: UITableViewCell {
     }()
     
     lazy var deleteButton: UIButton = {
-        let cancelButton = UIButton()
-        cancelButton.setImage(UIImage(systemName: "xmark.circle.fill"), for: .normal)
+        let deleteButton = UIButton(type: .custom)
+        deleteButton.tintColor = .darkGray
+        deleteButton.setImage(UIImage(systemName: "xmark"), for: .normal)
+        deleteButton.backgroundColor = .clear
         
-        return cancelButton
+        return deleteButton
     }()
     
     lazy var searchHistoryStackView: UIStackView = {
@@ -34,22 +36,16 @@ class SearchTableViewCell: UITableViewCell {
         return searchHistoryStackView
     }()
     
-    // MARK: - Public Properties
-    
-    var deleteButtonTapHandler: (() -> Void)?
-    
     // MARK: - Initializers
        
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         configureUI()
-        bindUI()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         configureUI()
-        bindUI()
     }
     
     private func configureUI() {
@@ -60,13 +56,5 @@ class SearchTableViewCell: UITableViewCell {
         searchHistoryStackView.snp.makeConstraints {
             $0.leading.top.trailing.bottom.equalToSuperview()
         }
-    }
-    
-    func bindUI() {
-        deleteButton.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
-    }
-    
-    @objc func deleteButtonTapped() {
-        deleteButtonTapHandler?()
     }
 }

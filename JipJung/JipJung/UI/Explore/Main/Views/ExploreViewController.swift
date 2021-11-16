@@ -71,6 +71,11 @@ final class ExploreViewController: UIViewController {
         configureUI()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
     // MARK: - Helpers
     
     private func configureUI() {
@@ -105,11 +110,6 @@ final class ExploreViewController: UIViewController {
             $0.leading.trailing.bottom.equalToSuperview()
         }
     }
-    
-    private func presentSearchViewController() {
-        let searchViewController = SearchViewController()
-        present(searchViewController, animated: true)
-    }
 }
 
 extension ExploreViewController: UISearchBarDelegate {
@@ -119,7 +119,8 @@ extension ExploreViewController: UISearchBarDelegate {
 
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         dismissKeyboard()
-        presentSearchViewController()
+        navigationController?.pushViewController(SearchViewController(viewModel: SearchViewModel(searchHistoryUseCase: SearchHistoryUseCase(), searchMediaUseCase: SearchMediaUseCase())),
+                                                 animated: true)
     }
 }
 

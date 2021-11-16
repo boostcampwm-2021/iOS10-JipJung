@@ -50,10 +50,29 @@ final class SearchViewController: UIViewController {
         return searchHistoryTableView
     }()
     
+    private lazy var soundCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        layout.minimumInteritemSpacing = 10
+        layout.minimumLineSpacing = 10
+
+        let soundContentsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        soundContentsCollectionView.backgroundColor = .black
+        soundContentsCollectionView.showsHorizontalScrollIndicator = false
+        soundContentsCollectionView.delegate = self
+        soundContentsCollectionView.dataSource = self
+        soundContentsCollectionView.register(
+            MusicCollectionViewCell.self,
+            forCellWithReuseIdentifier: UICollectionView.CellIdentifier.music.value)
+        return soundContentsCollectionView
+    }()
+    
     // MARK: - Private Variables
     
     private var disposeBag: DisposeBag = DisposeBag()
-    private var userDefaultStorage: UserDefaultsStorage = UserDefaultsStorage.shared
+    private var cellDisposeBag: DisposeBag = DisposeBag()
+    private var viewModel: SearchViewModel?
     
     // MARK: - Lifecycle Methods
     
@@ -63,6 +82,14 @@ final class SearchViewController: UIViewController {
         view.backgroundColor = .black
         configureUI()
         bindUI()
+        viewModel?.loadSearchHistory()
+    }
+    
+    // MARK: - Initializer
+
+    convenience init(viewModel: SearchViewModel) {
+        self.init(nibName: nil, bundle: nil)
+        self.viewModel = viewModel
     }
     
     // MARK: - Helpers
@@ -75,6 +102,12 @@ final class SearchViewController: UIViewController {
             $0.height.equalTo(50)
         }
         
+        view.addSubview(soundCollectionView)
+        soundCollectionView.snp.makeConstraints {
+            $0.top.equalTo(searchStackView.snp.bottom).offset(20)
+            $0.leading.trailing.bottom.equalToSuperview()
+        }
+        
         view.addSubview(searchHistoryTableView)
         searchHistoryTableView.snp.makeConstraints {
             $0.top.equalTo(searchStackView.snp.bottom).offset(20)
@@ -84,9 +117,22 @@ final class SearchViewController: UIViewController {
     
     private func bindUI() {
         cancelButton.rx.tap
-            .bind {
-                self.dismiss(animated: true, completion: nil)
+            .bind { [weak self] in
+                self?.navigationController?.popViewController(animated: true)
             }
+            .disposed(by: disposeBag)
+        
+        viewModel?.searchHistory
+            .bind(onNext: { [weak self] _ in
+                self?.searchHistoryTableView.reloadData()
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel?.searchResult
+            .bind(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                self.soundCollectionView.reloadData()
+            })
             .disposed(by: disposeBag)
     }
 }
@@ -98,14 +144,9 @@ extension SearchViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let keyword = searchBar.text else { return }
-        var searchHistory: [String] = []
-        if let data: [String] = userDefaultStorage.load(for: UserDefaultsKeys.searchHistory) {
-            searchHistory = data
-        }
-        searchHistory.append(keyword)
-        userDefaultStorage.save(for: UserDefaultsKeys.searchHistory, value: searchHistory)
-        searchHistoryTableView.reloadData()
-        
+        self.searchHistoryTableView.isHidden = true
+        viewModel?.saveSearchKeyword(keyword: keyword)
+        viewModel?.search(keyword: keyword)
         dismissKeyboard()
     }
 }
@@ -126,22 +167,46 @@ extension SearchViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let searchHistory: [String] = userDefaultStorage.load(for: UserDefaultsKeys.searchHistory) else { return 0 }
-        return searchHistory.count
+        return viewModel?.searchHistory.value.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.cell(identifier: UITableView.CellIdentifier.search.value, for: indexPath) as? SearchTableViewCell,
-              var searchHistory: [String] = userDefaultStorage.load(for: UserDefaultsKeys.searchHistory)
+        guard let cell = tableView.cell(identifier: UITableView.CellIdentifier.search.value, for: indexPath) as? SearchTableViewCell
         else { return UITableViewCell() }
         
-        cell.searchHistory.text = searchHistory[indexPath.item]
-        cell.deleteButtonTapHandler = { [weak self] in
-            searchHistory.remove(at: indexPath.item)
-            self?.userDefaultStorage.save(for: UserDefaultsKeys.searchHistory, value: searchHistory)
-            self?.searchHistoryTableView.reloadData()
+        cell.searchHistory.text = viewModel?.searchHistory.value[indexPath.item]
+        
+        if indexPath.item == 0 {
+            cellDisposeBag = DisposeBag()
         }
-        cell.bindUI()
+        
+        cell.deleteButton.rx.tap
+            .bind { [weak self] _ in
+                self?.viewModel?.removeSearchHistory(at: indexPath.item)
+            }
+            .disposed(by: cellDisposeBag)
+        return cell
+    }
+}
+
+extension SearchViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 180, height: 200)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 1
+    }
+}
+
+extension SearchViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return viewModel?.searchResult.value.count ?? 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.cell(identifier: UICollectionView.CellIdentifier.music.value, for: indexPath) as? MusicCollectionViewCell else { return  UICollectionViewCell() }
+        cell.titleView.text = viewModel?.searchResult.value[indexPath.item].name
         return cell
     }
 }
