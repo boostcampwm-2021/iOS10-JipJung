@@ -37,24 +37,23 @@ final class SearchViewModel: SearchViewModelInput, SearchViewModelOutput {
     }
 
     func saveSearchKeyword(keyword: String) {
-        var searchHistory = searchHistoryUseCase.load()
-        searchHistory.append(keyword)
-        searchHistoryUseCase.save(searchHistory)
-        
-        self.searchHistory.accept(searchHistory)
+        var searchHistoryValue = searchHistoryUseCase.load()
+        searchHistoryValue.append(keyword)
+        searchHistoryUseCase.save(searchHistoryValue)
+        searchHistory.accept(searchHistoryValue)
     }
     
     func loadSearchHistory() {
-        let searchHistory = searchHistoryUseCase.load()
-        self.searchHistory.accept(searchHistory)
+        let searchHistoryValue = searchHistoryUseCase.load()
+        searchHistory.accept(searchHistoryValue)
     }
     
     func removeSearchHistory(at index: Int) {
         guard self.searchHistory.value.count > index else { return }
-        var searchHistory = self.searchHistory.value
-        searchHistory.remove(at: index)
-        searchHistoryUseCase.save(searchHistory)
-        self.searchHistory.accept(searchHistoryUseCase.load())
+        var searchHistoryValue = searchHistory.value
+        searchHistoryValue.remove(at: index)
+        searchHistoryUseCase.save(searchHistoryValue)
+        searchHistory.accept(searchHistoryUseCase.load())
     }
     
     func search(keyword: String) {
