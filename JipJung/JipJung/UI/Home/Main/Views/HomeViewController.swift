@@ -45,7 +45,7 @@ class HomeViewController: UIViewController {
     }()
     private lazy var bottomView = UIView()
     
-    private let viewModel = HomeViewModel()
+    private let viewModel: HomeViewModel = HomeViewModel()
     private let disposeBag = DisposeBag()
     
     private var isAttached = false

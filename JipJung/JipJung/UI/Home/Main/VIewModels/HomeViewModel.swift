@@ -10,17 +10,32 @@ import Foundation
 import RxSwift
 import RxRelay
 
-final class HomeViewModel {
+protocol HomeViewModelInput {
+    func viewControllerLoaded()
+    func modeSwitchTouched()
+    func mediaPlayButtonTouched(_ audioFileName: String) -> Single<Bool>
+    func mediaCollectionCellLoaded(_ videoFileName: String) -> Single<URL>
+}
+
+protocol HomeViewModelOutput {
+    var mode: BehaviorRelay<MediaMode> { get }
+    var currentModeList: BehaviorRelay<[Media]> { get }
+    var favoriteSoundList: BehaviorRelay<[Media]> { get }
+    var recentPlayHistory: BehaviorRelay<[Media]> { get }
+}
+
+final class HomeViewModel: HomeViewModelInput, HomeViewModelOutput {
     private let mediaListUseCase = MediaListUseCase()
     private let maximListUseCase = MaximListUseCase()
     private let audioPlayUseCase = AudioPlayUseCase()
     private let videoPlayUseCase = VideoPlayUseCase()
+    
     private let bag = DisposeBag()
+    private let brightMode = BehaviorRelay<[Media]>(value: [])
+    private let darknessMode = BehaviorRelay<[Media]>(value: [])
     
     let mode = BehaviorRelay<MediaMode>(value: .bright)
     let currentModeList = BehaviorRelay<[Media]>(value: [])
-    let brightMode = BehaviorRelay<[Media]>(value: [])
-    let darknessMode = BehaviorRelay<[Media]>(value: [])
     let favoriteSoundList = BehaviorRelay<[Media]>(value: [])
     let recentPlayHistory = BehaviorRelay<[Media]>(value: [])
     
