@@ -113,7 +113,6 @@
 		DF1722B42741013600F06140 /* LocalDBMigrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF1722B32741013600F06140 /* LocalDBMigrator.swift */; };
 		DF1722B72741036C00F06140 /* BundleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF1722B62741036C00F06140 /* BundleManager.swift */; };
 		DF30FEF9273A730F001C720E /* TagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF30FEF8273A730F001C720E /* TagCollectionViewCell.swift */; };
-		DF30FEFB273ADAA9001C720E /* CollectionView+MusicPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF30FEFA273ADAA9001C720E /* CollectionView+MusicPlayerViewController.swift */; };
 		DF30FF05273CBC3B001C720E /* MusicPlayerButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF30FF04273CBC3B001C720E /* MusicPlayerButtons.swift */; };
 		DF6B111127390F1900D9924E /* MediaResourceRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6B111027390F1900D9924E /* MediaResourceRepository.swift */; };
 		DF71D22F2734455600CD980E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DF71D22E2734455600CD980E /* GoogleService-Info.plist */; };
@@ -252,7 +251,6 @@
 		DF1722B32741013600F06140 /* LocalDBMigrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDBMigrator.swift; sourceTree = "<group>"; };
 		DF1722B62741036C00F06140 /* BundleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleManager.swift; sourceTree = "<group>"; };
 		DF30FEF8273A730F001C720E /* TagCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCollectionViewCell.swift; sourceTree = "<group>"; };
-		DF30FEFA273ADAA9001C720E /* CollectionView+MusicPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CollectionView+MusicPlayerViewController.swift"; sourceTree = "<group>"; };
 		DF30FF04273CBC3B001C720E /* MusicPlayerButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayerButtons.swift; sourceTree = "<group>"; };
 		DF6B111027390F1900D9924E /* MediaResourceRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaResourceRepository.swift; sourceTree = "<group>"; };
 		DF71D22E2734455600CD980E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -782,7 +780,6 @@
 				DF30FEF8273A730F001C720E /* TagCollectionViewCell.swift */,
 				DF30FF04273CBC3B001C720E /* MusicPlayerButtons.swift */,
 				DFED21CA2733702800E99641 /* MusicPlayerViewController.swift */,
-				DF30FEFA273ADAA9001C720E /* CollectionView+MusicPlayerViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1118,7 +1115,6 @@
 				DF1722B22740FD2300F06140 /* ApplicationLaunch.swift in Sources */,
 				91CE6F7527391E1C00176AF2 /* HomeViewModel.swift in Sources */,
 				DD4D030227423C54007AA4DD /* CloseButton.swift in Sources */,
-				DF30FEFB273ADAA9001C720E /* CollectionView+MusicPlayerViewController.swift in Sources */,
 				DFED21D92733AE8400E99641 /* MusicPlayerMaximView.swift in Sources */,
 				DF30FEF9273A730F001C720E /* TagCollectionViewCell.swift in Sources */,
 			);
