@@ -16,9 +16,7 @@ class Media: Object, Decodable {
     @Persisted var tag: String
     @Persisted var thumbnailImageFileName: String
     @Persisted var videoFileName: String
-    @Persisted var videoFileSize: Float
     @Persisted var audioFileName: String
-    @Persisted var audioFileSize: Float
     
     private override init() {
         super.init()
@@ -31,9 +29,7 @@ class Media: Object, Decodable {
         tag: String,
         thumbnailImageFileName: String,
         videoFileName: String,
-        videoFileSize: Float,
-        audioFileName: String,
-        audioFileSize: Float
+        audioFileName: String
     ) {
         self.init()
         self.id = id
@@ -42,8 +38,6 @@ class Media: Object, Decodable {
         self.tag = tag
         self.thumbnailImageFileName = thumbnailImageFileName
         self.videoFileName = videoFileName
-        self.videoFileSize = videoFileSize
         self.audioFileName = audioFileName
-        self.audioFileSize = audioFileSize
     }
 }

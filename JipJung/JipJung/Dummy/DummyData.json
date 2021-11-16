@@ -1,155 +1,139 @@
 {
   "Media": [
     {
-      "id": "N000",
+      "id": "000",
       "name": "귀뚜라미",
       "mode": 0,
-      "tag": "자연/야외",
-      "thumbnailImageFileName": "N000.jpg",
-      "videoFileName": "N000.mp4",
-      "videoFileSize": 11.9,
-      "audioFileName": "N000.wav",
-      "audioFileSize": 5.4
+      "tag": "All/Nature/Relax",
+      "thumbnailImageFileName": "000.jpg",
+      "videoFileName": "000.mp4",
+      "audioFileName": "000.wav"
     },
     {
-      "id": "N001",
+      "id": "001",
       "name": "낙엽밟는소리",
       "mode": 0,
-      "tag": "자연/야외/가을",
-      "thumbnailImageFileName": "N001.jpg",
-      "videoFileName": "N001.mp4",
-      "videoFileSize": 10.4,
-      "audioFileName": "N001.wav",
-      "audioFileSize": 4.3
+      "tag": "All/Nature/Relax",
+      "thumbnailImageFileName": "001.jpg",
+      "videoFileName": "001.mp4",
+      "audioFileName": "001.wav"
     },
     {
-      "id": "N002",
+      "id": "002",
       "name": "낙엽에떨어지는가을비소리",
       "mode": 0,
-      "tag": "자연/야외/가을/비",
-      "thumbnailImageFileName": "N002.jpg",
-      "videoFileName": "N002.mp4",
-      "videoFileSize": 14.1,
-      "audioFileName": "N002.wav",
-      "audioFileSize": 4.9
+      "tag": "All/Nature/Relax",
+      "thumbnailImageFileName": "002.jpg",
+      "videoFileName": "002.mp4",
+      "audioFileName": "002.wav"
     },
     {
-      "id": "N003",
+      "id": "003",
       "name": "파도갈매기소리",
       "mode": 0,
-      "tag": "자연/야외/물/새",
-      "thumbnailImageFileName": "파도갈매기소리.jpg",
-      "videoFileName": "파도갈매기소리.mp4",
-      "videoFileSize": 9.2,
-      "audioFileName": "파도갈매기소리_LR.wav",
-      "audioFileSize": 5.1
+      "tag": "All/Nature/Relax",
+      "thumbnailImageFileName": "003.jpg",
+      "videoFileName": "003.mp4",
+      "audioFileName": "003.wav"
     },
     {
-      "id": "N004",
+      "id": "004",
       "name": "시냇물과새소리",
       "mode": 0,
-      "tag": "자연/야외/물/새",
-      "thumbnailImageFileName": "시냇물과새소리.jpg",
-      "videoFileName": "시냇물과새소리.mp4",
-      "videoFileSize": 14.1,
-      "audioFileName": "시냇물과새소리_LR.wav",
-      "audioFileSize": 6.1
+      "tag": "All/Nature/Relax",
+      "thumbnailImageFileName": "004.jpg",
+      "videoFileName": "004.mp4",
+      "audioFileName": "004.wav"
     },
     {
-      "id": "N005",
+      "id": "005",
       "name": "아침숲속새소리",
       "mode": 0,
-      "tag": "자연/야외/숲/새",
-      "thumbnailImageFileName": "아침숲속새소리.jpg",
-      "videoFileName": "아침숲속새소리.mp4",
-      "videoFileSize": 8.7,
-      "audioFileName": "아침숲속새소리_LR.wav",
-      "audioFileSize": 5.8
+      "tag": "All/Nature/Relax",
+      "thumbnailImageFileName": "005.jpg",
+      "videoFileName": "005.mp4",
+      "audioFileName": "005_LR.wav"
     },
     {
-      "id": "N006",
+      "id": "006",
       "name": "작은폭포소리",
       "mode": 0,
-      "tag": "자연/야외/물",
-      "thumbnailImageFileName": "작은폭포소리.jpg",
-      "videoFileName": "작은폭포소리.mp4",
-      "videoFileSize": 13.5,
-      "audioFileName": "작은폭포소리_LR.wav",
-      "audioFileSize": 3.3
+      "tag": "All/Nature/Relax",
+      "thumbnailImageFileName": "006.jpg",
+      "videoFileName": "006.mp4",
+      "audioFileName": "006.wav"
     },
     {
-      "id": "N007",
+      "id": "007",
       "name": "큰폭포소리",
       "mode": 0,
-      "tag": "자연/야외/물",
-      "thumbnailImageFileName": "큰폭포소리.jpg",
-      "videoFileName": "큰폭포소리.mp4",
-      "videoFileSize": 5.2,
-      "audioFileName": "큰폭포소리_LR.wav",
-      "audioFileSize": 3.6
+      "tag": "All/Nature/Relax",
+      "thumbnailImageFileName": "007.jpg",
+      "videoFileName": "007.mp4",
+      "audioFileName": "007.wav"
     }
   ],
   "PlayHistory": [
     {
       "id": 0,
-      "mediaID": "N002",
+      "mediaID": "002",
       "addDate": 0
     },
     {
       "id": 1,
-      "mediaID": "N002",
+      "mediaID": "002",
       "addDate": 0
     },
     {
       "id": 2,
-      "mediaID": "N002",
+      "mediaID": "002",
       "addDate": 0
     },
     {
       "id": 3,
-      "mediaID": "N002",
+      "mediaID": "002",
       "addDate": 0
     },
     {
       "id": 4,
-      "mediaID": "N008",
+      "mediaID": "008",
       "addDate": 0
     }
   ],
   "FavoriteMedia": [
     {
-      "id": "N001",
+      "id": "001",
       "addDate": 0
     },
     {
-      "id": "N002",
+      "id": "002",
       "addDate": 0
     },
     {
-      "id": "N003",
+      "id": "003",
       "addDate": 0
     }
   ],
   "BrightMedia": [
     {
-      "id": "N000"
+      "id": "000"
     },
     {
-      "id": "N001"
+      "id": "001"
     },
     {
-      "id": "N002"
+      "id": "002"
     }
   ],
   "DarknessMedia": [
     {
-      "id": "N003"
+      "id": "003"
     },
     {
-      "id": "N005"
+      "id": "005"
     },
     {
-      "id": "N006"
+      "id": "006"
     }
   ]
 }
