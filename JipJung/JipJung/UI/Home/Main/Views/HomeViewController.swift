@@ -40,8 +40,6 @@ class HomeViewController: UIViewController {
     
     private let viewModel = HomeViewModel()
     
-    private var videoPlayer: AVPlayer?
-    private var audioPlayer: AVAudioPlayer?
     private var isAttached = false
     
     let bag = DisposeBag()
@@ -291,13 +289,17 @@ class HomeViewController: UIViewController {
                 mediaCollectionView.rx.modelSelected(Media.self)
             )
             .bind { [weak self] indexPath, model in
-                guard let result = self?.mediaPlayButtonTouched(audioFileName: model.audioFileName),
-                      let cell = mediaCollectionView.cellForItem(at: indexPath) as? MediaCollectionViewCell
+                guard let self = self,
+                    let cell = mediaCollectionView.cellForItem(at: indexPath) as? MediaCollectionViewCell
                 else {
                     return
                 }
-                
-                result ? cell.playVideo() : cell.pauseVideo()
+                      
+                self.mediaPlayButtonTouched(audioFileName: model.audioFileName)
+                    .subscribe { state in
+                        state ? cell.playVideo() : cell.pauseVideo()
+                    }
+                    .disposed(by: self.bag)
             }
             .disposed(by: bag)
     }
@@ -307,18 +309,6 @@ class HomeViewController: UIViewController {
         else {
             return
         }
-        
-        viewModel.isPlaying.bind(
-            onNext: { [weak self] state in
-                if state {
-                    self?.audioPlayer?.play()
-                    self?.videoPlayer?.play()
-                } else {
-                    self?.audioPlayer?.pause()
-                    self?.videoPlayer?.pause()
-                }
-            }
-        ).disposed(by: bag)
         
         viewModel.currentModeList.bind(
             to: mediaCollectionView.rx.items(cellIdentifier: MediaCollectionViewCell.identifier)
@@ -346,7 +336,7 @@ class HomeViewController: UIViewController {
             .disposed(by: bag)
     }
     
-    private func mediaPlayButtonTouched(audioFileName: String) -> Bool {
+    private func mediaPlayButtonTouched(audioFileName: String) -> Single<Bool> {
         return viewModel.mediaPlayButtonTouched(audioFileName)
     }
     

@@ -23,7 +23,6 @@ final class HomeViewModel {
     let darknessMode = BehaviorRelay<[Media]>(value: [])
     let favoriteSoundList = BehaviorRelay<[Media]>(value: [])
     let recentPlayHistory = BehaviorRelay<[Media]>(value: [])
-    let isPlaying = BehaviorRelay(value: false)
     
     init() {
         Observable
@@ -74,22 +73,8 @@ final class HomeViewModel {
         mode.accept(mode.value == .bright ? .darkness : .bright)
     }
     
-    func mediaPlayButtonTouched(_ audioFileName: String) -> Bool {
-        isPlaying.accept(!isPlaying.value)
-        
-        if isPlaying.value {
-            do {
-                try audioPlayUseCase.ready(audioFileName)
-                audioPlayUseCase.play()
-            } catch {
-                print(#function, error)
-                return false
-            }
-            return true
-        } else {
-            audioPlayUseCase.pause()
-            return false
-        }
+    func mediaPlayButtonTouched(_ audioFileName: String) -> Single<Bool> {
+        return audioPlayUseCase.controlAudioPlay(audioFileName)
     }
     
     func mediaCollectionCellLoaded(_ videoFileName: String) -> Single<URL> {
