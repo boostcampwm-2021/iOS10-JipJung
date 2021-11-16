@@ -124,7 +124,7 @@ final class ExploreViewController: UIViewController {
     }
     
     private func bindUI() {
-        viewModel?.searchResult
+        viewModel?.categoryItems
             .distinctUntilChanged()
             .bind(onNext: { [weak self] _ in
                 guard let self = self else { return }
@@ -181,7 +181,7 @@ extension ExploreViewController: UICollectionViewDataSource {
         if collectionView == soundTagCollectionView {
             return viewModel?.soundTagList.count ?? 0
         } else if collectionView == soundCollectionView {
-            return viewModel?.searchResult.value.count ?? 0
+            return viewModel?.categoryItems.value.count ?? 0
         } else {
             return 0
         }
@@ -194,7 +194,7 @@ extension ExploreViewController: UICollectionViewDataSource {
             return cell
         } else if collectionView == soundCollectionView {
             guard let cell = collectionView.cell(identifier: UICollectionView.CellIdentifier.music.value, for: indexPath) as? MusicCollectionViewCell else { return  UICollectionViewCell() }
-            cell.titleView.text = viewModel?.searchResult.value[indexPath.item].name
+            cell.titleView.text = viewModel?.categoryItems.value[indexPath.item].name
             return cell
         } else {
             return  UICollectionViewCell()
