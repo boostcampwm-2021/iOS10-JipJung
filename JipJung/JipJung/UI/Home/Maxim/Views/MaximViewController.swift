@@ -16,6 +16,8 @@ final class MaximViewController: UIViewController {
         return button
     }()
     
+    private var backgroundView = UIImageView()
+    
     private lazy var calendarButton: UIButton = {
         let button = UIButton()
         button.setBackgroundImage(UIImage(systemName: "calendar"), for: .normal)
@@ -24,12 +26,12 @@ final class MaximViewController: UIViewController {
         return button
     }()
     
-    private lazy var dayLabel: UILabel = {
-        let dayLabel = UILabel()
-        dayLabel.font = .systemFont(ofSize: 70)
-        dayLabel.textColor = .white
-        dayLabel.text = "15"
-        return dayLabel
+    private lazy var dateLabel: UILabel = {
+        let dateLabel = UILabel()
+        dateLabel.font = .systemFont(ofSize: 70)
+        dateLabel.textColor = .white
+        dateLabel.text = "15"
+        return dateLabel
     }()
     
     private lazy var monthYearLabel: UILabel = {
@@ -40,7 +42,7 @@ final class MaximViewController: UIViewController {
         return monthYearLabel
     }()
 
-    private lazy var maximLabel: UILabel = {
+    private lazy var contentLabel: UILabel = {
         let maximLabel = UILabel()
         maximLabel.font = .systemFont(ofSize: 26, weight: .bold)
         maximLabel.textColor = .white
@@ -56,12 +58,17 @@ final class MaximViewController: UIViewController {
         return seperateLine
     }()
     
-    private lazy var speakerNameLabel: UILabel = {
-        let speakerNameLabel = UILabel()
-        speakerNameLabel.font = .italicSystemFont(ofSize: 24)
-        speakerNameLabel.textColor = .systemGray3
-        speakerNameLabel.text = "Schloar, Gu Hongming"
-        return speakerNameLabel
+    private lazy var speakerLabel: UILabel = {
+        let speakerLabel = UILabel()
+        speakerLabel.font = .italicSystemFont(ofSize: 24)
+        speakerLabel.textColor = .systemGray3
+        speakerLabel.text = "Schloar, Gu Hongming"
+        return speakerLabel
+    }()
+    
+    private lazy var viewModel: MaximViewModel = {
+        let viewModel = MaximViewModel()
+        return viewModel
     }()
     
     private var disposeBag = DisposeBag()
@@ -70,11 +77,17 @@ final class MaximViewController: UIViewController {
         super.viewDidLoad()
         configureUI()
         bindUI()
+        bindAction()
     }
     
     private func configureUI() {
-        self.view.backgroundColor = .red
-        
+        view.addSubview(backgroundView)
+        backgroundView.snp.makeConstraints {
+            $0.leading.equalToSuperview()
+            $0.trailing.equalToSuperview()
+            $0.top.equalToSuperview()
+            $0.bottom.equalToSuperview()
+        }
         view.addSubview(closeButton)
         closeButton.snp.makeConstraints { [weak self] in
             guard let self = self else {
@@ -97,8 +110,8 @@ final class MaximViewController: UIViewController {
             $0.height.equalTo(30)
         }
         
-        view.addSubview(speakerNameLabel)
-        speakerNameLabel.snp.makeConstraints { [weak self] in
+        view.addSubview(speakerLabel)
+        speakerLabel.snp.makeConstraints { [weak self] in
             guard let self = self else {
                 return
             }
@@ -109,13 +122,13 @@ final class MaximViewController: UIViewController {
         view.addSubview(seperateLine)
         seperateLine.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(30)
-            $0.bottom.equalTo(speakerNameLabel.snp.top).offset(-20)
+            $0.bottom.equalTo(speakerLabel.snp.top).offset(-20)
             $0.width.equalTo(30)
             $0.height.equalTo(5)
         }
         
-        view.addSubview(maximLabel)
-        maximLabel.snp.makeConstraints {
+        view.addSubview(contentLabel)
+        contentLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(30)
             $0.bottom.equalTo(seperateLine.snp.top).offset(-30)
             $0.trailing.equalToSuperview().offset(-30)
@@ -124,17 +137,44 @@ final class MaximViewController: UIViewController {
         view.addSubview(monthYearLabel)
         monthYearLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(30)
-            $0.bottom.equalTo(maximLabel.snp.top).offset(-30)
+            $0.bottom.equalTo(contentLabel.snp.top).offset(-30)
         }
         
-        view.addSubview(dayLabel)
-        dayLabel.snp.makeConstraints {
+        view.addSubview(dateLabel)
+        dateLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(30)
             $0.bottom.equalTo(monthYearLabel.snp.top)
         }
     }
     
     private func bindUI() {
+        viewModel.date.bind { [weak self] in
+            self?.dateLabel.text = $0
+        }
+        .disposed(by: disposeBag)
+        
+        viewModel.monthYear.bind { [weak self] in
+            self?.monthYearLabel.text = $0
+        }
+        .disposed(by: disposeBag)
+        
+        viewModel.content.bind { [weak self] in
+            self?.contentLabel.text = $0
+        }
+        .disposed(by: disposeBag)
+        
+        viewModel.speaker.bind { [weak self] in
+            self?.speakerLabel.text = $0
+        }
+        .disposed(by: disposeBag)
+        
+        viewModel.imageURL.bind { [weak self] in
+            self?.backgroundView.image = UIImage(contentsOfFile: $0) ?? UIImage(systemName: "xmark")
+        }
+        .disposed(by: disposeBag)
+    }
+    
+    private func bindAction() {
         closeButton.rx.tap.bind { [weak self] in
             self?.dismiss(animated: true)
         }.disposed(by: disposeBag)
