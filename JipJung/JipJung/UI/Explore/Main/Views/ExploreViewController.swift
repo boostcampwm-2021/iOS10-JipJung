@@ -168,9 +168,9 @@ extension ExploreViewController: UICollectionViewDelegate {
             let tag = viewModel?.souundTagList[safe: indexPath.item]?.value ?? ""
             viewModel?.search(tag: tag)
         } else if collectionView == soundCollectionView {
-            
+            navigationController?.pushViewController(MusicPlayerViewController(), animated: true)
         } else {
-           
+           return
         }
     }
 }
