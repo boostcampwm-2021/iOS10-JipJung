@@ -27,8 +27,11 @@ final class HomeViewModel {
     init() {
         Observable
             .combineLatest(mode, brightMode, darknessMode) { ($0, $1, $2) }
-            .subscribe { [weak self] (mode, brightModeList, darknessModeList) in
-                self?.currentModeList.accept(mode == .bright ? brightModeList : darknessModeList)
+            .subscribe { [weak self] mode, brightModeList, darknessModeList in
+                let modeList = mode == .bright ? brightModeList : darknessModeList
+                if let modeListValue = self?.makeInfinityCollectionDataSource(dataSource: modeList) {
+                    self?.currentModeList.accept(modeListValue)
+                }
             }
             .disposed(by: bag)
     }
@@ -79,5 +82,19 @@ final class HomeViewModel {
     
     func mediaCollectionCellLoaded(_ videoFileName: String) -> Single<URL> {
         return videoPlayUseCase.ready(videoFileName)
+    }
+    
+    private func makeInfinityCollectionDataSource(dataSource: [Media]) -> [Media] {
+        guard let first = dataSource.first,
+              let last = dataSource.last,
+              first != last
+        else {
+            return dataSource
+        }
+        
+        var newDataSource = dataSource
+        newDataSource.insert(last, at: 0)
+        newDataSource.append(first)
+        return newDataSource
     }
 }

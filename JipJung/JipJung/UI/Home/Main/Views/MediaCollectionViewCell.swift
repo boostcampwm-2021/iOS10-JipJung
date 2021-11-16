@@ -22,17 +22,15 @@ final class MediaCollectionViewCell: UICollectionViewCell {
             let playerLayer = AVPlayerLayer(player: videoPlayer)
             playerLayer.videoGravity = .resizeAspectFill
             playerLayer.frame = UIScreen.main.bounds
-            layer.insertSublayer(playerLayer, at: 0)
+            layer.sublayers = [playerLayer, playButton.layer]
         }
     }
+    private var videoURL: URL?
     
     override func prepareForReuse() {
         super.prepareForReuse()
         
         playButton.isHidden = false
-        layer.sublayers = [playButton.layer]
-        videoPlayer = nil
-        playerLooper = nil
     }
     
     override init(frame: CGRect) {
@@ -61,6 +59,11 @@ final class MediaCollectionViewCell: UICollectionViewCell {
     }
     
     func setVideo(videoURL: URL) {
+        if videoURL == self.videoURL {
+            return
+        }
+        
+        self.videoURL = videoURL
         let playerItem = AVPlayerItem(url: videoURL)
         videoPlayer = AVQueuePlayer(playerItem: playerItem)
         
@@ -72,7 +75,6 @@ final class MediaCollectionViewCell: UICollectionViewCell {
     
     private func configureUI() {
         addSubview(playButton)
-        layer.addSublayer(playButton.layer)
         playButton.snp.makeConstraints {
             $0.top.equalToSuperview().offset(UIScreen.deviceScreenSize.height * 0.4)
             $0.centerX.equalToSuperview()

@@ -25,6 +25,7 @@ class HomeViewController: UIViewController {
         pageControl.isUserInteractionEnabled = false
         pageControl.pageIndicatorTintColor = .white.withAlphaComponent(0.5)
         pageControl.currentPageIndicatorTintColor = .white
+        pageControl.hidesForSinglePage = true
         return pageControl
     }()
     private let topView = UIView()
@@ -110,6 +111,7 @@ class HomeViewController: UIViewController {
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .paging
+        
         // Reference: https://developer.apple.com/documentation/uikit/nscollectionlayoutsectionvisibleitemsinvalidationhandler
         section.visibleItemsInvalidationHandler = { [weak self] items, offset, environment in
             guard let self = self,
@@ -118,17 +120,52 @@ class HomeViewController: UIViewController {
                 return
             }
             
+            let cellCount = mediaCollectionView.numberOfItems(inSection: 0)
             let pageOffset = offset.x / self.view.frame.width
             let nearestPage = round(pageOffset)
+            let startPage = 0
+            let firstContentsPage = 1
+            let lastContentsPage = cellCount - 2
+            let endPage = cellCount - 1
+            
+            if cellCount == 1 {
+                self.pageControl.currentPage = 0
+            } else {
+                
+                var currentContentsPage = Int(nearestPage)
+                if currentContentsPage == startPage {
+                    currentContentsPage = lastContentsPage
+                } else if currentContentsPage == endPage {
+                    currentContentsPage = firstContentsPage
+                }
+                let visiblePageindex = currentContentsPage - 1
+                /*
+                 nearestPage -> currentContentsPage -> pageControl CurrentPage
+                 0 -> 3 -> 2
+                 1 -> 1 -> 0
+                 2 -> 2 -> 1
+                 3 -> 3 -> 2
+                 4 -> 1 -> 0
+                 */
+                self.pageControl.currentPage = visiblePageindex
+            }
             
             // Reference: iOS05-Escaper의 3주차 데모 발표 QnA
             items.forEach { item in
-                guard let cell = mediaCollectionView.cellForItem(at: item.indexPath) else { return }
+                guard let cell = mediaCollectionView.cellForItem(at: item.indexPath)
+                else { return }
                 
                 if pageOffset == nearestPage {
                     cell.layer.masksToBounds = false
                     cell.layer.cornerRadius = 0
                     cell.transform = CGAffineTransform.identity
+                    
+                    if Int(pageOffset) == startPage {
+                        mediaCollectionView.scrollToItem(at: [0, lastContentsPage], at: .right, animated: false)
+                    } else if Int(pageOffset) == endPage {
+                        mediaCollectionView.scrollToItem(at: [0, firstContentsPage], at: .left, animated: false)
+                    }
+                    
                 } else {
                     let distance = abs(nearestPage - pageOffset)
                     let distanceRatio = min(0.1, distance)
@@ -138,8 +175,6 @@ class HomeViewController: UIViewController {
                     cell.transform = CGAffineTransform(scaleX: 1 - distanceRatio, y: 1 - distanceRatio)
                 }
             }
-            
-            self.pageControl.currentPage = Int(nearestPage)
         }
         let layout = UICollectionViewCompositionalLayout(section: section)
         return layout
@@ -341,8 +376,11 @@ class HomeViewController: UIViewController {
             .map { $0.count }
             .filter { $0 != 0 }
             .bind { [weak self] count in
-                self?.pageControl.currentPage = 0
-                self?.pageControl.numberOfPages = count
+                self?.view.layoutIfNeeded()
+                let contentsPages = count == 1 ? 1 : count - 2
+                self?.pageControl.numberOfPages = contentsPages
+                self?.mediaCollectionView?.scrollToItem(at: [0, count/2], at: .left, animated: false)
+                self?.pageControl.currentPage = contentsPages / 2
             }
             .disposed(by: bag)
     }
