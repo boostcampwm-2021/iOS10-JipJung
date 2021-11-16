@@ -21,6 +21,7 @@ protocol BreathFocusViewModelInput {
 protocol BreathFocusViewModelOutput {
     var clockTime: BehaviorRelay<Int> { get }
     var isFocusRecordSaved: BehaviorRelay<Bool> { get }
+    var timerState: BehaviorRelay<TimerState> { get }
 }
 
 final class BreathFocusViewModel: BreathFocusViewModelInput, BreathFocusViewModelOutput {
