@@ -10,13 +10,14 @@ import Foundation
 import RxSwift
 
 final class MediaResourceRepository {
+    private let bundleManager = BundleManager.shared
     private let localFileManager = LocalFileManager.shared
     private let remoteServiceProvider = RemoteServiceProvider.shared
     
     func getMediaURL(fileName: String, type: MediaType) -> Single<URL> {
         let localFileManager = self.localFileManager
         
-        if let fileURL = BundleManager.shared.findURL(fileNameWithExtension: fileName) {
+        if let fileURL = bundleManager.findURL(fileNameWithExtension: fileName) {
             return Single.just(fileURL)
         }
         
@@ -31,7 +32,7 @@ final class MediaResourceRepository {
     func fetchData(fileName: String, type: MediaType) -> Single<Data> {
         let localFileManager = self.localFileManager
         
-        if let fileURL = BundleManager.shared.findURL(fileNameWithExtension: fileName) {
+        if let fileURL = bundleManager.findURL(fileNameWithExtension: fileName) {
             return Single.just(fileURL)
                 .map { try Data(contentsOf: $0) }
         }
