@@ -15,11 +15,12 @@ protocol ExploreViewModelInput {
 
 protocol ExploreViewModelOutput {
     var searchResult: BehaviorRelay<[Media]> { get }
+    var soundTagList: [SoundTag] { get }
 }
 
 final class ExploreViewModel: ExploreViewModelInput, ExploreViewModelOutput {
     var searchResult: BehaviorRelay<[Media]> = BehaviorRelay<[Media]>(value: [])
-    let soundTagList: [SoundTag] = SoundTag.allCases
+    var soundTagList: [SoundTag] = SoundTag.allCases
     
     private var disposeBag: DisposeBag = DisposeBag()
     
