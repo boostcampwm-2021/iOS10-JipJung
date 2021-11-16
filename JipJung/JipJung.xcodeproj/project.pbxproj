@@ -40,7 +40,7 @@
 		91EA47C6273846A800780C3E /* BlurCircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91EA47C5273846A800780C3E /* BlurCircleButton.swift */; };
 		B4015CD42739151B006BD14A /* RecentMusicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4015CD32739151B006BD14A /* RecentMusicViewController.swift */; };
 		B4015CD627391529006BD14A /* FavoriteMusicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4015CD527391529006BD14A /* FavoriteMusicViewController.swift */; };
-		B4015CD82739270C006BD14A /* GenreCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4015CD72739270C006BD14A /* GenreCollectionViewCell.swift */; };
+		B4015CD82739270C006BD14A /* SoundTagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4015CD72739270C006BD14A /* SoundTagCollectionViewCell.swift */; };
 		B40D1FA9273B5F1900881A49 /* DefaultFocusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40D1FA8273B5F1900881A49 /* DefaultFocusViewController.swift */; };
 		B40D1FAB273B5F2100881A49 /* DefaultFocusViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40D1FAA273B5F2100881A49 /* DefaultFocusViewModel.swift */; };
 		B40D1FAD273B5F2800881A49 /* PomodoroFocusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40D1FAC273B5F2700881A49 /* PomodoroFocusViewController.swift */; };
@@ -60,6 +60,7 @@
 		B4EF13B52742933F0086D8CD /* SearchHistoryUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4EF13B42742933F0086D8CD /* SearchHistoryUseCase.swift */; };
 		B4EF13B72742935B0086D8CD /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4EF13B62742935B0086D8CD /* SearchViewModel.swift */; };
 		B4EF13B927429A0F0086D8CD /* SearchMediaUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4EF13B827429A0F0086D8CD /* SearchMediaUseCase.swift */; };
+		B4EF13BB274370060086D8CD /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4EF13BA274370060086D8CD /* String+Extension.swift */; };
 		B4F36B5127336EE20073609C /* UserDefaultsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F36B5027336EE20073609C /* UserDefaultsStorage.swift */; };
 		B4F36B5927338E9B0073609C /* UserDefaultsStorageTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F36B5827338E9B0073609C /* UserDefaultsStorageTest.swift */; };
 		B4F36B662733B8770073609C /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F36B652733B8770073609C /* SearchViewController.swift */; };
@@ -157,7 +158,7 @@
 		91EA47C5273846A800780C3E /* BlurCircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurCircleButton.swift; sourceTree = "<group>"; };
 		B4015CD32739151B006BD14A /* RecentMusicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentMusicViewController.swift; sourceTree = "<group>"; };
 		B4015CD527391529006BD14A /* FavoriteMusicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteMusicViewController.swift; sourceTree = "<group>"; };
-		B4015CD72739270C006BD14A /* GenreCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreCollectionViewCell.swift; sourceTree = "<group>"; };
+		B4015CD72739270C006BD14A /* SoundTagCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundTagCollectionViewCell.swift; sourceTree = "<group>"; };
 		B40D1FA8273B5F1900881A49 /* DefaultFocusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultFocusViewController.swift; sourceTree = "<group>"; };
 		B40D1FAA273B5F2100881A49 /* DefaultFocusViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultFocusViewModel.swift; sourceTree = "<group>"; };
 		B40D1FAC273B5F2700881A49 /* PomodoroFocusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PomodoroFocusViewController.swift; sourceTree = "<group>"; };
@@ -177,6 +178,7 @@
 		B4EF13B42742933F0086D8CD /* SearchHistoryUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHistoryUseCase.swift; sourceTree = "<group>"; };
 		B4EF13B62742935B0086D8CD /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		B4EF13B827429A0F0086D8CD /* SearchMediaUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMediaUseCase.swift; sourceTree = "<group>"; };
+		B4EF13BA274370060086D8CD /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		B4F36B5027336EE20073609C /* UserDefaultsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsStorage.swift; sourceTree = "<group>"; };
 		B4F36B5627338E9B0073609C /* UserDefaultsStorageTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UserDefaultsStorageTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4F36B5827338E9B0073609C /* UserDefaultsStorageTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsStorageTest.swift; sourceTree = "<group>"; };
@@ -328,6 +330,7 @@
 				B42226CD2741144200F8CA3D /* UITableView+Extension.swift */,
 				B42226CB2741134100F8CA3D /* UICollectionView+Extension.swift */,
 				DD4D030427425610007AA4DD /* UILabel+Extension.swift */,
+				B4EF13BA274370060086D8CD /* String+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -370,7 +373,7 @@
 				DDB5CEA127328EC300E8F9EB /* ExploreViewController.swift */,
 				B4F36B652733B8770073609C /* SearchViewController.swift */,
 				B4F36B672733D4200073609C /* SearchTableViewCell.swift */,
-				B4015CD72739270C006BD14A /* GenreCollectionViewCell.swift */,
+				B4015CD72739270C006BD14A /* SoundTagCollectionViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -946,6 +949,7 @@
 				DF08B1DD2737F5010066518B /* RemoteServiceProvider.swift in Sources */,
 				B4F36B682733D4210073609C /* SearchTableViewCell.swift in Sources */,
 				B4EF13B927429A0F0086D8CD /* SearchMediaUseCase.swift in Sources */,
+				B4EF13BB274370060086D8CD /* String+Extension.swift in Sources */,
 				B40D1FB9273B674F00881A49 /* InfinityFocusViewController.swift in Sources */,
 				DDB92B9D2737BD5E00EE26F0 /* UIView+Extension.swift in Sources */,
 				B40D1FA9273B5F1900881A49 /* DefaultFocusViewController.swift in Sources */,
@@ -1029,7 +1033,7 @@
 				91E4178927312FEB001BA0A6 /* LocalFileManager.swift in Sources */,
 				91CE6F7327390AD200176AF2 /* FocusButton.swift in Sources */,
 				B4153941273B93B0004EF80F /* SaveFocusTimeUseCase.swift in Sources */,
-				B4015CD82739270C006BD14A /* GenreCollectionViewCell.swift in Sources */,
+				B4015CD82739270C006BD14A /* SoundTagCollectionViewCell.swift in Sources */,
 				9198DE952733863500EBAEC8 /* Common.swift in Sources */,
 				DF1722B22740FD2300F06140 /* ApplicationLaunch.swift in Sources */,
 				91CE6F7527391E1C00176AF2 /* HomeViewModel.swift in Sources */,

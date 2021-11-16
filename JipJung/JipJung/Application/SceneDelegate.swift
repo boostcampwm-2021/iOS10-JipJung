@@ -60,7 +60,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             tag: 1
         )
         
-        let exploreViewController = ExploreViewController()
+        let exploreViewController = ExploreViewController(viewModel: ExploreViewModel(searchMediaUseCase: SearchMediaUseCase()))
         exploreViewController.tabBarItem = tabBarItem
         let exploreNavigationViewController = UINavigationController(rootViewController: exploreViewController)
         
