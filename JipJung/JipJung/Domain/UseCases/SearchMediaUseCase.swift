@@ -37,8 +37,7 @@ final class SearchMediaUseCase {
             guard let self = self else { return }
             var searchResult: [Media] = []
             $0.forEach { media in
-                let tagInfo = media.tag.components(separatedBy: "/")
-                if tagInfo.contains(tag) {
+                if media.tag.contains(tag) {
                     searchResult.append(media)
                 }
             }
