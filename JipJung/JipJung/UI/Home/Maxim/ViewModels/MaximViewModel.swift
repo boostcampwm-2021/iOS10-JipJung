@@ -26,6 +26,10 @@ final class MaximViewModel: MaximViewModelInput, MaximViewModelOutput {
     let content: BehaviorRelay<String> = BehaviorRelay<String>(value: "")
     let speaker: BehaviorRelay<String> = BehaviorRelay<String>(value: "")
     let imageURL: BehaviorRelay<String> = BehaviorRelay<String>(value: "")
+    
+    init() {
+//        let maximUseCase = MaximListUseCase
+    }
 
     func fetchMaxim() {
     }

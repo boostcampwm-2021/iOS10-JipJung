@@ -26,44 +26,28 @@ final class MaximViewController: UIViewController {
         return button
     }()
     
-    private lazy var dateLabel: UILabel = {
-        let dateLabel = UILabel()
-        dateLabel.font = .systemFont(ofSize: 70)
-        dateLabel.textColor = .white
-        dateLabel.text = "15"
-        return dateLabel
-    }()
-    
-    private lazy var monthYearLabel: UILabel = {
-        let monthYearLabel = UILabel()
-        monthYearLabel.font = .systemFont(ofSize: 20)
-        monthYearLabel.textColor = .white
-        monthYearLabel.text = "NOV 2021"
-        return monthYearLabel
-    }()
-
-    private lazy var contentLabel: UILabel = {
-        let maximLabel = UILabel()
-        maximLabel.font = .systemFont(ofSize: 26, weight: .bold)
-        maximLabel.textColor = .white
-        maximLabel.text = "In fact, in order to understand the real Chinaman, and the Chinese civilisation, a man must be depp, broad and simple."
-        maximLabel.numberOfLines = 0
-        maximLabel.setLineSpacing(lineSpacing: 4)
-        return maximLabel
-    }()
-    
-    private lazy var seperateLine: UIView = {
-        let seperateLine = UIView(frame: CGRect(x: 0, y: 0, width: 30, height: 5))
-        seperateLine.backgroundColor = .systemGray3
-        return seperateLine
-    }()
-    
-    private lazy var speakerLabel: UILabel = {
-        let speakerLabel = UILabel()
-        speakerLabel.font = .italicSystemFont(ofSize: 24)
-        speakerLabel.textColor = .systemGray3
-        speakerLabel.text = "Schloar, Gu Hongming"
-        return speakerLabel
+    private lazy var maximCollectionView: UICollectionView = {
+        let collectionViewLayout = UICollectionViewFlowLayout()
+        collectionViewLayout.itemSize = UIScreen.main.bounds.size
+        collectionViewLayout.scrollDirection = .horizontal
+        collectionViewLayout.minimumLineSpacing = 5
+        let screenBounds = UIScreen.main.bounds
+        let maximCollectionView = UICollectionView(frame: screenBounds, collectionViewLayout: collectionViewLayout)
+        maximCollectionView.decelerationRate = .fast
+        maximCollectionView.isPagingEnabled = false
+        maximCollectionView.showsHorizontalScrollIndicator = false
+        maximCollectionView.delegate = self
+        maximCollectionView.dataSource = self
+        maximCollectionView.register(
+            MediaCollectionViewCell.self,
+            forCellWithReuseIdentifier: MediaCollectionViewCell.identifier
+        )
+        maximCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        maximCollectionView.register(
+            MaximCollectionViewCell.self,
+            forCellWithReuseIdentifier: MaximCollectionViewCell.identifier)
+        maximCollectionView.transform = CGAffineTransform.init(rotationAngle: (-(CGFloat)(Double.pi)))
+        return maximCollectionView
     }()
     
     private lazy var viewModel: MaximViewModel = {
@@ -76,18 +60,13 @@ final class MaximViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
-        bindUI()
         bindAction()
     }
     
     private func configureUI() {
-        view.addSubview(backgroundView)
-        backgroundView.snp.makeConstraints {
-            $0.leading.equalToSuperview()
-            $0.trailing.equalToSuperview()
-            $0.top.equalToSuperview()
-            $0.bottom.equalToSuperview()
-        }
+        self.view.backgroundColor = .red
+        view.addSubview(maximCollectionView)
+        
         view.addSubview(closeButton)
         closeButton.snp.makeConstraints { [weak self] in
             guard let self = self else {
@@ -109,67 +88,35 @@ final class MaximViewController: UIViewController {
             $0.centerX.equalToSuperview()
             $0.height.equalTo(30)
         }
-        
-        view.addSubview(speakerLabel)
-        speakerLabel.snp.makeConstraints { [weak self] in
-            guard let self = self else {
-                return
-            }
-            $0.leading.equalToSuperview().offset(30)
-            $0.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(-20)
-        }
-        
-        view.addSubview(seperateLine)
-        seperateLine.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(30)
-            $0.bottom.equalTo(speakerLabel.snp.top).offset(-20)
-            $0.width.equalTo(30)
-            $0.height.equalTo(5)
-        }
-        
-        view.addSubview(contentLabel)
-        contentLabel.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(30)
-            $0.bottom.equalTo(seperateLine.snp.top).offset(-30)
-            $0.trailing.equalToSuperview().offset(-30)
-        }
-        
-        view.addSubview(monthYearLabel)
-        monthYearLabel.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(30)
-            $0.bottom.equalTo(contentLabel.snp.top).offset(-30)
-        }
-        
-        view.addSubview(dateLabel)
-        dateLabel.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(30)
-            $0.bottom.equalTo(monthYearLabel.snp.top)
-        }
     }
     
-    private func bindUI() {
+    private func bind() {
+        Observable.zip(viewModel.date, viewModel.monthYear, viewModel.content, viewModel.speaker)
+    }
+    
+    private func bind(on cell: MaximCollectionViewCell) {
         viewModel.date.bind { [weak self] in
-            self?.dateLabel.text = $0
+            cell.dateLabel.text = $0
         }
         .disposed(by: disposeBag)
         
         viewModel.monthYear.bind { [weak self] in
-            self?.monthYearLabel.text = $0
+            cell.monthYearLabel.text = $0
         }
         .disposed(by: disposeBag)
         
         viewModel.content.bind { [weak self] in
-            self?.contentLabel.text = $0
+            cell.contentLabel.text = $0
         }
         .disposed(by: disposeBag)
         
         viewModel.speaker.bind { [weak self] in
-            self?.speakerLabel.text = $0
+            cell.speakerLabel.text = $0
         }
         .disposed(by: disposeBag)
         
         viewModel.imageURL.bind { [weak self] in
-            self?.backgroundView.image = UIImage(contentsOfFile: $0) ?? UIImage(systemName: "xmark")
+            cell.backgroundView = UIImageView(image: UIImage(contentsOfFile: $0) ?? UIImage(systemName: "xmark"))
         }
         .disposed(by: disposeBag)
     }
@@ -178,5 +125,41 @@ final class MaximViewController: UIViewController {
         closeButton.rx.tap.bind { [weak self] in
             self?.dismiss(animated: true)
         }.disposed(by: disposeBag)
+    }
+}
+
+// MARK: - CollectionViewDelegate & DataSource
+extension MaximViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 10
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MaximCollectionViewCell.identifier, for: indexPath) as? MaximCollectionViewCell else {
+            return UICollectionViewCell()
+        }
+        bind(on: cell)
+        cell.backgroundColor = .red
+        cell.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
+        return cell
+    }
+}
+
+// MARK: 출처 - https://eunjin3786.tistory.com/203
+extension MaximViewController: UIScrollViewDelegate {
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        guard let layout = maximCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
+        
+        let cellWidthIncludingSpacing = layout.itemSize.width + layout.minimumLineSpacing
+        let estimatedIndex = scrollView.contentOffset.x / cellWidthIncludingSpacing
+        let index: Int
+        if velocity.x > 0 {
+            index = Int(ceil(estimatedIndex))
+        } else if velocity.x < 0 {
+            index = Int(floor(estimatedIndex))
+        } else {
+            index = Int(round(estimatedIndex))
+        }
+        targetContentOffset.pointee = CGPoint(x: CGFloat(index) * cellWidthIncludingSpacing, y: 0)
     }
 }
