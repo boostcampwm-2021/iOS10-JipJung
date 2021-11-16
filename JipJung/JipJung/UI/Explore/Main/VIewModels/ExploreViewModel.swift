@@ -19,7 +19,7 @@ protocol ExploreViewModelOutput {
 
 final class ExploreViewModel: ExploreViewModelInput, ExploreViewModelOutput {
     var searchResult: BehaviorRelay<[Media]> = BehaviorRelay<[Media]>(value: [])
-    let souundTagList: [SoundTag] = [SoundTag.all, SoundTag.nature, SoundTag.urban, SoundTag.relax, SoundTag.focus, SoundTag.focus, SoundTag.cafe, SoundTag.cafe, SoundTag.lounge, SoundTag.club]
+    let soundTagList: [SoundTag] = SoundTag.allCases
     
     private var disposeBag: DisposeBag = DisposeBag()
     

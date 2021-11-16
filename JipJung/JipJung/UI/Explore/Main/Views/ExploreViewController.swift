@@ -148,7 +148,7 @@ extension ExploreViewController: UISearchBarDelegate {
 extension ExploreViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == soundTagCollectionView {
-            let count = viewModel?.souundTagList[safe: indexPath.item]?.value.count ?? 0
+            let count = viewModel?.soundTagList[safe: indexPath.item]?.value.count ?? 0
             return CGSize(width: count * 10, height: 30)
         } else if collectionView == soundCollectionView {
             return CGSize(width: 180, height: 200)
@@ -165,7 +165,7 @@ extension ExploreViewController: UICollectionViewDelegateFlowLayout {
 extension ExploreViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == soundTagCollectionView {
-            let tag = viewModel?.souundTagList[safe: indexPath.item]?.value ?? ""
+            let tag = viewModel?.soundTagList[safe: indexPath.item]?.value ?? ""
             viewModel?.search(tag: tag)
         } else if collectionView == soundCollectionView {
             navigationController?.pushViewController(MusicPlayerViewController(), animated: true)
@@ -178,7 +178,7 @@ extension ExploreViewController: UICollectionViewDelegate {
 extension ExploreViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == soundTagCollectionView {
-            return viewModel?.souundTagList.count ?? 0
+            return viewModel?.soundTagList.count ?? 0
         } else if collectionView == soundCollectionView {
             return viewModel?.searchResult.value.count ?? 0
         } else {
@@ -189,7 +189,7 @@ extension ExploreViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == soundTagCollectionView {
             guard let cell = collectionView.cell(identifier: UICollectionView.CellIdentifier.soundTag.value, for: indexPath) as? SoundTagCollectionViewCell else { return  UICollectionViewCell() }
-            cell.soundTagLabel.text = viewModel?.souundTagList[safe: indexPath.item]?.value
+            cell.soundTagLabel.text = viewModel?.soundTagList[safe: indexPath.item]?.value
             return cell
         } else if collectionView == soundCollectionView {
             guard let cell = collectionView.cell(identifier: UICollectionView.CellIdentifier.music.value, for: indexPath) as? MusicCollectionViewCell else { return  UICollectionViewCell() }

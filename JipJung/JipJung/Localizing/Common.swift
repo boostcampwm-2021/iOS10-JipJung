@@ -27,7 +27,7 @@ enum UserDefaultsKeys {
     static let wasLaunchedBefore = "WasLaunchedBefore"
 }
 
-enum SoundTag {
+enum SoundTag: CaseIterable {
     case all
     case nature
     case urban
