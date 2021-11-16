@@ -73,7 +73,7 @@ final class ExploreViewController: UIViewController {
         
         configureUI()
         bindUI()
-        viewModel?.search(tag: SoundTag.all.value)
+        viewModel?.categorize(by: SoundTag.all.value)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -167,7 +167,7 @@ extension ExploreViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == soundTagCollectionView {
             let tag = viewModel?.soundTagList[safe: indexPath.item]?.value ?? ""
-            viewModel?.search(tag: tag)
+            viewModel?.categorize(by: tag)
         } else if collectionView == soundCollectionView {
             navigationController?.pushViewController(MusicPlayerViewController(), animated: true)
         } else {

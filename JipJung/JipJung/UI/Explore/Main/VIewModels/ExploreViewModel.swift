@@ -10,7 +10,7 @@ import RxSwift
 import RxRelay
 
 protocol ExploreViewModelInput {
-    func search(tag: String)
+    func categorize(by tag: String)
 }
 
 protocol ExploreViewModelOutput {
@@ -30,7 +30,7 @@ final class ExploreViewModel: ExploreViewModelInput, ExploreViewModelOutput {
         self.searchMediaUseCase = searchMediaUseCase
     }
     
-    func search(tag: String) {
+    func categorize(by tag: String) {
         guard tag.isNotEmpty else { return }
         searchMediaUseCase.searchResult
             .bind { [weak self] in
