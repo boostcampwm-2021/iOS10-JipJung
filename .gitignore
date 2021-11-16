@@ -142,3 +142,9 @@ iOSInjectionProject/
 
 ## Firebase
 GoogleService-Info.plist
+
+## Media Resource
+**/Resource/*
+
+## gitkeep
+!.gitkeep
