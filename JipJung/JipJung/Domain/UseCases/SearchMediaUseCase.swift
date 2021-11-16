@@ -32,6 +32,23 @@ final class SearchMediaUseCase {
         fetchAllMediaList()
     }
     
+    func search(tag: String) {
+        allMediaList.bind { [weak self] in
+            guard let self = self else { return }
+            var searchResult: [Media] = []
+            $0.forEach { media in
+                let tagInfo = media.tag.components(separatedBy: "/")
+                if tagInfo.contains(tag) {
+                    searchResult.append(media)
+                }
+            }
+            self.searchResult.accept(searchResult)
+        }
+        .disposed(by: disposeBag)
+        
+        fetchAllMediaList()
+    }
+    
     private func fetchAllMediaList() {
         mediaListRepository.fetchAllMediaList()
             .subscribe { [weak self] in
