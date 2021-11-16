@@ -10,15 +10,15 @@ import UIKit
 extension UICollectionView {
     enum CellIdentifier {
         case music
-        case genre
+        case soundTag
         case tag
         
         var value: String {
             switch self {
             case .music:
                 return String(describing: MusicCollectionViewCell.self)
-            case .genre:
-                return String(describing: GenreCollectionViewCell.self)
+            case .soundTag:
+                return String(describing: SoundTagCollectionViewCell.self)
             case .tag:
                 return String(describing: TagCollectionViewCell.self)
             }
