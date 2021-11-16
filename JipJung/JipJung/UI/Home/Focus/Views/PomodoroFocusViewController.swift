@@ -109,9 +109,7 @@ final class PomodoroFocusViewController: FocusViewController {
     
     // MARK: - Private Variables
     
-    private var viewModel: PomodoroFocusViewModel?
-    private var disposeBag: DisposeBag = DisposeBag()
-    
+    var viewModel: PomodoroFocusViewModel?
     // MARK: - Lifecycle Methods
     
     override func viewDidLoad() {

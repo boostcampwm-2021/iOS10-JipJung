@@ -116,8 +116,6 @@ final class DefaultFocusViewController: FocusViewController {
     // MARK: - Private Variables
     
     private var viewModel: DefaultFocusViewModel?
-    private var disposeBag: DisposeBag = DisposeBag()
-    
     // MARK: - Initializer
 
     convenience init(viewModel: DefaultFocusViewModel) {

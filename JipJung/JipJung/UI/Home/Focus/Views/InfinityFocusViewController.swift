@@ -94,8 +94,6 @@ final class InfinityFocusViewController: FocusViewController {
     // MARK: - Private Variables
     
     private var viewModel: InfinityFocusViewModel?
-    private var disposeBag: DisposeBag = DisposeBag()
-    
     // MARK: - Lifecycle Methods
     
     override func viewDidLoad() {

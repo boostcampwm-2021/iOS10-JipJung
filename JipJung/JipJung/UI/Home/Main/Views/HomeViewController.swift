@@ -155,7 +155,13 @@ class HomeViewController: UIViewController {
             $0.height.equalTo(30)
         }
     }
-    
+    private lazy var maximButton: UIButton = {
+        let maximButton = UIButton()
+        maximButton.setTitle("명언", for: .normal)
+        maximButton.titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
+        maximButton.backgroundColor = .red
+        return maximButton
+    }()
     private func configureTopView() {
         mainScrollContentsView.addSubview(topView)
         topView.snp.makeConstraints {
@@ -246,16 +252,28 @@ class HomeViewController: UIViewController {
             focusView.set(mode: focusMode)
             focusView.buttonClickListener = { [weak self] in
                 let focusViewController = focusMode.getFocusViewController()
-                focusViewController.delegate = self
                 focusViewController.modalPresentationStyle = .custom
                 focusViewController.transitioningDelegate = self
-                self?.present(focusViewController, animated: true, completion: nil)
+                self?.present(focusViewController, animated: true)
             }
             focusButtonStackView.addArrangedSubview(focusView)
             focusView.snp.makeConstraints {
                 $0.width.equalTo(HomeMainViewSize.focusButtonSize.width)
                 $0.height.equalTo(HomeMainViewSize.focusButtonSize.height)
             }
+        }
+        
+        bottomView.addSubview(maximButton)
+        maximButton.snp.makeConstraints {
+            $0.width.equalTo(focusButtonStackView.snp.width)
+            $0.top.equalTo(focusButtonStackView.snp.bottom).offset(16)
+            $0.leading.equalTo(focusButtonStackView.snp.leading)
+            $0.height.equalTo(50)
+        }
+        maximButton.rx.tap.bind {
+            let maximViewController = MaximViewController()
+            maximViewController.modalPresentationStyle = .fullScreen
+            self.present(maximViewController, animated: true)
         }
     }
     
@@ -392,12 +410,6 @@ extension HomeViewController: UIGestureRecognizerDelegate {
         shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer
     ) -> Bool {
         return true
-    }
-}
-
-extension HomeViewController: FocusViewControllerDelegate {
-    func closeButtonDidClicked(_ sender: UIViewController) {
-        sender.dismiss(animated: true, completion: nil)
     }
 }
 
