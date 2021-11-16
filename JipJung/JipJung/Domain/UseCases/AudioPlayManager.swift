@@ -15,50 +15,36 @@ class AudioPlayManager {
     private init() {}
     
     private let mediaResourceRepository = MediaResourceRepository()
-    private let bag = DisposeBag()
+    private let disposeBag = DisposeBag()
     
     private var audioPlayer: AVAudioPlayer?
     
-    private func ready(_ audioFileName: String) -> Single<AVAudioPlayer?> {
-        if let currentURL = audioPlayer?.url?.lastPathComponent,
-           currentURL == audioFileName {
-            return Single.just(nil)
-        }
-        
-        return mediaResourceRepository.getMediaURL(fileName: audioFileName, type: .audio)
-            .map {
-                guard let audioPlayer = try? AVAudioPlayer(contentsOf: $0) else {
-                    throw AudioError.badURL
-                }
-                return audioPlayer
-            }
-    }
-    
-    func playPause(_ audioFileName: String) -> Single<Bool> {
-        if let currentURL = audioPlayer?.url?.lastPathComponent,
-              currentURL == audioFileName {
+    func controlAudioPlay(_ audioFileName: String) -> Single<Bool> {
+        if audioFileName == audioPlayer?.url?.lastPathComponent {
             audioPlayer?.pause()
             audioPlayer = nil
             return Single.just(false)
         }
         
-        return mediaResourceRepository.getMediaURL(fileName: audioFileName, type: .audio)
-            .map {
-                guard let audioPlayer = try? AVAudioPlayer(contentsOf: $0) else {
-                    throw AudioError.badURL
+        return Single<Bool>.create { [weak self] single in
+            guard let disposeBag = self?.disposeBag else {
+                single(.failure(AudioError.initFailed))
+                return Disposables.create()
+            }
+            
+            self?.mediaResourceRepository.getMediaURL(fileName: audioFileName, type: .audio)
+                .subscribe { url in
+                    self?.audioPlayer = try? AVAudioPlayer(contentsOf: url)
+                    self?.audioPlayer?.numberOfLoops = -1
+                    self?.audioPlayer?.prepareToPlay()
+                    if let result = self?.audioPlayer?.play() {
+                        single(.success(result))
+                    }
+                } onFailure: { error in
+                    single(.failure(error))
                 }
-                return audioPlayer
-            }
-            .map {[weak self] in
-                self?.audioPlayer = $0
-            }
-            .map { [weak self] in
-                guard let audioPlayer = self?.audioPlayer else {
-                    throw AudioError.initFailed
-                }
-                audioPlayer.numberOfLoops = -1
-                audioPlayer.prepareToPlay()
-                return audioPlayer.play()
-            }
+                .disposed(by: disposeBag)
+            return Disposables.create()
+        }
     }
 }

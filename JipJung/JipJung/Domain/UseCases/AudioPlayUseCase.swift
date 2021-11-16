@@ -14,7 +14,7 @@ final class AudioPlayUseCase {
     
     private let audioPlayManager = AudioPlayManager.shared
     
-    func playPause(_ audioFileName: String) -> Single<Bool> {
-        return audioPlayManager.playPause(audioFileName)
+    func controlAudioPlay(_ audioFileName: String) -> Single<Bool> {
+        return audioPlayManager.controlAudioPlay(audioFileName)
     }
 }

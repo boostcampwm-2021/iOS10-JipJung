@@ -74,7 +74,7 @@ final class HomeViewModel {
     }
     
     func mediaPlayButtonTouched(_ audioFileName: String) -> Single<Bool> {
-        return audioPlayUseCase.playPause(audioFileName)
+        return audioPlayUseCase.controlAudioPlay(audioFileName)
     }
     
     func mediaCollectionCellLoaded(_ videoFileName: String) -> Single<URL> {
