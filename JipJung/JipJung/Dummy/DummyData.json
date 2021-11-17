@@ -12,7 +12,7 @@
     },
     {
       "id": "001",
-      "name": "낙엽밟는소리",
+      "name": "낙엽",
       "explanation": "단풍 낙엽",
       "mode": 0,
       "tag": "All/Nature/Relax/Urban",
@@ -22,7 +22,7 @@
     },
     {
       "id": "002",
-      "name": "낙엽에떨어지는가을비소리",
+      "name": "가을비",
       "explanation": "잔잔한 가을비",
       "mode": 0,
       "tag": "All/Nature/Relax/Focus",
@@ -32,8 +32,8 @@
     },
     {
       "id": "003",
-      "name": "파도갈매기소리",
-      "explanation": "파도 위 갈매기",
+      "name": "갈매기",
+      "explanation": "바다 위 갈매기",
       "mode": 0,
       "tag": "All/Nature/Relax",
       "thumbnailImageFileName": "003.jpg",
@@ -42,7 +42,7 @@
     },
     {
       "id": "004",
-      "name": "시냇물과새소리",
+      "name": "시냇물과 새",
       "explanation": "맑은 시냇물과 새",
       "mode": 0,
       "tag": "All/Nature/Relax/Focus",
@@ -52,7 +52,7 @@
     },
     {
       "id": "005",
-      "name": "아침숲속새소리",
+      "name": "아침 숲속 새",
       "explanation": "이른 아침 숲속 새",
       "mode": 0,
       "tag": "All/Nature/Relax",
@@ -62,7 +62,7 @@
     },
     {
       "id": "006",
-      "name": "작은폭포소리",
+      "name": "작은폭포",
       "explanation": "작고 조용한 폭포",
       "mode": 0,
       "tag": "All/Nature/Relax/Focus",
@@ -72,7 +72,7 @@
     },
     {
       "id": "007",
-      "name": "큰폭포소리",
+      "name": "큰폭포",
       "explanation": "큰 폭포",
       "mode": 0,
       "tag": "All/Nature/Relax",
