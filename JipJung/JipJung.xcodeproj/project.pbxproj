@@ -95,6 +95,7 @@
 		DD4D030227423C54007AA4DD /* CloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4D030127423C54007AA4DD /* CloseButton.swift */; };
 		DD4D030527425611007AA4DD /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4D030427425610007AA4DD /* UILabel+Extension.swift */; };
 		DD4D03072743BBB9007AA4DD /* MaximCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4D03062743BBB9007AA4DD /* MaximCollectionViewCell.swift */; };
+		DD4D030927449AAC007AA4DD /* MaximPresenterObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4D030827449AAC007AA4DD /* MaximPresenterObject.swift */; };
 		DD82808C273CAE5F00BB2A60 /* FocusViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD82808B273CAE5F00BB2A60 /* FocusViewControllerFactory.swift */; };
 		DD82808E273CF07800BB2A60 /* CycleAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD82808D273CF07800BB2A60 /* CycleAnimation.swift */; };
 		DD828092273D113200BB2A60 /* NetworkEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD828091273D113200BB2A60 /* NetworkEnums.swift */; };
@@ -238,6 +239,7 @@
 		DD4D030127423C54007AA4DD /* CloseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseButton.swift; sourceTree = "<group>"; };
 		DD4D030427425610007AA4DD /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
 		DD4D03062743BBB9007AA4DD /* MaximCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaximCollectionViewCell.swift; sourceTree = "<group>"; };
+		DD4D030827449AAC007AA4DD /* MaximPresenterObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaximPresenterObject.swift; sourceTree = "<group>"; };
 		DD82808B273CAE5F00BB2A60 /* FocusViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusViewControllerFactory.swift; sourceTree = "<group>"; };
 		DD82808D273CF07800BB2A60 /* CycleAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CycleAnimation.swift; sourceTree = "<group>"; };
 		DD828091273D113200BB2A60 /* NetworkEnums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkEnums.swift; sourceTree = "<group>"; };
@@ -491,6 +493,7 @@
 			isa = PBXGroup;
 			children = (
 				9172BBFD274226B1000E1060 /* MaximViewModel.swift */,
+				DD4D030827449AAC007AA4DD /* MaximPresenterObject.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1048,6 +1051,7 @@
 				DDB5CEB32733752D00E8F9EB /* FavoriteMedia.swift in Sources */,
 				DDB92BB0273A263100EE26F0 /* MusicCollectionViewCell.swift in Sources */,
 				DDB5CEB32733752D00E8F9EB /* FavoriteMedia.swift in Sources */,
+				DD4D030927449AAC007AA4DD /* MaximPresenterObject.swift in Sources */,
 				DD4D03072743BBB9007AA4DD /* MaximCollectionViewCell.swift in Sources */,
 				DDB5CEB32733752D00E8F9EB /* FavoriteMedia.swift in Sources */,
 				DD82808E273CF07800BB2A60 /* CycleAnimation.swift in Sources */,
