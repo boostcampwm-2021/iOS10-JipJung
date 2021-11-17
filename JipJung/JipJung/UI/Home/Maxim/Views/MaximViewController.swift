@@ -37,10 +37,6 @@ final class MaximViewController: UIViewController {
         maximCollectionView.isPagingEnabled = false
         maximCollectionView.showsHorizontalScrollIndicator = false
         maximCollectionView.delegate = self
-        maximCollectionView.register(
-            MediaCollectionViewCell.self,
-            forCellWithReuseIdentifier: MediaCollectionViewCell.identifier
-        )
         maximCollectionView.translatesAutoresizingMaskIntoConstraints = false
         maximCollectionView.register(
             MaximCollectionViewCell.self,
