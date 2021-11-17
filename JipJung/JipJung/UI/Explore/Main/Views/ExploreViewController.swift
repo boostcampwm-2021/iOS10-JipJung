@@ -46,9 +46,7 @@ final class ExploreViewController: UIViewController {
     private lazy var soundCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-        layout.minimumInteritemSpacing = 10
-        layout.minimumLineSpacing = 10
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
 
         let soundContentsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         soundContentsCollectionView.backgroundColor = .black
@@ -152,14 +150,14 @@ extension ExploreViewController: UICollectionViewDelegateFlowLayout {
             let count = viewModel?.soundTagList[safe: indexPath.item]?.value.count ?? 0
             return CGSize(width: count * 10, height: 30)
         } else if collectionView == soundCollectionView {
-            return CGSize(width: 180, height: 200)
+            return CGSize(width: (collectionView.frame.size.width-32)/2-6, height: 220)
         } else {
             return CGSize(width: 50, height: 50)
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 1
+        return 12
     }
 }
 
