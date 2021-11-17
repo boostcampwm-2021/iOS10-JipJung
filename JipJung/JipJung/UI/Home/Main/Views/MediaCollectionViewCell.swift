@@ -14,6 +14,7 @@ final class MediaCollectionViewCell: UICollectionViewCell {
         let configuration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 45))
         button.setImage(UIImage(systemName: "play.fill", withConfiguration: configuration), for: .normal)
         button.tintColor = .white.withAlphaComponent(0.5)
+        button.isUserInteractionEnabled = false
         return button
     }()
     private var playerLooper: AVPlayerLooper?
