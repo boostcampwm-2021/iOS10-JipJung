@@ -12,13 +12,10 @@ import RxSwift
 import RxCocoa
 
 final class MusicPlayerViewController: UIViewController {
-    private let dataSource = ["Relax", "Melody", "Meditation", "Etc"]
     private let themeColor = CGColor(red: 34.0/255.0, green: 48.0/255.0, blue: 74.0/255.0, alpha: 1)
-    
     private let navigationBar = UINavigationBar()
     private let backButton = BackCircleButton()
     private let favoriteButton = FavoriteCircleButton()
-    
     private let topView = UIView()
     private let musicDescriptionView = MusicDescriptionView()
     private let tagCollectionView: UICollectionView = {
@@ -28,7 +25,6 @@ final class MusicPlayerViewController: UIViewController {
         collectionView.register(TagCollectionViewCell.self, forCellWithReuseIdentifier: UICollectionView.CellIdentifier.tag.value)
         return collectionView
     }()
-
     private let bottomView = UIView()
     private let maximTextView = MusicPlayerMaximView()
     private let playButton: UIButton = {
@@ -48,7 +44,6 @@ final class MusicPlayerViewController: UIViewController {
     
     private var viewModel: MusicPlayerViewModel?
     private var disposeBag: DisposeBag = DisposeBag()
-    private var audioPlayer: AVAudioPlayer?
     private var playerLooper: AVPlayerLooper?
     private var queuePlayer: AVQueuePlayer?
     private var playerLayer: AVPlayerLayer?
@@ -61,8 +56,8 @@ final class MusicPlayerViewController: UIViewController {
 
         configureUI()
         bindUI()
-        tagCollectionView.delegate = self
-        tagCollectionView.dataSource = self
+        viewModel?.checkMusicDownloaded()
+        viewModel?.checkMusicPlaying()
     }
     
     override func viewDidLayoutSubviews() {
@@ -78,6 +73,7 @@ final class MusicPlayerViewController: UIViewController {
     }
     
     private func configureUI() {
+        tabBarController?.tabBar.isHidden = true
         configureTopView()
         configureBottomView()
         configureNavigationBar()
@@ -122,41 +118,41 @@ final class MusicPlayerViewController: UIViewController {
             make.bottom.equalToSuperview()
             make.height.equalTo(115)
         }
+        musicDescriptionView.titleLabel.text = viewModel?.title
+        musicDescriptionView.explanationLabel.text = viewModel?.explanation
         
         musicDescriptionView.tagView.addSubview(tagCollectionView)
         tagCollectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        tagCollectionView.delegate = self
+        tagCollectionView.dataSource = self
     }
     
     private func configureVideoView() {
-        guard let videoURL = Bundle.main.url(forResource: "sea", withExtension: "mp4")
-        else {
-            return
+        if let playerItem = viewModel?.videoPlayerItem {
+            queuePlayer = AVQueuePlayer(items: [playerItem])
+            playerLayer = AVPlayerLayer(player: self.queuePlayer)
+            guard let playerLayer = playerLayer,
+                  let queuePlayer = queuePlayer
+            else {
+                return
+            }
+            playerLooper = AVPlayerLooper(player: queuePlayer, templateItem: playerItem)
+            playerLayer.videoGravity = .resizeAspectFill
         }
-
-        let playerItem = AVPlayerItem(url: videoURL)
-        queuePlayer = AVQueuePlayer(items: [playerItem])
-        playerLayer = AVPlayerLayer(player: self.queuePlayer)
-        
-        guard let playerLayer = playerLayer,
-              let queuePlayer = queuePlayer
-        else {
-            return
-        }
-        
-        playerLooper = AVPlayerLooper(player: queuePlayer, templateItem: playerItem)
-        playerLayer.videoGravity = .resizeAspectFill
 
         let backgroundView = UIView()
         topView.addSubview(backgroundView)
-        backgroundView.backgroundColor = .red
-        backgroundView.layer.addSublayer(playerLayer)
+        backgroundView.backgroundColor = .clear
+        if let playerLayer = self.playerLayer,
+           let queuePlayer = self.queuePlayer {
+            backgroundView.layer.addSublayer(playerLayer)
+            queuePlayer.play()
+        }
         backgroundView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        
-        queuePlayer.play()
     }
     
     private func configureBottomView() {
@@ -193,12 +189,70 @@ final class MusicPlayerViewController: UIViewController {
     }
     
     private func bindUI() {
+        backButton.rx.tap
+            .bind { [weak self] in
+                self?.navigationController?.popViewController(animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        playButton.rx.tap
+            .bind { [weak self] in
+                guard let self = self else { return }
+                let playButtonTitle = self.playButton.title(for: .normal)
+                if playButtonTitle == "Pause" {
+                    self.viewModel?.pauseMusic()
+                } else if playButtonTitle == "Play" {
+                    self.viewModel?.playMusic()
+                } else if playButtonTitle == "Download To Play" {
+                    self.viewModel?.playMusic()
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        favoriteButton.rx.tap
+            .bind { [weak self] in
+                self?.viewModel?.toggleFavoriteState()
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel?.musicFileStatus
+            .bind(onNext: { [weak self] in
+                guard let self = self else { return }
+                switch $0 {
+                case .isNotDownloaded:
+                    self.playButton.setTitle("Download To Play", for: .normal)
+                case .downloaded:
+                    self.playButton.setTitle("Play", for: .normal)
+                case .downloadFailed:
+                    self.playButton.setTitle("Download Failed", for: .normal)
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel?.isMusicPlaying
+            .distinctUntilChanged()
+            .bind(onNext: { [weak self] in
+                switch $0 {
+                case true:
+                    self?.playButton.setTitle("Pause", for: .normal)
+                case false:
+                    self?.playButton.setTitle("Play", for: .normal)
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel?.isFavorite
+            .distinctUntilChanged()
+            .bind(onNext: { [weak self] in
+                self?.favoriteButton.isSelected = $0
+            })
+            .disposed(by: disposeBag)
     }
 }
 
 extension MusicPlayerViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dataSource.count
+        return viewModel?.tag.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -209,7 +263,7 @@ extension MusicPlayerViewController: UICollectionViewDataSource {
         else {
             return UICollectionViewCell()
         }
-        cell.tagLabel.text = dataSource[indexPath.item]
+        cell.tagLabel.text = viewModel?.tag[indexPath.item]
         return cell
     }
 }
@@ -220,7 +274,7 @@ extension MusicPlayerViewController: UICollectionViewDelegateFlowLayout {
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         let label = UILabel()
         label.font = .systemFont(ofSize: 14)
-        label.text = dataSource[indexPath.item]
+        label.text = viewModel?.tag[indexPath.item]
         label.sizeToFit()
         
         let size = label.frame.size
@@ -237,17 +291,17 @@ class LeftAlignCollectionViewFlowLayout: UICollectionViewFlowLayout {
         var maxY: CGFloat = -1.0
         
         attributes?.forEach { layoutAttribute in
-          if layoutAttribute.representedElementCategory == .cell {
-            if layoutAttribute.frame.origin.y >= maxY {
-              leftMargin = sectionInset.left
+            if layoutAttribute.representedElementCategory == .cell {
+                if layoutAttribute.frame.origin.y >= maxY {
+                    leftMargin = sectionInset.left
+                }
+                
+                layoutAttribute.frame.origin.x = leftMargin
+                leftMargin += layoutAttribute.frame.width + minimumInteritemSpacing
+                maxY = max(layoutAttribute.frame.maxY, maxY)
             }
-
-            layoutAttribute.frame.origin.x = leftMargin
-            leftMargin += layoutAttribute.frame.width + minimumInteritemSpacing
-            maxY = max(layoutAttribute.frame.maxY, maxY)
-          }
         }
         
         return attributes
-      }
+    }
 }

@@ -169,7 +169,8 @@ extension ExploreViewController: UICollectionViewDelegate {
             let tag = viewModel?.soundTagList[safe: indexPath.item]?.value ?? ""
             viewModel?.categorize(by: tag)
         } else if collectionView == soundCollectionView {
-            navigationController?.pushViewController(MusicPlayerViewController(), animated: true)
+            let media = viewModel?.categoryItems.value[indexPath.item] ?? Media()
+            navigationController?.pushViewController(MusicPlayerViewController(viewModel: MusicPlayerViewModel(media: media)), animated: true)
         } else {
            return
         }
@@ -194,10 +195,11 @@ extension ExploreViewController: UICollectionViewDataSource {
             return cell
         } else if collectionView == soundCollectionView {
             guard let cell = collectionView.cell(identifier: UICollectionView.CellIdentifier.music.value, for: indexPath) as? MusicCollectionViewCell else { return  UICollectionViewCell() }
+
             cell.titleView.text = viewModel?.categoryItems.value[indexPath.item].name
             return cell
         } else {
-            return  UICollectionViewCell()
+            return UICollectionViewCell()
         }
     }
 }
