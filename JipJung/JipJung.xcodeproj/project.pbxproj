@@ -221,6 +221,7 @@
 		DF1722B22740FD2300F06140 /* ApplicationLaunch.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF1722B12740FD2300F06140 /* ApplicationLaunch.swift */; };
 		DF1722B42741013600F06140 /* LocalDBMigrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF1722B32741013600F06140 /* LocalDBMigrator.swift */; };
 		DF1722B72741036C00F06140 /* BundleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF1722B62741036C00F06140 /* BundleManager.swift */; };
+		DF297FD5274567880009E661 /* BreathAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF297FD4274567880009E661 /* BreathAnimation.swift */; };
 		DF30FEF9273A730F001C720E /* TagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF30FEF8273A730F001C720E /* TagCollectionViewCell.swift */; };
 		DF30FF05273CBC3B001C720E /* MusicPlayerButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF30FF04273CBC3B001C720E /* MusicPlayerButtons.swift */; };
 		DF6B111127390F1900D9924E /* MediaResourceRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6B111027390F1900D9924E /* MediaResourceRepository.swift */; };
@@ -475,6 +476,7 @@
 		DF1722B12740FD2300F06140 /* ApplicationLaunch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationLaunch.swift; sourceTree = "<group>"; };
 		DF1722B32741013600F06140 /* LocalDBMigrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDBMigrator.swift; sourceTree = "<group>"; };
 		DF1722B62741036C00F06140 /* BundleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleManager.swift; sourceTree = "<group>"; };
+		DF297FD4274567880009E661 /* BreathAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathAnimation.swift; sourceTree = "<group>"; };
 		DF30FEF8273A730F001C720E /* TagCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCollectionViewCell.swift; sourceTree = "<group>"; };
 		DF30FF04273CBC3B001C720E /* MusicPlayerButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayerButtons.swift; sourceTree = "<group>"; };
 		DF6B111027390F1900D9924E /* MediaResourceRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaResourceRepository.swift; sourceTree = "<group>"; };
@@ -893,6 +895,7 @@
 				DD208D35273BDD390089A2AB /* CALayer+Extension.swift */,
 				DD82808D273CF07800BB2A60 /* CycleAnimation.swift */,
 				DD8564C9273F9E6F00049D9B /* SlowPresent.swift */,
+				DF297FD4274567880009E661 /* BreathAnimation.swift */,
 			);
 			path = Animation;
 			sourceTree = "<group>";
@@ -1584,6 +1587,7 @@
 				B481FC7D274521B800D1F2EA /* FavoriteMediaUseCase.swift in Sources */,
 				B4EF13BD2744B9880086D8CD /* FetchMediaURLUseCase.swift in Sources */,
 				DD208D30273B55240089A2AB /* PulseAnimation.swift in Sources */,
+				DF297FD5274567880009E661 /* BreathAnimation.swift in Sources */,
 				91D0226C273CBA340073EA2A /* MediaListUseCase.swift in Sources */,
 				DF1722B42741013600F06140 /* LocalDBMigrator.swift in Sources */,
 				91D0227D273CE6F50073EA2A /* DBStructureForJSON.swift in Sources */,
