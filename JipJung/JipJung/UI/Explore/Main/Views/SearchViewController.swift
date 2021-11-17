@@ -157,6 +157,14 @@ extension SearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let searchHistory = viewModel?.searchHistory.value[indexPath.item] ?? ""
+        print(indexPath.item)
+        print(searchHistory)
+        self.searchHistoryTableView.isHidden = true
+        viewModel?.search(keyword: searchHistory)
+    }
 }
 
 extension SearchViewController: UITableViewDataSource {
