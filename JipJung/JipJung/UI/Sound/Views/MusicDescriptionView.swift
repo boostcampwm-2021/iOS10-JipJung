@@ -12,7 +12,7 @@ import SnapKit
 class MusicDescriptionView: UIView {
     var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "BlueBerry Nights"
+        label.text = ""
         label.font = .systemFont(ofSize: 32, weight: .medium)
         label.textColor = .white
         return label
@@ -20,7 +20,7 @@ class MusicDescriptionView: UIView {
     
     var explanationLabel: UILabel = {
         let label = UILabel()
-        label.text = "A blueberry pie and icecream"
+        label.text = ""
         label.textColor = UIColor(white: 1, alpha: 0.8)
         return label
     }()
