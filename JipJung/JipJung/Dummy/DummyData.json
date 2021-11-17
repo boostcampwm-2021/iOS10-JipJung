@@ -3,6 +3,7 @@
     {
       "id": "000",
       "name": "귀뚜라미",
+      "explanation": "풀숲 귀뚜라미",
       "mode": 0,
       "tag": "All/Nature/Relax",
       "thumbnailImageFileName": "000.jpg",
@@ -12,8 +13,9 @@
     {
       "id": "001",
       "name": "낙엽밟는소리",
+      "explanation": "단풍 낙엽",
       "mode": 0,
-      "tag": "All/Nature/Relax",
+      "tag": "All/Nature/Relax/Urban",
       "thumbnailImageFileName": "001.jpg",
       "videoFileName": "001.mp4",
       "audioFileName": "001.wav"
@@ -21,8 +23,9 @@
     {
       "id": "002",
       "name": "낙엽에떨어지는가을비소리",
+      "explanation": "잔잔한 가을비",
       "mode": 0,
-      "tag": "All/Nature/Relax",
+      "tag": "All/Nature/Relax/Focus",
       "thumbnailImageFileName": "002.jpg",
       "videoFileName": "002.mp4",
       "audioFileName": "002.wav"
@@ -30,6 +33,7 @@
     {
       "id": "003",
       "name": "파도갈매기소리",
+      "explanation": "파도 위 갈매기",
       "mode": 0,
       "tag": "All/Nature/Relax",
       "thumbnailImageFileName": "003.jpg",
@@ -39,8 +43,9 @@
     {
       "id": "004",
       "name": "시냇물과새소리",
+      "explanation": "맑은 시냇물과 새",
       "mode": 0,
-      "tag": "All/Nature/Relax",
+      "tag": "All/Nature/Relax/Focus",
       "thumbnailImageFileName": "004.jpg",
       "videoFileName": "004.mp4",
       "audioFileName": "004.wav"
@@ -48,6 +53,7 @@
     {
       "id": "005",
       "name": "아침숲속새소리",
+      "explanation": "이른 아침 숲속 새",
       "mode": 0,
       "tag": "All/Nature/Relax",
       "thumbnailImageFileName": "005.jpg",
@@ -57,8 +63,9 @@
     {
       "id": "006",
       "name": "작은폭포소리",
+      "explanation": "작고 조용한 폭포",
       "mode": 0,
-      "tag": "All/Nature/Relax",
+      "tag": "All/Nature/Relax/Focus",
       "thumbnailImageFileName": "006.jpg",
       "videoFileName": "006.mp4",
       "audioFileName": "006.wav"
@@ -66,6 +73,7 @@
     {
       "id": "007",
       "name": "큰폭포소리",
+      "explanation": "큰 폭포",
       "mode": 0,
       "tag": "All/Nature/Relax",
       "thumbnailImageFileName": "007.jpg",

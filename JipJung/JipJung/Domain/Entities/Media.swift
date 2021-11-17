@@ -12,6 +12,7 @@ import RealmSwift
 class Media: Object, Decodable {
     @Persisted(primaryKey: true) var id: String
     @Persisted var name: String
+    @Persisted var explanation: String
     @Persisted var mode: Int
     @Persisted var tag: String
     @Persisted var thumbnailImageFileName: String
@@ -25,6 +26,7 @@ class Media: Object, Decodable {
     convenience init(
         id: String,
         name: String,
+        explanation: String,
         mode: Int,
         tag: String,
         thumbnailImageFileName: String,
@@ -34,6 +36,7 @@ class Media: Object, Decodable {
         self.init()
         self.id = id
         self.name = name
+        self.explanation = explanation
         self.mode = mode
         self.tag = tag
         self.thumbnailImageFileName = thumbnailImageFileName
