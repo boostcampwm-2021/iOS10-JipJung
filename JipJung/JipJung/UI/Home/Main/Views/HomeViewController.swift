@@ -12,15 +12,19 @@ import RxSwift
 import SnapKit
 
 class HomeViewController: UIViewController {
-    private let mainScrollView: UIScrollView = {
+    private lazy var mainScrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.showsVerticalScrollIndicator = false
         return scrollView
     }()
-    private let mainScrollContentsView = UIView()
+    private lazy var mainScrollContentsView = UIView()
     private var mediaCollectionView: UICollectionView?
-    private let mediaControlBackgroundView = UIView()
-    private let pageControl: UIPageControl = {
+    private lazy var mediaControlBackgroundView: UIView = {
+        let view = UIView()
+        view.makeBlurBackground()
+        return view
+    }()
+    private lazy var pageControl: UIPageControl = {
         let pageControl = UIPageControl()
         pageControl.isUserInteractionEnabled = false
         pageControl.pageIndicatorTintColor = .white.withAlphaComponent(0.5)
@@ -28,14 +32,23 @@ class HomeViewController: UIViewController {
         pageControl.hidesForSinglePage = true
         return pageControl
     }()
-    private let topView = UIView()
-    private let bottomView = UIView()
+    private lazy var topView = UIView()
+    private lazy var modeSwitch: UIButton = {
+        let button = UIButton()
+        let configuration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 30))
+        button.setImage(
+            UIImage(systemName: "repeat.circle.fill", withConfiguration: configuration),
+            for: .normal
+        )
+        button.tintColor = .white
+        return button
+    }()
+    private lazy var bottomView = UIView()
     
-    private let viewModel = HomeViewModel()
+    private let viewModel: HomeViewModel = HomeViewModel()
+    private let disposeBag = DisposeBag()
     
     private var isAttached = false
-    
-    let bag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,10 +57,6 @@ class HomeViewController: UIViewController {
         bindUI()
         
         viewModel.viewControllerLoaded()
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
     }
     
     private func configureUI() {
@@ -176,8 +185,7 @@ class HomeViewController: UIViewController {
                 }
             }
         }
-        let layout = UICollectionViewCompositionalLayout(section: section)
-        return layout
+        return UICollectionViewCompositionalLayout(section: section)
     }
     
     private func configureMediaControlBackgroundView() {
@@ -196,6 +204,7 @@ class HomeViewController: UIViewController {
             $0.height.equalTo(30)
         }
     }
+    
     private lazy var maximButton: UIButton = {
         let maximButton = UIButton()
         maximButton.setTitle("명언", for: .normal)
@@ -203,6 +212,7 @@ class HomeViewController: UIViewController {
         maximButton.backgroundColor = .red
         return maximButton
     }()
+    
     private func configureTopView() {
         mainScrollContentsView.addSubview(topView)
         topView.snp.makeConstraints {
@@ -239,17 +249,11 @@ class HomeViewController: UIViewController {
             $0.leading.trailing.equalToSuperview().inset(16)
         }
         
-        let modeSwitch: UIButton = {
-            let button = UIButton()
-            button.backgroundColor = .gray.withAlphaComponent(0.5)
-            return button
-        }()
-        
         modeSwitch.rx.tap
             .bind { [weak self] in
                 self?.viewModel.modeSwitchTouched()
             }
-            .disposed(by: bag)
+            .disposed(by: disposeBag)
         
         topView.addSubview(modeSwitch)
         modeSwitch.snp.makeConstraints {
@@ -343,9 +347,9 @@ class HomeViewController: UIViewController {
                     .subscribe { state in
                         state ? cell.playVideo() : cell.pauseVideo()
                     }
-                    .disposed(by: self.bag)
+                    .disposed(by: self.disposeBag)
             }
-            .disposed(by: bag)
+            .disposed(by: disposeBag)
     }
     
     private func bindUIWithViewModel() {
@@ -367,9 +371,9 @@ class HomeViewController: UIViewController {
                 self.viewModel.mediaCollectionCellLoaded(element.videoFileName)
                     .subscribe { url in
                         cell.setVideo(videoURL: url)
-                    }.disposed(by: self.bag)
+                    }.disposed(by: self.disposeBag)
             }
-            .disposed(by: bag)
+            .disposed(by: disposeBag)
         
         viewModel.currentModeList
             .distinctUntilChanged()
@@ -382,7 +386,7 @@ class HomeViewController: UIViewController {
                 self?.mediaCollectionView?.scrollToItem(at: [0, count/2], at: .left, animated: false)
                 self?.pageControl.currentPage = contentsPages / 2
             }
-            .disposed(by: bag)
+            .disposed(by: disposeBag)
     }
     
     private func mediaPlayButtonTouched(audioFileName: String) -> Single<Bool> {
@@ -425,6 +429,14 @@ extension HomeViewController: UIScrollViewDelegate {
             isAttached = false
             topView.snp.updateConstraints {
                 $0.top.equalTo(view.snp.topMargin)
+            }
+        }
+        
+        mediaControlBackgroundView.subviews.forEach {
+            if $0 == pageControl {
+                $0.alpha = currentTopBottomYGap / HomeMainViewSize.mediaControlViewHeight
+            } else {
+                $0.alpha = 1 - currentTopBottomYGap / HomeMainViewSize.mediaControlViewHeight
             }
         }
     }

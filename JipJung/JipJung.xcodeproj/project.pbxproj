@@ -14,6 +14,22 @@
 		9131513F27400C26001E7125 /* UIScreen+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9131513E27400C26001E7125 /* UIScreen+Extension.swift */; };
 		9131514127400FBB001E7125 /* UIApplication+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9131514027400FBB001E7125 /* UIApplication+Extension.swift */; };
 		9131514327401200001E7125 /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9131514227401200001E7125 /* Array+Extension.swift */; };
+		913C321F27439CD200F82CCF /* 005.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 913C320F27439CD100F82CCF /* 005.mp4 */; };
+		913C322027439CD200F82CCF /* 004.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 913C321027439CD100F82CCF /* 004.mp4 */; };
+		913C322127439CD200F82CCF /* 007.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 913C321127439CD100F82CCF /* 007.mp4 */; };
+		913C322227439CD200F82CCF /* 001.wav in Resources */ = {isa = PBXBuildFile; fileRef = 913C321227439CD100F82CCF /* 001.wav */; };
+		913C322327439CD200F82CCF /* 006.wav in Resources */ = {isa = PBXBuildFile; fileRef = 913C321327439CD100F82CCF /* 006.wav */; };
+		913C322427439CD200F82CCF /* 002.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 913C321427439CD100F82CCF /* 002.mp4 */; };
+		913C322527439CD200F82CCF /* 003.wav in Resources */ = {isa = PBXBuildFile; fileRef = 913C321527439CD100F82CCF /* 003.wav */; };
+		913C322627439CD200F82CCF /* 000.wav in Resources */ = {isa = PBXBuildFile; fileRef = 913C321627439CD100F82CCF /* 000.wav */; };
+		913C322727439CD200F82CCF /* 006.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 913C321727439CD100F82CCF /* 006.mp4 */; };
+		913C322827439CD200F82CCF /* 004.wav in Resources */ = {isa = PBXBuildFile; fileRef = 913C321827439CD100F82CCF /* 004.wav */; };
+		913C322927439CD200F82CCF /* 005.wav in Resources */ = {isa = PBXBuildFile; fileRef = 913C321927439CD100F82CCF /* 005.wav */; };
+		913C322A27439CD200F82CCF /* 000.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 913C321A27439CD100F82CCF /* 000.mp4 */; };
+		913C322B27439CD200F82CCF /* 007.wav in Resources */ = {isa = PBXBuildFile; fileRef = 913C321B27439CD100F82CCF /* 007.wav */; };
+		913C322C27439CD200F82CCF /* 003.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 913C321C27439CD100F82CCF /* 003.mp4 */; };
+		913C322D27439CD200F82CCF /* 001.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 913C321D27439CD100F82CCF /* 001.mp4 */; };
+		913C322E27439CD200F82CCF /* 002.wav in Resources */ = {isa = PBXBuildFile; fileRef = 913C321E27439CD200F82CCF /* 002.wav */; };
 		914E1D87273A191D000CA5FB /* MediaCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914E1D86273A191D000CA5FB /* MediaCollectionViewCell.swift */; };
 		91655852273B618700C55CDC /* LocalFileEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91655851273B618700C55CDC /* LocalFileEnums.swift */; };
 		91655856273B6F0200C55CDC /* LocalDBEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91655855273B6F0200C55CDC /* LocalDBEnums.swift */; };
@@ -135,6 +151,22 @@
 		9131513E27400C26001E7125 /* UIScreen+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+Extension.swift"; sourceTree = "<group>"; };
 		9131514027400FBB001E7125 /* UIApplication+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Extension.swift"; sourceTree = "<group>"; };
 		9131514227401200001E7125 /* Array+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extension.swift"; sourceTree = "<group>"; };
+		913C320F27439CD100F82CCF /* 005.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = 005.mp4; sourceTree = "<group>"; };
+		913C321027439CD100F82CCF /* 004.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = 004.mp4; sourceTree = "<group>"; };
+		913C321127439CD100F82CCF /* 007.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = 007.mp4; sourceTree = "<group>"; };
+		913C321227439CD100F82CCF /* 001.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = 001.wav; sourceTree = "<group>"; };
+		913C321327439CD100F82CCF /* 006.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = 006.wav; sourceTree = "<group>"; };
+		913C321427439CD100F82CCF /* 002.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = 002.mp4; sourceTree = "<group>"; };
+		913C321527439CD100F82CCF /* 003.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = 003.wav; sourceTree = "<group>"; };
+		913C321627439CD100F82CCF /* 000.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = 000.wav; sourceTree = "<group>"; };
+		913C321727439CD100F82CCF /* 006.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = 006.mp4; sourceTree = "<group>"; };
+		913C321827439CD100F82CCF /* 004.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = 004.wav; sourceTree = "<group>"; };
+		913C321927439CD100F82CCF /* 005.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = 005.wav; sourceTree = "<group>"; };
+		913C321A27439CD100F82CCF /* 000.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = 000.mp4; sourceTree = "<group>"; };
+		913C321B27439CD100F82CCF /* 007.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = 007.wav; sourceTree = "<group>"; };
+		913C321C27439CD100F82CCF /* 003.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = 003.mp4; sourceTree = "<group>"; };
+		913C321D27439CD100F82CCF /* 001.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = 001.mp4; sourceTree = "<group>"; };
+		913C321E27439CD200F82CCF /* 002.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = 002.wav; sourceTree = "<group>"; };
 		914E1D86273A191D000CA5FB /* MediaCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaCollectionViewCell.swift; sourceTree = "<group>"; };
 		91655851273B618700C55CDC /* LocalFileEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFileEnums.swift; sourceTree = "<group>"; };
 		91655855273B6F0200C55CDC /* LocalDBEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDBEnums.swift; sourceTree = "<group>"; };
@@ -261,6 +293,29 @@
 				912A72032733B99300C1A37E /* LocalFileManagerTests.swift */,
 			);
 			path = LocalFileManagerTests;
+			sourceTree = "<group>";
+		};
+		913C31FA2743993800F82CCF /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				913C321A27439CD100F82CCF /* 000.mp4 */,
+				913C321627439CD100F82CCF /* 000.wav */,
+				913C321D27439CD100F82CCF /* 001.mp4 */,
+				913C321227439CD100F82CCF /* 001.wav */,
+				913C321427439CD100F82CCF /* 002.mp4 */,
+				913C321E27439CD200F82CCF /* 002.wav */,
+				913C321C27439CD100F82CCF /* 003.mp4 */,
+				913C321527439CD100F82CCF /* 003.wav */,
+				913C321027439CD100F82CCF /* 004.mp4 */,
+				913C321827439CD100F82CCF /* 004.wav */,
+				913C320F27439CD100F82CCF /* 005.mp4 */,
+				913C321927439CD100F82CCF /* 005.wav */,
+				913C321727439CD100F82CCF /* 006.mp4 */,
+				913C321327439CD100F82CCF /* 006.wav */,
+				913C321127439CD100F82CCF /* 007.mp4 */,
+				913C321B27439CD100F82CCF /* 007.wav */,
+			);
+			path = Resource;
 			sourceTree = "<group>";
 		};
 		91655846273B5C9000C55CDC /* Data */ = {
@@ -530,6 +585,7 @@
 		DD3902CF272FCA10009ECA82 /* JipJung */ = {
 			isa = PBXGroup;
 			children = (
+				913C31FA2743993800F82CCF /* Resource */,
 				91655849273B5CF900C55CDC /* Dummy */,
 				9198DE93273385D800EBAEC8 /* Localizing */,
 				DD3902FD272FE21D009ECA82 /* Application */,
@@ -861,11 +917,27 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				913C322727439CD200F82CCF /* 006.mp4 in Resources */,
 				DD3902DD272FCA12009ECA82 /* LaunchScreen.storyboard in Resources */,
 				918D19A5273D21B300A13954 /* sea.mp4 in Resources */,
+				913C322D27439CD200F82CCF /* 001.mp4 in Resources */,
+				913C322027439CD200F82CCF /* 004.mp4 in Resources */,
 				91D02279273CDF610073EA2A /* DummyData.json in Resources */,
+				913C322E27439CD200F82CCF /* 002.wav in Resources */,
+				913C321F27439CD200F82CCF /* 005.mp4 in Resources */,
+				913C322B27439CD200F82CCF /* 007.wav in Resources */,
+				913C322127439CD200F82CCF /* 007.mp4 in Resources */,
+				913C322C27439CD200F82CCF /* 003.mp4 in Resources */,
+				913C322527439CD200F82CCF /* 003.wav in Resources */,
+				913C322927439CD200F82CCF /* 005.wav in Resources */,
+				913C322227439CD200F82CCF /* 001.wav in Resources */,
+				913C322827439CD200F82CCF /* 004.wav in Resources */,
+				913C322327439CD200F82CCF /* 006.wav in Resources */,
+				913C322627439CD200F82CCF /* 000.wav in Resources */,
+				913C322A27439CD200F82CCF /* 000.mp4 in Resources */,
 				DD3902DA272FCA12009ECA82 /* Assets.xcassets in Resources */,
 				DF71D22F2734455600CD980E /* GoogleService-Info.plist in Resources */,
+				913C322427439CD200F82CCF /* 002.mp4 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

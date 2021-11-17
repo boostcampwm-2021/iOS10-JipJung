@@ -18,7 +18,7 @@ final class FocusButton: BlurCircleButton {
     }()
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .gray
+        label.textColor = .white
         label.textAlignment = .center
         label.adjustsFontSizeToFitWidth = true
         return label
