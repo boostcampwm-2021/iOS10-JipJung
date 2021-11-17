@@ -37,7 +37,6 @@ final class MaximViewController: UIViewController {
         maximCollectionView.isPagingEnabled = false
         maximCollectionView.showsHorizontalScrollIndicator = false
         maximCollectionView.delegate = self
-        maximCollectionView.dataSource = self
         maximCollectionView.register(
             MediaCollectionViewCell.self,
             forCellWithReuseIdentifier: MediaCollectionViewCell.identifier
@@ -46,7 +45,7 @@ final class MaximViewController: UIViewController {
         maximCollectionView.register(
             MaximCollectionViewCell.self,
             forCellWithReuseIdentifier: MaximCollectionViewCell.identifier)
-        maximCollectionView.transform = CGAffineTransform.init(rotationAngle: (-(CGFloat)(Double.pi)))
+        maximCollectionView.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
         return maximCollectionView
     }()
     
@@ -60,7 +59,10 @@ final class MaximViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        bindCollectionView()
         bindAction()
+        
+        viewModel.fetchMaximList()
     }
     
     private func configureUI() {
@@ -90,33 +92,17 @@ final class MaximViewController: UIViewController {
         }
     }
     
-    private func bind() {
-        Observable.zip(viewModel.date, viewModel.monthYear, viewModel.content, viewModel.speaker)
-    }
-    
-    private func bind(on cell: MaximCollectionViewCell) {
-        viewModel.date.bind { [weak self] in
-            cell.dateLabel.text = $0
-        }
-        .disposed(by: disposeBag)
-        
-        viewModel.monthYear.bind { [weak self] in
-            cell.monthYearLabel.text = $0
-        }
-        .disposed(by: disposeBag)
-        
-        viewModel.content.bind { [weak self] in
-            cell.contentLabel.text = $0
-        }
-        .disposed(by: disposeBag)
-        
-        viewModel.speaker.bind { [weak self] in
-            cell.speakerLabel.text = $0
-        }
-        .disposed(by: disposeBag)
-        
-        viewModel.imageURL.bind { [weak self] in
-            cell.backgroundView = UIImageView(image: UIImage(contentsOfFile: $0) ?? UIImage(systemName: "xmark"))
+    private func bindCollectionView() {
+        viewModel.maximLists.bind(to: maximCollectionView.rx.items(cellIdentifier: MaximCollectionViewCell.identifier)) { index, maxim, cell in
+            guard let cell = cell as? MaximCollectionViewCell else {
+                return
+            }
+            cell.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
+            cell.day.text = maxim.day
+            cell.monthYearLabel.text = maxim.monthYear
+            cell.contentLabel.text = maxim.content
+            cell.speakerLabel.text = maxim.speaker
+            cell.backgroundColor = .red
         }
         .disposed(by: disposeBag)
     }
@@ -128,21 +114,8 @@ final class MaximViewController: UIViewController {
     }
 }
 
-// MARK: - CollectionViewDelegate & DataSource
-extension MaximViewController: UICollectionViewDataSource, UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MaximCollectionViewCell.identifier, for: indexPath) as? MaximCollectionViewCell else {
-            return UICollectionViewCell()
-        }
-        bind(on: cell)
-        cell.backgroundColor = .red
-        cell.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
-        return cell
-    }
+// MARK: - CollectionViewDelegate
+extension MaximViewController: UICollectionViewDelegate {
 }
 
 // MARK: 출처 - https://eunjin3786.tistory.com/203

@@ -7,33 +7,33 @@
 
 import Foundation
 import RxRelay
+import RxSwift
 
 protocol MaximViewModelInput {
-    func fetchMaxim()
-    func changeDate(with: String)
+    func fetchMaximList()
 }
 
 protocol MaximViewModelOutput {
-    var date: BehaviorRelay<String> { get }
-    var monthYear: BehaviorRelay<String> { get }
-    var content: BehaviorRelay<String> { get }
-    var speaker: BehaviorRelay<String> { get }
+    var maximLists: BehaviorRelay<[MaximPresenterObject]> { get }
 }
 
 final class MaximViewModel: MaximViewModelInput, MaximViewModelOutput {
-    let date: BehaviorRelay<String> = BehaviorRelay<String>(value: "")
-    let monthYear: BehaviorRelay<String> = BehaviorRelay<String>(value: "")
-    let content: BehaviorRelay<String> = BehaviorRelay<String>(value: "")
-    let speaker: BehaviorRelay<String> = BehaviorRelay<String>(value: "")
-    let imageURL: BehaviorRelay<String> = BehaviorRelay<String>(value: "")
+    let maximLists: BehaviorRelay<[MaximPresenterObject]> = BehaviorRelay<[MaximPresenterObject]>(value: [])
+    let imageURLs: BehaviorRelay<[String]> = BehaviorRelay<[String]>(value: [])
     
-    init() {
-//        let maximUseCase = MaximListUseCase
+    private var disposeBag: DisposeBag = DisposeBag()
+    private let maximListUseCase: MaximListUseCase
+    
+    init(maximListUseCase: MaximListUseCase = MaximListUseCase()) {
+        self.maximListUseCase = maximListUseCase
     }
 
-    func fetchMaxim() {
-    }
-    
-    func changeDate(with: String) {
+    func fetchMaximList() {
+        maximListUseCase.fetchAllMaximList()
+            .map({ $0.map({ MaximPresenterObject(maxim: $0) })})
+            .subscribe { [weak self] in
+                self?.maximLists.accept($0)
+            }
+            .disposed(by: disposeBag)
     }
 }

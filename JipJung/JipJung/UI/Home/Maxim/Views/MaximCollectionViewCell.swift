@@ -24,7 +24,7 @@ final class MaximCollectionViewCell: UICollectionViewCell {
         return button
     }()
     
-    private(set) lazy var dateLabel: UILabel = {
+    private(set) lazy var day: UILabel = {
         let dateLabel = UILabel()
         dateLabel.font = .systemFont(ofSize: 70)
         dateLabel.textColor = .white
@@ -63,7 +63,17 @@ final class MaximCollectionViewCell: UICollectionViewCell {
         speakerLabel.text = "Schloar, Gu Hongming"
         return speakerLabel
     }()
-
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        configureUI()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        configureUI()
+    }
+    
     private func configureUI() {
         addSubview(speakerLabel)
         speakerLabel.snp.makeConstraints { [weak self] in
@@ -95,8 +105,8 @@ final class MaximCollectionViewCell: UICollectionViewCell {
             $0.bottom.equalTo(contentLabel.snp.top).offset(-30)
         }
         
-        addSubview(dateLabel)
-        dateLabel.snp.makeConstraints {
+        addSubview(day)
+        day.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(30)
             $0.bottom.equalTo(monthYearLabel.snp.top)
         }

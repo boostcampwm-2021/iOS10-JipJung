@@ -100,6 +100,7 @@
 		DD82808E273CF07800BB2A60 /* CycleAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD82808D273CF07800BB2A60 /* CycleAnimation.swift */; };
 		DD828092273D113200BB2A60 /* NetworkEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD828091273D113200BB2A60 /* NetworkEnums.swift */; };
 		DD828095273D1F8E00BB2A60 /* FocusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD828094273D1F8E00BB2A60 /* FocusViewController.swift */; };
+		DD8473632744C24500DF4FCB /* MaximViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9172BBFD274226B1000E1060 /* MaximViewModel.swift */; };
 		DD8564CA273F9E6F00049D9B /* SlowPresent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8564C9273F9E6F00049D9B /* SlowPresent.swift */; };
 		DDAA3D3D5F09E051F5BE96A6 /* Pods_JipJung.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6ECB91629425C2E076873750 /* Pods_JipJung.framework */; };
 		DDB5CE9E27328E8300E8F9EB /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB5CE9D27328E8300E8F9EB /* HomeViewController.swift */; };
@@ -135,6 +136,13 @@
 			remoteInfo = JipJung;
 		};
 		B4F36B5A27338E9B0073609C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DD3902C5272FCA10009ECA82 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DD3902CC272FCA10009ECA82;
+			remoteInfo = JipJung;
+		};
+		DD84735E2744C1BA00DF4FCB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = DD3902C5272FCA10009ECA82 /* Project object */;
 			proxyType = 1;
@@ -244,6 +252,7 @@
 		DD82808D273CF07800BB2A60 /* CycleAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CycleAnimation.swift; sourceTree = "<group>"; };
 		DD828091273D113200BB2A60 /* NetworkEnums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkEnums.swift; sourceTree = "<group>"; };
 		DD828094273D1F8E00BB2A60 /* FocusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusViewController.swift; sourceTree = "<group>"; };
+		DD84735A2744C1BA00DF4FCB /* MaximViewModelTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MaximViewModelTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD8564C9273F9E6F00049D9B /* SlowPresent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlowPresent.swift; sourceTree = "<group>"; };
 		DDB5CE9D27328E8300E8F9EB /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		DDB5CEA127328EC300E8F9EB /* ExploreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreViewController.swift; sourceTree = "<group>"; };
@@ -289,6 +298,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				DDAA3D3D5F09E051F5BE96A6 /* Pods_JipJung.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DD8473572744C1BA00DF4FCB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -591,6 +607,7 @@
 				DD3902CD272FCA10009ECA82 /* JipJung.app */,
 				B4F36B5627338E9B0073609C /* UserDefaultsStorageTest.xctest */,
 				912A72012733B99300C1A37E /* LocalFileManagerTests.xctest */,
+				DD84735A2744C1BA00DF4FCB /* MaximViewModelTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -867,6 +884,24 @@
 			productReference = DD3902CD272FCA10009ECA82 /* JipJung.app */;
 			productType = "com.apple.product-type.application";
 		};
+		DD8473592744C1BA00DF4FCB /* MaximViewModelTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DD8473622744C1BA00DF4FCB /* Build configuration list for PBXNativeTarget "MaximViewModelTests" */;
+			buildPhases = (
+				DD8473562744C1BA00DF4FCB /* Sources */,
+				DD8473572744C1BA00DF4FCB /* Frameworks */,
+				DD8473582744C1BA00DF4FCB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DD84735F2744C1BA00DF4FCB /* PBXTargetDependency */,
+			);
+			name = MaximViewModelTests;
+			productName = MaximViewModelTests;
+			productReference = DD84735A2744C1BA00DF4FCB /* MaximViewModelTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -888,6 +923,10 @@
 					DD3902CC272FCA10009ECA82 = {
 						CreatedOnToolsVersion = 13.1;
 					};
+					DD8473592744C1BA00DF4FCB = {
+						CreatedOnToolsVersion = 13.1;
+						TestTargetID = DD3902CC272FCA10009ECA82;
+					};
 				};
 			};
 			buildConfigurationList = DD3902C8272FCA10009ECA82 /* Build configuration list for PBXProject "JipJung" */;
@@ -906,6 +945,7 @@
 				DD3902CC272FCA10009ECA82 /* JipJung */,
 				B4F36B5527338E9B0073609C /* UserDefaultsStorageTest */,
 				912A72002733B99300C1A37E /* LocalFileManagerTests */,
+				DD8473592744C1BA00DF4FCB /* MaximViewModelTests */,
 			);
 		};
 /* End PBXProject section */
@@ -950,6 +990,13 @@
 				DD3902DA272FCA12009ECA82 /* Assets.xcassets in Resources */,
 				DF71D22F2734455600CD980E /* GoogleService-Info.plist in Resources */,
 				913C322427439CD200F82CCF /* 002.mp4 in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DD8473582744C1BA00DF4FCB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1140,6 +1187,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DD8473562744C1BA00DF4FCB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DD8473632744C24500DF4FCB /* MaximViewModel.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1152,6 +1207,11 @@
 			isa = PBXTargetDependency;
 			target = DD3902CC272FCA10009ECA82 /* JipJung */;
 			targetProxy = B4F36B5A27338E9B0073609C /* PBXContainerItemProxy */;
+		};
+		DD84735F2744C1BA00DF4FCB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DD3902CC272FCA10009ECA82 /* JipJung */;
+			targetProxy = DD84735E2744C1BA00DF4FCB /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1435,6 +1495,54 @@
 			};
 			name = Release;
 		};
+		DD8473602744C1BA00DF4FCB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6785P7H4GT;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Wavvie.MaximViewModelTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/JipJung.app/JipJung";
+			};
+			name = Debug;
+		};
+		DD8473612744C1BA00DF4FCB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6785P7H4GT;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Wavvie.MaximViewModelTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/JipJung.app/JipJung";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1470,6 +1578,15 @@
 			buildConfigurations = (
 				DD3902E2272FCA12009ECA82 /* Debug */,
 				DD3902E3272FCA12009ECA82 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DD8473622744C1BA00DF4FCB /* Build configuration list for PBXNativeTarget "MaximViewModelTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DD8473602744C1BA00DF4FCB /* Debug */,
+				DD8473612744C1BA00DF4FCB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
