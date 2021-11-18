@@ -14,8 +14,7 @@ class BreathAnimation: CAAnimationGroup {
     }
     
     required init?(coder: NSCoder) {
-        super.init(coder: coder)
-//        self.atypicalAnimation()
+        fatalError("init(coder:) has not been implemented")
     }
     
     private func atypicalAnimation(frame: CGRect) {
@@ -45,10 +44,10 @@ class BreathAnimation: CAAnimationGroup {
         self.isRemovedOnCompletion = false
         self.repeatCount = Float.infinity
     }
-    
+
     convenience init(frame: CGRect) {
         self.init()
-        
+
         atypicalAnimation(frame: frame)
     }
     
