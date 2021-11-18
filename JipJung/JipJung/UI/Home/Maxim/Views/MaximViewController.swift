@@ -26,6 +26,34 @@ final class MaximViewController: UIViewController {
         return button
     }()
     
+    private lazy var calendarHeaderCollectionView: UICollectionView = {
+        let collectionViewLayout = UICollectionViewFlowLayout()
+        let screenWidth = UIScreen.main.bounds.size.width
+        let cellWidth = screenWidth / 14
+        let lineSpacing = cellWidth
+        collectionViewLayout.minimumLineSpacing = lineSpacing
+        collectionViewLayout.itemSize = CGSize(width: cellWidth, height: 100)
+        collectionViewLayout.scrollDirection = .horizontal
+        
+        let headerSize = 50
+        let calendarHeaderCollectionView = UICollectionView(
+            frame: CGRect(x: CGFloat(0),
+                          y: CGFloat(0),
+                          width: CGFloat(screenWidth),
+                          height: CGFloat(100 + headerSize) + UIApplication.shared.statusBarFrame.height),
+            collectionViewLayout: collectionViewLayout)
+        // blur not working
+//        calendarHeaderCollectionView.makeBlurBackground()
+        calendarHeaderCollectionView.isHidden = true
+        calendarHeaderCollectionView.showsHorizontalScrollIndicator = false
+        calendarHeaderCollectionView.isPagingEnabled = true
+        calendarHeaderCollectionView.register(
+            MaximHeaderCollectionViewCell.self,
+            forCellWithReuseIdentifier: MaximHeaderCollectionViewCell.identifier)
+        calendarHeaderCollectionView.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
+        return calendarHeaderCollectionView
+    }()
+    
     private lazy var maximCollectionView: UICollectionView = {
         let collectionViewLayout = UICollectionViewFlowLayout()
         collectionViewLayout.itemSize = UIScreen.main.bounds.size
@@ -50,6 +78,7 @@ final class MaximViewController: UIViewController {
         return viewModel
     }()
     
+    private var isHeaderPresent = false
     private var disposeBag = DisposeBag()
     
     override func viewDidLoad() {
@@ -62,8 +91,19 @@ final class MaximViewController: UIViewController {
     }
     
     private func configureUI() {
-        view.backgroundColor = .red
+        maximCollectionView.backgroundColor = .red
         view.addSubview(maximCollectionView)
+        
+        view.addSubview(calendarHeaderCollectionView)
+        calendarHeaderCollectionView.snp.makeConstraints { [weak self] in
+            guard let self = self else {
+                return
+            }
+            $0.width.equalToSuperview()
+            $0.bottom.equalTo(self.view.snp.top)
+            $0.leading.equalToSuperview()
+            $0.height.equalTo(200)
+        }
         
         view.addSubview(closeButton)
         closeButton.snp.makeConstraints { [weak self] in
@@ -100,12 +140,55 @@ final class MaximViewController: UIViewController {
             cell.speakerLabel.text = maxim.speaker
         }
         .disposed(by: disposeBag)
+        
+        viewModel.maximList.bind(to: calendarHeaderCollectionView.rx.items(cellIdentifier: MaximHeaderCollectionViewCell.identifier)) { index, maxim, cell in
+            guard let cell = cell as? MaximHeaderCollectionViewCell else {
+                return
+            }
+            cell.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
+        }
+        .disposed(by: disposeBag)
     }
     
     private func bindAction() {
+        let isHeaderPresent = self.isHeaderPresent
         closeButton.rx.tap.bind { [weak self] in
-            self?.dismiss(animated: true)
-        }.disposed(by: disposeBag)
+            if isHeaderPresent {
+                self?.dismissHeader()
+            } else {
+                self?.presentHeader()
+            }
+            self?.isHeaderPresent.toggle()
+        }
+        .disposed(by: disposeBag)
+        
+        calendarButton.rx.tap.bind { [weak self] in
+            self?.presentHeader()
+        }
+        .disposed(by: disposeBag)
+    }
+    
+    private func presentHeader() {
+        calendarHeaderCollectionView.isHidden = false
+        self.calendarHeaderCollectionView.snp.updateConstraints { [weak self] in
+            guard let self = self else {
+                return
+            }
+            $0.bottom.equalTo(self.view.snp.top).offset(self.calendarHeaderCollectionView.frame.height)
+        }
+        UIView.animate(withDuration: 0.5, delay: 0, options: []) { [weak self] in
+            self?.calendarHeaderCollectionView.superview?.layoutIfNeeded()
+//            self?.calendarHeaderCollectionView.transform = CGAffineTransform(translationX: 0, y: 150 + UIApplication.shared.statusBarFrame.height)
+        }
+    }
+    
+    private func dismissHeader() {
+        UIView.animate(withDuration: 0.3, delay: 0, options: []) { [weak self] in
+            self?.calendarHeaderCollectionView.transform = CGAffineTransform(translationX: 0, y: -200)
+        } completion: { [weak self] in
+            self?.calendarHeaderCollectionView.isHidden = $0
+        }
+
     }
 }
 

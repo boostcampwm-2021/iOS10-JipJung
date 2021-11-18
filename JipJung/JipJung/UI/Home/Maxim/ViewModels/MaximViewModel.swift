@@ -11,6 +11,8 @@ import RxSwift
 
 protocol MaximViewModelInput {
     func fetchMaximList()
+    func presentHeader()
+    func dismissHeader()
 }
 
 protocol MaximViewModelOutput {
@@ -19,6 +21,7 @@ protocol MaximViewModelOutput {
 
 final class MaximViewModel: MaximViewModelInput, MaximViewModelOutput {
     let maximList: BehaviorRelay<[MaximPresenterObject]> = BehaviorRelay<[MaximPresenterObject]>(value: [])
+    let isHeaderPresent: PublishRelay<Bool> = PublishRelay<Bool>()
     let imageURLs: BehaviorRelay<[String]> = BehaviorRelay<[String]>(value: [])
     
     private var disposeBag: DisposeBag = DisposeBag()
@@ -35,5 +38,13 @@ final class MaximViewModel: MaximViewModelInput, MaximViewModelOutput {
                 self?.maximList.accept($0)
             }
             .disposed(by: disposeBag)
+    }
+    
+    func presentHeader() {
+        isHeaderPresent.accept(true)
+    }
+    
+    func dismissHeader() {
+        isHeaderPresent.accept(false)
     }
 }
