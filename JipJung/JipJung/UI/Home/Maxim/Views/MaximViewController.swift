@@ -102,7 +102,6 @@ final class MaximViewController: UIViewController {
     private func configureUI() {
         maximCollectionView.backgroundColor = .blue
         view.addSubview(maximCollectionView)
-        
         view.addSubview(calendarHeaderCollectionView)
         calendarHeaderCollectionView.snp.makeConstraints { [weak self] in
             guard let self = self else {
@@ -174,7 +173,6 @@ final class MaximViewController: UIViewController {
         let currentObservable = dateObservable.skip(1)
         
         Observable.zip(previousObservable, currentObservable).bind(onNext: { [weak self] (prev, cur) in
-            print(prev, cur)
             let previousCell =
             self?.calendarHeaderCollectionView.cellForItem(at: prev) as? MaximCalendarHeaderCollectionViewCell
             let currentCell =
@@ -193,7 +191,6 @@ final class MaximViewController: UIViewController {
     
     private func showWeek(with indexPath: IndexPath) {
         let index = indexPath.row / 7
-        print(indexPath.row)
         calendarHeaderCollectionView.contentOffset = CGPoint(x: CGFloat(index) * MaximCalendarHeaderCollectionViewSize.width, y: 0)
     }
     

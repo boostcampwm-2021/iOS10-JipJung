@@ -209,7 +209,7 @@ class HomeViewController: UIViewController {
         let maximButton = UIButton()
         maximButton.setTitle("명언", for: .normal)
         maximButton.titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
-        maximButton.backgroundColor = .red
+        maximButton.makeBlurBackground()
         return maximButton
     }()
     

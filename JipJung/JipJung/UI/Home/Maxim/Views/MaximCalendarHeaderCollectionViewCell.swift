@@ -8,8 +8,6 @@
 import UIKit
 
 class MaximCalendarHeaderCollectionViewCell: UICollectionViewCell {
-    static let identifier = String(describing: MaximCalendarHeaderCollectionViewCell.self)
-    
     private(set) lazy var weekdayLabel: UILabel = {
         let weekdayLabel = UILabel()
         weekdayLabel.font = .systemFont(ofSize: 20)
