@@ -124,6 +124,7 @@ final class InfinityFocusViewController: FocusViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         let viewCenter = view.center
+        
         UIView.animate(withDuration: 0.6) { [weak self] in
             self?.timerView.center = viewCenter
             self?.startButton.alpha = 0
@@ -193,7 +194,7 @@ final class InfinityFocusViewController: FocusViewController {
         timerView.layer.addSublayer(pulseGroupLayer)
         let pulseCount = 4
         for _ in 0..<pulseCount {
-            let pulseLayer = createCircleShapeLayer(strokeColor: .secondarySystemBackground, lineWidth: 2)
+            let pulseLayer = createCircleShapeLayer(strokeColor: .white, lineWidth: 2)
             pulseGroupLayer.addSublayer(pulseLayer)
         }
     }

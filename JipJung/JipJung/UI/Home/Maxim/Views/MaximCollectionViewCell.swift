@@ -22,7 +22,7 @@ final class MaximCollectionViewCell: UICollectionViewCell {
         return button
     }()
     
-    private(set) lazy var day: UILabel = {
+    private(set) lazy var dayLabel: UILabel = {
         let dateLabel = UILabel()
         dateLabel.font = .systemFont(ofSize: 70)
         dateLabel.textColor = .white
@@ -100,8 +100,8 @@ final class MaximCollectionViewCell: UICollectionViewCell {
             $0.bottom.equalTo(contentLabel.snp.top).offset(-30)
         }
         
-        addSubview(day)
-        day.snp.makeConstraints {
+        addSubview(dayLabel)
+        dayLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(30)
             $0.bottom.equalTo(monthYearLabel.snp.top)
         }
