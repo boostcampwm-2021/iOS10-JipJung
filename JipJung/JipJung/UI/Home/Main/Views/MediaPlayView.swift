@@ -32,7 +32,7 @@ final class MediaPlayView: UIView {
     
     private let viewModel = MediaPlayViewModel()
     private let disposeBag = DisposeBag()
-    private let media = BehaviorRelay<Media?>(value: nil)
+    let media = BehaviorRelay<Media?>(value: nil)
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -68,22 +68,12 @@ final class MediaPlayView: UIView {
             .distinctUntilChanged()
             .compactMap { $0 }
             .bind(onNext: { [weak self] media in
-                guard let self = self else { return }
-                
-                self.viewModel.didSetMedia(media: media)
-                    .subscribe { url in
-//                        print(url)
-                    } onFailure: { error in
-                        print(error.localizedDescription)
-                    }
-                    .disposed(by: self.disposeBag)
+                self?.setMedia(media: media)
             })
             .disposed(by: disposeBag)
-        
     }
     
     func replaceMedia(media: Media) {
-        print(media.id)
         self.media.accept(media)
     }
     
@@ -98,6 +88,23 @@ final class MediaPlayView: UIView {
         guard let videoPlayer = videoPlayer else { return }
         videoPlayer.pause()
         playButton.isHidden = false
+    }
+    
+    private func setMedia(media: Media) {
+        viewModel.didSetMedia(media: media)
+            .subscribe { [weak self] url in
+                guard let self = self else { return }
+                
+                let playerItem = AVPlayerItem(url: url)
+                let videoPlayer = AVQueuePlayer(playerItem: playerItem)
+                let playerLayer = AVPlayerLayer(player: videoPlayer)
+                playerLayer.videoGravity = .resizeAspectFill
+                playerLayer.frame = UIScreen.main.bounds
+                self.layer.sublayers = [playerLayer, self.playButton.layer]
+            } onFailure: { error in
+                print(error.localizedDescription)
+            }
+            .disposed(by: disposeBag)
     }
 }
 
