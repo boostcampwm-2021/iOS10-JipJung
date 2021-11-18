@@ -11,7 +11,7 @@ import RxSwift
 import RxRelay
 
 protocol HomeViewModelInput {
-    func viewControllerLoaded()
+    func viewWillAppear()
     func modeSwitchTouched()
     func mediaPlayButtonTouched(_ audioFileName: String) -> Single<Bool>
     func mediaCollectionCellLoaded(_ videoFileName: String) -> Single<URL>
@@ -44,14 +44,12 @@ final class HomeViewModel: HomeViewModelInput, HomeViewModelOutput {
             .combineLatest(mode, brightMode, darknessMode) { ($0, $1, $2) }
             .subscribe { [weak self] mode, brightModeList, darknessModeList in
                 let modeList = mode == .bright ? brightModeList : darknessModeList
-                if let modeListValue = self?.makeInfinityCollectionDataSource(dataSource: modeList) {
-                    self?.currentModeList.accept(modeListValue)
-                }
+                self?.currentModeList.accept(modeList)
             }
             .disposed(by: bag)
     }
     
-    func viewControllerLoaded() {
+    func viewWillAppear() {
         // TODO: UserDefaults에서 현재 mode 정보 가져오기
         
         mediaListUseCase.fetchMediaMyList(mode: .bright)
@@ -89,6 +87,7 @@ final class HomeViewModel: HomeViewModelInput, HomeViewModelOutput {
     
     func modeSwitchTouched() {
         mode.accept(mode.value == .bright ? .darkness : .bright)
+        mediaPlayButtonTouched("")
     }
     
     func mediaPlayButtonTouched(_ audioFileName: String) -> Single<Bool> {
@@ -97,19 +96,5 @@ final class HomeViewModel: HomeViewModelInput, HomeViewModelOutput {
     
     func mediaCollectionCellLoaded(_ videoFileName: String) -> Single<URL> {
         return videoPlayUseCase.ready(videoFileName)
-    }
-    
-    private func makeInfinityCollectionDataSource(dataSource: [Media]) -> [Media] {
-        guard let first = dataSource.first,
-              let last = dataSource.last,
-              first != last
-        else {
-            return dataSource
-        }
-        
-        var newDataSource = dataSource
-        newDataSource.insert(last, at: 0)
-        newDataSource.append(first)
-        return newDataSource
     }
 }
