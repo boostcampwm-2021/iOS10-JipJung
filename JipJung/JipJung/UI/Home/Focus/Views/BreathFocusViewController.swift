@@ -40,9 +40,7 @@ final class BreathFocusViewController: FocusViewController {
     private let breathView = UIView()
     private lazy var breathShapeLayer: CAShapeLayer = {
         let drawingLayer = CAShapeLayer()
-//        drawingLayer.path = bezPathStage0.cgPath
         drawingLayer.fillColor = .init(red: 0.1, green: 1.0, blue: 0.1, alpha: 0.5)
-//        drawingLayer.lineWidth = 4.0
         drawingLayer.shadowColor = .init(red: 0, green: 1.0, blue: 0, alpha: 1)
         drawingLayer.shadowOpacity = 0.9
         drawingLayer.shadowOffset = CGSize.zero
@@ -91,11 +89,7 @@ final class BreathFocusViewController: FocusViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        configurePulseLayer()
-//        configureProgressBar()
-        
         configureUI()
-        
         bindUI()
     }
     
@@ -117,8 +111,6 @@ final class BreathFocusViewController: FocusViewController {
     
     private func configureUI() {
         view.makeBlurBackground()
-               
-//        view.backgroundColor = .gray
         
         view.addSubview(breathView)
         breathView.snp.makeConstraints {
@@ -138,7 +130,6 @@ final class BreathFocusViewController: FocusViewController {
         
         view.addSubview(timePickerView)
         timePickerView.snp.makeConstraints {
-//            $0.center.equalTo(timeLabel)
             $0.center.equalTo(breathView.snp.center)
         }
         
@@ -181,8 +172,8 @@ final class BreathFocusViewController: FocusViewController {
         scaleUpAnim.repeatCount = 1
         
         let colorAnim = CABasicAnimation(keyPath: "opacity")
-        colorAnim.fromValue = 1.0//CGColor.init(red: 0.1, green: 1.0, blue: 0.1, alpha: 0.5)
-        colorAnim.toValue = 0.5//CGColor.init(red: 0.1, green: 1.0, blue: 0.1, alpha: 0.2)
+        colorAnim.fromValue = 1.0
+        colorAnim.toValue = 0.5
         colorAnim.duration = 1.0
         colorAnim.beginTime = 0.0
         colorAnim.repeatCount = 1
@@ -194,12 +185,8 @@ final class BreathFocusViewController: FocusViewController {
         animations.beginTime = 0.0
         animations.isRemovedOnCompletion = true
         animations.fillMode = CAMediaTimingFillMode.forwards
-//        breathShapeLayer.opacity =
-//        breathShapeLayer.removeAllAnimations()
         breathShapeLayer.add(animations, forKey: nil)
         
-//        self.breathShapeLayer.add(scaleUpAnim, forKey: "adf")
-//        self.view.layer.backgroundColor = .init(red: 0.1, green: 1.0, blue: 0.1, alpha: 0.5)
         // 진입 배경 애니메이션
         self.stopButton.layer.opacity = 0
         UIView.animate(withDuration: 1.0, delay: .zero, options: .curveEaseIn) {
@@ -221,10 +208,6 @@ final class BreathFocusViewController: FocusViewController {
     }
     
     private func stopBreath() {
-        
-//        self.startButton.isHidden = false
-//        self.stopButton.isHidden = true
-        
         startButton.isHidden = false
         stopButton.isHidden = true
         timeLabel.isHidden = false
