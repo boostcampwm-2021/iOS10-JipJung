@@ -31,8 +31,8 @@ final class BreathFocusViewController: FocusViewController {
     
     private lazy var timeLabel: UILabel = {
         let timeLabel = UILabel()
-        timeLabel.text = "01:00"
-        timeLabel.font = UIFont.boldSystemFont(ofSize: 35)
+        timeLabel.text = "7 breaths"
+        timeLabel.font = UIFont.boldSystemFont(ofSize: 21)
         timeLabel.textColor = .white
         return timeLabel
     }()
@@ -91,9 +91,9 @@ final class BreathFocusViewController: FocusViewController {
     // MARK: - Helpers
     
     private func configureUI() {
-//        view.makeBlurBackground()
+        view.makeBlurBackground()
                
-        view.backgroundColor = .gray
+//        view.backgroundColor = .gray
         
         view.addSubview(breathView)
         breathView.snp.makeConstraints {
@@ -338,9 +338,9 @@ final class BreathFocusViewController: FocusViewController {
 
 extension BreathFocusViewController: UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        let focusTime = (viewModel?.focusTimeList[row] ?? 0) * 60
+        let focusTime = (viewModel?.focusTimeList[row] ?? 0) * 7
         viewModel?.setFocusTime(seconds: focusTime)
-        self.timeLabel.text = focusTime.digitalClockFormatted
+        self.timeLabel.text = "\(focusTime) breaths"
     }
     
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
