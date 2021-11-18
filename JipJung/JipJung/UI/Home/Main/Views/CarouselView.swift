@@ -111,7 +111,7 @@ class CarouselView: UIView {
                 else {
                     return
                 }
-                print(currentIndex, contents.count, contents.map { $0.id })
+
                 self?.applyContents(
                     previousItem: previousItem,
                     currentItem: currentItem,
@@ -134,6 +134,9 @@ class CarouselView: UIView {
     }
     
     private func move(distanceX: CGFloat) {
+        guard contents.value.count != 1 else {
+            return
+        }
         previousView.snp.updateConstraints {
             $0.centerX.equalToSuperview().offset(distanceX - UIScreen.main.bounds.width)
         }
@@ -146,6 +149,10 @@ class CarouselView: UIView {
     }
     
     private func applyPaging(with scrollDirection: ScrollDirection) {
+        guard contents.value.count != 1 else {
+            return
+        }
+        
         switch scrollDirection {
         case .left:
             previousView.snp.updateConstraints {
@@ -236,34 +243,24 @@ extension CarouselView {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         
-        guard let touch = touches.first else {
-            return
-        }
+        guard let touch = touches.first else { return }
         
         startX = touch.location(in: self).x
-        print("CarouselView", #function, touch.location(in: self).x)
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesMoved(touches, with: event)
         
-        guard let touch = touches.first else {
-            return
-        }
+        guard let touch = touches.first else { return }
         
         let moveX = touch.location(in: self).x
-        
-        print("CarouselView", #function, touch.location(in: self).x)
-
         move(distanceX: moveX - startX)
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesMoved(touches, with: event)
         
-        guard let touch = touches.first else {
-            return
-        }
+        guard let touch = touches.first else { return }
         
         let destinationX = touch.location(in: self).x
         
