@@ -92,6 +92,7 @@ final class MaximViewController: UIViewController {
         configureUI()
         bindCollectionView()
         bindAction()
+        bindHeaderCollectionView()
         
         viewModel.fetchMaximList()
     }
@@ -146,8 +147,12 @@ final class MaximViewController: UIViewController {
             cell.speakerLabel.text = maxim.speaker
         }
         .disposed(by: disposeBag)
-        
-        viewModel.maximList.bind(to: calendarHeaderCollectionView.rx.items(cellIdentifier: MaximCalendarHeaderCollectionViewCell.identifier)) { index, maxim, cell in
+    }
+    
+    private func bindHeaderCollectionView() {
+        viewModel.maximList.bind(
+            to: calendarHeaderCollectionView.rx.items(cellIdentifier: MaximCalendarHeaderCollectionViewCell.identifier)
+        ) { _, maxim, cell in
             guard let cell = cell as? MaximCalendarHeaderCollectionViewCell else {
                 return
             }
@@ -156,6 +161,24 @@ final class MaximViewController: UIViewController {
             cell.weekdayLabel.text = maxim.weekDay
         }
         .disposed(by: disposeBag)
+        let dateObservable = viewModel.selectedDate.distinctUntilChanged()
+        let previousObservable = dateObservable
+        let currentObservable = dateObservable.skip(1)
+        Observable.zip(previousObservable, currentObservable).bind(onNext: { [weak self] (prev, cur) in
+            let previousCell =
+            self?.calendarHeaderCollectionView.cellForItem(at: prev) as? MaximCalendarHeaderCollectionViewCell
+            let currentCell =
+            self?.calendarHeaderCollectionView.cellForItem(at: cur) as? MaximCalendarHeaderCollectionViewCell
+            previousCell?.indicatorPointView.isHidden = true
+            currentCell?.indicatorPointView.isHidden = false
+        })
+            .disposed(by: disposeBag)
+        // TODO: Today관련 bind
+//        viewModel.selectedDate.bind { [weak self] in
+//            guard let cell = self?.calendarHeaderCollectionView.cellForItem(at: $0) as? MaximCalendarHeaderCollectionViewCell else {
+//                return
+//            }
+//        }
     }
     
     private func bindAction() {
@@ -174,12 +197,11 @@ final class MaximViewController: UIViewController {
             self?.presentHeader()
         }
         .disposed(by: disposeBag)
-        calendarHeaderCollectionView.rx.itemSelected.bind {
-            print($0)
+        
+        calendarHeaderCollectionView.rx.itemSelected.bind { [weak self] in
+            self?.viewModel.selectDate(with: $0)
         }
         .disposed(by: disposeBag)
-//        calendarHeaderCollectionView.rx.
-//        calendarHeaderCollectionView.rx.items(cellIdentifier: "")
     }
     
     private func presentHeader() {

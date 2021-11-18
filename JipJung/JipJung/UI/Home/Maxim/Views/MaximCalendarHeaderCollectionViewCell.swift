@@ -29,9 +29,6 @@ class MaximCalendarHeaderCollectionViewCell: UICollectionViewCell {
         return dayButton
     }()
     
-//    @objc func clickButton(_ sender: UIButton) {
-//        self.dayButton.sendAction(<#T##UIAction#>)
-//    }
     var dayButtonText: String {
         get {
             dayButton.titleLabel?.text ?? ""
@@ -50,6 +47,7 @@ class MaximCalendarHeaderCollectionViewCell: UICollectionViewCell {
     private(set) lazy var indicatorPointView: UIView = {
         let indicatorPointView = UIView()
         indicatorPointView.backgroundColor = .red
+        indicatorPointView.isHidden = true
         return indicatorPointView
     }()
     
