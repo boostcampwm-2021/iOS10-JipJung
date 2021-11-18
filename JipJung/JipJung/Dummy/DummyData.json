@@ -104,41 +104,41 @@
   "PlayHistory": [
     {
       "id": 0,
-      "mediaID": "002",
+      "mediaID": "N000",
       "addDate": "2012-04-23T18:25:00Z"
     },
     {
       "id": 1,
-      "mediaID": "002",
+      "mediaID": "N001",
       "addDate": "2012-04-23T18:25:00Z"
     },
     {
       "id": 2,
-      "mediaID": "002",
+      "mediaID": "N002",
       "addDate": "2012-04-23T18:25:00Z"
     },
     {
       "id": 3,
-      "mediaID": "002",
+      "mediaID": "N003",
       "addDate": "2012-04-23T18:25:00Z"
     },
     {
       "id": 4,
-      "mediaID": "008",
+      "mediaID": "N004",
       "addDate": "2012-04-23T18:25:00Z"
     }
   ],
   "FavoriteMedia": [
     {
-      "id": "001",
+      "id": "U000",
       "addDate": "2012-04-23T18:25:00Z"
     },
     {
-      "id": "002",
+      "id": "U001",
       "addDate": "2012-04-23T18:25:00Z"
     },
     {
-      "id": "003",
+      "id": "U002",
       "addDate": "2012-04-23T18:25:00Z"
     }
   ],
