@@ -13,11 +13,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
     
-    private let localFileManager: LocalFileAccessible = LocalFileManager()
-    private let localDBManager: LocalDBManageable = RealmDBManager()
-    private let userDefaultsManager: UserDefaultsStorable = UserDefaultsStorage()
-    private let remoteServiceProvider: RemoteServiceAccessible = RemoteServiceProvider()
-
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
@@ -30,15 +25,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let tabBarController = UITabBarController()
         self.configure(tabBarController.tabBar)
         
-        let audioPlayUseCase = AudioPlayUseCase(
-            mediaResourceRepository: MediaResourceRepository(
-                localFileManager: localFileManager,
-                remoteServiceProvider: remoteServiceProvider
-            )
-        )
-        
         tabBarController.viewControllers = [
-            createHomeViewController(audioPlayUseCase),
+            createHomeViewController(),
             createExploreNavigationViewController(),
             createMeViewController()
         ]
@@ -53,8 +41,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         tabBar.makeBlurBackground()
     }
     
-    // TODO: Protocol로 의존성 제거 필요
-    private func createHomeViewController(_ audioPlayUseCase: AudioPlayUseCase) -> UIViewController {
+    private func createHomeViewController() -> UIViewController {
         let tabBarItem = UITabBarItem(
             title: TabBarItems.Home.title,
             image: UIImage(systemName: TabBarItems.Home.image),
@@ -63,11 +50,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let homeViewController = HomeViewController()
         homeViewController.tabBarItem = tabBarItem
-        homeViewController.localFileManager = localFileManager
-        homeViewController.localDBManager = localDBManager
-        homeViewController.userDefaultsManager = userDefaultsManager
-        homeViewController.remoteServiceProvider = remoteServiceProvider
-        homeViewController.audioPlayUseCase = audioPlayUseCase
         return homeViewController
     }
     
@@ -78,7 +60,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             tag: 1
         )
         
-        let exploreViewController = ExploreViewController()
+        let exploreViewController = ExploreViewController(viewModel: ExploreViewModel(searchMediaUseCase: SearchMediaUseCase()))
         exploreViewController.tabBarItem = tabBarItem
         let exploreNavigationViewController = UINavigationController(rootViewController: exploreViewController)
         

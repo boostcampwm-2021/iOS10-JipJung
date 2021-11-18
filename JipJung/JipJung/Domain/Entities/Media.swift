@@ -12,13 +12,15 @@ import RealmSwift
 class Media: Object, Decodable {
     @Persisted(primaryKey: true) var id: String
     @Persisted var name: String
+    @Persisted var explanation: String
+    @Persisted var maxim: String
+    @Persisted var speaker: String
+    @Persisted var color: String
     @Persisted var mode: Int
     @Persisted var tag: String
     @Persisted var thumbnailImageFileName: String
     @Persisted var videoFileName: String
-    @Persisted var videoFileSize: Float
     @Persisted var audioFileName: String
-    @Persisted var audioFileSize: Float
     
     private override init() {
         super.init()
@@ -27,23 +29,27 @@ class Media: Object, Decodable {
     convenience init(
         id: String,
         name: String,
+        explanation: String,
+        maxim: String,
+        speaker: String,
+        color: String,
         mode: Int,
         tag: String,
         thumbnailImageFileName: String,
         videoFileName: String,
-        videoFileSize: Float,
-        audioFileName: String,
-        audioFileSize: Float
+        audioFileName: String
     ) {
         self.init()
         self.id = id
         self.name = name
+        self.explanation = explanation
+        self.maxim = maxim
+        self.speaker = speaker
+        self.color = color
         self.mode = mode
         self.tag = tag
         self.thumbnailImageFileName = thumbnailImageFileName
         self.videoFileName = videoFileName
-        self.videoFileSize = videoFileSize
         self.audioFileName = audioFileName
-        self.audioFileSize = audioFileSize
     }
 }

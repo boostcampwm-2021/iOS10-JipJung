@@ -12,15 +12,15 @@ import SnapKit
 class MusicDescriptionView: UIView {
     var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "BlueBerry Nights"
+        label.text = ""
         label.font = .systemFont(ofSize: 32, weight: .medium)
         label.textColor = .white
         return label
     }()
     
-    var subscriptionLabel: UILabel = {
+    var explanationLabel: UILabel = {
         let label = UILabel()
-        label.text = "A blueberry pie and icecream"
+        label.text = ""
         label.textColor = UIColor(white: 1, alpha: 0.8)
         return label
     }()
@@ -69,7 +69,7 @@ class MusicDescriptionView: UIView {
         }
         
         contentView.addSubview(titleLabel)
-        contentView.addSubview(subscriptionLabel)
+        contentView.addSubview(explanationLabel)
         contentView.addSubview(streamingButton)
         contentView.addSubview(tagView)
         
@@ -84,14 +84,14 @@ class MusicDescriptionView: UIView {
             make.centerY.equalTo(streamingButton.snp.centerY)
         }
 
-        subscriptionLabel.snp.makeConstraints { make in
+        explanationLabel.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
             make.top.equalTo(titleLabel.snp.bottom).offset(8)
         }
 
         tagView.snp.makeConstraints { make in
             make.leading.trailing.bottom.equalToSuperview()
-            make.top.equalTo(subscriptionLabel.snp.bottom).offset(8)
+            make.top.equalTo(explanationLabel.snp.bottom).offset(8)
         }
     }
 }

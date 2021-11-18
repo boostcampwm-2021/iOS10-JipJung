@@ -7,12 +7,20 @@
 
 import Foundation
 
-class LocalFileManager: LocalFileAccessible {
-    // TODO: [safe: 0] 적용하기
-    private let cachePath = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0]
+class LocalFileManager {
+    static let shared = LocalFileManager()
+    private init() {}
+    
+    private let cachePath = FileManager.default.urls(
+        for: .cachesDirectory,
+           in: .userDomainMask
+    )[safe: 0]
     
     func isExsit(_ fileName: String) -> URL? {
-        let fileURL = cachePath.appendingPathComponent(fileName)
+        guard let fileURL = cachePath?.appendingPathComponent(fileName) else {
+            return nil
+        }
+        
         if FileManager.default.fileExists(atPath: fileURL.path) {
             return fileURL
         } else {
@@ -29,7 +37,10 @@ class LocalFileManager: LocalFileAccessible {
     }
     
     func read(_ fileName: String) throws -> Data {
-        let fileURL = cachePath.appendingPathComponent(fileName)
+        guard let fileURL = cachePath?.appendingPathComponent(fileName) else {
+            throw LocalFileError.notFound
+        }
+        
         do {
             return try Data(contentsOf: fileURL)
         } catch {
@@ -46,7 +57,10 @@ class LocalFileManager: LocalFileAccessible {
     }
     
     func write(_ data: Data, at fileName: String) throws {
-        let fileURL = cachePath.appendingPathComponent(fileName)
+        guard let fileURL = cachePath?.appendingPathComponent(fileName) else {
+            throw LocalFileError.notFound
+        }
+        
         do {
             try data.write(to: fileURL)
         } catch {
@@ -55,7 +69,10 @@ class LocalFileManager: LocalFileAccessible {
     }
     
     func move(from url: URL, to fileName: String) throws -> URL {
-        let fileURL = cachePath.appendingPathComponent(fileName)
+        guard let fileURL = cachePath?.appendingPathComponent(fileName) else {
+            throw LocalFileError.notFound
+        }
+        
         do {
             try FileManager.default.moveItem(at: url, to: fileURL)
         } catch {
@@ -65,7 +82,10 @@ class LocalFileManager: LocalFileAccessible {
     }
     
     func delete(_ fileName: String) throws {
-        let fileURL = cachePath.appendingPathComponent(fileName)
+        guard let fileURL = cachePath?.appendingPathComponent(fileName) else {
+            throw LocalFileError.notFound
+        }
+        
         do {
             try FileManager.default.removeItem(at: fileURL)
         } catch {

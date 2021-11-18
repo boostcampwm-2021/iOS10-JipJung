@@ -40,6 +40,7 @@ final class FavoriteCircleButton: MusicPlayerBaseButton {
     override func configure() {
         super.configure()
         setImage(UIImage(systemName: "heart"), for: .normal)
-        tintColor = .white
+        setImage(UIImage(systemName: "heart.fill"), for: .selected)
+        tintColor = .red
     }
 }

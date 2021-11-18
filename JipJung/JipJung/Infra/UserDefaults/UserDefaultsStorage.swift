@@ -7,19 +7,11 @@
 
 import Foundation
 
-protocol UserDefaultsStorable {
-    func save(for key: String, value: Int)
-    func save(for key: String, value: [String])
-    func load(for key: String) -> Int?
-    func load(for key: String) -> [String]?
-}
-
-final class UserDefaultsStorage: UserDefaultsStorable {
-    private let userDefaults: UserDefaults
+final class UserDefaultsStorage {
+    static let shared = UserDefaultsStorage()
+    private init() {}
     
-    init(userDefaults: UserDefaults = UserDefaults.standard) {
-        self.userDefaults = userDefaults
-    }
+    private let userDefaults = UserDefaults.standard
     
     func save(for key: String, value: Int) {
         userDefaults.set(value, forKey: key)
