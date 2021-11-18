@@ -72,6 +72,9 @@ final class ExploreViewController: UIViewController {
         configureUI()
         bindUI()
         viewModel?.categorize(by: SoundTag.all.value)
+        soundTagCollectionView.selectItem(at: IndexPath(item: 0, section: 0),
+                                          animated: true,
+                                          scrollPosition: .centeredHorizontally)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -149,7 +152,7 @@ extension ExploreViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == soundTagCollectionView {
             let count = viewModel?.soundTagList[safe: indexPath.item]?.value.count ?? 0
-            return CGSize(width: count * 10, height: 30)
+            return CGSize(width: count * 14, height: 30)
         } else if collectionView == soundCollectionView {
             return CGSize(width: (collectionView.frame.size.width-32)/2-6, height: 220)
         } else {
@@ -167,6 +170,7 @@ extension ExploreViewController: UICollectionViewDelegate {
         if collectionView == soundTagCollectionView {
             let tag = viewModel?.soundTagList[safe: indexPath.item]?.value ?? ""
             viewModel?.categorize(by: tag)
+            
         } else if collectionView == soundCollectionView {
             let media = viewModel?.categoryItems.value[indexPath.item] ?? Media()
             navigationController?.pushViewController(MusicPlayerViewController(viewModel: MusicPlayerViewModel(media: media)), animated: true)
@@ -198,6 +202,9 @@ extension ExploreViewController: UICollectionViewDataSource {
             let media = viewModel?.categoryItems.value[indexPath.item] ?? Media()
             cell.titleView.text = media.name
             cell.imageView.image = UIImage(named: media.thumbnailImageFileName)
+            let colorHexString = viewModel?.categoryItems.value[indexPath.item].color ?? "FFFFFF"
+            cell.backgroundColor = UIColor(rgb: Int(colorHexString, radix: 16) ?? 0xFFFFFF,
+                                           alpha: 1.0)
             return cell
         } else {
             return UICollectionViewCell()
