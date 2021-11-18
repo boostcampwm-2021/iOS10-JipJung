@@ -22,7 +22,7 @@ final class MusicPlayerViewController: UIViewController {
         let layout = LeftAlignCollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
-        collectionView.register(TagCollectionViewCell.self, forCellWithReuseIdentifier: UICollectionView.CellIdentifier.tag.value)
+        collectionView.register(TagCollectionViewCell.self, forCellWithReuseIdentifier: TagCollectionViewCell.identifier)
         return collectionView
     }()
     private let bottomView = UIView()
@@ -176,11 +176,18 @@ final class MusicPlayerViewController: UIViewController {
             return view
         }()
         
+        let colorHexString = viewModel?.color ?? "FFFFFF"
+        bottomView.backgroundColor = UIColor(rgb: Int(colorHexString, radix: 16) ?? 0xFFFFFF,
+                                             alpha: 1.0)
+        
         bottomView.addSubview(maximContainerView)
         maximContainerView.snp.makeConstraints { make in
             make.leading.top.trailing.equalToSuperview().inset(12)
             make.bottom.equalTo(playButton.snp.top).offset(-12)
         }
+        
+        maximTextView.maximLabel.text = viewModel?.maxim
+        maximTextView.speakerNameLabel.text = viewModel?.speaker
         
         maximContainerView.addSubview(maximTextView)
         maximTextView.snp.makeConstraints { make in
@@ -257,13 +264,14 @@ extension MusicPlayerViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: UICollectionView.CellIdentifier.tag.value,
+            withReuseIdentifier: TagCollectionViewCell.identifier,
             for: indexPath
         ) as? TagCollectionViewCell
         else {
             return UICollectionViewCell()
         }
         cell.tagLabel.text = viewModel?.tag[indexPath.item]
+
         return cell
     }
 }

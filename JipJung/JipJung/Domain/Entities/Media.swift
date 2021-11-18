@@ -13,6 +13,9 @@ class Media: Object, Decodable {
     @Persisted(primaryKey: true) var id: String
     @Persisted var name: String
     @Persisted var explanation: String
+    @Persisted var maxim: String
+    @Persisted var speaker: String
+    @Persisted var color: String
     @Persisted var mode: Int
     @Persisted var tag: String
     @Persisted var thumbnailImageFileName: String
@@ -27,6 +30,9 @@ class Media: Object, Decodable {
         id: String,
         name: String,
         explanation: String,
+        maxim: String,
+        speaker: String,
+        color: String,
         mode: Int,
         tag: String,
         thumbnailImageFileName: String,
@@ -37,6 +43,9 @@ class Media: Object, Decodable {
         self.id = id
         self.name = name
         self.explanation = explanation
+        self.maxim = maxim
+        self.speaker = speaker
+        self.color = color
         self.mode = mode
         self.tag = tag
         self.thumbnailImageFileName = thumbnailImageFileName

@@ -16,7 +16,7 @@ class MusicPlayerMaximView: UIView {
         At night,
         The moon draws faint tides from ear to ear.
         """
-        label.font = .italicSystemFont(ofSize: 18)
+        label.font = .systemFont(ofSize: 14, weight: .semibold)
         label.numberOfLines = 0
         label.textColor = .white
         
@@ -33,11 +33,11 @@ class MusicPlayerMaximView: UIView {
         return label
     }()
     
-    let personNameLabel: UILabel = {
+    let speakerNameLabel: UILabel = {
         let label = UILabel()
         let words = "- J.M. Coetzee"
         label.text = words
-        label.font = .italicSystemFont(ofSize: 18)
+        label.font = .systemFont(ofSize: 18)
         label.textColor = UIColor(white: 1, alpha: 0.35)
         return label
     }()
@@ -54,17 +54,17 @@ class MusicPlayerMaximView: UIView {
     
     func configure() {
         addSubview(maximLabel)
-        addSubview(personNameLabel)
+        addSubview(speakerNameLabel)
         
-        maximLabel.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview()
-            make.center.equalToSuperview()
-            make.height.equalTo(maximLabel.intrinsicContentSize.height)
+        maximLabel.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview()
+            $0.center.equalToSuperview()
+            $0.height.equalTo(maximLabel.intrinsicContentSize.height)
         }
         
-        personNameLabel.snp.makeConstraints { make in
-            make.trailing.equalToSuperview()
-            make.top.equalTo(maximLabel.snp.bottom).offset(32)
+        speakerNameLabel.snp.makeConstraints {
+            $0.trailing.equalToSuperview()
+            $0.top.equalTo(maximLabel.snp.bottom).offset(32)
         }
     }
 }

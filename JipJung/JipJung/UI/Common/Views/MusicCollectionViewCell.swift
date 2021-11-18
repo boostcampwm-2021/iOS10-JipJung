@@ -9,7 +9,6 @@ import UIKit
 import SnapKit
 
 class MusicCollectionViewCell: UICollectionViewCell {
-    
     lazy var imageView: UIImageView = {
         let imageView = UIImageView(frame: frame)
         imageView.image = UIImage(systemName: "photo")
@@ -20,8 +19,9 @@ class MusicCollectionViewCell: UICollectionViewCell {
     lazy var titleView: UILabel = {
         let label = UILabel(frame: frame)
         label.text = "몰디브 자연음"
+        label.textColor = .white
         label.textAlignment = .center
-        label.font = .systemFont(ofSize: 16)
+        label.font = .systemFont(ofSize: 16, weight: .semibold)
         return label
     }()
     
@@ -48,17 +48,17 @@ class MusicCollectionViewCell: UICollectionViewCell {
         
         addSubview(imageView)
         let frame = self.frame
-        imageView.snp.makeConstraints { make in
-            make.width.equalToSuperview().multipliedBy(0.6)
-            make.centerX.equalToSuperview()
-            make.height.equalTo(imageView.snp.width)
-            make.top.equalToSuperview().offset(frame.width * 0.115)
+        imageView.snp.makeConstraints {
+            $0.width.equalToSuperview().multipliedBy(0.6)
+            $0.centerX.equalToSuperview()
+            $0.height.equalTo(imageView.snp.width)
+            $0.top.equalToSuperview().offset(frame.width * 0.2)
         }
         addSubview(titleView)
-        titleView.snp.makeConstraints { make in
-            make.width.equalToSuperview().multipliedBy(0.9)
-            make.centerX.equalToSuperview()
-            make.top.equalTo(imageView.snp.bottom).offset(frame.width * 0.2)
+        titleView.snp.makeConstraints {
+            $0.width.equalToSuperview().multipliedBy(0.9)
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(imageView.snp.bottom).offset(frame.width * 0.2)
         }
     }
 }

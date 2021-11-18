@@ -43,9 +43,10 @@ final class SearchViewController: UIViewController {
     private lazy var searchHistoryTableView: UITableView = {
         let searchHistoryTableView = UITableView()
         searchHistoryTableView.backgroundColor = .black
+        searchHistoryTableView.separatorStyle = .none
         searchHistoryTableView.delegate = self
         searchHistoryTableView.dataSource = self
-        searchHistoryTableView.register(SearchTableViewCell.self, forCellReuseIdentifier: UITableView.CellIdentifier.search.value)
+        searchHistoryTableView.register(SearchTableViewCell.self, forCellReuseIdentifier: SearchTableViewCell.identifier)
         
         return searchHistoryTableView
     }()
@@ -62,7 +63,7 @@ final class SearchViewController: UIViewController {
         soundContentsCollectionView.dataSource = self
         soundContentsCollectionView.register(
             MusicCollectionViewCell.self,
-            forCellWithReuseIdentifier: UICollectionView.CellIdentifier.music.value)
+            forCellWithReuseIdentifier: MusicCollectionViewCell.identifier)
         return soundContentsCollectionView
     }()
     
@@ -158,8 +159,6 @@ extension SearchViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let searchHistory = viewModel?.searchHistory.value[indexPath.item] ?? ""
-        print(indexPath.item)
-        print(searchHistory)
         self.searchHistoryTableView.isHidden = true
         viewModel?.search(keyword: searchHistory)
     }
@@ -167,7 +166,7 @@ extension SearchViewController: UITableViewDelegate {
 
 extension SearchViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 10
+        return 15
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -179,7 +178,7 @@ extension SearchViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.cell(identifier: UITableView.CellIdentifier.search.value, for: indexPath) as? SearchTableViewCell
+        guard let cell = tableView.cell(identifier: SearchTableViewCell.identifier, for: indexPath) as? SearchTableViewCell
         else { return UITableViewCell() }
         
         cell.searchHistory.text = viewModel?.searchHistory.value[indexPath.item]
@@ -220,8 +219,13 @@ extension SearchViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.cell(identifier: UICollectionView.CellIdentifier.music.value, for: indexPath) as? MusicCollectionViewCell else { return  UICollectionViewCell() }
-        cell.titleView.text = viewModel?.searchResult.value[indexPath.item].name
+        guard let cell = collectionView.cell(identifier: MusicCollectionViewCell.identifier, for: indexPath) as? MusicCollectionViewCell else { return  UICollectionViewCell() }
+        let media = viewModel?.searchResult.value[indexPath.item] ?? Media()
+        cell.titleView.text = media.name
+        cell.imageView.image = UIImage(named: media.thumbnailImageFileName)
+        let colorHexString = viewModel?.searchResult.value[indexPath.item].color ?? "FFFFFF"
+        cell.backgroundColor = UIColor(rgb: Int(colorHexString, radix: 16) ?? 0xFFFFFF,
+                                       alpha: 1.0)
         return cell
     }
 }

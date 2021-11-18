@@ -39,7 +39,7 @@ final class ExploreViewController: UIViewController {
         categoryCollectionView.dataSource = self
         categoryCollectionView.register(
             SoundTagCollectionViewCell.self,
-            forCellWithReuseIdentifier: UICollectionView.CellIdentifier.soundTag.value)
+            forCellWithReuseIdentifier: SoundTagCollectionViewCell.identifier)
         return categoryCollectionView
     }()
 
@@ -55,7 +55,7 @@ final class ExploreViewController: UIViewController {
         soundContentsCollectionView.dataSource = self
         soundContentsCollectionView.register(
             MusicCollectionViewCell.self,
-            forCellWithReuseIdentifier: UICollectionView.CellIdentifier.music.value)
+            forCellWithReuseIdentifier: MusicCollectionViewCell.identifier)
         return soundContentsCollectionView
     }()
     
@@ -72,11 +72,15 @@ final class ExploreViewController: UIViewController {
         configureUI()
         bindUI()
         viewModel?.categorize(by: SoundTag.all.value)
+        soundTagCollectionView.selectItem(at: IndexPath(item: 0, section: 0),
+                                          animated: true,
+                                          scrollPosition: .centeredHorizontally)
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
+        tabBarController?.tabBar.isHidden = false
     }
     
     // MARK: - Initializer
@@ -148,7 +152,7 @@ extension ExploreViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == soundTagCollectionView {
             let count = viewModel?.soundTagList[safe: indexPath.item]?.value.count ?? 0
-            return CGSize(width: count * 10, height: 30)
+            return CGSize(width: count * 14, height: 30)
         } else if collectionView == soundCollectionView {
             return CGSize(width: (collectionView.frame.size.width-32)/2-6, height: 220)
         } else {
@@ -166,6 +170,7 @@ extension ExploreViewController: UICollectionViewDelegate {
         if collectionView == soundTagCollectionView {
             let tag = viewModel?.soundTagList[safe: indexPath.item]?.value ?? ""
             viewModel?.categorize(by: tag)
+            
         } else if collectionView == soundCollectionView {
             let media = viewModel?.categoryItems.value[indexPath.item] ?? Media()
             navigationController?.pushViewController(MusicPlayerViewController(viewModel: MusicPlayerViewModel(media: media)), animated: true)
@@ -188,13 +193,18 @@ extension ExploreViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == soundTagCollectionView {
-            guard let cell = collectionView.cell(identifier: UICollectionView.CellIdentifier.soundTag.value, for: indexPath) as? SoundTagCollectionViewCell else { return  UICollectionViewCell() }
+            guard let cell = collectionView.cell(identifier: SoundTagCollectionViewCell.identifier, for: indexPath) as? SoundTagCollectionViewCell else { return  UICollectionViewCell() }
             cell.soundTagLabel.text = viewModel?.soundTagList[safe: indexPath.item]?.value
             return cell
         } else if collectionView == soundCollectionView {
-            guard let cell = collectionView.cell(identifier: UICollectionView.CellIdentifier.music.value, for: indexPath) as? MusicCollectionViewCell else { return  UICollectionViewCell() }
+            guard let cell = collectionView.cell(identifier: MusicCollectionViewCell.identifier, for: indexPath) as? MusicCollectionViewCell else { return  UICollectionViewCell() }
 
-            cell.titleView.text = viewModel?.categoryItems.value[indexPath.item].name
+            let media = viewModel?.categoryItems.value[indexPath.item] ?? Media()
+            cell.titleView.text = media.name
+            cell.imageView.image = UIImage(named: media.thumbnailImageFileName)
+            let colorHexString = viewModel?.categoryItems.value[indexPath.item].color ?? "FFFFFF"
+            cell.backgroundColor = UIColor(rgb: Int(colorHexString, radix: 16) ?? 0xFFFFFF,
+                                           alpha: 1.0)
             return cell
         } else {
             return UICollectionViewCell()

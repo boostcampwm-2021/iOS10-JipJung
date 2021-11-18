@@ -29,6 +29,9 @@ protocol MusicPlayerViewModelOutput {
     var isFavorite: BehaviorRelay<Bool> { get }
     var title: String { get }
     var explanation: String { get }
+    var maxim: String { get }
+    var speaker: String { get }
+    var color: String { get }
     var tag: [String] { get }
     var videoPlayerItem: AVPlayerItem? { get }
 }
@@ -39,6 +42,9 @@ final class MusicPlayerViewModel: MusicPlayerViewModelInput, MusicPlayerViewMode
     let isFavorite: BehaviorRelay<Bool> = BehaviorRelay<Bool>(value: false)
     let title: String
     let explanation: String
+    let maxim: String
+    let speaker: String
+    let color: String
     let tag: [String]
     var videoPlayerItem: AVPlayerItem?
     
@@ -55,6 +61,9 @@ final class MusicPlayerViewModel: MusicPlayerViewModelInput, MusicPlayerViewMode
         id = media.id
         title = media.name
         explanation = media.explanation
+        maxim = media.maxim
+        speaker = media.speaker
+        color = media.color
         tag = media.tag.components(separatedBy: "/")
         audioFileName = media.audioFileName
         videoFileName = media.videoFileName
@@ -71,7 +80,6 @@ final class MusicPlayerViewModel: MusicPlayerViewModelInput, MusicPlayerViewMode
         favoriteMediaUseCase.read(id: id)
             .subscribe { [weak self] in
                 guard $0.count > 0 else { return }
-                print($0) //
                 self?.isFavorite.accept(true)
             } onFailure: { error in
                 print(error.localizedDescription)
@@ -130,7 +138,6 @@ final class MusicPlayerViewModel: MusicPlayerViewModelInput, MusicPlayerViewMode
                     print(error.localizedDescription)
                 }
                 .disposed(by: disposeBag)
-
         case true:
             favoriteMediaUseCase.delete(id: id)
             isFavorite.accept(false)

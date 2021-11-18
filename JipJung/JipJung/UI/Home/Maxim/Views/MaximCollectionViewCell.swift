@@ -8,8 +8,6 @@
 import UIKit
 
 final class MaximCollectionViewCell: UICollectionViewCell {
-    static let identifier = String(describing: MaximCollectionViewCell.self)
-    
     private(set) lazy var closeButton: UIButton = {
         let button = CloseButton()
         button.tintColor = .white

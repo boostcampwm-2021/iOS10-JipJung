@@ -62,7 +62,7 @@ final class MaximViewController: UIViewController {
     }
     
     private func configureUI() {
-        backgroundColor = .red
+        view.backgroundColor = .red
         view.addSubview(maximCollectionView)
         
         view.addSubview(closeButton)
