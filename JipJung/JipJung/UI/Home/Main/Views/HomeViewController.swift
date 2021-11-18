@@ -40,8 +40,12 @@ class HomeViewController: UIViewController {
         
         configureUI()
         bindUI()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
-        viewModel.viewControllerLoaded()
+        viewModel.viewWillAppear()
     }
     
     private func configureUI() {
@@ -71,6 +75,7 @@ class HomeViewController: UIViewController {
     }
     
     private func configureCarouselView() {
+        carouselView.delegate = self
         carouselView.backgroundColor = .clear
         mainScrollContentsView.addSubview(carouselView)
         carouselView.snp.makeConstraints {
@@ -306,5 +311,11 @@ extension HomeViewController: UIViewControllerTransitioningDelegate {
     
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return SlowPresent(duration: 0.5, animationType: .dismiss)
+    }
+}
+
+extension HomeViewController: CarouselViewDelegate {
+    func currentViewTapped(audioFileName: String) -> Single<Bool> {
+        return mediaPlayButtonTouched(audioFileName: audioFileName)
     }
 }

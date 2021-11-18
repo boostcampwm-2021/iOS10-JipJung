@@ -11,6 +11,10 @@ import RxRelay
 import RxSwift
 import SnapKit
 
+protocol CarouselViewDelegate: AnyObject {
+    func currentViewTapped(audioFileName: String) -> Single<Bool>
+}
+
 class CarouselView: UIView {
     enum ScrollDirection: CGFloat {
         case left = -1
@@ -34,7 +38,9 @@ class CarouselView: UIView {
     private let contents = BehaviorRelay<[Media]>(value: [])
     private let currentIndex = BehaviorRelay<Int>(value: 0)
     
-    private var startX: CGFloat = 0
+    private var startPoint: CGPoint = .zero
+    
+    weak var delegate: CarouselViewDelegate?
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -58,7 +64,7 @@ class CarouselView: UIView {
         
         addSubview(previousView)
         previousView.snp.makeConstraints {
-            $0.centerX.equalToSuperview().offset(-UIScreen.main.bounds.width)
+            $0.centerX.equalToSuperview().offset(-UIScreen.deviceScreenSize.width)
             $0.centerY.equalToSuperview()
             $0.width.height.equalToSuperview()
         }
@@ -72,7 +78,7 @@ class CarouselView: UIView {
         
         addSubview(nextView)
         nextView.snp.makeConstraints {
-            $0.centerX.equalToSuperview().offset(UIScreen.main.bounds.width)
+            $0.centerX.equalToSuperview().offset(UIScreen.deviceScreenSize.width)
             $0.centerY.equalToSuperview()
             $0.width.height.equalToSuperview()
         }
@@ -138,13 +144,29 @@ class CarouselView: UIView {
             return
         }
         previousView.snp.updateConstraints {
-            $0.centerX.equalToSuperview().offset(distanceX - UIScreen.main.bounds.width)
+            $0.centerX.equalToSuperview().offset(distanceX - UIScreen.deviceScreenSize.width)
         }
         currentView.snp.updateConstraints {
             $0.centerX.equalToSuperview().offset(distanceX)
         }
         nextView.snp.updateConstraints {
-            $0.centerX.equalToSuperview().offset(distanceX + UIScreen.main.bounds.width)
+            $0.centerX.equalToSuperview().offset(distanceX + UIScreen.deviceScreenSize.width)
+        }
+        
+        // Reference: iOS05-Escaper의 3주차 데모 발표 QnA
+        let leftDistance = abs(distanceX)
+        let rightDistance = abs(UIScreen.deviceScreenSize.width - distanceX)
+        let distance = min(leftDistance, rightDistance) / UIScreen.deviceScreenSize.width
+        let distanceRatio = min(0.1, distance)
+        
+        [
+            previousView,
+            currentView,
+            nextView
+        ].forEach {
+            $0.layer.masksToBounds = true
+            $0.layer.cornerRadius = 40 * (distanceRatio * 10)
+            $0.transform = CGAffineTransform(scaleX: 1 - distanceRatio, y: 1 - distanceRatio)
         }
     }
     
@@ -156,10 +178,10 @@ class CarouselView: UIView {
         switch scrollDirection {
         case .left:
             previousView.snp.updateConstraints {
-                $0.centerX.equalToSuperview().offset(-UIScreen.main.bounds.width * 2)
+                $0.centerX.equalToSuperview().offset(-UIScreen.deviceScreenSize.width * 2)
             }
             currentView.snp.updateConstraints {
-                $0.centerX.equalToSuperview().offset(-UIScreen.main.bounds.width)
+                $0.centerX.equalToSuperview().offset(-UIScreen.deviceScreenSize.width)
             }
             nextView.snp.updateConstraints {
                 $0.centerX.equalToSuperview()
@@ -169,27 +191,39 @@ class CarouselView: UIView {
                 $0.centerX.equalToSuperview()
             }
             currentView.snp.updateConstraints {
-                $0.centerX.equalToSuperview().offset(UIScreen.main.bounds.width)
+                $0.centerX.equalToSuperview().offset(UIScreen.deviceScreenSize.width)
             }
             nextView.snp.updateConstraints {
-                $0.centerX.equalToSuperview().offset(UIScreen.main.bounds.width * 2)
+                $0.centerX.equalToSuperview().offset(UIScreen.deviceScreenSize.width * 2)
             }
         case .none:
             previousView.snp.updateConstraints {
-                $0.centerX.equalToSuperview().offset(-UIScreen.main.bounds.width)
+                $0.centerX.equalToSuperview().offset(-UIScreen.deviceScreenSize.width)
             }
             currentView.snp.updateConstraints {
                 $0.centerX.equalToSuperview()
             }
             nextView.snp.updateConstraints {
-                $0.centerX.equalToSuperview().offset(UIScreen.main.bounds.width)
+                $0.centerX.equalToSuperview().offset(UIScreen.deviceScreenSize.width)
             }
         }
 
         UIView.animate(withDuration: 0.2) { [weak self] in
             self?.layoutIfNeeded()
+            
+            [
+                self?.previousView,
+                self?.currentView,
+                self?.nextView
+            ].forEach {
+                $0?.layer.masksToBounds = false
+                $0?.layer.cornerRadius = 0
+                $0?.transform = CGAffineTransform.identity
+            }
+            
         } completion: { [weak self] _ in
             guard let self = self else { return }
+            
             switch scrollDirection {
             case .left:
                 let currentIndex = self.currentIndex.value
@@ -202,6 +236,11 @@ class CarouselView: UIView {
                 self.nextView = tempView
                 
                 self.currentIndex.accept(nextIndex)
+                
+                self.previousView.pauseVideo()
+                self.currentView.pauseVideo()
+                self.nextView.pauseVideo()
+                self.mediaPlayViewTapped()
             case .right:
                 let currentIndex = self.currentIndex.value
                 let contentsCount = self.contents.value.count
@@ -214,20 +253,38 @@ class CarouselView: UIView {
                 
                 self.currentIndex.accept(nextIndex)
                 
+                self.previousView.pauseVideo()
+                self.currentView.pauseVideo()
+                self.nextView.pauseVideo()
+                self.mediaPlayViewTapped()
             case .none:
                 break
             }
             
             self.previousView.snp.updateConstraints {
-                $0.centerX.equalToSuperview().offset(-UIScreen.main.bounds.width)
+                $0.centerX.equalToSuperview().offset(-UIScreen.deviceScreenSize.width)
             }
             self.currentView.snp.updateConstraints {
                 $0.centerX.equalToSuperview()
             }
             self.nextView.snp.updateConstraints {
-                $0.centerX.equalToSuperview().offset(UIScreen.main.bounds.width)
+                $0.centerX.equalToSuperview().offset(UIScreen.deviceScreenSize.width)
             }
         }
+    }
+    
+    private func mediaPlayViewTapped() {
+        guard let delegate = delegate,
+              let media = currentView.media.value
+        else {
+            return
+        }
+
+        delegate.currentViewTapped(audioFileName: media.audioFileName)
+            .subscribe { [weak self] state in
+                state ? self?.currentView.playVideo() : self?.currentView.pauseVideo()
+            }
+            .disposed(by: disposeBag)
     }
 }
 
@@ -238,7 +295,7 @@ extension CarouselView {
         
         guard let touch = touches.first else { return }
         
-        startX = touch.location(in: self).x
+        startPoint = touch.location(in: self)
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -246,8 +303,9 @@ extension CarouselView {
         
         guard let touch = touches.first else { return }
         
-        let moveX = touch.location(in: self).x
-        move(distanceX: moveX - startX)
+        let movingPoint = touch.location(in: self)
+        let distance = movingPoint - startPoint
+        move(distanceX: distance.x)
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -255,10 +313,16 @@ extension CarouselView {
         
         guard let touch = touches.first else { return }
         
-        let destinationX = touch.location(in: self).x
+        let endPoint = touch.location(in: self)
+        let distance = endPoint - startPoint
         
-        let distanceX = (destinationX - startX) / frame.width
+        if abs(distance.x) < 5 && abs(distance.y) < 5 {
+            applyPaging(with: .none)
+            mediaPlayViewTapped()
+            return
+        }
         
+        let distanceX = distance.x / frame.width
         if let direction = ScrollDirection.init(rawValue: round(distanceX)) {
             applyPaging(with: direction)
         }
