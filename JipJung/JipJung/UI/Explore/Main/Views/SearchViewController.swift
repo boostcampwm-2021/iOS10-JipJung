@@ -46,7 +46,7 @@ final class SearchViewController: UIViewController {
         searchHistoryTableView.separatorStyle = .none
         searchHistoryTableView.delegate = self
         searchHistoryTableView.dataSource = self
-        searchHistoryTableView.register(SearchTableViewCell.self, forCellReuseIdentifier: UITableView.CellIdentifier.search.value)
+        searchHistoryTableView.register(SearchTableViewCell.self, forCellReuseIdentifier: SearchTableViewCell.identifier)
         
         return searchHistoryTableView
     }()
@@ -63,7 +63,7 @@ final class SearchViewController: UIViewController {
         soundContentsCollectionView.dataSource = self
         soundContentsCollectionView.register(
             MusicCollectionViewCell.self,
-            forCellWithReuseIdentifier: UICollectionView.CellIdentifier.music.value)
+            forCellWithReuseIdentifier: MusicCollectionViewCell.identifier)
         return soundContentsCollectionView
     }()
     
@@ -178,7 +178,7 @@ extension SearchViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.cell(identifier: UITableView.CellIdentifier.search.value, for: indexPath) as? SearchTableViewCell
+        guard let cell = tableView.cell(identifier: SearchTableViewCell.identifier, for: indexPath) as? SearchTableViewCell
         else { return UITableViewCell() }
         
         cell.searchHistory.text = viewModel?.searchHistory.value[indexPath.item]
@@ -219,7 +219,7 @@ extension SearchViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.cell(identifier: UICollectionView.CellIdentifier.music.value, for: indexPath) as? MusicCollectionViewCell else { return  UICollectionViewCell() }
+        guard let cell = collectionView.cell(identifier: MusicCollectionViewCell.identifier, for: indexPath) as? MusicCollectionViewCell else { return  UICollectionViewCell() }
         let media = viewModel?.searchResult.value[indexPath.item] ?? Media()
         cell.titleView.text = media.name
         cell.imageView.image = UIImage(named: media.thumbnailImageFileName)

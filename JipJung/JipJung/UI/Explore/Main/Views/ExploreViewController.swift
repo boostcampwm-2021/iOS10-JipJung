@@ -39,7 +39,7 @@ final class ExploreViewController: UIViewController {
         categoryCollectionView.dataSource = self
         categoryCollectionView.register(
             SoundTagCollectionViewCell.self,
-            forCellWithReuseIdentifier: UICollectionView.CellIdentifier.soundTag.value)
+            forCellWithReuseIdentifier: SoundTagCollectionViewCell.identifier)
         return categoryCollectionView
     }()
 
@@ -55,7 +55,7 @@ final class ExploreViewController: UIViewController {
         soundContentsCollectionView.dataSource = self
         soundContentsCollectionView.register(
             MusicCollectionViewCell.self,
-            forCellWithReuseIdentifier: UICollectionView.CellIdentifier.music.value)
+            forCellWithReuseIdentifier: MusicCollectionViewCell.identifier)
         return soundContentsCollectionView
     }()
     
@@ -193,11 +193,11 @@ extension ExploreViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == soundTagCollectionView {
-            guard let cell = collectionView.cell(identifier: UICollectionView.CellIdentifier.soundTag.value, for: indexPath) as? SoundTagCollectionViewCell else { return  UICollectionViewCell() }
+            guard let cell = collectionView.cell(identifier: SoundTagCollectionViewCell.identifier, for: indexPath) as? SoundTagCollectionViewCell else { return  UICollectionViewCell() }
             cell.soundTagLabel.text = viewModel?.soundTagList[safe: indexPath.item]?.value
             return cell
         } else if collectionView == soundCollectionView {
-            guard let cell = collectionView.cell(identifier: UICollectionView.CellIdentifier.music.value, for: indexPath) as? MusicCollectionViewCell else { return  UICollectionViewCell() }
+            guard let cell = collectionView.cell(identifier: MusicCollectionViewCell.identifier, for: indexPath) as? MusicCollectionViewCell else { return  UICollectionViewCell() }
 
             let media = viewModel?.categoryItems.value[indexPath.item] ?? Media()
             cell.titleView.text = media.name

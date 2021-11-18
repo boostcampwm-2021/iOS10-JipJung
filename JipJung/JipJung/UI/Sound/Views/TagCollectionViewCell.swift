@@ -10,6 +10,7 @@ import UIKit
 import SnapKit
 
 class TagCollectionViewCell: UICollectionViewCell {
+    static let identifier = String(describing: TagCollectionViewCell.self)
     
     let tagLabel: UILabel = {
         let label = UILabel()

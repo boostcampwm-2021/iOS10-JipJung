@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 
 class SoundTagCollectionViewCell: UICollectionViewCell {
+    static let identifier = String(describing: SoundTagCollectionViewCell.self)
     
     // MARK: - Subviews
     

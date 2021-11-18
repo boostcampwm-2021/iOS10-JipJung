@@ -95,7 +95,7 @@ class HomeViewController: UIViewController {
         mediaCollectionView.backgroundColor = .clear
         mediaCollectionView.register(
             MediaCollectionViewCell.self,
-            forCellWithReuseIdentifier: UICollectionView.CellIdentifier.media.value
+            forCellWithReuseIdentifier: MediaCollectionViewCell.identifier
         )
         mediaCollectionView.addGestureRecognizer(UIPanGestureRecognizer(target: nil, action: nil))
         mediaCollectionView.contentInsetAdjustmentBehavior = .never
@@ -361,7 +361,7 @@ class HomeViewController: UIViewController {
         viewModel.currentModeList
             .distinctUntilChanged()
             .bind(
-                to: mediaCollectionView.rx.items(cellIdentifier: UICollectionView.CellIdentifier.media.value)
+                to: mediaCollectionView.rx.items(cellIdentifier: MediaCollectionViewCell.identifier)
             ) { [weak self] _, element, cell in
                 guard let self = self,
                       let cell = cell as? MediaCollectionViewCell

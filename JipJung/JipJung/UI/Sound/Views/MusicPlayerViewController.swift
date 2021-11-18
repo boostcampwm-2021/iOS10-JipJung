@@ -22,7 +22,7 @@ final class MusicPlayerViewController: UIViewController {
         let layout = LeftAlignCollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
-        collectionView.register(TagCollectionViewCell.self, forCellWithReuseIdentifier: UICollectionView.CellIdentifier.tag.value)
+        collectionView.register(TagCollectionViewCell.self, forCellWithReuseIdentifier: TagCollectionViewCell.identifier)
         return collectionView
     }()
     private let bottomView = UIView()
@@ -264,7 +264,7 @@ extension MusicPlayerViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: UICollectionView.CellIdentifier.tag.value,
+            withReuseIdentifier: TagCollectionViewCell.identifier,
             for: indexPath
         ) as? TagCollectionViewCell
         else {

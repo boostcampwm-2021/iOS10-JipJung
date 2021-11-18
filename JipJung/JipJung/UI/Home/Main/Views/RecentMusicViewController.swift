@@ -35,7 +35,7 @@ final class RecentMusicViewController: UIViewController {
         recentMusicCollectionView.delegate = self
         recentMusicCollectionView.dataSource = self
         recentMusicCollectionView.register(MusicCollectionViewCell.self,
-                                           forCellWithReuseIdentifier: UICollectionView.CellIdentifier.music.value)
+                                           forCellWithReuseIdentifier: MusicCollectionViewCell.identifier)
         return recentMusicCollectionView
     }()
     
@@ -94,7 +94,7 @@ extension RecentMusicViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.cell(identifier: UICollectionView.CellIdentifier.music.value, for: indexPath) as? MusicCollectionViewCell else { return  UICollectionViewCell() }
+        guard let cell = collectionView.cell(identifier: MusicCollectionViewCell.identifier, for: indexPath) as? MusicCollectionViewCell else { return  UICollectionViewCell() }
         
         return cell
     }
