@@ -14,6 +14,7 @@ protocol MaximViewModelInput {
     func presentHeader()
     func dismissHeader()
     func selectDate(with indexPath: IndexPath)
+    func moveNDate(with nDate: Int)
 }
 
 protocol MaximViewModelOutput {
@@ -54,5 +55,11 @@ final class MaximViewModel: MaximViewModelInput, MaximViewModelOutput {
     
     func selectDate(with indexPath: IndexPath) {
         selectedDate.accept(indexPath)
+    }
+    
+    func moveNDate(with nDate: Int) {
+        if 0 <= selectedDate.value.row + nDate && selectedDate.value.row + nDate < maximList.value.count {
+            selectedDate.accept(IndexPath(row: selectedDate.value.row + nDate, section: selectedDate.value.section))
+        }
     }
 }

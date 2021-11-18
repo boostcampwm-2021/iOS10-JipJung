@@ -51,7 +51,9 @@ final class MaximViewController: UIViewController {
             right: 0)
         calendarHeaderCollectionView.isHidden = true
         calendarHeaderCollectionView.showsHorizontalScrollIndicator = false
-        calendarHeaderCollectionView.isPagingEnabled = true
+        calendarHeaderCollectionView.decelerationRate = .fast
+//        calendarHeaderCollectionView.isPagingEnabled = true
+        calendarHeaderCollectionView.delegate = self
         calendarHeaderCollectionView.register(
             MaximCalendarHeaderCollectionViewCell.self,
             forCellWithReuseIdentifier: MaximCalendarHeaderCollectionViewCell.identifier)
@@ -68,7 +70,7 @@ final class MaximViewController: UIViewController {
         let screenBounds = UIScreen.main.bounds
         let maximCollectionView = UICollectionView(frame: screenBounds, collectionViewLayout: collectionViewLayout)
         maximCollectionView.decelerationRate = .fast
-        maximCollectionView.isPagingEnabled = false
+//        maximCollectionView.isPagingEnabled = false
         maximCollectionView.showsHorizontalScrollIndicator = false
         maximCollectionView.delegate = self
         maximCollectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -90,15 +92,15 @@ final class MaximViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
-        bindCollectionView()
+        bindMaximCollectionView()
         bindAction()
-        bindHeaderCollectionView()
+        bindCalendarHeaderCollectionView()
         
         viewModel.fetchMaximList()
     }
     
     private func configureUI() {
-        maximCollectionView.backgroundColor = .red
+        maximCollectionView.backgroundColor = .blue
         view.addSubview(maximCollectionView)
         
         view.addSubview(calendarHeaderCollectionView)
@@ -135,7 +137,7 @@ final class MaximViewController: UIViewController {
         }
     }
     
-    private func bindCollectionView() {
+    private func bindMaximCollectionView() {
         viewModel.maximList.bind(to: maximCollectionView.rx.items(cellIdentifier: MaximCollectionViewCell.identifier)) { index, maxim, cell in
             guard let cell = cell as? MaximCollectionViewCell else {
                 return
@@ -147,9 +149,15 @@ final class MaximViewController: UIViewController {
             cell.speakerLabel.text = maxim.speaker
         }
         .disposed(by: disposeBag)
+
+        viewModel.selectedDate.skip(1).bind { [weak self] indexPath in
+            self?.maximCollectionView.scrollToItem(at: indexPath, at: [], animated: true)
+            self?.showWeek(with: indexPath)
+        }
+        .disposed(by: disposeBag)
     }
     
-    private func bindHeaderCollectionView() {
+    private func bindCalendarHeaderCollectionView() {
         viewModel.maximList.bind(
             to: calendarHeaderCollectionView.rx.items(cellIdentifier: MaximCalendarHeaderCollectionViewCell.identifier)
         ) { _, maxim, cell in
@@ -161,10 +169,12 @@ final class MaximViewController: UIViewController {
             cell.weekdayLabel.text = maxim.weekDay
         }
         .disposed(by: disposeBag)
-        let dateObservable = viewModel.selectedDate.distinctUntilChanged()
+        let dateObservable = viewModel.selectedDate
         let previousObservable = dateObservable
         let currentObservable = dateObservable.skip(1)
+        
         Observable.zip(previousObservable, currentObservable).bind(onNext: { [weak self] (prev, cur) in
+            print(prev, cur)
             let previousCell =
             self?.calendarHeaderCollectionView.cellForItem(at: prev) as? MaximCalendarHeaderCollectionViewCell
             let currentCell =
@@ -181,20 +191,30 @@ final class MaximViewController: UIViewController {
 //        }
     }
     
+    private func showWeek(with indexPath: IndexPath) {
+        let index = indexPath.row / 7
+        print(indexPath.row)
+        calendarHeaderCollectionView.contentOffset = CGPoint(x: CGFloat(index) * MaximCalendarHeaderCollectionViewSize.width, y: 0)
+    }
+    
     private func bindAction() {
-        let isHeaderPresent = self.isHeaderPresent
         closeButton.rx.tap.bind { [weak self] in
+            guard let isHeaderPresent = self?.isHeaderPresent else {
+                return
+            }
             if isHeaderPresent {
                 self?.dismissHeader()
+                self?.isHeaderPresent = false
             } else {
-                self?.presentHeader()
+                self?.dismiss(animated: true)
             }
-            self?.isHeaderPresent.toggle()
         }
         .disposed(by: disposeBag)
         
         calendarButton.rx.tap.bind { [weak self] in
             self?.presentHeader()
+            self?.viewModel.moveNDate(with: 0)
+            self?.isHeaderPresent = true
         }
         .disposed(by: disposeBag)
         
@@ -218,12 +238,17 @@ final class MaximViewController: UIViewController {
     }
     
     private func dismissHeader() {
-        UIView.animate(withDuration: 0.3, delay: 0, options: []) { [weak self] in
-            self?.calendarHeaderCollectionView.transform = CGAffineTransform(translationX: 0, y: -200)
+        self.calendarHeaderCollectionView.snp.updateConstraints { [weak self] in
+            guard let self = self else {
+                return
+            }
+            $0.bottom.equalTo(self.view.snp.top)
+        }
+        UIView.animate(withDuration: 0.5, delay: 0, options: []) { [weak self] in
+            self?.calendarHeaderCollectionView.superview?.layoutIfNeeded()
         } completion: { [weak self] in
             self?.calendarHeaderCollectionView.isHidden = $0
         }
-
     }
 }
 
@@ -234,18 +259,40 @@ extension MaximViewController: UICollectionViewDelegate {
 // MARK: 출처 - https://eunjin3786.tistory.com/203
 extension MaximViewController: UIScrollViewDelegate {
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        guard let layout = maximCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
-        
-        let cellWidthIncludingSpacing = layout.itemSize.width + layout.minimumLineSpacing
-        let estimatedIndex = scrollView.contentOffset.x / cellWidthIncludingSpacing
-        let index: Int
-        if velocity.x > 0 {
-            index = Int(ceil(estimatedIndex))
-        } else if velocity.x < 0 {
-            index = Int(floor(estimatedIndex))
-        } else {
-            index = Int(round(estimatedIndex))
+        switch scrollView {
+        case maximCollectionView:
+            guard let layout = maximCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
+            let cellWidthIncludingSpacing = layout.itemSize.width + layout.minimumLineSpacing
+            let estimatedIndex = scrollView.contentOffset.x / cellWidthIncludingSpacing
+            let index: Int
+            if velocity.x > 0 {
+                index = Int(ceil(estimatedIndex))
+                viewModel.moveNDate(with: 1)
+            } else if velocity.x < 0 {
+                index = Int(floor(estimatedIndex))
+                viewModel.moveNDate(with: -1)
+            } else {
+                index = Int(round(estimatedIndex))
+            }
+            targetContentOffset.pointee = CGPoint(x: CGFloat(index) * cellWidthIncludingSpacing, y: 0)
+        case calendarHeaderCollectionView:
+            guard let layout = calendarHeaderCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
+            let cellWidthIncludingSpacing = (layout.itemSize.width + layout.minimumLineSpacing) * 7
+            let estimatedIndex = scrollView.contentOffset.x / cellWidthIncludingSpacing
+            let index: Int
+            if velocity.x > 0 {
+                index = Int(ceil(estimatedIndex))
+                self.viewModel.moveNDate(with: 7)
+            } else if velocity.x < 0 {
+                index = Int(floor(estimatedIndex))
+                self.viewModel.moveNDate(with: -7)
+            } else {
+                index = Int(round(estimatedIndex))
+            }
+            targetContentOffset.pointee = CGPoint(x: CGFloat(index) * cellWidthIncludingSpacing, y: 0)
+            
+        default:
+            break
         }
-        targetContentOffset.pointee = CGPoint(x: CGFloat(index) * cellWidthIncludingSpacing, y: 0)
     }
 }
