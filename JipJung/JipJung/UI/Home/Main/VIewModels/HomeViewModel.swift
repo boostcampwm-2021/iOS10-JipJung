@@ -11,7 +11,7 @@ import RxSwift
 import RxRelay
 
 protocol HomeViewModelInput {
-    func viewControllerLoaded()
+    func viewWillAppear()
     func modeSwitchTouched()
     func mediaPlayButtonTouched(_ audioFileName: String) -> Single<Bool>
     func mediaCollectionCellLoaded(_ videoFileName: String) -> Single<URL>
@@ -49,7 +49,7 @@ final class HomeViewModel: HomeViewModelInput, HomeViewModelOutput {
             .disposed(by: bag)
     }
     
-    func viewControllerLoaded() {
+    func viewWillAppear() {
         // TODO: UserDefaults에서 현재 mode 정보 가져오기
         
         mediaListUseCase.fetchMediaMyList(mode: .bright)
@@ -87,6 +87,7 @@ final class HomeViewModel: HomeViewModelInput, HomeViewModelOutput {
     
     func modeSwitchTouched() {
         mode.accept(mode.value == .bright ? .darkness : .bright)
+        mediaPlayButtonTouched("")
     }
     
     func mediaPlayButtonTouched(_ audioFileName: String) -> Single<Bool> {

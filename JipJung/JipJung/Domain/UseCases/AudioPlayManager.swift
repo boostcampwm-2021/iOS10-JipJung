@@ -20,7 +20,7 @@ class AudioPlayManager {
     private var audioPlayer: AVAudioPlayer?
     
     func controlAudioPlay(_ audioFileName: String) -> Single<Bool> {
-        if audioFileName == audioPlayer?.url?.lastPathComponent {
+        if audioFileName.isEmpty || audioFileName == audioPlayer?.url?.lastPathComponent {
             audioPlayer?.pause()
             audioPlayer = nil
             return Single.just(false)

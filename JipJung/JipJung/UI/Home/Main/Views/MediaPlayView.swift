@@ -68,6 +68,7 @@ final class MediaPlayView: UIView {
             .distinctUntilChanged()
             .compactMap { $0 }
             .bind(onNext: { [weak self] media in
+                self?.pauseVideo()
                 self?.setMedia(media: media)
             })
             .disposed(by: disposeBag)
@@ -96,8 +97,9 @@ final class MediaPlayView: UIView {
                 guard let self = self else { return }
                 
                 let playerItem = AVPlayerItem(url: url)
-                let videoPlayer = AVQueuePlayer(playerItem: playerItem)
-                let playerLayer = AVPlayerLayer(player: videoPlayer)
+                self.videoPlayer = AVQueuePlayer(playerItem: playerItem)
+                
+                let playerLayer = AVPlayerLayer(player: self.videoPlayer)
                 playerLayer.videoGravity = .resizeAspectFill
                 playerLayer.frame = UIScreen.main.bounds
                 self.layer.sublayers = [playerLayer, self.playButton.layer]

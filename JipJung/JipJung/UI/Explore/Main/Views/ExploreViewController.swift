@@ -204,7 +204,7 @@ extension ExploreViewController: UICollectionViewDataSource {
             cell.imageView.image = UIImage(named: media.thumbnailImageFileName)
             let colorHexString = viewModel?.categoryItems.value[indexPath.item].color ?? "FFFFFF"
             cell.backgroundColor = UIColor(rgb: Int(colorHexString, radix: 16) ?? 0xFFFFFF,
-                                           alpha: 1.0)
+                                           alpha: 1.0).withAlphaComponent(0.7)
             return cell
         } else {
             return UICollectionViewCell()

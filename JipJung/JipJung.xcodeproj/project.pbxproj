@@ -29,6 +29,7 @@
 		917BDD592745FAEC0049E944 /* CarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917BDD582745FAEC0049E944 /* CarouselView.swift */; };
 		917BDD5B2745FBDA0049E944 /* MediaPlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917BDD5A2745FBDA0049E944 /* MediaPlayView.swift */; };
 		917BDD5D2746268D0049E944 /* TouchTransferView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917BDD5C2746268D0049E944 /* TouchTransferView.swift */; };
+		917BDD5F274638750049E944 /* CGPoint+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917BDD5E274638750049E944 /* CGPoint+Extension.swift */; };
 		918D19A5273D21B300A13954 /* sea.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 91184BB3273D1E01007A29C8 /* sea.mp4 */; };
 		9198DE952733863500EBAEC8 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9198DE942733863500EBAEC8 /* Common.swift */; };
 		91CE6F6F2739024800176AF2 /* Home+Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CE6F6E2739024800176AF2 /* Home+Enums.swift */; };
@@ -219,6 +220,7 @@
 		917BDD582745FAEC0049E944 /* CarouselView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselView.swift; sourceTree = "<group>"; };
 		917BDD5A2745FBDA0049E944 /* MediaPlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPlayView.swift; sourceTree = "<group>"; };
 		917BDD5C2746268D0049E944 /* TouchTransferView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchTransferView.swift; sourceTree = "<group>"; };
+		917BDD5E274638750049E944 /* CGPoint+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+Extension.swift"; sourceTree = "<group>"; };
 		9198DE942733863500EBAEC8 /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		91CE6F6E2739024800176AF2 /* Home+Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Home+Enums.swift"; sourceTree = "<group>"; };
 		91CE6F7227390AD200176AF2 /* FocusButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusButton.swift; sourceTree = "<group>"; };
@@ -538,6 +540,7 @@
 				B4E4210C27463C3D00C39545 /* UIColor+Extension.swift */,
 				B4E4210E274673E300C39545 /* UICollectionViewCell+Extension.swift */,
 				B4E421102746753B00C39545 /* UITableViewCell+Extension.swift */,
+				917BDD5E274638750049E944 /* CGPoint+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1296,6 +1299,7 @@
 				B4F36B5127336EE20073609C /* UserDefaultsStorage.swift in Sources */,
 				91D02281273D0A320073EA2A /* VideoPlayUseCase.swift in Sources */,
 				B40D1FAF273B5F2C00881A49 /* PomodoroFocusViewModel.swift in Sources */,
+				917BDD5F274638750049E944 /* CGPoint+Extension.swift in Sources */,
 				91CE6F6F2739024800176AF2 /* Home+Enums.swift in Sources */,
 				91CE6F6F2739024800176AF2 /* Home+Enums.swift in Sources */,
 				B4153949273BA34A004EF80F /* FocusTimeRepository.swift in Sources */,
