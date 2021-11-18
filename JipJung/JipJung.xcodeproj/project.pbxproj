@@ -139,7 +139,8 @@
 		DD828092273D113200BB2A60 /* NetworkEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD828091273D113200BB2A60 /* NetworkEnums.swift */; };
 		DD828095273D1F8E00BB2A60 /* FocusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD828094273D1F8E00BB2A60 /* FocusViewController.swift */; };
 		DD8473632744C24500DF4FCB /* MaximViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9172BBFD274226B1000E1060 /* MaximViewModel.swift */; };
-		DD84736527453FD700DF4FCB /* MaximHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD84736427453FD700DF4FCB /* MaximHeaderCollectionViewCell.swift */; };
+		DD84736527453FD700DF4FCB /* MaximCalendarHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD84736427453FD700DF4FCB /* MaximCalendarHeaderCollectionViewCell.swift */; };
+		DD8473672746112D00DF4FCB /* Maxim+Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8473662746112D00DF4FCB /* Maxim+Enums.swift */; };
 		DD8564CA273F9E6F00049D9B /* SlowPresent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8564C9273F9E6F00049D9B /* SlowPresent.swift */; };
 		DDAA3D3D5F09E051F5BE96A6 /* Pods_JipJung.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6ECB91629425C2E076873750 /* Pods_JipJung.framework */; };
 		DDB5CE9E27328E8300E8F9EB /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB5CE9D27328E8300E8F9EB /* HomeViewController.swift */; };
@@ -330,7 +331,8 @@
 		DD828091273D113200BB2A60 /* NetworkEnums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkEnums.swift; sourceTree = "<group>"; };
 		DD828094273D1F8E00BB2A60 /* FocusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusViewController.swift; sourceTree = "<group>"; };
 		DD84735A2744C1BA00DF4FCB /* MaximViewModelTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MaximViewModelTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		DD84736427453FD700DF4FCB /* MaximHeaderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaximHeaderCollectionViewCell.swift; sourceTree = "<group>"; };
+		DD84736427453FD700DF4FCB /* MaximCalendarHeaderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaximCalendarHeaderCollectionViewCell.swift; sourceTree = "<group>"; };
+		DD8473662746112D00DF4FCB /* Maxim+Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Maxim+Enums.swift"; sourceTree = "<group>"; };
 		DD8564C9273F9E6F00049D9B /* SlowPresent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlowPresent.swift; sourceTree = "<group>"; };
 		DDB5CE9D27328E8300E8F9EB /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		DDB5CEA127328EC300E8F9EB /* ExploreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreViewController.swift; sourceTree = "<group>"; };
@@ -617,7 +619,8 @@
 			children = (
 				9172BBFB274226A8000E1060 /* MaximViewController.swift */,
 				DD4D03062743BBB9007AA4DD /* MaximCollectionViewCell.swift */,
-				DD84736427453FD700DF4FCB /* MaximHeaderCollectionViewCell.swift */,
+				DD84736427453FD700DF4FCB /* MaximCalendarHeaderCollectionViewCell.swift */,
+				DD8473662746112D00DF4FCB /* Maxim+Enums.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1246,7 +1249,7 @@
 				B40D1FAD273B5F2800881A49 /* PomodoroFocusViewController.swift in Sources */,
 				DDB5CEB32733752D00E8F9EB /* FavoriteMedia.swift in Sources */,
 				9131513F27400C26001E7125 /* UIScreen+Extension.swift in Sources */,
-				DD84736527453FD700DF4FCB /* MaximHeaderCollectionViewCell.swift in Sources */,
+				DD84736527453FD700DF4FCB /* MaximCalendarHeaderCollectionViewCell.swift in Sources */,
 				DDB92B9D2737BD5E00EE26F0 /* UIView+Extension.swift in Sources */,
 				DF1722B72741036C00F06140 /* BundleManager.swift in Sources */,
 				DDB5CEB32733752D00E8F9EB /* FavoriteMedia.swift in Sources */,
@@ -1320,6 +1323,7 @@
 				DFED21D02733931600E99641 /* MusicDescriptionView.swift in Sources */,
 				DD828092273D113200BB2A60 /* NetworkEnums.swift in Sources */,
 				DD3902D3272FCA10009ECA82 /* SceneDelegate.swift in Sources */,
+				DD8473672746112D00DF4FCB /* Maxim+Enums.swift in Sources */,
 				B481FC7D274521B800D1F2EA /* FavoriteMediaUseCase.swift in Sources */,
 				B4EF13BD2744B9880086D8CD /* FetchMediaURLUseCase.swift in Sources */,
 				DD208D30273B55240089A2AB /* PulseAnimation.swift in Sources */,

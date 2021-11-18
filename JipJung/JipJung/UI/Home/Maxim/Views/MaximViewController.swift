@@ -28,6 +28,11 @@ final class MaximViewController: UIViewController {
     
     private lazy var calendarHeaderCollectionView: UICollectionView = {
         let collectionViewLayout = UICollectionViewFlowLayout()
+        collectionViewLayout.sectionInset = UIEdgeInsets(
+            top: 0,
+            left: MaximCalendarHeaderCollectionViewSize.cellSpacing / CGFloat(2),
+            bottom: 0,
+            right: 0)
         let screenWidth = UIScreen.main.bounds.size.width
         let cellWidth = screenWidth / 14
         let lineSpacing = cellWidth
@@ -37,20 +42,21 @@ final class MaximViewController: UIViewController {
         
         let headerSize = 50
         let calendarHeaderCollectionView = UICollectionView(
-            frame: CGRect(x: CGFloat(0),
-                          y: CGFloat(0),
-                          width: CGFloat(screenWidth),
-                          height: CGFloat(100 + headerSize) + UIApplication.shared.statusBarFrame.height),
+            frame: MaximCalendarHeaderCollectionViewSize.cellSize,
             collectionViewLayout: collectionViewLayout)
-        // blur not working
-//        calendarHeaderCollectionView.makeBlurBackground()
+        calendarHeaderCollectionView.contentInset = UIEdgeInsets(
+            top: 0,
+            left: 0,
+            bottom: MaximViewSize.headerHeight + MaximViewSize.nocheHeight,
+            right: 0)
         calendarHeaderCollectionView.isHidden = true
         calendarHeaderCollectionView.showsHorizontalScrollIndicator = false
         calendarHeaderCollectionView.isPagingEnabled = true
         calendarHeaderCollectionView.register(
-            MaximHeaderCollectionViewCell.self,
-            forCellWithReuseIdentifier: MaximHeaderCollectionViewCell.identifier)
+            MaximCalendarHeaderCollectionViewCell.self,
+            forCellWithReuseIdentifier: MaximCalendarHeaderCollectionViewCell.identifier)
         calendarHeaderCollectionView.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
+        calendarHeaderCollectionView.backgroundColor = UIColor.white.withAlphaComponent(0.5)
         return calendarHeaderCollectionView
     }()
     
@@ -134,18 +140,20 @@ final class MaximViewController: UIViewController {
                 return
             }
             cell.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
-            cell.day.text = maxim.day
+            cell.dayLabel.text = maxim.day
             cell.monthYearLabel.text = maxim.monthYear
             cell.contentLabel.text = maxim.content
             cell.speakerLabel.text = maxim.speaker
         }
         .disposed(by: disposeBag)
         
-        viewModel.maximList.bind(to: calendarHeaderCollectionView.rx.items(cellIdentifier: MaximHeaderCollectionViewCell.identifier)) { index, maxim, cell in
-            guard let cell = cell as? MaximHeaderCollectionViewCell else {
+        viewModel.maximList.bind(to: calendarHeaderCollectionView.rx.items(cellIdentifier: MaximCalendarHeaderCollectionViewCell.identifier)) { index, maxim, cell in
+            guard let cell = cell as? MaximCalendarHeaderCollectionViewCell else {
                 return
             }
             cell.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
+            cell.dayButtonText = maxim.day
+            cell.weekdayLabel.text = maxim.weekDay
         }
         .disposed(by: disposeBag)
     }
@@ -166,6 +174,12 @@ final class MaximViewController: UIViewController {
             self?.presentHeader()
         }
         .disposed(by: disposeBag)
+        calendarHeaderCollectionView.rx.itemSelected.bind {
+            print($0)
+        }
+        .disposed(by: disposeBag)
+//        calendarHeaderCollectionView.rx.
+//        calendarHeaderCollectionView.rx.items(cellIdentifier: "")
     }
     
     private func presentHeader() {
@@ -178,7 +192,6 @@ final class MaximViewController: UIViewController {
         }
         UIView.animate(withDuration: 0.5, delay: 0, options: []) { [weak self] in
             self?.calendarHeaderCollectionView.superview?.layoutIfNeeded()
-//            self?.calendarHeaderCollectionView.transform = CGAffineTransform(translationX: 0, y: 150 + UIApplication.shared.statusBarFrame.height)
         }
     }
     

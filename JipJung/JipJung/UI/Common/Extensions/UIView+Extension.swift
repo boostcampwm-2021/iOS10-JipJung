@@ -10,8 +10,9 @@ import UIKit
 extension UIView {
     func makeCircle() {
         layer.cornerRadius = bounds.height / 2
+        layer.masksToBounds = true
     }
-    
+
     func makeBlurBackground(style: UIBlurEffect.Style = .light) {
         let blurEffect = UIBlurEffect(style: style)
         let blurView = UIVisualEffectView(effect: blurEffect)

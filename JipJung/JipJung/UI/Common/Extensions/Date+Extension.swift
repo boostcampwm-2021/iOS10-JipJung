@@ -20,6 +20,10 @@ extension Date {
         return Calendar.current.component(.month, from: self)
     }
     
+    var weekday: String {
+        return ["S", "M", "T", "W", "T", "F", "S"] [Calendar.current.component(.weekday, from: self) - 1]
+    }
+    
     var year: Int {
         return Calendar.current.component(.year, from: self)
     }

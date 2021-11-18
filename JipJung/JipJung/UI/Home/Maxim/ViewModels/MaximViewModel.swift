@@ -23,7 +23,7 @@ final class MaximViewModel: MaximViewModelInput, MaximViewModelOutput {
     let maximList: BehaviorRelay<[MaximPresenterObject]> = BehaviorRelay<[MaximPresenterObject]>(value: [])
     let isHeaderPresent: PublishRelay<Bool> = PublishRelay<Bool>()
     let imageURLs: BehaviorRelay<[String]> = BehaviorRelay<[String]>(value: [])
-    
+    let selectedDay: PublishRelay<IndexPath> = PublishRelay<IndexPath>()
     private var disposeBag: DisposeBag = DisposeBag()
     private let maximListUseCase: MaximListUseCase
     
