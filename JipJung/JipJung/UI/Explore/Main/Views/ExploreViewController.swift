@@ -194,7 +194,9 @@ extension ExploreViewController: UICollectionViewDataSource {
         } else if collectionView == soundCollectionView {
             guard let cell = collectionView.cell(identifier: UICollectionView.CellIdentifier.music.value, for: indexPath) as? MusicCollectionViewCell else { return  UICollectionViewCell() }
 
-            cell.titleView.text = viewModel?.categoryItems.value[indexPath.item].name
+            let media = viewModel?.categoryItems.value[indexPath.item] ?? Media()
+            cell.titleView.text = media.name
+            cell.imageView.image = UIImage(named: media.thumbnailImageFileName)
             return cell
         } else {
             return UICollectionViewCell()

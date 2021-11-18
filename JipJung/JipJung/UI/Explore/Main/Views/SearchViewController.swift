@@ -221,7 +221,9 @@ extension SearchViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.cell(identifier: UICollectionView.CellIdentifier.music.value, for: indexPath) as? MusicCollectionViewCell else { return  UICollectionViewCell() }
-        cell.titleView.text = viewModel?.searchResult.value[indexPath.item].name
+        let media = viewModel?.searchResult.value[indexPath.item] ?? Media()
+        cell.titleView.text = media.name
+        cell.imageView.image = UIImage(named: media.thumbnailImageFileName)
         return cell
     }
 }
