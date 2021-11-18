@@ -46,9 +46,7 @@ final class ExploreViewController: UIViewController {
     private lazy var soundCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-        layout.minimumInteritemSpacing = 10
-        layout.minimumLineSpacing = 10
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
 
         let soundContentsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         soundContentsCollectionView.backgroundColor = .black
@@ -124,7 +122,7 @@ final class ExploreViewController: UIViewController {
     }
     
     private func bindUI() {
-        viewModel?.searchResult
+        viewModel?.categoryItems
             .distinctUntilChanged()
             .bind(onNext: { [weak self] _ in
                 guard let self = self else { return }
@@ -152,14 +150,14 @@ extension ExploreViewController: UICollectionViewDelegateFlowLayout {
             let count = viewModel?.soundTagList[safe: indexPath.item]?.value.count ?? 0
             return CGSize(width: count * 10, height: 30)
         } else if collectionView == soundCollectionView {
-            return CGSize(width: 180, height: 200)
+            return CGSize(width: (collectionView.frame.size.width-32)/2-6, height: 220)
         } else {
             return CGSize(width: 50, height: 50)
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 1
+        return 12
     }
 }
 
@@ -169,7 +167,8 @@ extension ExploreViewController: UICollectionViewDelegate {
             let tag = viewModel?.soundTagList[safe: indexPath.item]?.value ?? ""
             viewModel?.categorize(by: tag)
         } else if collectionView == soundCollectionView {
-            navigationController?.pushViewController(MusicPlayerViewController(), animated: true)
+            let media = viewModel?.categoryItems.value[indexPath.item] ?? Media()
+            navigationController?.pushViewController(MusicPlayerViewController(viewModel: MusicPlayerViewModel(media: media)), animated: true)
         } else {
            return
         }
@@ -181,7 +180,7 @@ extension ExploreViewController: UICollectionViewDataSource {
         if collectionView == soundTagCollectionView {
             return viewModel?.soundTagList.count ?? 0
         } else if collectionView == soundCollectionView {
-            return viewModel?.searchResult.value.count ?? 0
+            return viewModel?.categoryItems.value.count ?? 0
         } else {
             return 0
         }
@@ -194,10 +193,11 @@ extension ExploreViewController: UICollectionViewDataSource {
             return cell
         } else if collectionView == soundCollectionView {
             guard let cell = collectionView.cell(identifier: UICollectionView.CellIdentifier.music.value, for: indexPath) as? MusicCollectionViewCell else { return  UICollectionViewCell() }
-            cell.titleView.text = viewModel?.searchResult.value[indexPath.item].name
+
+            cell.titleView.text = viewModel?.categoryItems.value[indexPath.item].name
             return cell
         } else {
-            return  UICollectionViewCell()
+            return UICollectionViewCell()
         }
     }
 }

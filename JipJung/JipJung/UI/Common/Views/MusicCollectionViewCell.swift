@@ -13,8 +13,6 @@ class MusicCollectionViewCell: UICollectionViewCell {
     lazy var imageView: UIImageView = {
         let imageView = UIImageView(frame: frame)
         imageView.image = UIImage(systemName: "photo")
-        imageView.layer.borderColor = UIColor.systemRed.cgColor
-        imageView.layer.borderWidth = 3
         imageView.clipsToBounds = true
         return imageView
     }()
@@ -23,7 +21,7 @@ class MusicCollectionViewCell: UICollectionViewCell {
         let label = UILabel(frame: frame)
         label.text = "몰디브 자연음"
         label.textAlignment = .center
-        label.font = .systemFont(ofSize: 32)
+        label.font = .systemFont(ofSize: 16)
         return label
     }()
     
@@ -45,11 +43,13 @@ class MusicCollectionViewCell: UICollectionViewCell {
     }
     
     func configureUI() {
-        backgroundColor = .cyan.withAlphaComponent(0.5)
+        backgroundColor = .white
+        layer.cornerRadius = 10
+        
         addSubview(imageView)
         let frame = self.frame
         imageView.snp.makeConstraints { make in
-            make.width.equalToSuperview().multipliedBy(0.7)
+            make.width.equalToSuperview().multipliedBy(0.6)
             make.centerX.equalToSuperview()
             make.height.equalTo(imageView.snp.width)
             make.top.equalToSuperview().offset(frame.width * 0.115)
@@ -58,7 +58,7 @@ class MusicCollectionViewCell: UICollectionViewCell {
         titleView.snp.makeConstraints { make in
             make.width.equalToSuperview().multipliedBy(0.9)
             make.centerX.equalToSuperview()
-            make.top.equalTo(imageView.snp.bottom).offset(frame.width * 0.115)
+            make.top.equalTo(imageView.snp.bottom).offset(frame.width * 0.2)
         }
     }
 }

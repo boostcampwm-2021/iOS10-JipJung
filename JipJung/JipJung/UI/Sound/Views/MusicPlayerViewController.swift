@@ -7,36 +7,27 @@
 
 import AVKit
 import UIKit
-
 import SnapKit
+import RxSwift
+import RxCocoa
 
-class MusicPlayerViewController: UIViewController {
-    // MARK: - View builder -> 임시 코드가 포함됨
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-    
-    let dataSource = ["Relax", "Melody", "Meditation", "Etc"]
-    let themeColor = CGColor(red: 34.0/255.0, green: 48.0/255.0, blue: 74.0/255.0, alpha: 1)
-    
-    let navigationBar = UINavigationBar()
-    let backButton = BackCircleButton()
-    let favoriteButton = FavoriteCircleButton()
-    
-    let topView = UIView()
-    let musicDescriptionView = MusicDescriptionView()
-    let tagCollectionView: UICollectionView = {
+final class MusicPlayerViewController: UIViewController {
+    private let themeColor = CGColor(red: 34.0/255.0, green: 48.0/255.0, blue: 74.0/255.0, alpha: 1)
+    private let navigationBar = UINavigationBar()
+    private let backButton = BackCircleButton()
+    private let favoriteButton = FavoriteCircleButton()
+    private let topView = UIView()
+    private let musicDescriptionView = MusicDescriptionView()
+    private let tagCollectionView: UICollectionView = {
         let layout = LeftAlignCollectionViewFlowLayout()
-        
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
         collectionView.register(TagCollectionViewCell.self, forCellWithReuseIdentifier: UICollectionView.CellIdentifier.tag.value)
         return collectionView
     }()
-    
-    let bottomView = UIView()
-    let maximTextView = MusicPlayerMaximView()
-    let playButton: UIButton = {
+    private let bottomView = UIView()
+    private let maximTextView = MusicPlayerMaximView()
+    private let playButton: UIButton = {
         let button = UIButton(type: .system)
         button.titleLabel?.font = .boldSystemFont(ofSize: 16)
         button.backgroundColor = .white
@@ -44,25 +35,29 @@ class MusicPlayerViewController: UIViewController {
         button.layer.cornerRadius = 8
         return button
     }()
-
-    var audioPlayer: AVAudioPlayer?
     
-    var playerLooper: AVPlayerLooper?
-    var queuePlayer: AVQueuePlayer?
-    var playerLayer: AVPlayerLayer?
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+
+    // MARK: - Private Variables
+    
+    private var viewModel: MusicPlayerViewModel?
+    private var disposeBag: DisposeBag = DisposeBag()
+    private var playerLooper: AVPlayerLooper?
+    private var queuePlayer: AVQueuePlayer?
+    private var playerLayer: AVPlayerLayer?
     
     // MARK: - Life Cycles
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
 
         configureUI()
-        
-        tagCollectionView.delegate = self
-        tagCollectionView.dataSource = self
-        playButton.addTarget(self, action: #selector(playButtonTouched(_:)), for: .touchUpInside)
-        backButton.addTarget(self, action: #selector(backButtonTouched(_:)), for: .touchUpInside)
-        favoriteButton.addTarget(self, action: #selector(favoriteButtonTouched(_:)), for: .touchUpInside)
+        bindUI()
+        viewModel?.checkMusicDownloaded()
+        viewModel?.checkMusicPlaying()
     }
     
     override func viewDidLayoutSubviews() {
@@ -70,33 +65,21 @@ class MusicPlayerViewController: UIViewController {
         playerLayer?.frame = topView.bounds
     }
     
-    func configureUI() {
+    // MARK: - Initializer
+
+    convenience init(viewModel: MusicPlayerViewModel) {
+        self.init(nibName: nil, bundle: nil)
+        self.viewModel = viewModel
+    }
+    
+    private func configureUI() {
+        tabBarController?.tabBar.isHidden = true
         configureTopView()
         configureBottomView()
         configureNavigationBar()
     }
     
-    // MARK: - Input vent from views
-    @objc func favoriteButtonTouched(_ sender: UIButton) {
-        print(#function, #line)
-    }
-    
-    @objc func streamingButtonTouched(_ sender: UIButton) {
-        print(#function, #line)
-    }
-    
-    @objc func playButtonTouched(_ sender: UIButton) {
-        print(#function, #line)
-    }
-    
-    @objc func backButtonTouched(_ sender: UIButton) {
-        navigationController?.popViewController(animated: true)
-    }
-}
-
-// MARK: - UI Configuration Method
-extension MusicPlayerViewController {
-    func configureNavigationBar() {
+    private func configureNavigationBar() {
         self.view.addSubview(navigationBar)
         navigationBar.snp.makeConstraints { make in
             make.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
@@ -120,7 +103,7 @@ extension MusicPlayerViewController {
         }
     }
     
-    func configureTopView() {
+    private func configureTopView() {
         configureVideoView()
                 
         self.view.addSubview(topView)
@@ -135,44 +118,44 @@ extension MusicPlayerViewController {
             make.bottom.equalToSuperview()
             make.height.equalTo(115)
         }
+        musicDescriptionView.titleLabel.text = viewModel?.title
+        musicDescriptionView.explanationLabel.text = viewModel?.explanation
         
         musicDescriptionView.tagView.addSubview(tagCollectionView)
         tagCollectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        tagCollectionView.delegate = self
+        tagCollectionView.dataSource = self
     }
     
-    func configureVideoView() {
-        guard let videoURL = Bundle.main.url(forResource: "sea", withExtension: "mp4")
-        else {
-            return
+    private func configureVideoView() {
+        if let playerItem = viewModel?.videoPlayerItem {
+            queuePlayer = AVQueuePlayer(items: [playerItem])
+            playerLayer = AVPlayerLayer(player: self.queuePlayer)
+            guard let playerLayer = playerLayer,
+                  let queuePlayer = queuePlayer
+            else {
+                return
+            }
+            playerLooper = AVPlayerLooper(player: queuePlayer, templateItem: playerItem)
+            playerLayer.videoGravity = .resizeAspectFill
         }
-
-        let playerItem = AVPlayerItem(url: videoURL)
-        queuePlayer = AVQueuePlayer(items: [playerItem])
-        playerLayer = AVPlayerLayer(player: self.queuePlayer)
-        
-        guard let playerLayer = playerLayer,
-              let queuePlayer = queuePlayer
-        else {
-            return
-        }
-        
-        playerLooper = AVPlayerLooper(player: queuePlayer, templateItem: playerItem)
-        playerLayer.videoGravity = .resizeAspectFill
 
         let backgroundView = UIView()
         topView.addSubview(backgroundView)
-        backgroundView.backgroundColor = .red
-        backgroundView.layer.addSublayer(playerLayer)
+        backgroundView.backgroundColor = .clear
+        if let playerLayer = self.playerLayer,
+           let queuePlayer = self.queuePlayer {
+            backgroundView.layer.addSublayer(playerLayer)
+            queuePlayer.play()
+        }
         backgroundView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        
-        queuePlayer.play()
     }
     
-    func configureBottomView() {
+    private func configureBottomView() {
         bottomView.layer.backgroundColor = themeColor
         playButton.setTitleColor(UIColor(cgColor: themeColor), for: .normal)
         
@@ -205,4 +188,120 @@ extension MusicPlayerViewController {
         }
     }
     
+    private func bindUI() {
+        backButton.rx.tap
+            .bind { [weak self] in
+                self?.navigationController?.popViewController(animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        playButton.rx.tap
+            .bind { [weak self] in
+                guard let self = self else { return }
+                let playButtonTitle = self.playButton.title(for: .normal)
+                if playButtonTitle == "Pause" {
+                    self.viewModel?.pauseMusic()
+                } else if playButtonTitle == "Play" {
+                    self.viewModel?.playMusic()
+                } else if playButtonTitle == "Download To Play" {
+                    self.viewModel?.playMusic()
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        favoriteButton.rx.tap
+            .bind { [weak self] in
+                self?.viewModel?.toggleFavoriteState()
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel?.musicFileStatus
+            .bind(onNext: { [weak self] in
+                guard let self = self else { return }
+                switch $0 {
+                case .isNotDownloaded:
+                    self.playButton.setTitle("Download To Play", for: .normal)
+                case .downloaded:
+                    self.playButton.setTitle("Play", for: .normal)
+                case .downloadFailed:
+                    self.playButton.setTitle("Download Failed", for: .normal)
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel?.isMusicPlaying
+            .distinctUntilChanged()
+            .bind(onNext: { [weak self] in
+                switch $0 {
+                case true:
+                    self?.playButton.setTitle("Pause", for: .normal)
+                case false:
+                    self?.playButton.setTitle("Play", for: .normal)
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel?.isFavorite
+            .distinctUntilChanged()
+            .bind(onNext: { [weak self] in
+                self?.favoriteButton.isSelected = $0
+            })
+            .disposed(by: disposeBag)
+    }
+}
+
+extension MusicPlayerViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return viewModel?.tag.count ?? 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: UICollectionView.CellIdentifier.tag.value,
+            for: indexPath
+        ) as? TagCollectionViewCell
+        else {
+            return UICollectionViewCell()
+        }
+        cell.tagLabel.text = viewModel?.tag[indexPath.item]
+        return cell
+    }
+}
+
+extension MusicPlayerViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 14)
+        label.text = viewModel?.tag[indexPath.item]
+        label.sizeToFit()
+        
+        let size = label.frame.size
+        
+        return CGSize(width: size.width + 16, height: size.height + 10)
+    }
+}
+
+class LeftAlignCollectionViewFlowLayout: UICollectionViewFlowLayout {
+    override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+        let attributes = super.layoutAttributesForElements(in: rect)
+        
+        var leftMargin = sectionInset.left
+        var maxY: CGFloat = -1.0
+        
+        attributes?.forEach { layoutAttribute in
+            if layoutAttribute.representedElementCategory == .cell {
+                if layoutAttribute.frame.origin.y >= maxY {
+                    leftMargin = sectionInset.left
+                }
+                
+                layoutAttribute.frame.origin.x = leftMargin
+                leftMargin += layoutAttribute.frame.width + minimumInteritemSpacing
+                maxY = max(layoutAttribute.frame.maxY, maxY)
+            }
+        }
+        
+        return attributes
+    }
 }

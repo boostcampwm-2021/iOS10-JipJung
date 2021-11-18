@@ -47,4 +47,8 @@ class AudioPlayManager {
             return Disposables.create()
         }
     }
+    
+    func isPlaying(of audioFileUrl: URL) -> Bool {
+        return audioPlayer?.url == audioFileUrl
+    }
 }

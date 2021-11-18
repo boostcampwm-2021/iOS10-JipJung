@@ -14,7 +14,7 @@ class RealmDBManager {
     static let shared = RealmDBManager()
     private init() {}
     
-    func search<T: Object>(with predicate: NSPredicate? = nil) -> Single<[T]> {
+    func search<T: Object>(ofType: T.Type, with predicate: NSPredicate? = nil) -> Single<[T]> {
         let realm = try? Realm()
         return Single.create { single in
             guard let realm = realm else {
@@ -73,8 +73,14 @@ class RealmDBManager {
     func delete(_ value: Object) -> Single<Bool> {
         let realm = try? Realm()
         return Single.create { single in
-            realm?.delete(value)
-            single(.success(true))
+            do {
+                try realm?.write({
+                    realm?.delete(value)
+                    single(.success(true))
+                })
+            } catch {
+                single(.failure(error))
+            }
             return Disposables.create()
         }
     }

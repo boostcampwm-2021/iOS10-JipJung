@@ -53,9 +53,7 @@ final class SearchViewController: UIViewController {
     private lazy var soundCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-        layout.minimumInteritemSpacing = 10
-        layout.minimumLineSpacing = 10
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
 
         let soundContentsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         soundContentsCollectionView.backgroundColor = .black
@@ -157,6 +155,14 @@ extension SearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let searchHistory = viewModel?.searchHistory.value[indexPath.item] ?? ""
+        print(indexPath.item)
+        print(searchHistory)
+        self.searchHistoryTableView.isHidden = true
+        viewModel?.search(keyword: searchHistory)
+    }
 }
 
 extension SearchViewController: UITableViewDataSource {
@@ -191,13 +197,20 @@ extension SearchViewController: UITableViewDataSource {
     }
 }
 
+extension SearchViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let media = viewModel?.searchResult.value[indexPath.item] ?? Media()
+        navigationController?.pushViewController(MusicPlayerViewController(viewModel: MusicPlayerViewModel(media: media)), animated: true)
+    }
+}
+
 extension SearchViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 180, height: 200)
+        return CGSize(width: (collectionView.frame.size.width-32)/2-6, height: 220)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 1
+        return 12
     }
 }
 

@@ -14,12 +14,12 @@ protocol ExploreViewModelInput {
 }
 
 protocol ExploreViewModelOutput {
-    var searchResult: BehaviorRelay<[Media]> { get }
+    var categoryItems: BehaviorRelay<[Media]> { get }
     var soundTagList: [SoundTag] { get }
 }
 
 final class ExploreViewModel: ExploreViewModelInput, ExploreViewModelOutput {
-    var searchResult: BehaviorRelay<[Media]> = BehaviorRelay<[Media]>(value: [])
+    var categoryItems: BehaviorRelay<[Media]> = BehaviorRelay<[Media]>(value: [])
     var soundTagList: [SoundTag] = SoundTag.allCases
     
     private var disposeBag: DisposeBag = DisposeBag()
@@ -34,7 +34,7 @@ final class ExploreViewModel: ExploreViewModelInput, ExploreViewModelOutput {
         guard tag.isNotEmpty else { return }
         searchMediaUseCase.searchResult
             .bind { [weak self] in
-                self?.searchResult.accept($0)
+                self?.categoryItems.accept($0)
             }
             .disposed(by: disposeBag)
         
