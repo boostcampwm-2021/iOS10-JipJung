@@ -43,6 +43,7 @@ final class SearchViewController: UIViewController {
     private lazy var searchHistoryTableView: UITableView = {
         let searchHistoryTableView = UITableView()
         searchHistoryTableView.backgroundColor = .black
+        searchHistoryTableView.separatorStyle = .none
         searchHistoryTableView.delegate = self
         searchHistoryTableView.dataSource = self
         searchHistoryTableView.register(SearchTableViewCell.self, forCellReuseIdentifier: UITableView.CellIdentifier.search.value)
@@ -158,8 +159,6 @@ extension SearchViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let searchHistory = viewModel?.searchHistory.value[indexPath.item] ?? ""
-        print(indexPath.item)
-        print(searchHistory)
         self.searchHistoryTableView.isHidden = true
         viewModel?.search(keyword: searchHistory)
     }
@@ -167,7 +166,7 @@ extension SearchViewController: UITableViewDelegate {
 
 extension SearchViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 10
+        return 15
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -224,6 +223,9 @@ extension SearchViewController: UICollectionViewDataSource {
         let media = viewModel?.searchResult.value[indexPath.item] ?? Media()
         cell.titleView.text = media.name
         cell.imageView.image = UIImage(named: media.thumbnailImageFileName)
+        let colorHexString = viewModel?.searchResult.value[indexPath.item].color ?? "FFFFFF"
+        cell.backgroundColor = UIColor(rgb: Int(colorHexString, radix: 16) ?? 0xFFFFFF,
+                                       alpha: 1.0)
         return cell
     }
 }
