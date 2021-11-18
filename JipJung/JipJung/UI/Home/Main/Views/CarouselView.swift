@@ -195,44 +195,37 @@ class CarouselView: UIView {
                 let currentIndex = self.currentIndex.value
                 let contentsCount = self.contents.value.count
                 let nextIndex = (currentIndex + 1) % contentsCount
-                self.currentIndex.accept(nextIndex)
-                
+
                 let tempView = self.previousView
                 self.previousView = self.currentView
                 self.currentView = self.nextView
                 self.nextView = tempView
-
-                self.previousView.snp.updateConstraints {
-                    $0.centerX.equalToSuperview().offset(-UIScreen.main.bounds.width)
-                }
-                self.currentView.snp.updateConstraints {
-                    $0.centerX.equalToSuperview()
-                }
-                self.nextView.snp.updateConstraints {
-                    $0.centerX.equalToSuperview().offset(UIScreen.main.bounds.width)
-                }
+                
+                self.currentIndex.accept(nextIndex)
             case .right:
                 let currentIndex = self.currentIndex.value
                 let contentsCount = self.contents.value.count
                 let nextIndex = (contentsCount + currentIndex - 1) % contentsCount
-                self.currentIndex.accept(nextIndex)
                 
                 let tempView = self.nextView
                 self.nextView = self.currentView
                 self.currentView = self.previousView
                 self.previousView = tempView
-
-                self.previousView.snp.updateConstraints {
-                    $0.centerX.equalToSuperview().offset(-UIScreen.main.bounds.width)
-                }
-                self.currentView.snp.updateConstraints {
-                    $0.centerX.equalToSuperview()
-                }
-                self.nextView.snp.updateConstraints {
-                    $0.centerX.equalToSuperview().offset(UIScreen.main.bounds.width)
-                }
+                
+                self.currentIndex.accept(nextIndex)
+                
             case .none:
                 break
+            }
+            
+            self.previousView.snp.updateConstraints {
+                $0.centerX.equalToSuperview().offset(-UIScreen.main.bounds.width)
+            }
+            self.currentView.snp.updateConstraints {
+                $0.centerX.equalToSuperview()
+            }
+            self.nextView.snp.updateConstraints {
+                $0.centerX.equalToSuperview().offset(UIScreen.main.bounds.width)
             }
         }
     }
