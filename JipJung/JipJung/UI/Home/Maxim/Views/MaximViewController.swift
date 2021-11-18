@@ -190,7 +190,7 @@ final class MaximViewController: UIViewController {
     }
     
     private func showWeek(with indexPath: IndexPath) {
-        let index = indexPath.row / 7
+        let index = indexPath.item / 7
         calendarHeaderCollectionView.contentOffset = CGPoint(x: CGFloat(index) * MaximCalendarHeaderCollectionViewSize.width, y: 0)
     }
     

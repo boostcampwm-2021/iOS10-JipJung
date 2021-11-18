@@ -19,17 +19,17 @@ protocol MaximViewModelInput {
 
 protocol MaximViewModelOutput {
     var maximList: BehaviorRelay<[MaximPresenterObject]> { get }
-    var isHeaderPresent: PublishRelay<Bool> { get }
+    var isHeaderPresent: BehaviorRelay<Bool> { get }
     var imageURLs: BehaviorRelay<[String]> { get }
     var selectedDate: BehaviorRelay<IndexPath> { get }
 }
 
 final class MaximViewModel: MaximViewModelInput, MaximViewModelOutput {
-    let maximList: BehaviorRelay<[MaximPresenterObject]> = BehaviorRelay<[MaximPresenterObject]>(value: [])
-    let isHeaderPresent: PublishRelay<Bool> = PublishRelay<Bool>()
-    let imageURLs: BehaviorRelay<[String]> = BehaviorRelay<[String]>(value: [])
-    let selectedDate: BehaviorRelay<IndexPath> = BehaviorRelay<IndexPath>(value: IndexPath(item: 0, section: 0))
-    private var disposeBag: DisposeBag = DisposeBag()
+    let maximList = BehaviorRelay<[MaximPresenterObject]>(value: [])
+    let isHeaderPresent = BehaviorRelay<Bool>(value: false)
+    let imageURLs = BehaviorRelay<[String]>(value: [])
+    let selectedDate = BehaviorRelay<IndexPath>(value: IndexPath(item: 0, section: 0))
+    private var disposeBag = DisposeBag()
     private let maximListUseCase: MaximListUseCase
     
     init(maximListUseCase: MaximListUseCase = MaximListUseCase()) {
@@ -58,8 +58,8 @@ final class MaximViewModel: MaximViewModelInput, MaximViewModelOutput {
     }
     
     func moveNDate(with nDate: Int) {
-        if 0 <= selectedDate.value.row + nDate && selectedDate.value.row + nDate < maximList.value.count {
-            selectedDate.accept(IndexPath(row: selectedDate.value.row + nDate, section: selectedDate.value.section))
+        if 0 <= selectedDate.value.item + nDate && selectedDate.value.item + nDate < maximList.value.count {
+            selectedDate.accept(IndexPath(item: selectedDate.value.item + nDate, section: selectedDate.value.section))
         }
     }
 }

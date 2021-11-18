@@ -8,9 +8,10 @@
 import UIKit
 
 enum MaximViewSize {
-    static let nocheHeight = UIApplication.shared.statusBarFrame.height
+    static let nocheHeight = UIApplication.statusBarHeight
     static let headerHeight = CGFloat(50)
 }
+
 enum MaximCalendarHeaderCollectionViewSize {
     static let width = UIScreen.deviceScreenSize.width
     static let cellSize = CGRect(
