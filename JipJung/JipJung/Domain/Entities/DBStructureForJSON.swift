@@ -7,13 +7,14 @@
 
 import Foundation
 
-class DBStructureForJSON: Decodable {
+struct DBStructureForJSON: Decodable {
     enum CodingKeys: String, CodingKey {
         case allMediaList = "Media"
         case brightModeList = "BrightMedia"
         case darknessModeList = "DarknessMedia"
         case playHistoryList = "PlayHistory"
         case favoriteMediaList = "FavoriteMedia"
+        case maximList = "Maxim"
     }
     
     var allMediaList: [Media]
@@ -21,4 +22,5 @@ class DBStructureForJSON: Decodable {
     var darknessModeList: [DarknessMedia]
     var playHistoryList: [PlayHistory]
     var favoriteMediaList: [FavoriteMedia]
+    var maximList: [Maxim]
 }

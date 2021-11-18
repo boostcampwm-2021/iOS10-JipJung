@@ -32,26 +32,6 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B4F36B5527338E9B0073609C"
-               BuildableName = "UserDefaultsStorageTest.xctest"
-               BlueprintName = "UserDefaultsStorageTest"
-               ReferencedContainer = "container:JipJung.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "912A72002733B99300C1A37E"
-               BuildableName = "LocalFileManagerTests.xctest"
-               BlueprintName = "LocalFileManagerTests"
-               ReferencedContainer = "container:JipJung.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
                BlueprintIdentifier = "DDB5CEC22733BEB100E8F9EB"
                BuildableName = "LocalDBManagerTests.xctest"
                BlueprintName = "LocalDBManagerTests"

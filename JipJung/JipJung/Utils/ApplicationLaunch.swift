@@ -28,6 +28,12 @@ final class ApplicationLaunch {
         }
     }
     
+    func makeDebugFirstLaunch() {
+        try? FileManager.default.removeItem(at: Realm.Configuration.defaultConfiguration.fileURL ?? URL(fileURLWithPath: ""))
+        let key = UserDefaultsKeys.wasLaunchedBefore
+        UserDefaults.standard.set(false, forKey: key)
+    }
+    
     private func isFirstLaunch() -> Bool {
         let key = UserDefaultsKeys.wasLaunchedBefore
         let wasLaunchedBefore = UserDefaults.standard.bool(forKey: key)
@@ -48,16 +54,20 @@ final class ApplicationLaunch {
             }
             
             let data = try Data(contentsOf: url)
-            let jsonValue = try JSONDecoder().decode(DBStructureForJSON.self, from: data)
+            let jsonDecoder = JSONDecoder()
+            jsonDecoder.dateDecodingStrategy = .iso8601
+            let jsonValue = try jsonDecoder.decode(DBStructureForJSON.self, from: data)
             
             try LocalDBMigrator.shared.migrate(dataList: jsonValue.allMediaList)
             try LocalDBMigrator.shared.migrate(dataList: jsonValue.favoriteMediaList)
             try LocalDBMigrator.shared.migrate(dataList: jsonValue.brightModeList)
             try LocalDBMigrator.shared.migrate(dataList: jsonValue.darknessModeList)
             try LocalDBMigrator.shared.migrate(dataList: jsonValue.playHistoryList)
+            try LocalDBMigrator.shared.migrate(dataList: jsonValue.maximList)
         } catch {
             throw error
         }
+        
     }
     
     private func configureAudioSession() {

@@ -11,19 +11,21 @@ import RealmSwift
 
 class Maxim: Object, Decodable {
     @Persisted(primaryKey: true) var id: String
-    @Persisted var day: Date
+    @Persisted var date: Date
     @Persisted var thumbnailImageFileName: String
     @Persisted var content: String
+    @Persisted var speaker: String
     
     private override init() {
         super.init()
     }
     
-    convenience init(id: String, day: Date, thumbnailImageFileName: String, content: String) {
+    convenience init(id: String, date: Date, thumbnailImageFileName: String, content: String, speaker: String) {
         self.init()
         self.id = id
-        self.day = day
+        self.date = date
         self.thumbnailImageFileName = thumbnailImageFileName
         self.content = content
+        self.speaker = speaker
     }
 }

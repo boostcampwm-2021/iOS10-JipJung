@@ -6,3 +6,34 @@
 //
 
 import Foundation
+import RxRelay
+import RxSwift
+
+protocol MaximViewModelInput {
+    func fetchMaximList()
+}
+
+protocol MaximViewModelOutput {
+    var maximList: BehaviorRelay<[MaximPresenterObject]> { get }
+}
+
+final class MaximViewModel: MaximViewModelInput, MaximViewModelOutput {
+    let maximList: BehaviorRelay<[MaximPresenterObject]> = BehaviorRelay<[MaximPresenterObject]>(value: [])
+    let imageURLs: BehaviorRelay<[String]> = BehaviorRelay<[String]>(value: [])
+    
+    private var disposeBag: DisposeBag = DisposeBag()
+    private let maximListUseCase: MaximListUseCase
+    
+    init(maximListUseCase: MaximListUseCase = MaximListUseCase()) {
+        self.maximListUseCase = maximListUseCase
+    }
+
+    func fetchMaximList() {
+        maximListUseCase.fetchAllMaximList()
+            .map({ $0.map({ MaximPresenterObject(maxim: $0) })})
+            .subscribe { [weak self] in
+                self?.maximList.accept($0)
+            }
+            .disposed(by: disposeBag)
+    }
+}
