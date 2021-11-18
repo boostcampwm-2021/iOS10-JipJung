@@ -99,6 +99,10 @@ final class MediaPlayView: UIView {
                 let playerItem = AVPlayerItem(url: url)
                 self.videoPlayer = AVQueuePlayer(playerItem: playerItem)
                 
+                if let videoPlayer = self.videoPlayer {
+                    self.playerLooper = AVPlayerLooper(player: videoPlayer, templateItem: playerItem)
+                }
+                
                 let playerLayer = AVPlayerLayer(player: self.videoPlayer)
                 playerLayer.videoGravity = .resizeAspectFill
                 playerLayer.frame = UIScreen.main.bounds
