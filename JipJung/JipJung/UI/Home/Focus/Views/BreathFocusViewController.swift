@@ -214,7 +214,7 @@ final class BreathFocusViewController: FocusViewController {
             }
             UIView.animate(withDuration: 1.0) {
                 self.stopButton.layer.opacity = 1
-            }            
+            }
             self.startScalingAnimation()
         }
         
@@ -278,20 +278,6 @@ final class BreathFocusViewController: FocusViewController {
 //                self.viewModel?.resetClockTimer()
 //                self.viewModel?.saveFocusRecord()
 //            }
-//            .disposed(by: disposeBag)
-        
-//        viewModel?.clockTime
-//            .bind(onNext: { [weak self] in
-//                guard let self = self, $0 > 0,
-//                      let focusTime = self.viewModel?.focusTime
-//                else { return }
-//                if $0 == focusTime {
-//                    self.viewModel?.resetClockTimer()
-//                    return
-//                }
-//                self.timeLabel.text = (focusTime - $0).digitalClockFormatted
-//                self.startPulseAnimation(second: $0)
-//            })
 //            .disposed(by: disposeBag)
     }
     
@@ -360,24 +346,6 @@ final class BreathFocusViewController: FocusViewController {
         animations.delegate = self
         scalingShapeLayer.add(animations, forKey: "scaling")
     }
-    
-//    private func startPulseAnimation(second: Int) {
-//        self.pulseGroupLayer.sublayers?[second % 4].add(PulseAnimation(), forKey: "pulse")
-//    }
-//
-//    private func pauseTimerProgressAnimation() {
-//        timeProgressLayer.pauseLayer()
-//    }
-    
-//    private func resumeTimerProgressAnimation() {
-//        timeProgressLayer.resumeLayer()
-//    }
-//
-//    private func removeAllAnimations() {
-//        timeProgressLayer.removeAllAnimations()
-//        timeProgressLayer.removeFromSuperlayer()
-//        pulseGroupLayer.sublayers?.forEach({ $0.removeAllAnimations() })
-//    }
 }
 
 extension BreathFocusViewController: UIPickerViewDelegate {
@@ -423,6 +391,7 @@ extension BreathFocusViewController: CAAnimationDelegate {
 
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
         print(#function, #line, flag, anim.description)
+        self.viewModel?.resetClockTimer()
     }
 }
  

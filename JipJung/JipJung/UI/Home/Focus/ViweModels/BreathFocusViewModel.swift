@@ -10,13 +10,12 @@ import RxSwift
 import RxRelay
 
 protocol BreathFocusViewModelInput {
-//    func changeTimerState(to timerState: TimerState)
-//    func startClockTimer()
-//    func pauseClockTimer()
-//    func resetClockTimer()
     func changeState(to: BreathFocusState)
+    func startClockTimer()
+//    func pauseClockTimer()
+    func resetClockTimer()
     func setFocusTime(seconds: Int)
-    func saveFocusRecord()
+//    func saveFocusRecord()
 }
 
 enum BreathFocusState {
@@ -36,6 +35,7 @@ final class BreathFocusViewModel: BreathFocusViewModelInput, BreathFocusViewMode
     var focusState: BehaviorRelay<BreathFocusState> = BehaviorRelay<BreathFocusState>(value: .stop)
     let focusTimeList: [Int] = Array<Int>(1...15)
     var focusTime: Int = 7
+    var timerState: BehaviorRelay<TimerState> = BehaviorRelay<TimerState>(value: .ready)
     
     private var runningStateDisposeBag: DisposeBag = DisposeBag()
     private var disposeBag: DisposeBag = DisposeBag()
@@ -50,36 +50,37 @@ final class BreathFocusViewModel: BreathFocusViewModelInput, BreathFocusViewMode
         self.focusState.accept(to)
     }
     
-//    func startClockTimer() {
-//        Observable<Int>.interval(RxTimeInterval.seconds(1),
-//                                 scheduler: MainScheduler.instance)
-//            .subscribe { [weak self] _ in
-//                guard let self = self else { return }
-//                self.clockTime.accept(self.clockTime.value + 1)
-//            }
-//            .disposed(by: runningStateDisposeBag)
-//    }
-//
+    func startClockTimer() {
+        Observable<Int>.interval(RxTimeInterval.seconds(1),
+                                 scheduler: MainScheduler.instance)
+            .subscribe { [weak self] _ in
+                guard let self = self else { return }
+                self.clockTime.accept(self.clockTime.value + 1)
+            }
+            .disposed(by: runningStateDisposeBag)
+    }
+
 //    func pauseClockTimer() {
 //        runningStateDisposeBag = DisposeBag()
 //    }
-//
-//    func resetClockTimer() {
-//        clockTime.accept(0)
-//        runningStateDisposeBag = DisposeBag()
-//    }
-//
+
+    func resetClockTimer() {
+        clockTime.accept(0)
+        runningStateDisposeBag = DisposeBag()
+    }
+
+    // 숨쉬기 횟수 설정
     func setFocusTime(seconds: Int) {
         focusTime = seconds
     }
     
-    func saveFocusRecord() {
-        saveFocusTimeUseCase.execute(seconds: clockTime.value)
-            .subscribe { [weak self] in
-                self?.isFocusRecordSaved.accept($0)
-            } onFailure: { [weak self] _ in
-                self?.isFocusRecordSaved.accept(false)
-            }
-            .disposed(by: disposeBag)
-    }
+//    func saveFocusRecord() {
+//        saveFocusTimeUseCase.execute(seconds: clockTime.value)
+//            .subscribe { [weak self] in
+//                self?.isFocusRecordSaved.accept($0)
+//            } onFailure: { [weak self] _ in
+//                self?.isFocusRecordSaved.accept(false)
+//            }
+//            .disposed(by: disposeBag)
+//    }
 }
