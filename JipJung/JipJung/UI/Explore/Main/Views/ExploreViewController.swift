@@ -193,11 +193,11 @@ extension ExploreViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == soundTagCollectionView {
-            guard let cell = collectionView.cell(identifier: SoundTagCollectionViewCell.identifier, for: indexPath) as? SoundTagCollectionViewCell else { return  UICollectionViewCell() }
+            guard let cell: SoundTagCollectionViewCell = collectionView.dequeueReusableCell(indexPath: indexPath) else { return  UICollectionViewCell() }
             cell.soundTagLabel.text = viewModel?.soundTagList[safe: indexPath.item]?.value
             return cell
         } else if collectionView == soundCollectionView {
-            guard let cell = collectionView.cell(identifier: MusicCollectionViewCell.identifier, for: indexPath) as? MusicCollectionViewCell else { return  UICollectionViewCell() }
+            guard let cell: MusicCollectionViewCell = collectionView.dequeueReusableCell(indexPath: indexPath) else { return  UICollectionViewCell() }
 
             let media = viewModel?.categoryItems.value[indexPath.item] ?? Media()
             cell.titleView.text = media.name
