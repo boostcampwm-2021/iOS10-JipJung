@@ -10,24 +10,30 @@ import RxSwift
 import RxRelay
 
 protocol BreathFocusViewModelInput {
-    func changeTimerState(to timerState: TimerState)
-    func startClockTimer()
-    func pauseClockTimer()
-    func resetClockTimer()
+//    func changeTimerState(to timerState: TimerState)
+//    func startClockTimer()
+//    func pauseClockTimer()
+//    func resetClockTimer()
+    func changeState(to: BreathFocusState)
     func setFocusTime(seconds: Int)
     func saveFocusRecord()
+}
+
+enum BreathFocusState {
+    case running
+    case stop
 }
 
 protocol BreathFocusViewModelOutput {
     var clockTime: BehaviorRelay<Int> { get }
     var isFocusRecordSaved: BehaviorRelay<Bool> { get }
-    var timerState: BehaviorRelay<TimerState> { get }
+    var focusState: BehaviorRelay<BreathFocusState> { get }
 }
 
 final class BreathFocusViewModel: BreathFocusViewModelInput, BreathFocusViewModelOutput {
     var clockTime: BehaviorRelay<Int> = BehaviorRelay<Int>(value: 0)
     var isFocusRecordSaved: BehaviorRelay<Bool> = BehaviorRelay<Bool>(value: false)
-    var timerState: BehaviorRelay<TimerState> = BehaviorRelay<TimerState>(value: .ready)
+    var focusState: BehaviorRelay<BreathFocusState> = BehaviorRelay<BreathFocusState>(value: .stop)
     let focusTimeList: [Int] = Array<Int>(1...15)
     var focusTime: Int = 7
     
@@ -40,29 +46,29 @@ final class BreathFocusViewModel: BreathFocusViewModelInput, BreathFocusViewMode
         self.saveFocusTimeUseCase = saveFocusTimeUseCase
     }
     
-    func changeTimerState(to timerState: TimerState) {
-        self.timerState.accept(timerState)
+    func changeState(to: BreathFocusState) {
+        self.focusState.accept(to)
     }
     
-    func startClockTimer() {
-        Observable<Int>.interval(RxTimeInterval.seconds(1),
-                                 scheduler: MainScheduler.instance)
-            .subscribe { [weak self] _ in
-                guard let self = self else { return }
-                self.clockTime.accept(self.clockTime.value + 1)
-            }
-            .disposed(by: runningStateDisposeBag)
-    }
-    
-    func pauseClockTimer() {
-        runningStateDisposeBag = DisposeBag()
-    }
-    
-    func resetClockTimer() {
-        clockTime.accept(0)
-        runningStateDisposeBag = DisposeBag()
-    }
-    
+//    func startClockTimer() {
+//        Observable<Int>.interval(RxTimeInterval.seconds(1),
+//                                 scheduler: MainScheduler.instance)
+//            .subscribe { [weak self] _ in
+//                guard let self = self else { return }
+//                self.clockTime.accept(self.clockTime.value + 1)
+//            }
+//            .disposed(by: runningStateDisposeBag)
+//    }
+//
+//    func pauseClockTimer() {
+//        runningStateDisposeBag = DisposeBag()
+//    }
+//
+//    func resetClockTimer() {
+//        clockTime.accept(0)
+//        runningStateDisposeBag = DisposeBag()
+//    }
+//
     func setFocusTime(seconds: Int) {
         focusTime = seconds
     }
