@@ -1,84 +1,104 @@
 {
   "Media": [
     {
-      "id": "000",
-      "name": "귀뚜라미",
-      "explanation": "풀숲 귀뚜라미",
-      "mode": 0,
-      "tag": "All/Nature/Relax",
-      "thumbnailImageFileName": "000.jpg",
-      "videoFileName": "000.mp4",
-      "audioFileName": "000.wav"
-    },
-    {
-      "id": "001",
-      "name": "낙엽",
-      "explanation": "단풍 낙엽",
-      "mode": 0,
-      "tag": "All/Nature/Relax/Urban",
-      "thumbnailImageFileName": "001.jpg",
-      "videoFileName": "001.mp4",
-      "audioFileName": "001.wav"
-    },
-    {
-      "id": "002",
+      "id": "N000",
       "name": "가을비",
-      "explanation": "잔잔한 가을비",
+      "explanation": "잔잔하게 떨어지는 가을비",
       "mode": 0,
       "tag": "All/Nature/Relax/Focus",
-      "thumbnailImageFileName": "002.jpg",
-      "videoFileName": "002.mp4",
-      "audioFileName": "002.wav"
+      "thumbnailImageFileName": "N000.jpg",
+      "videoFileName": "N000.mp4",
+      "audioFileName": "N000.WAV"
     },
     {
-      "id": "003",
+      "id": "N001",
+      "name": "귀뚜라미",
+      "explanation": "풀숲에 숨어 몰래우는 귀뚜라미",
+      "mode": 0,
+      "tag": "All/Nature/Relax",
+      "thumbnailImageFileName": "N001.jpg",
+      "videoFileName": "N001.mp4",
+      "audioFileName": "N001.WAV"
+    },
+    {
+      "id": "N002",
+      "name": "낙엽",
+      "explanation": "공원을 수놓은 붉은 낙엽",
+      "mode": 0,
+      "tag": "All/Nature/Relax",
+      "thumbnailImageFileName": "N002.jpg",
+      "videoFileName": "N002.mp4",
+      "audioFileName": "N002.WAV"
+    },
+    {
+      "id": "N003",
       "name": "갈매기",
-      "explanation": "바다 위 갈매기",
+      "explanation": "파도위에 날고있는 갈매기",
       "mode": 0,
       "tag": "All/Nature/Relax",
-      "thumbnailImageFileName": "003.jpg",
-      "videoFileName": "003.mp4",
-      "audioFileName": "003.wav"
+      "thumbnailImageFileName": "N003.jpg",
+      "videoFileName": "N003.mp4",
+      "audioFileName": "N003.WAV"
     },
     {
-      "id": "004",
-      "name": "시냇물과 새",
-      "explanation": "맑은 시냇물과 새",
-      "mode": 0,
-      "tag": "All/Nature/Relax/Focus",
-      "thumbnailImageFileName": "004.jpg",
-      "videoFileName": "004.mp4",
-      "audioFileName": "004.wav"
-    },
-    {
-      "id": "005",
-      "name": "아침 숲속 새",
-      "explanation": "이른 아침 숲속 새",
+      "id": "N004",
+      "name": "배",
+      "explanation": "해질녘 고기잡이하는 배들",
       "mode": 0,
       "tag": "All/Nature/Relax",
-      "thumbnailImageFileName": "005.jpg",
-      "videoFileName": "005.mp4",
-      "audioFileName": "005.wav"
+      "thumbnailImageFileName": "N004.jpg",
+      "videoFileName": "N004.mp4",
+      "audioFileName": "N004.WAV"
     },
     {
-      "id": "006",
-      "name": "작은폭포",
-      "explanation": "작고 조용한 폭포",
+      "id": "U000",
+      "name": "가로등",
+      "explanation": "비를 비추는 가로등",
       "mode": 0,
-      "tag": "All/Nature/Relax/Focus",
-      "thumbnailImageFileName": "006.jpg",
-      "videoFileName": "006.mp4",
-      "audioFileName": "006.wav"
+      "tag": "All/Urban/Relax/Focus",
+      "thumbnailImageFileName": "U000.jpg",
+      "videoFileName": "U000.mp4",
+      "audioFileName": "U000.WAV"
     },
     {
-      "id": "007",
-      "name": "큰폭포",
-      "explanation": "큰 폭포",
+      "id": "U001",
+      "name": "샤워",
+      "explanation": "기분 좋은 샤워 시간",
       "mode": 0,
-      "tag": "All/Nature/Relax",
-      "thumbnailImageFileName": "007.jpg",
-      "videoFileName": "007.mp4",
-      "audioFileName": "007.wav"
+      "tag": "All/Urban/Relax/Focus",
+      "thumbnailImageFileName": "U001.jpg",
+      "videoFileName": "U001.mp4",
+      "audioFileName": "U001.WAV"
+    },
+    {
+      "id": "U002",
+      "name": "시계",
+      "explanation": "째깍째깍 움직이는 시곗바늘",
+      "mode": 0,
+      "tag": "All/Urban/Focus",
+      "thumbnailImageFileName": "U002.jpg",
+      "videoFileName": "U002.mp4",
+      "audioFileName": "U002.WAV"
+    },
+    {
+      "id": "U003",
+      "name": "재래시장",
+      "explanation": "활기가 느껴지는 재래시장",
+      "mode": 0,
+      "tag": "All/Urban/Relax/Focus",
+      "thumbnailImageFileName": "U003.jpg",
+      "videoFileName": "U003.mp4",
+      "audioFileName": "U003.WAV"
+    },
+    {
+      "id": "U004",
+      "name": "청계천",
+      "explanation": "도심 속 청계천에서 여유를 느끼며",
+      "mode": 0,
+      "tag": "All/Urban/Relax/Focus",
+      "thumbnailImageFileName": "U004.jpg",
+      "videoFileName": "U004.mp4",
+      "audioFileName": "U004.WAV"
     }
   ],
   "PlayHistory": [
@@ -124,24 +144,24 @@
   ],
   "BrightMedia": [
     {
-      "id": "000"
+      "id": "N000"
     },
     {
-      "id": "001"
+      "id": "N001"
     },
     {
-      "id": "002"
+      "id": "N002"
     }
   ],
   "DarknessMedia": [
     {
-      "id": "003"
+      "id": "N000"
     },
     {
-      "id": "005"
+      "id": "N001"
     },
     {
-      "id": "006"
+      "id": "N002"
     }
   ]
   ,

@@ -71,7 +71,6 @@ final class MusicPlayerViewModel: MusicPlayerViewModelInput, MusicPlayerViewMode
         favoriteMediaUseCase.read(id: id)
             .subscribe { [weak self] in
                 guard $0.count > 0 else { return }
-                print($0) //
                 self?.isFavorite.accept(true)
             } onFailure: { error in
                 print(error.localizedDescription)
