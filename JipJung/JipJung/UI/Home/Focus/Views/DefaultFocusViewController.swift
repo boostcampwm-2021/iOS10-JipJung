@@ -13,8 +13,7 @@ import RxRelay
 final class DefaultFocusViewController: FocusViewController {
     // MARK: - Subviews
     private lazy var timerView: UIView = {
-        let timerView = UIView(frame: UIScreen.main.bounds)
-        timerView.isUserInteractionEnabled = false
+        let timerView = UIView(frame: CGRect(origin: .zero, size: CGSize(width: 300, height: 300)))
         return timerView
     }()
     
