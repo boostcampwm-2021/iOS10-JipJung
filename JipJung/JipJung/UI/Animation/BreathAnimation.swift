@@ -52,7 +52,7 @@ class BreathAnimation: CAAnimationGroup {
     }
     
     private func prepareBezierPath(frame: CGRect) -> (UIBezierPath, UIBezierPath, UIBezierPath) {
-        let rectRef = RectFramer(UIView(frame: frame))
+        let rectRef = BreathAnimationFrame(UIView(frame: frame))
 
         let bezPathStage0: UIBezierPath = UIBezierPath()
         bezPathStage0.move(to: rectRef.bottomLeft)
@@ -78,8 +78,8 @@ class BreathAnimation: CAAnimationGroup {
                                                       y: rectRef.minY + rectRef.length * 0.65))
         bezPathStage0.close()
 
-        rectRef.viewRef.bounds.size.width *= 1.02
-        rectRef.viewRef.bounds.size.height *= 0.98
+        rectRef.contentView.bounds.size.width *= 1.02
+        rectRef.contentView.bounds.size.height *= 0.98
         let bezPathStage1: UIBezierPath = UIBezierPath()
         bezPathStage1.move(to: rectRef.bottomLeft)
         bezPathStage1.addCurve(to: rectRef.bottomRight,
@@ -104,11 +104,11 @@ class BreathAnimation: CAAnimationGroup {
                                                       y: rectRef.minY + rectRef.length * 0.85))
         bezPathStage1.close()
 
-        rectRef.viewRef.transform = CGAffineTransform(rotationAngle: 50)
-        rectRef.viewRef.bounds.size.width *= 1.0 / 1.02 * 1.01
-        rectRef.viewRef.bounds.size.height *= 1.0 / 0.98 * 1.0
-        rectRef.viewRef.bounds.origin.y -= 1.2
-        rectRef.viewRef.bounds.origin.x -= 1.2
+        rectRef.contentView.transform = CGAffineTransform(rotationAngle: 50)
+        rectRef.contentView.bounds.size.width *= 1.0 / 1.02 * 1.01
+        rectRef.contentView.bounds.size.height *= 1.0 / 0.98 * 1.0
+        rectRef.contentView.bounds.origin.y -= 1.2
+        rectRef.contentView.bounds.origin.x -= 1.2
         let bezPathStage2: UIBezierPath = UIBezierPath()
         bezPathStage2.move(to: rectRef.bottomLeft)
         bezPathStage2.addCurve(to: rectRef.bottomRight,
@@ -137,27 +137,28 @@ class BreathAnimation: CAAnimationGroup {
     }
 }
 
-struct RectFramer {
-    var viewRef: UIView
+// MARK: - 직접 사용하는 View가 아님
+struct BreathAnimationFrame {
+    var contentView: UIView
     var gap: CGFloat {
         return 0.27
     }
     
     var length: CGFloat {
-        return viewRef.bounds.maxX * (1 - 2 * gap)
+        return contentView.bounds.maxX * (1 - 2 * gap)
     }
 
     var maxY: CGFloat {
-        return viewRef.bounds.maxY * (1 - gap)
+        return contentView.bounds.maxY * (1 - gap)
     }
     var maxX: CGFloat {
-        return viewRef.bounds.maxX * (1 - gap)
+        return contentView.bounds.maxX * (1 - gap)
     }
     var minY: CGFloat {
-        return viewRef.bounds.maxY * gap
+        return contentView.bounds.maxY * gap
     }
     var minX: CGFloat {
-        return viewRef.bounds.maxX * gap
+        return contentView.bounds.maxX * gap
     }
 
     var bottomRight: CGPoint {
@@ -174,6 +175,6 @@ struct RectFramer {
     }
 
     init(_ view: UIView) {
-        viewRef = view
+        contentView = view
     }
 }

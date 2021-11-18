@@ -165,8 +165,8 @@ final class BreathFocusViewController: FocusViewController {
         minuteLabel.isHidden = true
         
         let scaleUpAnim = CABasicAnimation(keyPath: "transform.scale")
-        scaleUpAnim.fromValue = CGPoint(x: 1, y: 1) // UIColor.gray.cgColor
-        scaleUpAnim.toValue = CGPoint(x: 10.0, y: 10.0) // UIColor.green.cgColor
+        scaleUpAnim.fromValue = CGPoint(x: 1, y: 1)
+        scaleUpAnim.toValue = CGPoint(x: 10.0, y: 10.0)
         scaleUpAnim.beginTime = 0.0
         scaleUpAnim.duration = 1.0
         scaleUpAnim.repeatCount = 1
@@ -293,14 +293,13 @@ final class BreathFocusViewController: FocusViewController {
     }
   
     private func startBreathAnimation() {
-//        breathShapeLayer.add(BreathAnimation(frame: CGRect(origin: .zero,
-//                                                           size: CGSize(width: 400, height: 400))),
-//
-//                             forKey: "breath")
-        breathShapeLayer.add(BreathAnimation(frame: CGRect(origin: .zero,
-                                                           size: CGSize(width: 400, height: 400))),
-                             
-                             forKey: "breath")
+        breathShapeLayer.add(
+            BreathAnimation(
+                frame: CGRect(
+                    origin: .zero,
+                    size: CGSize(width: 400, height: 400))
+            ),
+            forKey: "breath")
     }
     
     private func startScalingAnimation() {

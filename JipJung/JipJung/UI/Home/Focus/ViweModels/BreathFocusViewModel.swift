@@ -46,8 +46,8 @@ final class BreathFocusViewModel: BreathFocusViewModelInput, BreathFocusViewMode
         self.saveFocusTimeUseCase = saveFocusTimeUseCase
     }
     
-    func changeState(to: BreathFocusState) {
-        self.focusState.accept(to)
+    func changeState(to state: BreathFocusState) {
+        self.focusState.accept(state)
     }
     
     func startClockTimer() {
