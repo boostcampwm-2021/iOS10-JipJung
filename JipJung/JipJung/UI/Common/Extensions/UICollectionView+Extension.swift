@@ -7,8 +7,8 @@
 
 import UIKit
 
-extension UICollectionView {
-    func cell(identifier: String, for indexPath: IndexPath) -> UICollectionViewCell {
-        return self.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath)
+extension UICollectionView { 
+    func dequeueReusableCell<T: UICollectionViewCell>(indexPath: IndexPath) -> T? {
+        return self.dequeueReusableCell(withReuseIdentifier: T.identifier, for: indexPath) as? T
     }
 }

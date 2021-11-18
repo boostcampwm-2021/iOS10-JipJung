@@ -95,7 +95,7 @@ extension FavoriteMusicViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.cell(identifier: MusicCollectionViewCell.identifier, for: indexPath) as? MusicCollectionViewCell else { return  UICollectionViewCell() }
+        guard let cell: MusicCollectionViewCell = collectionView.dequeueReusableCell(indexPath: indexPath) else { return  UICollectionViewCell() }
         
         return cell
     }
