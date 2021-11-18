@@ -36,4 +36,3 @@ class FocusViewController: UIViewController {
         .disposed(by: disposeBag)
     }
 }
-
