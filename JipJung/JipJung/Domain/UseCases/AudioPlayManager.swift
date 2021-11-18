@@ -49,6 +49,6 @@ class AudioPlayManager {
     }
     
     func isPlaying(of audioFileUrl: URL) -> Bool {
-        return audioPlayer?.url == audioFileUrl ? true : false
+        return audioPlayer?.url == audioFileUrl
     }
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class FetchMediaUrlUseCase {
+final class FetchMediaURLUseCase {
     private let localFileManager = LocalFileManager.shared
     private let remoteServiceProvider = RemoteServiceProvider.shared
     

@@ -47,7 +47,7 @@ final class MusicPlayerViewModel: MusicPlayerViewModelInput, MusicPlayerViewMode
     private let videoFileName: String
     private let audioPlayUseCase: AudioPlayUseCase = AudioPlayUseCase()
     private let videoPlayUseCase: VideoPlayUseCase = VideoPlayUseCase()
-    private let fetchMediaUrlUseCase: FetchMediaUrlUseCase = FetchMediaUrlUseCase()
+    private let fetchMediaUrlUseCase: FetchMediaURLUseCase = FetchMediaURLUseCase()
     private let favoriteMediaUseCase: FavoriteMediaUseCase = FavoriteMediaUseCase()
     private var disposeBag: DisposeBag = DisposeBag()
     
@@ -94,7 +94,7 @@ final class MusicPlayerViewModel: MusicPlayerViewModelInput, MusicPlayerViewMode
     func pauseMusic() {
         audioPlayUseCase.controlAudioPlay(audioFileName)
             .subscribe { [weak self] in
-                guard $0 == false else { return }
+                guard $0 else { return }
                 self?.isMusicPlaying.accept($0)
             } onFailure: { [weak self] in
                 self?.musicFileStatus.accept(.downloadFailed)
