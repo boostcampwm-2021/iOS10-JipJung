@@ -201,9 +201,9 @@ final class BreathFocusViewController: FocusViewController {
 //        self.breathShapeLayer.add(scaleUpAnim, forKey: "adf")
 //        self.view.layer.backgroundColor = .init(red: 0.1, green: 1.0, blue: 0.1, alpha: 0.5)
         // 진입 배경 애니메이션
+        self.stopButton.layer.opacity = 0
         UIView.animate(withDuration: 1.0, delay: .zero, options: .curveEaseIn) {
             self.view.layer.backgroundColor = .init(red: 0.1, green: 1.0, blue: 0.1, alpha: 0.8)
-//            self.view.layer.opacity = 1.0
         } completion: { flag in
             // 진입 완료 후
             print(#function, #line, flag)
@@ -212,6 +212,9 @@ final class BreathFocusViewController: FocusViewController {
                 self.scalingShapeLayer.isHidden = false
                 self.view.layer.backgroundColor = .none
             }
+            UIView.animate(withDuration: 1.0) {
+                self.stopButton.layer.opacity = 1
+            }            
             self.startScalingAnimation()
         }
         
