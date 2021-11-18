@@ -62,7 +62,7 @@ final class MaximViewController: UIViewController {
     }
     
     private func configureUI() {
-        self.view.backgroundColor = .red
+        backgroundColor = .red
         view.addSubview(maximCollectionView)
         
         view.addSubview(closeButton)
@@ -89,7 +89,7 @@ final class MaximViewController: UIViewController {
     }
     
     private func bindCollectionView() {
-        viewModel.maximLists.bind(to: maximCollectionView.rx.items(cellIdentifier: MaximCollectionViewCell.identifier)) { index, maxim, cell in
+        viewModel.maximList.bind(to: maximCollectionView.rx.items(cellIdentifier: MaximCollectionViewCell.identifier)) { index, maxim, cell in
             guard let cell = cell as? MaximCollectionViewCell else {
                 return
             }
@@ -98,7 +98,6 @@ final class MaximViewController: UIViewController {
             cell.monthYearLabel.text = maxim.monthYear
             cell.contentLabel.text = maxim.content
             cell.speakerLabel.text = maxim.speaker
-            cell.backgroundColor = .red
         }
         .disposed(by: disposeBag)
     }

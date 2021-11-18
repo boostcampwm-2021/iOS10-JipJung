@@ -318,7 +318,7 @@ class HomeViewController: UIViewController {
         }
         maximButton.rx.tap.bind {
             let maximViewController = MaximViewController()
-            maximViewController.modalPresentationStyle = .fullScreen
+            maximViewController.modalPresentationStyle = .overCurrentContext
             self.present(maximViewController, animated: true)
         }
     }

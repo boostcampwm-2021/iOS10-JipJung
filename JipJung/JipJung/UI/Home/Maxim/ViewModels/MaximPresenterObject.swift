@@ -21,12 +21,12 @@ struct MaximPresenterObject {
     }
     
     init(maxim: Maxim) {
-        let monthDict = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"]
+        let monthList = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"]
         let date = maxim.date
         let day = "\(date.day)"
-        let monthYear = "\(monthDict[date.month - 1]) \(date.year)"
+        let monthYear = "\(monthList[date.month - 1]) \(date.year)"
         let content = maxim.content
-        let speaker = maxim.speaker == "" ? "미상" : maxim.speaker
+        let speaker = maxim.speaker.isEmpty ? "미상" : maxim.speaker
         self.init(day: day, monthYear: monthYear, content: content, speaker: speaker)
     }
 }

@@ -14,11 +14,11 @@ protocol MaximViewModelInput {
 }
 
 protocol MaximViewModelOutput {
-    var maximLists: BehaviorRelay<[MaximPresenterObject]> { get }
+    var maximList: BehaviorRelay<[MaximPresenterObject]> { get }
 }
 
 final class MaximViewModel: MaximViewModelInput, MaximViewModelOutput {
-    let maximLists: BehaviorRelay<[MaximPresenterObject]> = BehaviorRelay<[MaximPresenterObject]>(value: [])
+    let maximList: BehaviorRelay<[MaximPresenterObject]> = BehaviorRelay<[MaximPresenterObject]>(value: [])
     let imageURLs: BehaviorRelay<[String]> = BehaviorRelay<[String]>(value: [])
     
     private var disposeBag: DisposeBag = DisposeBag()
@@ -32,7 +32,7 @@ final class MaximViewModel: MaximViewModelInput, MaximViewModelOutput {
         maximListUseCase.fetchAllMaximList()
             .map({ $0.map({ MaximPresenterObject(maxim: $0) })})
             .subscribe { [weak self] in
-                self?.maximLists.accept($0)
+                self?.maximList.accept($0)
             }
             .disposed(by: disposeBag)
     }

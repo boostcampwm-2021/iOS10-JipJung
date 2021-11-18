@@ -76,10 +76,7 @@ final class MaximCollectionViewCell: UICollectionViewCell {
     
     private func configureUI() {
         addSubview(speakerLabel)
-        speakerLabel.snp.makeConstraints { [weak self] in
-            guard let self = self else {
-                return
-            }
+        speakerLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(30)
             $0.bottom.equalTo(self.safeAreaLayoutGuide.snp.bottom).offset(-20)
         }
