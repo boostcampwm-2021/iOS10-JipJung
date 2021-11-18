@@ -26,6 +26,9 @@
 		9172BBF727422618000E1060 /* MeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9172BBF627422618000E1060 /* MeViewModel.swift */; };
 		9172BBFC274226A8000E1060 /* MaximViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9172BBFB274226A8000E1060 /* MaximViewController.swift */; };
 		9172BBFE274226B1000E1060 /* MaximViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9172BBFD274226B1000E1060 /* MaximViewModel.swift */; };
+		917BDD592745FAEC0049E944 /* CarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917BDD582745FAEC0049E944 /* CarouselView.swift */; };
+		917BDD5B2745FBDA0049E944 /* MediaPlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917BDD5A2745FBDA0049E944 /* MediaPlayView.swift */; };
+		917BDD5D2746268D0049E944 /* TouchTransferView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917BDD5C2746268D0049E944 /* TouchTransferView.swift */; };
 		918D19A5273D21B300A13954 /* sea.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 91184BB3273D1E01007A29C8 /* sea.mp4 */; };
 		9198DE952733863500EBAEC8 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9198DE942733863500EBAEC8 /* Common.swift */; };
 		91CE6F6F2739024800176AF2 /* Home+Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CE6F6E2739024800176AF2 /* Home+Enums.swift */; };
@@ -279,6 +282,9 @@
 		9172BBF627422618000E1060 /* MeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeViewModel.swift; sourceTree = "<group>"; };
 		9172BBFB274226A8000E1060 /* MaximViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaximViewController.swift; sourceTree = "<group>"; };
 		9172BBFD274226B1000E1060 /* MaximViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaximViewModel.swift; sourceTree = "<group>"; };
+		917BDD582745FAEC0049E944 /* CarouselView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselView.swift; sourceTree = "<group>"; };
+		917BDD5A2745FBDA0049E944 /* MediaPlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPlayView.swift; sourceTree = "<group>"; };
+		917BDD5C2746268D0049E944 /* TouchTransferView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchTransferView.swift; sourceTree = "<group>"; };
 		9198DE942733863500EBAEC8 /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		91CE6F6E2739024800176AF2 /* Home+Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Home+Enums.swift"; sourceTree = "<group>"; };
 		91CE6F7227390AD200176AF2 /* FocusButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusButton.swift; sourceTree = "<group>"; };
@@ -693,6 +699,8 @@
 				B4015CD32739151B006BD14A /* RecentMusicViewController.swift */,
 				B4015CD527391529006BD14A /* FavoriteMusicViewController.swift */,
 				914E1D86273A191D000CA5FB /* MediaCollectionViewCell.swift */,
+				917BDD582745FAEC0049E944 /* CarouselView.swift */,
+				917BDD5A2745FBDA0049E944 /* MediaPlayView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -704,6 +712,7 @@
 				91EA47C5273846A800780C3E /* BlurCircleButton.swift */,
 				DDB92BAF273A263100EE26F0 /* MusicCollectionViewCell.swift */,
 				DD4D030127423C54007AA4DD /* CloseButton.swift */,
+				917BDD5C2746268D0049E944 /* TouchTransferView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1560,6 +1569,7 @@
 				B4E4210F274673E400C39545 /* UICollectionViewCell+Extension.swift in Sources */,
 				B4EF13B52742933F0086D8CD /* SearchHistoryUseCase.swift in Sources */,
 				DD208D36273BDD390089A2AB /* CALayer+Extension.swift in Sources */,
+				917BDD592745FAEC0049E944 /* CarouselView.swift in Sources */,
 				DD828095273D1F8E00BB2A60 /* FocusViewController.swift in Sources */,
 				B42226CC2741134100F8CA3D /* UICollectionView+Extension.swift in Sources */,
 				91D0226A273CB6050073EA2A /* DarknessMedia.swift in Sources */,
@@ -1600,9 +1610,11 @@
 				B4153941273B93B0004EF80F /* SaveFocusTimeUseCase.swift in Sources */,
 				B4015CD82739270C006BD14A /* SoundTagCollectionViewCell.swift in Sources */,
 				9198DE952733863500EBAEC8 /* Common.swift in Sources */,
+				917BDD5B2745FBDA0049E944 /* MediaPlayView.swift in Sources */,
 				DF1722B22740FD2300F06140 /* ApplicationLaunch.swift in Sources */,
 				91CE6F7527391E1C00176AF2 /* HomeViewModel.swift in Sources */,
 				DD4D030227423C54007AA4DD /* CloseButton.swift in Sources */,
+				917BDD5D2746268D0049E944 /* TouchTransferView.swift in Sources */,
 				DFED21D92733AE8400E99641 /* MusicPlayerMaximView.swift in Sources */,
 				DF30FEF9273A730F001C720E /* TagCollectionViewCell.swift in Sources */,
 			);

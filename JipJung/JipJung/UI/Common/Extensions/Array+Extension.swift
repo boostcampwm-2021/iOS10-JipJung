@@ -11,4 +11,8 @@ extension Array {
     subscript (safe index: Int) -> Element? {
         return indices ~= index ? self[index] : nil
     }
+    
+    subscript(loop index: Int) -> Element? {
+        return isEmpty ? nil : self[(index + count) % count]
+    }
 }
