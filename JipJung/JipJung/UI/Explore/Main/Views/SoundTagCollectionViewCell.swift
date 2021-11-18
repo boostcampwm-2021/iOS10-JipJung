@@ -9,8 +9,6 @@ import UIKit
 import SnapKit
 
 class SoundTagCollectionViewCell: UICollectionViewCell {
-    static let identifier = String(describing: SoundTagCollectionViewCell.self)
-    
     // MARK: - Subviews
     
     lazy var soundTagLabel: UILabel = {
@@ -54,7 +52,7 @@ class SoundTagCollectionViewCell: UICollectionViewCell {
         
         contentView.addSubview(soundTagLabel)
         soundTagLabel.snp.makeConstraints {
-            $0.centerX.centerY.equalToSuperview()
+            $0.center.equalToSuperview()
         }
     }
 }

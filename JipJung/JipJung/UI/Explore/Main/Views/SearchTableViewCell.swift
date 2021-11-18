@@ -9,8 +9,6 @@ import UIKit
 import SnapKit
 
 class SearchTableViewCell: UITableViewCell {
-    static let identifier = String(describing: SearchTableViewCell.self)
-    
     // MARK: - Subviews
     
     lazy var searchHistory: UILabel = {

@@ -8,7 +8,6 @@
 import UIKit
 
 import SnapKit
-import SwiftUI
 
 class MusicPlayerMaximView: UIView {
     let maximLabel: UILabel = {
@@ -57,15 +56,15 @@ class MusicPlayerMaximView: UIView {
         addSubview(maximLabel)
         addSubview(speakerNameLabel)
         
-        maximLabel.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview()
-            make.center.equalToSuperview()
-            make.height.equalTo(maximLabel.intrinsicContentSize.height)
+        maximLabel.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview()
+            $0.center.equalToSuperview()
+            $0.height.equalTo(maximLabel.intrinsicContentSize.height)
         }
         
-        speakerNameLabel.snp.makeConstraints { make in
-            make.trailing.equalToSuperview()
-            make.top.equalTo(maximLabel.snp.bottom).offset(32)
+        speakerNameLabel.snp.makeConstraints {
+            $0.trailing.equalToSuperview()
+            $0.top.equalTo(maximLabel.snp.bottom).offset(32)
         }
     }
 }

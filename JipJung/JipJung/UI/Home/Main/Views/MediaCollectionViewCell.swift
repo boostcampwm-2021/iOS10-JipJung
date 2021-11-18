@@ -9,8 +9,6 @@ import AVKit
 import UIKit
 
 final class MediaCollectionViewCell: UICollectionViewCell {
-    static let identifier = String(describing: MediaCollectionViewCell.self)
-    
     private lazy var playButton: UIButton = {
         let button = UIButton()
         let configuration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 45))

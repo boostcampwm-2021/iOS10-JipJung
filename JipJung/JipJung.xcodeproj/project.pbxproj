@@ -112,6 +112,8 @@
 		B4E4210A27460BBB00C39545 /* N002.WAV in Resources */ = {isa = PBXBuildFile; fileRef = B4E420D727460BBB00C39545 /* N002.WAV */; };
 		B4E4210B27460BBB00C39545 /* M019.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B4E420D827460BBB00C39545 /* M019.jpg */; };
 		B4E4210D27463C3D00C39545 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E4210C27463C3D00C39545 /* UIColor+Extension.swift */; };
+		B4E4210F274673E400C39545 /* UICollectionViewCell+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E4210E274673E300C39545 /* UICollectionViewCell+Extension.swift */; };
+		B4E421112746753B00C39545 /* UITableViewCell+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E421102746753B00C39545 /* UITableViewCell+Extension.swift */; };
 		B4EF13B3274293220086D8CD /* SearchHistoryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4EF13B2274293220086D8CD /* SearchHistoryRepository.swift */; };
 		B4EF13B52742933F0086D8CD /* SearchHistoryUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4EF13B42742933F0086D8CD /* SearchHistoryUseCase.swift */; };
 		B4EF13B72742935B0086D8CD /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4EF13B62742935B0086D8CD /* SearchViewModel.swift */; };
@@ -296,6 +298,8 @@
 		B4E420D727460BBB00C39545 /* N002.WAV */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = N002.WAV; sourceTree = "<group>"; };
 		B4E420D827460BBB00C39545 /* M019.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = M019.jpg; sourceTree = "<group>"; };
 		B4E4210C27463C3D00C39545 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
+		B4E4210E274673E300C39545 /* UICollectionViewCell+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewCell+Extension.swift"; sourceTree = "<group>"; };
+		B4E421102746753B00C39545 /* UITableViewCell+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+Extension.swift"; sourceTree = "<group>"; };
 		B4EF13B2274293220086D8CD /* SearchHistoryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHistoryRepository.swift; sourceTree = "<group>"; };
 		B4EF13B42742933F0086D8CD /* SearchHistoryUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHistoryUseCase.swift; sourceTree = "<group>"; };
 		B4EF13B62742935B0086D8CD /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
@@ -523,6 +527,8 @@
 				DD4D030427425610007AA4DD /* UILabel+Extension.swift */,
 				B4EF13BA274370060086D8CD /* String+Extension.swift */,
 				B4E4210C27463C3D00C39545 /* UIColor+Extension.swift */,
+				B4E4210E274673E300C39545 /* UICollectionViewCell+Extension.swift */,
+				B4E421102746753B00C39545 /* UITableViewCell+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1229,6 +1235,7 @@
 				DF08B1DD2737F5010066518B /* RemoteServiceProvider.swift in Sources */,
 				B4F36B682733D4210073609C /* SearchTableViewCell.swift in Sources */,
 				B4EF13B927429A0F0086D8CD /* SearchMediaUseCase.swift in Sources */,
+				B4E421112746753B00C39545 /* UITableViewCell+Extension.swift in Sources */,
 				B4EF13BB274370060086D8CD /* String+Extension.swift in Sources */,
 				B40D1FB9273B674F00881A49 /* InfinityFocusViewController.swift in Sources */,
 				DDB92B9D2737BD5E00EE26F0 /* UIView+Extension.swift in Sources */,
@@ -1283,6 +1290,7 @@
 				91CE6F6F2739024800176AF2 /* Home+Enums.swift in Sources */,
 				91CE6F6F2739024800176AF2 /* Home+Enums.swift in Sources */,
 				B4153949273BA34A004EF80F /* FocusTimeRepository.swift in Sources */,
+				B4E4210F274673E400C39545 /* UICollectionViewCell+Extension.swift in Sources */,
 				B4EF13B52742933F0086D8CD /* SearchHistoryUseCase.swift in Sources */,
 				DD208D36273BDD390089A2AB /* CALayer+Extension.swift in Sources */,
 				DD828095273D1F8E00BB2A60 /* FocusViewController.swift in Sources */,

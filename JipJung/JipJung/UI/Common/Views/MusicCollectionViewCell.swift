@@ -9,8 +9,6 @@ import UIKit
 import SnapKit
 
 class MusicCollectionViewCell: UICollectionViewCell {
-    static let identifier = String(describing: MusicCollectionViewCell.self)
-    
     lazy var imageView: UIImageView = {
         let imageView = UIImageView(frame: frame)
         imageView.image = UIImage(systemName: "photo")
