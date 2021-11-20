@@ -159,15 +159,19 @@ final class MaximViewController: UIViewController {
     private func bindCalendarHeaderCollectionView() {
         viewModel.maximList.bind(
             to: calendarHeaderCollectionView.rx.items(cellIdentifier: MaximCalendarHeaderCollectionViewCell.identifier)
-        ) { _, maxim, cell in
+        ) { [weak self] index, maxim, cell in
             guard let cell = cell as? MaximCalendarHeaderCollectionViewCell else {
                 return
             }
             cell.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
             cell.dayButtonText = maxim.day
             cell.weekdayLabel.text = maxim.weekDay
+            if self?.viewModel.selectedDate.value.item == index {
+                cell.indicatorPointView.isHidden = false
+            }
         }
         .disposed(by: disposeBag)
+        
         let dateObservable = viewModel.selectedDate
         let previousObservable = dateObservable
         let currentObservable = dateObservable.skip(1)
