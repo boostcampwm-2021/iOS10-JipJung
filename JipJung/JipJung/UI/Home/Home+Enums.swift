@@ -75,6 +75,6 @@ enum FocusViewButtonSize {
 
 enum TimerState: Equatable {
     case ready
-    case running(isContinue: Bool)
+    case running(isResume: Bool)
     case paused
 }
