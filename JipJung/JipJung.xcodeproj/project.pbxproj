@@ -208,12 +208,12 @@
 		DDB5CEBE2733A49A00E8F9EB /* RealmDBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB5CEBD2733A49A00E8F9EB /* RealmDBManager.swift */; };
 		DDB92B9D2737BD5E00EE26F0 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB92B9C2737BD5E00EE26F0 /* UIView+Extension.swift */; };
 		DDB92BB0273A263100EE26F0 /* MusicCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB92BAF273A263100EE26F0 /* MusicCollectionViewCell.swift */; };
+		DF05FD14274ABCDF006C8689 /* WiggleAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF05FD13274ABCDF006C8689 /* WiggleAnimation.swift */; };
 		DF08B1DD2737F5010066518B /* RemoteServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF08B1DC2737F5010066518B /* RemoteServiceProvider.swift */; };
 		DF09E9B52741FAC700F5F739 /* Utils+Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF09E9B42741FAC700F5F739 /* Utils+Enums.swift */; };
 		DF1722B22740FD2300F06140 /* ApplicationLaunch.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF1722B12740FD2300F06140 /* ApplicationLaunch.swift */; };
 		DF1722B42741013600F06140 /* LocalDBMigrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF1722B32741013600F06140 /* LocalDBMigrator.swift */; };
 		DF1722B72741036C00F06140 /* BundleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF1722B62741036C00F06140 /* BundleManager.swift */; };
-		DF297FD5274567880009E661 /* BreathAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF297FD4274567880009E661 /* BreathAnimation.swift */; };
 		DF30FEF9273A730F001C720E /* TagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF30FEF8273A730F001C720E /* TagCollectionViewCell.swift */; };
 		DF30FF05273CBC3B001C720E /* MusicPlayerButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF30FF04273CBC3B001C720E /* MusicPlayerButtons.swift */; };
 		DF6B111127390F1900D9924E /* MediaResourceRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6B111027390F1900D9924E /* MediaResourceRepository.swift */; };
@@ -467,12 +467,12 @@
 		DDB5CEBD2733A49A00E8F9EB /* RealmDBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmDBManager.swift; sourceTree = "<group>"; };
 		DDB92B9C2737BD5E00EE26F0 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		DDB92BAF273A263100EE26F0 /* MusicCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicCollectionViewCell.swift; sourceTree = "<group>"; };
+		DF05FD13274ABCDF006C8689 /* WiggleAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiggleAnimation.swift; sourceTree = "<group>"; };
 		DF08B1DC2737F5010066518B /* RemoteServiceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteServiceProvider.swift; sourceTree = "<group>"; };
 		DF09E9B42741FAC700F5F739 /* Utils+Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Utils+Enums.swift"; sourceTree = "<group>"; };
 		DF1722B12740FD2300F06140 /* ApplicationLaunch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationLaunch.swift; sourceTree = "<group>"; };
 		DF1722B32741013600F06140 /* LocalDBMigrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDBMigrator.swift; sourceTree = "<group>"; };
 		DF1722B62741036C00F06140 /* BundleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleManager.swift; sourceTree = "<group>"; };
-		DF297FD4274567880009E661 /* BreathAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathAnimation.swift; sourceTree = "<group>"; };
 		DF30FEF8273A730F001C720E /* TagCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCollectionViewCell.swift; sourceTree = "<group>"; };
 		DF30FF04273CBC3B001C720E /* MusicPlayerButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayerButtons.swift; sourceTree = "<group>"; };
 		DF6B111027390F1900D9924E /* MediaResourceRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaResourceRepository.swift; sourceTree = "<group>"; };
@@ -895,7 +895,7 @@
 				DD208D35273BDD390089A2AB /* CALayer+Extension.swift */,
 				DD82808D273CF07800BB2A60 /* CycleAnimation.swift */,
 				DD8564C9273F9E6F00049D9B /* SlowPresent.swift */,
-				DF297FD4274567880009E661 /* BreathAnimation.swift */,
+				DF05FD13274ABCDF006C8689 /* WiggleAnimation.swift */,
 			);
 			path = Animation;
 			sourceTree = "<group>";
@@ -1577,7 +1577,6 @@
 				B481FC7D274521B800D1F2EA /* FavoriteMediaUseCase.swift in Sources */,
 				B4EF13BD2744B9880086D8CD /* FetchMediaURLUseCase.swift in Sources */,
 				DD208D30273B55240089A2AB /* PulseAnimation.swift in Sources */,
-				DF297FD5274567880009E661 /* BreathAnimation.swift in Sources */,
 				91D0226C273CBA340073EA2A /* MediaListUseCase.swift in Sources */,
 				DF1722B42741013600F06140 /* LocalDBMigrator.swift in Sources */,
 				91D0227D273CE6F50073EA2A /* DBStructureForJSON.swift in Sources */,
@@ -1591,6 +1590,7 @@
 				B4015CD82739270C006BD14A /* SoundTagCollectionViewCell.swift in Sources */,
 				9198DE952733863500EBAEC8 /* Common.swift in Sources */,
 				917BDD5B2745FBDA0049E944 /* MediaPlayView.swift in Sources */,
+				DF05FD14274ABCDF006C8689 /* WiggleAnimation.swift in Sources */,
 				DF1722B22740FD2300F06140 /* ApplicationLaunch.swift in Sources */,
 				91CE6F7527391E1C00176AF2 /* HomeViewModel.swift in Sources */,
 				DD4D030227423C54007AA4DD /* CloseButton.swift in Sources */,
