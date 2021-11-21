@@ -114,9 +114,9 @@ final class BreathFocusViewController: FocusViewController {
         
         view.addSubview(breathView)
         breathView.snp.makeConstraints {
-            $0.width.equalToSuperview()
+            $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(breathView.snp.width)
-            $0.centerY.equalTo(view.snp.centerY).multipliedBy(0.65)
+            $0.top.equalTo(super.closeButton.snp.bottom)
         }
         breathView.layer.addSublayer(breathShapeLayer)
         breathView.layer.addSublayer(scalingShapeLayer)
@@ -165,31 +165,24 @@ final class BreathFocusViewController: FocusViewController {
         minuteLabel.isHidden = true
         
         let scaleUpAnim = CABasicAnimation(keyPath: "transform.scale")
-        scaleUpAnim.fromValue = CGPoint(x: 1, y: 1)
-        scaleUpAnim.toValue = CGPoint(x: 10.0, y: 10.0)
-        scaleUpAnim.beginTime = 0.0
-        scaleUpAnim.duration = 1.0
-        scaleUpAnim.repeatCount = 1
-        
+        scaleUpAnim.fromValue = 1.0
+        scaleUpAnim.toValue = 5.0
+
         let colorAnim = CABasicAnimation(keyPath: "opacity")
         colorAnim.fromValue = 1.0
         colorAnim.toValue = 0.5
-        colorAnim.duration = 1.0
-        colorAnim.beginTime = 0.0
-        colorAnim.repeatCount = 1
-        
+
         let animations = CAAnimationGroup()
         animations.animations = [scaleUpAnim, colorAnim]
         animations.repeatCount = 1
-        animations.duration = 1.0
+        animations.duration = 0.5
         animations.beginTime = 0.0
         animations.isRemovedOnCompletion = true
-        animations.fillMode = CAMediaTimingFillMode.forwards
-        breathShapeLayer.add(animations, forKey: nil)
+        breathShapeLayer.add(animations, forKey: "scaleAndOpacity")
         
         // 진입 배경 애니메이션
         self.stopButton.layer.opacity = 0
-        UIView.animate(withDuration: 1.0, delay: .zero, options: .curveEaseIn) {
+        UIView.animate(withDuration: 0.5, delay: .zero, options: .curveEaseIn) {
             self.view.layer.backgroundColor = .init(red: 0.1, green: 1.0, blue: 0.1, alpha: 0.8)
         } completion: { flag in
             // 진입 완료 후
@@ -295,9 +288,7 @@ final class BreathFocusViewController: FocusViewController {
     private func startBreathAnimation() {
         breathShapeLayer.add(
             BreathAnimation(
-                frame: CGRect(
-                    origin: .zero,
-                    size: CGSize(width: 400, height: 400))
+                frame: breathView.bounds
             ),
             forKey: "breath")
     }
