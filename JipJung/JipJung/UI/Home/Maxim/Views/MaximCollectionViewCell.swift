@@ -62,6 +62,12 @@ final class MaximCollectionViewCell: UICollectionViewCell {
         return speakerLabel
     }()
     
+    var backgroundImageName: String = "" {
+        didSet {
+            backgroundView = UIImageView(image: UIImage(named: backgroundImageName))
+        }
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()

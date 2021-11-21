@@ -36,9 +36,9 @@ class MaximCalendarHeaderCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    var dayButtonImageURL: String = "" {
+    var dayButtonImageName: String = "" {
         didSet {
-            dayButton.setImage(UIImage(contentsOfFile: dayButtonImageURL), for: .normal)
+            dayButton.setBackgroundImage(UIImage(named: dayButtonImageName), for: .normal)
         }
     }
     
