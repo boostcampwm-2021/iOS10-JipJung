@@ -62,6 +62,18 @@ final class MaximCollectionViewCell: UICollectionViewCell {
         return speakerLabel
     }()
     
+    var isShown = false {
+        willSet {
+            if newValue {
+                UIView.animate(withDuration: 2, delay: 0, options: [], animations: ({ [weak self] in
+                    self?.contentLabel.alpha = 1
+                }))
+            } else {
+                self.contentLabel.alpha = 0
+            }
+        }
+    }
+    
     var backgroundImageName: String = "" {
         didSet {
             backgroundView = UIImageView(image: UIImage(named: backgroundImageName))

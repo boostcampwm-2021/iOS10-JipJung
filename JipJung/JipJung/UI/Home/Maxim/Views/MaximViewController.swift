@@ -39,7 +39,7 @@ final class MaximViewController: UIViewController {
         collectionViewLayout.minimumLineSpacing = lineSpacing
         collectionViewLayout.itemSize = CGSize(width: cellWidth, height: 100)
         collectionViewLayout.scrollDirection = .horizontal
-        
+
         let headerSize = 50
         let calendarHeaderCollectionView = UICollectionView(
             frame: MaximCalendarHeaderCollectionViewSize.cellSize,
@@ -93,7 +93,7 @@ final class MaximViewController: UIViewController {
         bindMaximCollectionView()
         bindAction()
         bindCalendarHeaderCollectionView()
-        
+        print(calendarHeaderCollectionView.indexPathsForVisibleItems)
         viewModel.fetchMaximList()
     }
     
@@ -145,8 +145,24 @@ final class MaximViewController: UIViewController {
             cell.contentLabel.text = maxim.content
             cell.speakerLabel.text = maxim.speaker
             cell.backgroundImageName = maxim.thumbnailImageFileName
+            cell.isShown = false
         }
         .disposed(by: disposeBag)
+        maximCollectionView.rx.willDisplayCell.bind {
+            guard let cell = $0.cell as? MaximCollectionViewCell else {
+                return
+            }
+            cell.isShown = true
+        }
+        .disposed(by: disposeBag)
+//        maximCollectionView.rx.didEndDisplayCell.bind {
+//            guard let cell = $0 as? MaximCollectionViewCell else {
+//                return
+//            }
+//            cell.show()
+//            print($0, $1)
+//        }
+//        .disposed(by: disposeBag)
 
         viewModel.selectedDate.skip(1).bind { [weak self] indexPath in
             self?.maximCollectionView.scrollToItem(at: indexPath, at: [], animated: true)
