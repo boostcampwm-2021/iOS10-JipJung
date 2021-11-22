@@ -52,6 +52,12 @@ final class BreathFocusViewController: FocusViewController {
         scalingShapeLayer.lineWidth = 2.0
         return scalingShapeLayer
     }()
+    private lazy var textLayer: CATextLayer = {
+        let textLayer = CATextLayer()
+        textLayer.alignmentMode = .center
+        textLayer.string = "Inhale"
+        return textLayer
+    }()
     
     private lazy var startButton: UIButton = {
         let startButton = UIButton()
@@ -95,6 +101,9 @@ final class BreathFocusViewController: FocusViewController {
         super.viewDidLayoutSubviews()
         breathShapeLayer.frame = breathView.bounds
         scalingShapeLayer.frame = breathView.bounds
+        textLayer.frame = CGRect(origin: CGPoint(x: breathView.bounds.midX - 60,
+                                                 y: breathView.bounds.midY - 40),
+                                 size: CGSize(width: 120, height: 100))
         startWiggleAnimation()
     }
     
@@ -118,6 +127,7 @@ final class BreathFocusViewController: FocusViewController {
         }
         breathView.layer.addSublayer(breathShapeLayer)
         breathView.layer.addSublayer(scalingShapeLayer)
+        scalingShapeLayer.addSublayer(textLayer)
         scalingShapeLayer.isHidden = true
         
         view.addSubview(timeLabel)
@@ -179,23 +189,43 @@ final class BreathFocusViewController: FocusViewController {
                 self.stopBreath()
             }
         }).disposed(by: disposeBag)
-    
-//
-//        continueButton.rx.tap
-//            .bind { [weak self] in
-//                guard let self = self else { return }
-//                self.viewModel?.changeTimerState(to: .running(isContinue: true))
-//            }
-//            .disposed(by: disposeBag)
-//
-//        exitButton.rx.tap
-//            .bind { [weak self] in
-//                guard let self = self else { return }
-//                self.viewModel?.changeTimerState(to: .ready)
-//                self.viewModel?.resetClockTimer()
-//                self.viewModel?.saveFocusRecord()
-//            }
-//            .disposed(by: disposeBag)
+
+        viewModel?.clockTime.bind(onNext: { [weak self] in
+            guard let self = self else { return }
+            if $0 % 7 == 4 {
+                self.textLayer.opacity = 0
+                self.textLayer.string = ""
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                    self.textLayer.string = "Exhale"
+                    self.textLayer.opacity = 1
+                }
+            } else if $0 % 7 == 0 {
+                self.textLayer.opacity = 0
+                self.textLayer.string = ""
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                    self.textLayer.string = "Inhale"
+                    self.textLayer.opacity = 1
+                }
+            }
+            
+        })
+        
+        //
+        //        continueButton.rx.tap
+        //            .bind { [weak self] in
+        //                guard let self = self else { return }
+        //                self.viewModel?.changeTimerState(to: .running(isContinue: true))
+        //            }
+        //            .disposed(by: disposeBag)
+        //
+        //        exitButton.rx.tap
+        //            .bind { [weak self] in
+        //                guard let self = self else { return }
+        //                self.viewModel?.changeTimerState(to: .ready)
+        //                self.viewModel?.resetClockTimer()
+        //                self.viewModel?.saveFocusRecord()
+        //            }
+        //            .disposed(by: disposeBag)
     }
     
     private func startBreath() {
@@ -221,7 +251,9 @@ final class BreathFocusViewController: FocusViewController {
             UIView.animate(withDuration: 1.0) {
                 self.stopButton.layer.opacity = 1
             }
+            
             self.startInhaleExhaleAnimation()
+            self.viewModel?.startClockTimer()
         }
         
     }
@@ -240,7 +272,7 @@ final class BreathFocusViewController: FocusViewController {
             self.scalingShapeLayer.isHidden = true
         }
     }
-  
+    
     private func startIntroAnimation() {
         let scaleUpAnimation = CABasicAnimation(keyPath: "transform.scale")
         scaleUpAnimation.fromValue = 1.0
@@ -323,7 +355,7 @@ extension BreathFocusViewController: UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
-     
+    
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return viewModel?.focusTimeList.count ?? 0
     }
@@ -336,6 +368,6 @@ extension BreathFocusViewController: CAAnimationDelegate {
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
         print(#function, #line, flag, anim.description)
         self.viewModel?.resetClockTimer()
+        stopBreath()
     }
 }
- 

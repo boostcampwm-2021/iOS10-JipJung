@@ -23,7 +23,7 @@ class WiggleAnimation: CAAnimationGroup {
         animation0.fromValue = bezierPath0.cgPath
         animation0.toValue = bezierPath1.cgPath
         animation0.beginTime = 0.0
-        animation0.duration = 2.2
+        animation0.duration = 7.0 / 3.0
 
         let animation1 = CABasicAnimation(keyPath: "path")
         animation1.fromValue = bezierPath1.cgPath
