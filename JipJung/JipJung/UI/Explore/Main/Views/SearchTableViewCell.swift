@@ -13,8 +13,6 @@ class SearchTableViewCell: UITableViewCell {
     
     lazy var searchHistory: UILabel = {
         let searchHistory = UILabel()
-        searchHistory.textColor = .white
-        
         return searchHistory
     }()
     
@@ -30,7 +28,7 @@ class SearchTableViewCell: UITableViewCell {
     lazy var searchHistoryStackView: UIStackView = {
         let searchHistoryStackView = UIStackView(arrangedSubviews: [searchHistory, deleteButton])
         searchHistoryStackView.axis = .horizontal
-        searchHistoryStackView.spacing = 6
+        searchHistoryStackView.spacing = 20
         
         return searchHistoryStackView
     }()
@@ -47,13 +45,23 @@ class SearchTableViewCell: UITableViewCell {
         configureUI()
     }
     
-    private func configureUI() {
+    func configureUI() {
         selectionStyle = .none
-        backgroundColor = .black
         
         contentView.addSubview(searchHistoryStackView)
         searchHistoryStackView.snp.makeConstraints {
-            $0.leading.top.trailing.bottom.equalToSuperview()
+            $0.top.bottom.equalToSuperview()
+            $0.leading.equalToSuperview().offset(20)
+            $0.trailing.equalToSuperview().offset(-20)
+        }
+        
+        switch ApplicationMode.shared.mode.value {
+        case .bright:
+            backgroundColor = .white
+            searchHistory.textColor = .black
+        case .dark:
+            backgroundColor = .black
+            searchHistory.textColor = .white
         }
     }
 }
