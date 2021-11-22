@@ -14,7 +14,6 @@ protocol HomeViewModelInput {
     func viewWillAppear()
     func modeSwitchTouched()
     func mediaPlayViewTapped() -> Single<Bool>
-    func mediaCollectionCellLoaded(_ videoFileName: String) -> Single<URL>
 }
 
 protocol HomeViewModelOutput {
@@ -28,7 +27,6 @@ final class HomeViewModel: HomeViewModelInput, HomeViewModelOutput {
     private let mediaListUseCase = MediaListUseCase()
     private let maximListUseCase = MaximListUseCase()
     private let audioPlayUseCase = AudioPlayUseCase()
-    private let videoPlayUseCase = VideoPlayUseCase()
     
     private let disposeBag = DisposeBag()
     private let brightMode = BehaviorRelay<[Media]>(value: [])
@@ -93,11 +91,7 @@ final class HomeViewModel: HomeViewModelInput, HomeViewModelOutput {
         return audioPlayUseCase.controlAudio()
     }
     
-    func mediaPlayViewAppear(_ audioFileName: String, autoPlay: Bool) -> Single<Bool> {
+    func mediaPlayViewAppear(_ audioFileName: String, autoPlay: Bool = false) -> Single<Bool> {
         return audioPlayUseCase.readyToPlay(audioFileName, autoPlay: autoPlay)
-    }
-    
-    func mediaCollectionCellLoaded(_ videoFileName: String) -> Single<URL> {
-        return videoPlayUseCase.ready(videoFileName)
     }
 }

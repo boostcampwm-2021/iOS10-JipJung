@@ -54,6 +54,18 @@ class CarouselView: UIView {
         bindUI()
     }
     
+    func getMediaFromCurrentView() -> Media? {
+        return currentView.media.value
+    }
+    
+    func playVideoInCurrentView() {
+        currentView.playVideo()
+    }
+    
+    func pauseVideoInCurrentView() {
+        currentView.pauseVideo()
+    }
+    
     func replaceContents(contents: [Media]) {
         pageControl.numberOfPages = contents.count
         self.currentIndex.accept(contents.count/2)

@@ -45,7 +45,25 @@ class HomeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        if let currentMedia = carouselView.getMediaFromCurrentView() {
+            viewModel.mediaPlayViewAppear(currentMedia.audioFileName)
+                .subscribe { [weak self] state in
+                    if state {
+                        self?.carouselView.playVideoInCurrentView()
+                    }
+                } onFailure: { error in
+                    print(error.localizedDescription)
+                }
+                .disposed(by: disposeBag)
+        }
+        
         viewModel.viewWillAppear()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        carouselView.pauseVideoInCurrentView()
     }
     
     private func configureUI() {

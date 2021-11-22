@@ -115,9 +115,9 @@ final class MediaPlayView: UIView {
 }
 
 class MediaPlayViewModel {
-    private let videoPlayUseCase = VideoPlayUseCase()
+    private let fetchMediaURLUseCase = FetchMediaURLUseCase()
     
     func didSetMedia(media: Media) -> Single<URL> {
-        return videoPlayUseCase.ready(media.videoFileName)
+        return fetchMediaURLUseCase.getMediaURL(fileName: media.videoFileName, type: .video)
     }
 }
