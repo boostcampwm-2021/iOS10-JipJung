@@ -279,6 +279,7 @@ final class DefaultFocusViewController: FocusViewController {
                 else { return }
                 if $0 == focusTime {
                     self.viewModel?.resetClockTimer()
+                    self.changeStateToReady()
                     return
                 }
                 self.timeLabel.text = (focusTime - $0).digitalClockFormatted
