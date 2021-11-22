@@ -14,7 +14,6 @@
 		9131513F27400C26001E7125 /* UIScreen+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9131513E27400C26001E7125 /* UIScreen+Extension.swift */; };
 		9131514127400FBB001E7125 /* UIApplication+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9131514027400FBB001E7125 /* UIApplication+Extension.swift */; };
 		9131514327401200001E7125 /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9131514227401200001E7125 /* Array+Extension.swift */; };
-		914E1D87273A191D000CA5FB /* MediaCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914E1D86273A191D000CA5FB /* MediaCollectionViewCell.swift */; };
 		91655852273B618700C55CDC /* LocalFileEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91655851273B618700C55CDC /* LocalFileEnums.swift */; };
 		91655856273B6F0200C55CDC /* LocalDBEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91655855273B6F0200C55CDC /* LocalDBEnums.swift */; };
 		91655858273B773400C55CDC /* MaximListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91655857273B773400C55CDC /* MaximListUseCase.swift */; };
@@ -40,7 +39,6 @@
 		91D0226C273CBA340073EA2A /* MediaListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D0226B273CBA340073EA2A /* MediaListUseCase.swift */; };
 		91D02279273CDF610073EA2A /* DummyData.json in Resources */ = {isa = PBXBuildFile; fileRef = 91D02278273CDF610073EA2A /* DummyData.json */; };
 		91D0227D273CE6F50073EA2A /* DBStructureForJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D0227C273CE6F50073EA2A /* DBStructureForJSON.swift */; };
-		91D02281273D0A320073EA2A /* VideoPlayUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D02280273D0A320073EA2A /* VideoPlayUseCase.swift */; };
 		91DABCC0273A4EF000E57AAE /* AudioPlayUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DABCBF273A4EF000E57AAE /* AudioPlayUseCase.swift */; };
 		91E4178927312FEB001BA0A6 /* LocalFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E4178827312FEB001BA0A6 /* LocalFileManager.swift */; };
 		91EA47C6273846A800780C3E /* BlurCircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91EA47C5273846A800780C3E /* BlurCircleButton.swift */; };
@@ -259,7 +257,6 @@
 		9131513E27400C26001E7125 /* UIScreen+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+Extension.swift"; sourceTree = "<group>"; };
 		9131514027400FBB001E7125 /* UIApplication+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Extension.swift"; sourceTree = "<group>"; };
 		9131514227401200001E7125 /* Array+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extension.swift"; sourceTree = "<group>"; };
-		914E1D86273A191D000CA5FB /* MediaCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaCollectionViewCell.swift; sourceTree = "<group>"; };
 		91655851273B618700C55CDC /* LocalFileEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFileEnums.swift; sourceTree = "<group>"; };
 		91655855273B6F0200C55CDC /* LocalDBEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDBEnums.swift; sourceTree = "<group>"; };
 		91655857273B773400C55CDC /* MaximListUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaximListUseCase.swift; sourceTree = "<group>"; };
@@ -284,7 +281,6 @@
 		91D0226B273CBA340073EA2A /* MediaListUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaListUseCase.swift; sourceTree = "<group>"; };
 		91D02278273CDF610073EA2A /* DummyData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = DummyData.json; sourceTree = "<group>"; };
 		91D0227C273CE6F50073EA2A /* DBStructureForJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBStructureForJSON.swift; sourceTree = "<group>"; };
-		91D02280273D0A320073EA2A /* VideoPlayUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayUseCase.swift; sourceTree = "<group>"; };
 		91DABCBF273A4EF000E57AAE /* AudioPlayUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayUseCase.swift; sourceTree = "<group>"; };
 		91E4178827312FEB001BA0A6 /* LocalFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFileManager.swift; sourceTree = "<group>"; };
 		91EA47C5273846A800780C3E /* BlurCircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurCircleButton.swift; sourceTree = "<group>"; };
@@ -688,7 +684,6 @@
 				DDB5CE9D27328E8300E8F9EB /* HomeViewController.swift */,
 				B4015CD32739151B006BD14A /* RecentMusicViewController.swift */,
 				B4015CD527391529006BD14A /* FavoriteMusicViewController.swift */,
-				914E1D86273A191D000CA5FB /* MediaCollectionViewCell.swift */,
 				917BDD582745FAEC0049E944 /* CarouselView.swift */,
 				917BDD5A2745FBDA0049E944 /* MediaPlayView.swift */,
 			);
@@ -839,7 +834,6 @@
 				91D0226B273CBA340073EA2A /* MediaListUseCase.swift */,
 				91655857273B773400C55CDC /* MaximListUseCase.swift */,
 				91DABCBF273A4EF000E57AAE /* AudioPlayUseCase.swift */,
-				91D02280273D0A320073EA2A /* VideoPlayUseCase.swift */,
 				B4153940273B93B0004EF80F /* SaveFocusTimeUseCase.swift */,
 				B4EF13B42742933F0086D8CD /* SearchHistoryUseCase.swift */,
 				B4EF13B827429A0F0086D8CD /* SearchMediaUseCase.swift */,
@@ -1540,7 +1534,6 @@
 				911D7F7E27428430003B7C3B /* AudioPlayManager.swift in Sources */,
 				B4F36B662733B8770073609C /* SearchViewController.swift in Sources */,
 				B4F36B5127336EE20073609C /* UserDefaultsStorage.swift in Sources */,
-				91D02281273D0A320073EA2A /* VideoPlayUseCase.swift in Sources */,
 				B40D1FAF273B5F2C00881A49 /* PomodoroFocusViewModel.swift in Sources */,
 				917BDD5F274638750049E944 /* CGPoint+Extension.swift in Sources */,
 				91CE6F6F2739024800176AF2 /* Home+Enums.swift in Sources */,
@@ -1565,7 +1558,6 @@
 				91D02268273CB5FD0073EA2A /* BrightMedia.swift in Sources */,
 				DD4D030527425611007AA4DD /* UILabel+Extension.swift in Sources */,
 				DDB5CEBE2733A49A00E8F9EB /* RealmDBManager.swift in Sources */,
-				914E1D87273A191D000CA5FB /* MediaCollectionViewCell.swift in Sources */,
 				91655858273B773400C55CDC /* MaximListUseCase.swift in Sources */,
 				91EA47C6273846A800780C3E /* BlurCircleButton.swift in Sources */,
 				B4015CD42739151B006BD14A /* RecentMusicViewController.swift in Sources */,
