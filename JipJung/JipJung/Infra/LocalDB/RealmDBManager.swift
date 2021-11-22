@@ -121,7 +121,7 @@ class RealmDBManager {
             case .bright:
                 let mediaMyList = realm.objects(BrightMedia.self)
                 mediaMyListIDs = try? mediaMyList.compactMap({ element throws in element.id})
-            case .darkness:
+            case .dark:
                 let mediaMyList = realm.objects(DarknessMedia.self)
                 mediaMyListIDs = try? mediaMyList.compactMap({ element throws in element.id})
             }
