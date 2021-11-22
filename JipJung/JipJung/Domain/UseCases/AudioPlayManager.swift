@@ -18,11 +18,13 @@ class AudioPlayManager {
     private let disposeBag = DisposeBag()
     
     private var audioPlayer: AVAudioPlayer?
+    private var isPlaying = false
     
-    func controlAudioPlay(_ audioFileName: String) -> Single<Bool> {
+    func readyToPlay(_ audioFileName: String, autoPlay: Bool) -> Single<Bool> {
+        isPlaying = autoPlay
+        
         if audioFileName.isEmpty || audioFileName == audioPlayer?.url?.lastPathComponent {
             audioPlayer?.pause()
-            audioPlayer = nil
             return Single.just(false)
         }
         
@@ -37,7 +39,8 @@ class AudioPlayManager {
                     self?.audioPlayer = try? AVAudioPlayer(contentsOf: url)
                     self?.audioPlayer?.numberOfLoops = -1
                     self?.audioPlayer?.prepareToPlay()
-                    if let result = self?.audioPlayer?.play() {
+                    if autoPlay,
+                       let result = self?.audioPlayer?.play() {
                         single(.success(result))
                     }
                 } onFailure: { error in
@@ -48,7 +51,28 @@ class AudioPlayManager {
         }
     }
     
+    func controlAudio(state: Bool? = nil) -> Single<Bool> {
+        guard let audioPlayer = audioPlayer else {
+            return Single.error(AudioError.initFailed)
+        }
+        
+        if let state = state {
+            if isPlaying == state {
+                return Single.just(isPlaying)
+            }
+        }
+        
+        isPlaying.toggle()
+        
+        if isPlaying {
+            return Single.just(audioPlayer.play())
+        } else {
+            audioPlayer.pause()
+            return Single.just(false)
+        }
+    }
+    
     func isPlaying(of audioFileUrl: URL) -> Bool {
-        return audioPlayer?.url == audioFileUrl
+        return isPlaying
     }
 }

@@ -242,8 +242,8 @@ class HomeViewController: UIViewController {
             .disposed(by: disposeBag)
     }
     
-    private func mediaPlayButtonTouched(audioFileName: String) -> Single<Bool> {
-        return viewModel.mediaPlayButtonTouched(audioFileName)
+    private func mediaPlayButtonTouched() -> Single<Bool> {
+        return viewModel.mediaPlayViewTapped()
     }
     
     @objc private func bottomViewDragged(_ sender: UIPanGestureRecognizer) {
@@ -315,7 +315,11 @@ extension HomeViewController: UIViewControllerTransitioningDelegate {
 }
 
 extension HomeViewController: CarouselViewDelegate {
-    func currentViewTapped(audioFileName: String) -> Single<Bool> {
-        return mediaPlayButtonTouched(audioFileName: audioFileName)
+    func currentViewTapped() -> Single<Bool> {
+        return mediaPlayButtonTouched()
+    }
+    
+    func currentViewAppear(audioFileName: String, autoPlay: Bool) -> Single<Bool> {
+        return viewModel.mediaPlayViewAppear(audioFileName, autoPlay: autoPlay)
     }
 }

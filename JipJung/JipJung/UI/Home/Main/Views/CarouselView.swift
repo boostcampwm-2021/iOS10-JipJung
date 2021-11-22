@@ -12,7 +12,8 @@ import RxSwift
 import SnapKit
 
 protocol CarouselViewDelegate: AnyObject {
-    func currentViewTapped(audioFileName: String) -> Single<Bool>
+    func currentViewTapped() -> Single<Bool>
+    func currentViewAppear(audioFileName: String, autoPlay: Bool) -> Single<Bool>
 }
 
 class CarouselView: UIView {
@@ -109,7 +110,6 @@ class CarouselView: UIView {
         
         Observable
             .combineLatest(contentsObservable, currentIndexObservable)
-            .filter { !$0.0.isEmpty }
             .subscribe { [weak self] contents, currentIndex in
                 guard let previousItem = contents[loop: currentIndex - 1],
                       let currentItem = contents[loop: currentIndex],
@@ -123,6 +123,8 @@ class CarouselView: UIView {
                     currentItem: currentItem,
                     nextItem: nextItem
                 )
+                
+                self?.mediaPlayViewAppear(autoPlay: false)
             } onError: { error in
                 print(error.localizedDescription)
             }
@@ -240,6 +242,7 @@ class CarouselView: UIView {
                 self.previousView.pauseVideo()
                 self.currentView.pauseVideo()
                 self.nextView.pauseVideo()
+                
                 self.mediaPlayViewTapped()
             case .right:
                 let currentIndex = self.currentIndex.value
@@ -256,6 +259,7 @@ class CarouselView: UIView {
                 self.previousView.pauseVideo()
                 self.currentView.pauseVideo()
                 self.nextView.pauseVideo()
+                
                 self.mediaPlayViewTapped()
             case .none:
                 break
@@ -280,7 +284,21 @@ class CarouselView: UIView {
             return
         }
 
-        delegate.currentViewTapped(audioFileName: media.audioFileName)
+        delegate.currentViewTapped()
+            .subscribe { [weak self] state in
+                state ? self?.currentView.playVideo() : self?.currentView.pauseVideo()
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    private func mediaPlayViewAppear(autoPlay: Bool) {
+        guard let delegate = delegate,
+              let media = currentView.media.value
+        else {
+            return
+        }
+
+        delegate.currentViewAppear(audioFileName: media.audioFileName, autoPlay: autoPlay)
             .subscribe { [weak self] state in
                 state ? self?.currentView.playVideo() : self?.currentView.pauseVideo()
             }

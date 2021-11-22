@@ -88,7 +88,7 @@ final class MusicPlayerViewModel: MusicPlayerViewModelInput, MusicPlayerViewMode
     }
 
     func playMusic() {
-        audioPlayUseCase.controlAudioPlay(audioFileName)
+        audioPlayUseCase.readyToPlay(audioFileName)
             .subscribe { [weak self] in
                 guard $0 == true else { return }
                 self?.isMusicPlaying.accept($0)
@@ -100,7 +100,7 @@ final class MusicPlayerViewModel: MusicPlayerViewModelInput, MusicPlayerViewMode
     }
     
     func pauseMusic() {
-        audioPlayUseCase.controlAudioPlay(audioFileName)
+        audioPlayUseCase.readyToPlay(audioFileName)
             .subscribe { [weak self] in
                 guard $0 == false else { return }
                 self?.isMusicPlaying.accept($0)
