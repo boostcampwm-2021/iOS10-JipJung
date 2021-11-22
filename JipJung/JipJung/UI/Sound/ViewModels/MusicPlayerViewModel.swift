@@ -5,10 +5,11 @@
 //  Created by Soohyeon Lee on 2021/11/15.
 //
 
-import Foundation
-import RxSwift
-import RxRelay
 import AVFoundation
+import Foundation
+
+import RxRelay
+import RxSwift
 
 enum FileStatus {
     case isNotDownloaded
@@ -51,11 +52,10 @@ final class MusicPlayerViewModel: MusicPlayerViewModelInput, MusicPlayerViewMode
     private let id: String
     private let audioFileName: String
     private let videoFileName: String
-    private let audioPlayUseCase: AudioPlayUseCase = AudioPlayUseCase()
-    private let videoPlayUseCase: VideoPlayUseCase = VideoPlayUseCase()
-    private let fetchMediaUrlUseCase: FetchMediaURLUseCase = FetchMediaURLUseCase()
-    private let favoriteMediaUseCase: FavoriteMediaUseCase = FavoriteMediaUseCase()
-    private var disposeBag: DisposeBag = DisposeBag()
+    private let audioPlayUseCase = AudioPlayUseCase()
+    private let fetchMediaURLUseCase = FetchMediaURLUseCase()
+    private let favoriteMediaUseCase = FavoriteMediaUseCase()
+    private var disposeBag = DisposeBag()
     
     init(media: Media) {
         id = media.id
@@ -72,8 +72,13 @@ final class MusicPlayerViewModel: MusicPlayerViewModelInput, MusicPlayerViewMode
     }
     
     private func configureVideoPlayerItem() {
-        guard let videoFileUrl = fetchMediaUrlUseCase.execute(fileName: videoFileName) else { return }
-        videoPlayerItem = AVPlayerItem(url: videoFileUrl)
+        fetchMediaURLUseCase.getMediaURL(fileName: videoFileName, type: .video)
+            .subscribe { [weak self] videoFileURL in
+                self?.videoPlayerItem = AVPlayerItem(url: videoFileURL)
+            } onFailure: { error in
+                print(error.localizedDescription)
+            }
+            .disposed(by: disposeBag)
     }
     
     private func configureIsFavorite() {
@@ -88,7 +93,7 @@ final class MusicPlayerViewModel: MusicPlayerViewModelInput, MusicPlayerViewMode
     }
 
     func playMusic() {
-        audioPlayUseCase.readyToPlay(audioFileName)
+        audioPlayUseCase.readyToPlay(audioFileName, autoPlay: true)
             .subscribe { [weak self] in
                 guard $0 == true else { return }
                 self?.isMusicPlaying.accept($0)
@@ -100,7 +105,7 @@ final class MusicPlayerViewModel: MusicPlayerViewModelInput, MusicPlayerViewMode
     }
     
     func pauseMusic() {
-        audioPlayUseCase.readyToPlay(audioFileName)
+        audioPlayUseCase.controlAudio(playState: .manual(false))
             .subscribe { [weak self] in
                 guard $0 == false else { return }
                 self?.isMusicPlaying.accept($0)
@@ -112,17 +117,17 @@ final class MusicPlayerViewModel: MusicPlayerViewModelInput, MusicPlayerViewMode
     }
     
     func checkMusicDownloaded() {
-        if let audioFileUrl = fetchMediaUrlUseCase.execute(fileName: audioFileName) {
-            musicFileStatus.accept(FileStatus.downloaded)
-        } else {
-            musicFileStatus.accept(FileStatus.isNotDownloaded)
-        }
+        fetchMediaURLUseCase.getMediaURLFromLocal(fileName: audioFileName)
+            .subscribe { [weak self] _ in
+                self?.musicFileStatus.accept(FileStatus.downloaded)
+            } onFailure: { [weak self] _ in
+                self?.musicFileStatus.accept(FileStatus.isNotDownloaded)
+            }
+            .disposed(by: disposeBag)
     }
     
     func checkMusicPlaying() {
-        let audioPlayManager = AudioPlayManager.shared
-        if let audioFileUrl = fetchMediaUrlUseCase.execute(fileName: audioFileName),
-           audioPlayManager.isPlaying(of: audioFileUrl) {
+        if audioPlayUseCase.isPlaying(using: audioFileName) {
             isMusicPlaying.accept(true)
         }
     }

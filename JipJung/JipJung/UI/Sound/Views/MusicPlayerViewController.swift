@@ -131,7 +131,7 @@ final class MusicPlayerViewController: UIViewController {
     
     private func configureVideoView() {
         if let playerItem = viewModel?.videoPlayerItem {
-            queuePlayer = AVQueuePlayer(items: [playerItem])
+            queuePlayer = AVQueuePlayer(playerItem: playerItem)
             playerLayer = AVPlayerLayer(player: self.queuePlayer)
             guard let playerLayer = playerLayer,
                   let queuePlayer = queuePlayer
