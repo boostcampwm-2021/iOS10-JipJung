@@ -58,6 +58,7 @@ final class MusicPlayerViewController: UIViewController {
         bindUI()
         viewModel?.checkMusicDownloaded()
         viewModel?.checkMusicPlaying()
+        viewModel?.checkMediaMode()
     }
     
     override func viewDidLayoutSubviews() {
