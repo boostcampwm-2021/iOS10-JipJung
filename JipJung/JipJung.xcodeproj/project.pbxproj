@@ -60,6 +60,7 @@
 		B42226CE2741144200F8CA3D /* UITableView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42226CD2741144200F8CA3D /* UITableView+Extension.swift */; };
 		B481FC7D274521B800D1F2EA /* FavoriteMediaUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B481FC7C274521B800D1F2EA /* FavoriteMediaUseCase.swift */; };
 		B481FC7F2745238100D1F2EA /* MyFavoriteRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B481FC7E2745238100D1F2EA /* MyFavoriteRepository.swift */; };
+		B490FDBE274B771F008A4454 /* ApplicationMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B490FDBD274B771F008A4454 /* ApplicationMode.swift */; };
 		B4B780DF2741F6FA0080DC28 /* BreathFocusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B780DE2741F6FA0080DC28 /* BreathFocusViewController.swift */; };
 		B4B780E12741F7070080DC28 /* BreathFocusViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B780E02741F7070080DC28 /* BreathFocusViewModel.swift */; };
 		B4E420D927460BBB00C39545 /* M014.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B4E420A627460BB900C39545 /* M014.jpg */; };
@@ -302,6 +303,7 @@
 		B42226CD2741144200F8CA3D /* UITableView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Extension.swift"; sourceTree = "<group>"; };
 		B481FC7C274521B800D1F2EA /* FavoriteMediaUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteMediaUseCase.swift; sourceTree = "<group>"; };
 		B481FC7E2745238100D1F2EA /* MyFavoriteRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFavoriteRepository.swift; sourceTree = "<group>"; };
+		B490FDBD274B771F008A4454 /* ApplicationMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationMode.swift; sourceTree = "<group>"; };
 		B4B780DE2741F6FA0080DC28 /* BreathFocusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathFocusViewController.swift; sourceTree = "<group>"; };
 		B4B780E02741F7070080DC28 /* BreathFocusViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathFocusViewModel.swift; sourceTree = "<group>"; };
 		B4E420A627460BB900C39545 /* M014.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = M014.jpg; sourceTree = "<group>"; };
@@ -1080,6 +1082,7 @@
 				DF09E9B42741FAC700F5F739 /* Utils+Enums.swift */,
 				DF1722B12740FD2300F06140 /* ApplicationLaunch.swift */,
 				DF1722B32741013600F06140 /* LocalDBMigrator.swift */,
+				B490FDBD274B771F008A4454 /* ApplicationMode.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1536,6 +1539,7 @@
 				B4F36B5127336EE20073609C /* UserDefaultsStorage.swift in Sources */,
 				B40D1FAF273B5F2C00881A49 /* PomodoroFocusViewModel.swift in Sources */,
 				917BDD5F274638750049E944 /* CGPoint+Extension.swift in Sources */,
+				B490FDBE274B771F008A4454 /* ApplicationMode.swift in Sources */,
 				91CE6F6F2739024800176AF2 /* Home+Enums.swift in Sources */,
 				91CE6F6F2739024800176AF2 /* Home+Enums.swift in Sources */,
 				B4153949273BA34A004EF80F /* FocusTimeRepository.swift in Sources */,
