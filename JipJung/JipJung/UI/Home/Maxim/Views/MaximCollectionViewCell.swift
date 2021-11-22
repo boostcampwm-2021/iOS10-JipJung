@@ -77,6 +77,8 @@ final class MaximCollectionViewCell: UICollectionViewCell {
     var backgroundImageName: String = "" {
         didSet {
             backgroundView = UIImageView(image: UIImage(named: backgroundImageName))
+            backgroundColor = .black
+            backgroundView?.alpha = 0.5
         }
     }
     

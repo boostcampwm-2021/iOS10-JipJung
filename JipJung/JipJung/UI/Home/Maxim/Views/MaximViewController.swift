@@ -57,7 +57,7 @@ final class MaximViewController: UIViewController {
             MaximCalendarHeaderCollectionViewCell.self,
             forCellWithReuseIdentifier: MaximCalendarHeaderCollectionViewCell.identifier)
         calendarHeaderCollectionView.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
-        calendarHeaderCollectionView.backgroundColor = UIColor.white.withAlphaComponent(0.5)
+        calendarHeaderCollectionView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         return calendarHeaderCollectionView
     }()
     
@@ -93,7 +93,6 @@ final class MaximViewController: UIViewController {
         bindMaximCollectionView()
         bindAction()
         bindCalendarHeaderCollectionView()
-        print(calendarHeaderCollectionView.indexPathsForVisibleItems)
         viewModel.fetchMaximList()
     }
     
@@ -144,10 +143,11 @@ final class MaximViewController: UIViewController {
             cell.monthYearLabel.text = maxim.monthYear
             cell.contentLabel.text = maxim.content
             cell.speakerLabel.text = maxim.speaker
-            cell.backgroundImageName = maxim.thumbnailImageFileName
+            cell.backgroundImageName = maxim.thumbnailImageAssetPath
             cell.isShown = false
         }
         .disposed(by: disposeBag)
+        
         maximCollectionView.rx.willDisplayCell.bind {
             guard let cell = $0.cell as? MaximCollectionViewCell else {
                 return
@@ -155,14 +155,6 @@ final class MaximViewController: UIViewController {
             cell.isShown = true
         }
         .disposed(by: disposeBag)
-//        maximCollectionView.rx.didEndDisplayCell.bind {
-//            guard let cell = $0 as? MaximCollectionViewCell else {
-//                return
-//            }
-//            cell.show()
-//            print($0, $1)
-//        }
-//        .disposed(by: disposeBag)
 
         viewModel.selectedDate.skip(1).bind { [weak self] indexPath in
             self?.maximCollectionView.scrollToItem(at: indexPath, at: [], animated: true)
@@ -179,9 +171,9 @@ final class MaximViewController: UIViewController {
                 return
             }
             cell.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
-            cell.dayButtonText = maxim.day
+            cell.dayLabel.text = maxim.day
             cell.weekdayLabel.text = maxim.weekDay
-            cell.dayButtonImageName = maxim.thumbnailImageFileName
+            cell.dayButtonImageName = maxim.thumbnailImageAssetPath
             if self?.viewModel.selectedDate.value.item == index {
                 cell.indicatorPointView.isHidden = false
             }

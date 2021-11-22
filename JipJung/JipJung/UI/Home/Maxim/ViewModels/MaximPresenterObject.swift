@@ -13,15 +13,15 @@ struct MaximPresenterObject {
     let monthYear: String
     let content: String
     let speaker: String
-    let thumbnailImageFileName: String
+    let thumbnailImageAssetPath: String
     
-    init(day: String, weekDay: String, monthYear: String, content: String, speaker: String, thumbnailImageFileName: String) {
+    init(day: String, weekDay: String, monthYear: String, content: String, speaker: String, thumbnailImageAssetPath: String) {
         self.day = day
         self.weekDay = weekDay
         self.monthYear = monthYear
         self.content = content
         self.speaker = speaker
-        self.thumbnailImageFileName = thumbnailImageFileName
+        self.thumbnailImageAssetPath = thumbnailImageAssetPath
     }
     
     init(maxim: Maxim) {
@@ -32,8 +32,8 @@ struct MaximPresenterObject {
         let monthYear = "\(monthList[date.month - 1]) \(date.year)"
         let content = maxim.content
         let speaker = maxim.speaker.isEmpty ? "미상" : maxim.speaker
-        let thumbnailImageFileName = maxim.id + ".jpg"
-        self.init(day: day, weekDay: weekDay, monthYear: monthYear, content: content, speaker: speaker, thumbnailImageFileName: thumbnailImageFileName)
+        let thumbnailImageAssetPath = maxim.id + ".jpg"
+        self.init(day: day, weekDay: weekDay, monthYear: monthYear, content: content, speaker: speaker, thumbnailImageAssetPath: thumbnailImageAssetPath)
     }
 }
 
