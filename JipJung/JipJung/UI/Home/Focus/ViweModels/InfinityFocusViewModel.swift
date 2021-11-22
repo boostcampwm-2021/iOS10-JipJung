@@ -31,6 +31,7 @@ final class InfinityFocusViewModel: InfinityFocusViewModelInput, InfinityFocusVi
     private var disposeBag: DisposeBag = DisposeBag()
     
     private let saveFocusTimeUseCase: SaveFocusTimeUseCaseProtocol
+    private let audioPlayUseCase = AudioPlayUseCase()
     
     init(saveFocusTimeUseCase: SaveFocusTimeUseCaseProtocol) {
         self.saveFocusTimeUseCase = saveFocusTimeUseCase
@@ -41,6 +42,7 @@ final class InfinityFocusViewModel: InfinityFocusViewModelInput, InfinityFocusVi
     }
     
     func startClockTimer() {
+        audioPlayUseCase.controlAudio(state: true)
         Observable<Int>.interval(RxTimeInterval.seconds(1),
                                  scheduler: MainScheduler.instance)
             .subscribe { [weak self] _ in
@@ -51,10 +53,12 @@ final class InfinityFocusViewModel: InfinityFocusViewModelInput, InfinityFocusVi
     }
     
     func pauseClockTimer() {
+        audioPlayUseCase.controlAudio(state: false)
         runningStateDisposeBag = DisposeBag()
     }
     
     func resetClockTimer() {
+        audioPlayUseCase.controlAudio(state: false)
         clockTime.accept(0)
         runningStateDisposeBag = DisposeBag()
     }
