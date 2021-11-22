@@ -12,14 +12,14 @@ final class ApplicationMode {
     static let shared = ApplicationMode()
     private init() {}
     
-    var value: BehaviorRelay<ApplicationModeType> = BehaviorRelay<ApplicationModeType>(value: .bright)
+    var mode: BehaviorRelay<ApplicationModeType> = BehaviorRelay<ApplicationModeType>(value: .bright)
     
     func convert() {
-        switch value.value {
+        switch mode.value {
         case .bright:
-            value.accept(.dark)
+            mode.accept(.dark)
         case .dark:
-            value.accept(.bright)
+            mode.accept(.bright)
         }
     }
 }
