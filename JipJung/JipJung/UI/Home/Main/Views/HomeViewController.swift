@@ -315,11 +315,19 @@ extension HomeViewController: UIViewControllerTransitioningDelegate {
 }
 
 extension HomeViewController: CarouselViewDelegate {
-    func currentViewTapped() -> Single<Bool> {
-        return mediaPlayButtonTouched()
+    func currentViewTapped(currentView: MediaPlayView) {
+        mediaPlayButtonTouched()
+            .subscribe { state in
+                state ? currentView.playVideo() : currentView.pauseVideo()
+            }
+            .disposed(by: disposeBag)
     }
     
-    func currentViewAppear(audioFileName: String, autoPlay: Bool) -> Single<Bool> {
+    func currentViewAppear(currentView: MediaPlayView, audioFileName: String, autoPlay: Bool) {
         return viewModel.mediaPlayViewAppear(audioFileName, autoPlay: autoPlay)
+            .subscribe { state in
+                state ? currentView.playVideo() : currentView.pauseVideo()
+            }
+            .disposed(by: disposeBag)
     }
 }

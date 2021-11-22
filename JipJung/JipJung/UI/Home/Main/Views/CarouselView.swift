@@ -12,8 +12,8 @@ import RxSwift
 import SnapKit
 
 protocol CarouselViewDelegate: AnyObject {
-    func currentViewTapped() -> Single<Bool>
-    func currentViewAppear(audioFileName: String, autoPlay: Bool) -> Single<Bool>
+    func currentViewTapped(currentView: MediaPlayView)
+    func currentViewAppear(currentView: MediaPlayView, audioFileName: String, autoPlay: Bool)
 }
 
 class CarouselView: UIView {
@@ -284,11 +284,7 @@ class CarouselView: UIView {
             return
         }
 
-        delegate.currentViewTapped()
-            .subscribe { [weak self] state in
-                state ? self?.currentView.playVideo() : self?.currentView.pauseVideo()
-            }
-            .disposed(by: disposeBag)
+        delegate.currentViewTapped(currentView: self.currentView)
     }
     
     private func mediaPlayViewAppear(autoPlay: Bool) {
@@ -298,11 +294,7 @@ class CarouselView: UIView {
             return
         }
 
-        delegate.currentViewAppear(audioFileName: media.audioFileName, autoPlay: autoPlay)
-            .subscribe { [weak self] state in
-                state ? self?.currentView.playVideo() : self?.currentView.pauseVideo()
-            }
-            .disposed(by: disposeBag)
+        delegate.currentViewAppear(currentView: self.currentView, audioFileName: media.audioFileName, autoPlay: autoPlay)
     }
 }
 
