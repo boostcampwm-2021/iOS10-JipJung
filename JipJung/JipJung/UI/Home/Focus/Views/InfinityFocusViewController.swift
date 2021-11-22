@@ -220,7 +220,7 @@ final class InfinityFocusViewController: FocusViewController {
         startButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
-                self.viewModel?.changeTimerState(to: .running(isContinue: false))
+                self.viewModel?.changeTimerState(to: .running(isResume: false))
             }
             .disposed(by: disposeBag)
         
@@ -234,7 +234,7 @@ final class InfinityFocusViewController: FocusViewController {
         continueButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
-                self.viewModel?.changeTimerState(to: .running(isContinue: true))
+                self.viewModel?.changeTimerState(to: .running(isResume: true))
             }
             .disposed(by: disposeBag)
         
