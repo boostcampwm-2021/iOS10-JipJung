@@ -17,7 +17,6 @@ final class BreathFocusViewController: FocusViewController {
         let timePickerView = UIPickerView()
         timePickerView.delegate = self
         timePickerView.dataSource = self
-        
         return timePickerView
     }()
     
@@ -25,7 +24,6 @@ final class BreathFocusViewController: FocusViewController {
         let minuteLabel = UILabel()
         minuteLabel.text = "min"
         minuteLabel.textColor = .init(white: 1.0, alpha: 0.8)
-        
         return minuteLabel
     }()
     
@@ -72,7 +70,7 @@ final class BreathFocusViewController: FocusViewController {
     
     private lazy var stopButton: UIButton = {
         let stopButton = UIButton()
-        stopButton.setTitle("Pause", for: .normal)
+        stopButton.setTitle("Stop", for: .normal)
         stopButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         stopButton.setTitleColor(UIColor.white, for: .normal)
         stopButton.layer.cornerRadius = 25
@@ -93,18 +91,18 @@ final class BreathFocusViewController: FocusViewController {
         bindUI()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        breathShapeLayer.frame = breathView.bounds
+        scalingShapeLayer.frame = breathView.bounds
+        startWiggleAnimation()
+    }
+    
     // MARK: - Initializer
 
     convenience init(viewModel: BreathFocusViewModel) {
         self.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        breathShapeLayer.frame = breathView.bounds
-        scalingShapeLayer.frame = breathView.bounds
-        startBreathAnimation()
     }
     
     // MARK: - Helpers
@@ -114,9 +112,9 @@ final class BreathFocusViewController: FocusViewController {
         
         view.addSubview(breathView)
         breathView.snp.makeConstraints {
-            $0.width.equalToSuperview()
+            $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(breathView.snp.width)
-            $0.centerY.equalTo(view.snp.centerY).multipliedBy(0.65)
+            $0.top.equalTo(super.closeButton.snp.bottom)
         }
         breathView.layer.addSublayer(breathShapeLayer)
         breathView.layer.addSublayer(scalingShapeLayer)
@@ -155,70 +153,6 @@ final class BreathFocusViewController: FocusViewController {
             $0.height.equalTo(FocusViewButtonSize.pauseButton.height)
         }
         stopButton.isHidden = true
-    }
-    
-    private func startBreath() {
-        startButton.isHidden = true
-        stopButton.isHidden = false
-        timeLabel.isHidden = true
-        timePickerView.isHidden = true
-        minuteLabel.isHidden = true
-        
-        let scaleUpAnim = CABasicAnimation(keyPath: "transform.scale")
-        scaleUpAnim.fromValue = CGPoint(x: 1, y: 1)
-        scaleUpAnim.toValue = CGPoint(x: 10.0, y: 10.0)
-        scaleUpAnim.beginTime = 0.0
-        scaleUpAnim.duration = 1.0
-        scaleUpAnim.repeatCount = 1
-        
-        let colorAnim = CABasicAnimation(keyPath: "opacity")
-        colorAnim.fromValue = 1.0
-        colorAnim.toValue = 0.5
-        colorAnim.duration = 1.0
-        colorAnim.beginTime = 0.0
-        colorAnim.repeatCount = 1
-        
-        let animations = CAAnimationGroup()
-        animations.animations = [scaleUpAnim, colorAnim]
-        animations.repeatCount = 1
-        animations.duration = 1.0
-        animations.beginTime = 0.0
-        animations.isRemovedOnCompletion = true
-        animations.fillMode = CAMediaTimingFillMode.forwards
-        breathShapeLayer.add(animations, forKey: nil)
-        
-        // 진입 배경 애니메이션
-        self.stopButton.layer.opacity = 0
-        UIView.animate(withDuration: 1.0, delay: .zero, options: .curveEaseIn) {
-            self.view.layer.backgroundColor = .init(red: 0.1, green: 1.0, blue: 0.1, alpha: 0.8)
-        } completion: { flag in
-            // 진입 완료 후
-            print(#function, #line, flag)
-            self.breathShapeLayer.isHidden = true
-            UIView.animate(withDuration: 3.0) {
-                self.scalingShapeLayer.isHidden = false
-                self.view.layer.backgroundColor = .none
-            }
-            UIView.animate(withDuration: 1.0) {
-                self.stopButton.layer.opacity = 1
-            }
-            self.startScalingAnimation()
-        }
-        
-    }
-    
-    private func stopBreath() {
-        startButton.isHidden = false
-        stopButton.isHidden = true
-        timeLabel.isHidden = false
-        timePickerView.isHidden = false
-        minuteLabel.isHidden = false
-        self.breathShapeLayer.isHidden = false
-        UIView.animate(withDuration: 1.0) {
-            self.view.layer.backgroundColor = .none
-            self.scalingShapeLayer.removeAllAnimations()
-            self.scalingShapeLayer.isHidden = true
-        }
     }
     
     private func bindUI() {
@@ -264,69 +198,97 @@ final class BreathFocusViewController: FocusViewController {
 //            .disposed(by: disposeBag)
     }
     
-    private func changeStateToPaused() {
+    private func startBreath() {
         startButton.isHidden = true
-//        pauseButton.isHidden = true
-        timeLabel.isHidden = false
+        stopButton.isHidden = false
+        timeLabel.isHidden = true
         timePickerView.isHidden = true
         minuteLabel.isHidden = true
-//        viewModel?.pauseClockTimer()
-//        pauseTimerProgressAnimation()
-
-//        UIView.animate(withDuration: 0.5) { [weak self] in
-//            guard let self = self else { return }
-//            self.continueButton.isHidden = false
-//            self.exitButton.isHidden = false
-//            self.continueButton.frame = CGRect(
-//                x: self.continueButton.frame.minX * 0.45,
-//                y: self.continueButton.frame.minY,
-//                width: self.continueButton.frame.width,
-//                height: self.continueButton.frame.height
-//            )
-//            self.exitButton.frame = CGRect(
-//                x: self.exitButton.frame.minX * 1.55,
-//                y: self.exitButton.frame.minY,
-//                width: self.exitButton.frame.width,
-//                height: self.exitButton.frame.height
-//            )
-//        }
-    }
-  
-    private func startBreathAnimation() {
-        breathShapeLayer.add(
-            BreathAnimation(
-                frame: CGRect(
-                    origin: .zero,
-                    size: CGSize(width: 400, height: 400))
-            ),
-            forKey: "breath")
+        
+        startIntroAnimation()
+        
+        // 진입 배경 애니메이션
+        self.stopButton.layer.opacity = 0
+        UIView.animate(withDuration: 0.5, delay: .zero, options: .curveEaseIn) {
+            self.view.layer.backgroundColor = .init(red: 0.1, green: 1.0, blue: 0.1, alpha: 0.8)
+        } completion: { _ in
+            // 진입 완료 후
+            self.breathShapeLayer.isHidden = true
+            UIView.animate(withDuration: 3.0) {
+                self.scalingShapeLayer.isHidden = false
+                self.view.layer.backgroundColor = .none
+            }
+            UIView.animate(withDuration: 1.0) {
+                self.stopButton.layer.opacity = 1
+            }
+            self.startInhaleExhaleAnimation()
+        }
+        
     }
     
-    private func startScalingAnimation() {
-        let animations = BreathAnimation(
-            frame: breathView.bounds
+    private func stopBreath() {
+        startButton.isHidden = false
+        stopButton.isHidden = true
+        timeLabel.isHidden = false
+        timePickerView.isHidden = false
+        minuteLabel.isHidden = false
+        breathShapeLayer.isHidden = false
+        
+        UIView.animate(withDuration: 1.0) {
+            self.view.layer.backgroundColor = .none
+            self.scalingShapeLayer.removeAllAnimations()
+            self.scalingShapeLayer.isHidden = true
+        }
+    }
+  
+    private func startIntroAnimation() {
+        let scaleUpAnimation = CABasicAnimation(keyPath: "transform.scale")
+        scaleUpAnimation.fromValue = 1.0
+        scaleUpAnimation.toValue = 5.0
+
+        let opacityDownAnimation = CABasicAnimation(keyPath: "opacity")
+        opacityDownAnimation.fromValue = 1.0
+        opacityDownAnimation.toValue = 0.5
+
+        let introAnimations = CAAnimationGroup()
+        introAnimations.animations = [scaleUpAnimation, opacityDownAnimation]
+        introAnimations.repeatCount = 1
+        introAnimations.duration = 0.5
+        introAnimations.beginTime = 0.0
+        introAnimations.isRemovedOnCompletion = true
+        breathShapeLayer.add(introAnimations, forKey: "scaleUpAndOpacityDown")
+    }
+    
+    private func startWiggleAnimation() {
+        breathShapeLayer.add(
+            WiggleAnimation(frame: breathView.bounds),
+            forKey: "wiggle"
         )
+    }
+    
+    private func startInhaleExhaleAnimation() {
+        let animations = WiggleAnimation(frame: breathView.bounds)
         
-        let animScaleUp: CABasicAnimation = CABasicAnimation(keyPath: "transform.scale")
-        animScaleUp.fromValue = 0.5
-        animScaleUp.toValue = 1
-        animScaleUp.beginTime = animations.beginTime
-        animScaleUp.duration = animations.duration / 3.0 * 2.0
-        animScaleUp.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        let inhaleAnimation = CABasicAnimation(keyPath: "transform.scale")
+        inhaleAnimation.fromValue = 0.5
+        inhaleAnimation.toValue = 1
+        inhaleAnimation.beginTime = animations.beginTime
+        inhaleAnimation.duration = animations.duration / 3.0 * 2.0
+        inhaleAnimation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
         
-        let animScaleDown: CABasicAnimation = CABasicAnimation(keyPath: "transform.scale")
-        animScaleDown.fromValue = 1
-        animScaleDown.toValue = 0.5
-        animScaleDown.beginTime = animations.beginTime + animations.duration / 3.0 * 2.0
-        animScaleDown.duration = animations.duration / 3.0
-        animScaleDown.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        let exhaleAnimation = CABasicAnimation(keyPath: "transform.scale")
+        exhaleAnimation.fromValue = 1
+        exhaleAnimation.toValue = 0.5
+        exhaleAnimation.beginTime = animations.beginTime + animations.duration / 3.0 * 2.0
+        exhaleAnimation.duration = animations.duration / 3.0
+        exhaleAnimation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
         
         animations.isRemovedOnCompletion = true
         animations.repeatCount = Float(viewModel?.focusTime ?? 1)
-        animations.animations?.append(animScaleUp)
-        animations.animations?.append(animScaleDown)
+        animations.animations?.append(inhaleAnimation)
+        animations.animations?.append(exhaleAnimation)
         animations.delegate = self
-        scalingShapeLayer.add(animations, forKey: "scaling")
+        scalingShapeLayer.add(animations, forKey: "inhaleAndExhale")
     }
 }
 
