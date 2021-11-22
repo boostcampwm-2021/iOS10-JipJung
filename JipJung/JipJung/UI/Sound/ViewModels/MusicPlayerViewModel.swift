@@ -102,7 +102,7 @@ final class MusicPlayerViewModel: MusicPlayerViewModelInput, MusicPlayerViewMode
     func pauseMusic() {
         audioPlayUseCase.controlAudioPlay(audioFileName)
             .subscribe { [weak self] in
-                guard $0 else { return }
+                guard $0 == false else { return }
                 self?.isMusicPlaying.accept($0)
             } onFailure: { [weak self] in
                 self?.musicFileStatus.accept(.downloadFailed)
