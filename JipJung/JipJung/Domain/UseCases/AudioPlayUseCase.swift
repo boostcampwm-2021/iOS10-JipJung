@@ -18,7 +18,7 @@ final class AudioPlayUseCase {
         return audioPlayManager.readyToPlay(audioFileName, autoPlay: autoPlay)
     }
     
-    func controlAudio(state: Bool? = nil) -> Single<Bool> {
-        return audioPlayManager.controlAudio(state: state)
+    func controlAudio(playState: PlayState = .automatics) -> Single<Bool> {
+        return audioPlayManager.controlAudio(playState: playState)
     }
 }

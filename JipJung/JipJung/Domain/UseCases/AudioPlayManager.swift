@@ -10,7 +10,14 @@ import Foundation
 
 import RxSwift
 
+typealias PlayState = AudioPlayManager.PlayState
+
 class AudioPlayManager {
+    enum PlayState {
+        case manual(Bool)
+        case automatics
+    }
+    
     static let shared = AudioPlayManager()
     private init() {}
     
@@ -51,27 +58,30 @@ class AudioPlayManager {
         }
     }
     
-    func controlAudio(state: Bool? = nil) -> Single<Bool> {
+    func controlAudio(playState: PlayState) -> Single<Bool> {
         guard let audioPlayer = audioPlayer else {
             return Single.error(AudioError.initFailed)
         }
         
-        if let state = state {
-            if isPlaying == state {
+        switch playState {
+        case .manual(let state):
+            if state == isPlaying {
                 return Single.just(isPlaying)
             }
-        }
-        
-        isPlaying.toggle()
-        
-        if isPlaying {
-            return Single.just(audioPlayer.play())
-        } else {
-            audioPlayer.pause()
-            return Single.just(false)
+            fallthrough
+        case .automatics:
+            isPlaying.toggle()
+            
+            if isPlaying {
+                return Single.just(audioPlayer.play())
+            } else {
+                audioPlayer.pause()
+                return Single.just(false)
+            }
         }
     }
     
+    // TODO: Music Cell에서 사용, 현식님과 논의 필요
     func isPlaying(of audioFileUrl: URL) -> Bool {
         return isPlaying
     }
