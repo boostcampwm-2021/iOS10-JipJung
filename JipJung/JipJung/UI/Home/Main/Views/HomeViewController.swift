@@ -166,6 +166,7 @@ class HomeViewController: UIViewController {
         modeSwitch.rx.tap
             .bind { [weak self] in
                 self?.viewModel.modeSwitchTouched()
+                ApplicationMode.shared.convert()
             }
             .disposed(by: disposeBag)
         
