@@ -6,12 +6,14 @@
 //
 
 import UIKit
-
+import RxSwift
+import RxCocoa
 import SnapKit
 
 class MeViewController: UIViewController {
     private lazy var meCollectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
+        flowLayout.itemSize = CGSize(width: MeCollectionViewSize.width, height: MeCollectionViewSize.width)
         let meCollectionView = UICollectionView(frame: view.frame, collectionViewLayout: flowLayout)
         flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
         meCollectionView.dataSource = self
@@ -23,11 +25,14 @@ class MeViewController: UIViewController {
         return meCollectionView
     }()
     
+    private var disposeBag = DisposeBag()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         configureNavigationbar()
         configureCollectionView()
+        bindDailyStaticsCell()
     }
     
     private func configureNavigationbar() {
@@ -43,6 +48,47 @@ class MeViewController: UIViewController {
             $0.bottom.equalToSuperview()
         }
     }
+    
+    private func bindDailyStaticsCell() {
+        Observable<[Int]>.of([1, 2, 3]).bind {
+            print($0)
+        }
+        .disposed(by: disposeBag)
+    }
+    
+    private lazy var grassMapView: UIView = {
+        let grassMapView = UIView()
+    
+        let weeksStackView = UIStackView()
+        weeksStackView.distribution = .fillEqually
+        weeksStackView.axis = .horizontal
+        for _ in 1...20 {
+            let weekStackView = UIStackView()
+            weekStackView.axis = .vertical
+            for _ in 1...7 {
+                let dayView = UIView(frame: CGRect(
+                    origin: .zero,
+                    size: CGSize(
+                        width: MeGrassMapViewSize.cellLength,
+                        height: MeGrassMapViewSize.cellLength)))
+                dayView.backgroundColor = .gray.withAlphaComponent(0.2)
+                weekStackView.addArrangedSubview(dayView)
+                weekStackView.distribution = .fillEqually
+                weekStackView.spacing = MeGrassMapViewSize.cellSpacing
+            }
+            weeksStackView.addArrangedSubview(weekStackView)
+            weeksStackView.distribution = .fillEqually
+            weeksStackView.spacing = MeGrassMapViewSize.cellSpacing
+        }
+        grassMapView.addSubview(weeksStackView)
+        weeksStackView.snp.makeConstraints {
+            $0.bottom.equalToSuperview()
+            $0.leading.equalToSuperview()
+            $0.trailing.equalToSuperview()
+            $0.height.equalTo(MeGrassMapViewSize.height)
+        }
+        return grassMapView
+    }()
 }
 
 extension MeViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
@@ -59,6 +105,9 @@ extension MeViewController: UICollectionViewDataSource, UICollectionViewDelegate
         switch indexPath.section {
         case 0:
             if let cell: MeDailyStaticsCollectionViewCell = collectionView.dequeueReusableCell(indexPath: indexPath) {
+                let view = UIView()
+                view.backgroundColor = .blue
+                cell.setGrassMapView(grassMapView)
                 return cell
             }
         case 1:
@@ -73,9 +122,5 @@ extension MeViewController: UICollectionViewDataSource, UICollectionViewDelegate
             break
         }
         return UICollectionViewCell()
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: MeCollectionViewSize.width, height: MeCollectionViewSize.width)
     }
 }

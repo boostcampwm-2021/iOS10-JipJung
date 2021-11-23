@@ -31,12 +31,22 @@ class MeDailyStaticsCollectionViewCell: UICollectionViewCell {
         representativeValuesStackView.distribution = .equalSpacing
         return representativeValuesStackView
     }()
+    private var grassMapView: UIView? = UIView()
     
-    var grassMapView: UIView = {
-        let grassMapView = UIView()
-        grassMapView.backgroundColor = .green
-        return grassMapView
-    }()
+    func setGrassMapView(_ grassMapView: UIView) {
+        guard self.grassMapView != grassMapView else {
+            return
+        }
+        self.grassMapView?.removeFromSuperview()
+        self.grassMapView = grassMapView
+        addSubview(grassMapView)
+        grassMapView.snp.makeConstraints {
+            $0.top.equalTo(representativeValuesStackView.snp.bottom).offset(30)
+            $0.leading.equalToSuperview().offset(30)
+            $0.trailing.equalToSuperview().offset(-30)
+            $0.bottom.equalToSuperview().offset(-30)
+        }
+    }
     
     // MARK: 평균, 총합 등의 대표값이란 의미에서 RepresentativeValue를 썼습니다.
     private func makeFocusRepresentativeValueStackViewStackView(category: String) -> UIStackView {
@@ -83,14 +93,6 @@ class MeDailyStaticsCollectionViewCell: UICollectionViewCell {
             $0.top.equalTo(dateLabel.snp.bottom).offset(30)
             $0.leading.equalToSuperview().offset(30)
             $0.trailing.equalToSuperview().offset(-30)
-        }
-        
-        addSubview(grassMapView)
-        grassMapView.snp.makeConstraints {
-            $0.top.equalTo(representativeValuesStackView.snp.bottom).offset(30)
-            $0.leading.equalToSuperview().offset(30)
-            $0.trailing.equalToSuperview().offset(-30)
-            $0.bottom.equalToSuperview().offset(-30)
         }
     }
 }
