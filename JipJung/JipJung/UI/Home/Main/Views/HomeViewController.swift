@@ -32,6 +32,7 @@ class HomeViewController: UIViewController {
     
     private let viewModel: HomeViewModel = HomeViewModel()
     private let disposeBag = DisposeBag()
+    private var topBottomViewGap: CGFloat = 0
     
     private var isAttached = false
     
@@ -69,12 +70,25 @@ class HomeViewController: UIViewController {
     private func configureUI() {
         view.backgroundColor = .lightGray
         
+        configureTopBottomViewGap()
         configureMainScrollView()
         configureCarouselView()
         configureMediaControlBackgroundView()
         configureTopView()
         configureBottomView()
         configureTouchTransferView()
+    }
+    
+    private func configureTopBottomViewGap() {
+        let tabBarHeight = self.tabBarController?.tabBar.frame.height ?? 0
+        let betweenSpace = (
+            UIScreen.deviceScreenSize.height
+            - UIApplication.statusBarHeight
+            - HomeMainViewSize.topViewHeight
+            - tabBarHeight
+            - UIApplication.bottomIndicatorHeight
+            - 23) // TODO: 어디서 비는지 알 수 없는 여백, 12P와 12PM 동일
+        topBottomViewGap = betweenSpace - 124
     }
     
     private func configureMainScrollView() {
@@ -113,6 +127,8 @@ class HomeViewController: UIViewController {
         maximButton.setTitle("명언", for: .normal)
         maximButton.titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
         maximButton.makeBlurBackground()
+        maximButton.layer.masksToBounds = true
+        maximButton.layer.cornerRadius = 16
         return maximButton
     }()
     
@@ -181,7 +197,7 @@ class HomeViewController: UIViewController {
         mainScrollContentsView.addSubview(bottomView)
         bottomView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(
-                HomeMainViewSize.mediaControlViewHeight + HomeMainViewSize.topViewHeight
+                topBottomViewGap + HomeMainViewSize.topViewHeight
             )
             $0.leading.trailing.bottom.equalToSuperview()
             $0.height.equalTo(HomeMainViewSize.bottomViewHeight)
@@ -228,7 +244,7 @@ class HomeViewController: UIViewController {
             $0.width.equalTo(focusButtonStackView.snp.width)
             $0.top.equalTo(focusButtonStackView.snp.bottom).offset(16)
             $0.leading.equalTo(focusButtonStackView.snp.leading)
-            $0.height.equalTo(50)
+            $0.height.equalTo(80)
         }
         maximButton.rx.tap.bind {
             let maximViewController = MaximViewController()
@@ -243,7 +259,7 @@ class HomeViewController: UIViewController {
         touchTransferView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(HomeMainViewSize.topViewHeight + UIApplication.statusBarHeight)
             $0.width.centerX.equalToSuperview()
-            $0.height.equalTo(HomeMainViewSize.mediaControlViewHeight)
+            $0.height.equalTo(topBottomViewGap)
         }
     }
     
@@ -272,7 +288,7 @@ class HomeViewController: UIViewController {
         if (self.isAttached && moveY > 0) || (!self.isAttached && moveY < 0) {
             self.isAttached = true
             self.mainScrollView.setContentOffset(
-                CGPoint(x: 0, y: HomeMainViewSize.mediaControlViewHeight - UIApplication.statusBarHeight),
+                CGPoint(x: 0, y: topBottomViewGap - UIApplication.statusBarHeight),
                 animated: true
             )
         } else {
@@ -290,7 +306,7 @@ extension HomeViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
         let currentContentsOffsetY = scrollView.contentOffset.y
-        let currentTopBottomYGap = HomeMainViewSize.mediaControlViewHeight - (currentContentsOffsetY + UIApplication.statusBarHeight)
+        let currentTopBottomYGap = topBottomViewGap - (currentContentsOffsetY + UIApplication.statusBarHeight)
 
         if currentTopBottomYGap <= 0 {
             isAttached = true
@@ -308,7 +324,7 @@ extension HomeViewController: UIScrollViewDelegate {
         }
 
         let currentHeight = currentTopBottomYGap
-        let totalHeight = HomeMainViewSize.mediaControlViewHeight
+        let totalHeight = topBottomViewGap
         mediaControlBackgroundView.alpha = 1 - currentHeight / totalHeight
     }
 }

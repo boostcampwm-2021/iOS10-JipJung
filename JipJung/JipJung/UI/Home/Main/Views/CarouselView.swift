@@ -98,7 +98,7 @@ class CarouselView: UIView {
         
         addSubview(pageControl)
         pageControl.snp.makeConstraints {
-            $0.bottom.equalToSuperview().offset(-UIScreen.deviceScreenSize.height * 0.3)
+            $0.bottom.equalToSuperview().offset(-200 - UIApplication.bottomIndicatorHeight)
             $0.centerX.equalToSuperview()
             $0.width.equalToSuperview()
             $0.height.equalTo(30)

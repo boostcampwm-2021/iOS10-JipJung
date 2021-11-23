@@ -60,8 +60,7 @@ enum FocusMode: CaseIterable {
 }
 
 enum HomeMainViewSize {
-    static let topViewHeight = UIScreen.deviceScreenSize.width / 3
-    static let mediaControlViewHeight = UIScreen.deviceScreenSize.height / 2
+    static let topViewHeight: CGFloat = 100
     static let bottomViewHeight = UIScreen.deviceScreenSize.height
     static let focusButtonSize: (width: CGFloat, height: CGFloat) = (60, 90)
 }
