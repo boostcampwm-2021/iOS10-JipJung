@@ -51,7 +51,8 @@ final class ClubSKScene: SKScene {
     
     func configureBackgroundNode() {
         background = SKSpriteNode(color: .white,
-                                      size: CGSize(width: 300, height: 400))
+                                  size: CGSize(width: frame.width,
+                                               height: frame.height))
         background.position = CGPoint(x: frame.midX,
                                       y: frame.midY)
         background.lightingBitMask = 0b0001
