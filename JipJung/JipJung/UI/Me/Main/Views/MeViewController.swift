@@ -16,7 +16,7 @@ class MeViewController: UIViewController {
         flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
         meCollectionView.dataSource = self
         meCollectionView.delegate = self
-        meCollectionView.register(MeDailiyStaticsCollectionViewCell.self)
+        meCollectionView.register(MeDailyStaticsCollectionViewCell.self)
         meCollectionView.register(MeMonthYearStaticsCollectionViewCell.self)
         meCollectionView.register(MeExtraCollectionViewCell.self)
         meCollectionView.backgroundColor = .clear
@@ -61,7 +61,7 @@ extension MeViewController: UICollectionViewDataSource, UICollectionViewDelegate
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch indexPath.section {
         case 0:
-            if let cell: MeDailiyStaticsCollectionViewCell = collectionView.dequeueReusableCell(indexPath: indexPath) {
+            if let cell: MeDailyStaticsCollectionViewCell = collectionView.dequeueReusableCell(indexPath: indexPath) {
                 return cell
             }
         case 1:

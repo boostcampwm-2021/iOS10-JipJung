@@ -187,7 +187,7 @@
 		DD6E0B6727466CC60086D374 /* U002.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DD6E0B2827466CC60086D374 /* U002.jpg */; };
 		DD6E0B6827466CC60086D374 /* N003.WAV in Resources */ = {isa = PBXBuildFile; fileRef = DD6E0B2927466CC60086D374 /* N003.WAV */; };
 		DD6E0B6927466CC60086D374 /* M012.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DD6E0B2A27466CC60086D374 /* M012.jpg */; };
-		DD6FD1F4274BBA2700568A4E /* MeDailiyStaticsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6FD1F3274BBA2700568A4E /* MeDailiyStaticsCollectionViewCell.swift */; };
+		DD6FD1F4274BBA2700568A4E /* MeDailyStaticsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6FD1F3274BBA2700568A4E /* MeDailyStaticsCollectionViewCell.swift */; };
 		DD6FD1F6274BCEB300568A4E /* Me+Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6FD1F5274BCEB300568A4E /* Me+Enums.swift */; };
 		DD6FD1F8274BD08400568A4E /* MeHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6FD1F7274BD08400568A4E /* MeHeaderCollectionReusableView.swift */; };
 		DD7CDCAC274CBA66005ADF35 /* MeMonthYearStaticsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD7CDCAB274CBA66005ADF35 /* MeMonthYearStaticsCollectionViewCell.swift */; };
@@ -450,7 +450,7 @@
 		DD6E0B2827466CC60086D374 /* U002.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = U002.jpg; sourceTree = "<group>"; };
 		DD6E0B2927466CC60086D374 /* N003.WAV */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = N003.WAV; sourceTree = "<group>"; };
 		DD6E0B2A27466CC60086D374 /* M012.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = M012.jpg; sourceTree = "<group>"; };
-		DD6FD1F3274BBA2700568A4E /* MeDailiyStaticsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeDailiyStaticsCollectionViewCell.swift; sourceTree = "<group>"; };
+		DD6FD1F3274BBA2700568A4E /* MeDailyStaticsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeDailyStaticsCollectionViewCell.swift; sourceTree = "<group>"; };
 		DD6FD1F5274BCEB300568A4E /* Me+Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Me+Enums.swift"; sourceTree = "<group>"; };
 		DD6FD1F7274BD08400568A4E /* MeHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
 		DD7CDCAB274CBA66005ADF35 /* MeMonthYearStaticsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeMonthYearStaticsCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -789,7 +789,7 @@
 			isa = PBXGroup;
 			children = (
 				DDB5CEA727328EF400E8F9EB /* MeViewController.swift */,
-				DD6FD1F3274BBA2700568A4E /* MeDailiyStaticsCollectionViewCell.swift */,
+				DD6FD1F3274BBA2700568A4E /* MeDailyStaticsCollectionViewCell.swift */,
 				DD6FD1F5274BCEB300568A4E /* Me+Enums.swift */,
 				DD6FD1F7274BD08400568A4E /* MeHeaderCollectionReusableView.swift */,
 				DD7CDCAB274CBA66005ADF35 /* MeMonthYearStaticsCollectionViewCell.swift */,
@@ -1547,7 +1547,7 @@
 				DDB5CEA227328EC300E8F9EB /* ExploreViewController.swift in Sources */,
 				DD3902D1272FCA10009ECA82 /* AppDelegate.swift in Sources */,
 				DDB5CEAF273372A700E8F9EB /* Media.swift in Sources */,
-				DD6FD1F4274BBA2700568A4E /* MeDailiyStaticsCollectionViewCell.swift in Sources */,
+				DD6FD1F4274BBA2700568A4E /* MeDailyStaticsCollectionViewCell.swift in Sources */,
 				911D7F7E27428430003B7C3B /* AudioPlayManager.swift in Sources */,
 				B4F36B662733B8770073609C /* SearchViewController.swift in Sources */,
 				B4F36B5127336EE20073609C /* UserDefaultsStorage.swift in Sources */,
@@ -1576,7 +1576,6 @@
 				91D02268273CB5FD0073EA2A /* BrightMedia.swift in Sources */,
 				DD4D030527425611007AA4DD /* UILabel+Extension.swift in Sources */,
 				DDB5CEBE2733A49A00E8F9EB /* RealmDBManager.swift in Sources */,
-				914E1D87273A191D000CA5FB /* MediaCollectionViewCell.swift in Sources */,
 				DD6FD1F8274BD08400568A4E /* MeHeaderCollectionReusableView.swift in Sources */,
 				91655858273B773400C55CDC /* MaximListUseCase.swift in Sources */,
 				91EA47C6273846A800780C3E /* BlurCircleButton.swift in Sources */,
@@ -1875,7 +1874,6 @@
 				INFOPLIST_FILE = JipJung/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
@@ -1907,7 +1905,6 @@
 				INFOPLIST_FILE = JipJung/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;

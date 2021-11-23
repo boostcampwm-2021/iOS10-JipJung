@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MeDailiyStaticsCollectionViewCell: UICollectionViewCell {
+class MeDailyStaticsCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
