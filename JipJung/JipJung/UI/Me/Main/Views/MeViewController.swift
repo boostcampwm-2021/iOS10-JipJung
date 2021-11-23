@@ -31,9 +31,6 @@ class MeViewController: UIViewController {
     }
     
     private func configureNavigationbar() {
-        guard let navigationBar = navigationController?.navigationBar else {
-            return
-        }
         self.navigationItem.title = "hi friends"
     }
     
