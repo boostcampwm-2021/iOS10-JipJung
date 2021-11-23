@@ -234,7 +234,6 @@ class HomeViewController: UIViewController {
                 topBottomViewGap + HomeMainViewSize.topViewHeight
             )
             $0.leading.trailing.bottom.equalToSuperview()
-//            $0.height.equalTo(HomeMainViewSize.bottomViewHeight)
         }
         
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(bottomViewDragged(_:)))
@@ -409,7 +408,6 @@ class HomeViewController: UIViewController {
         if sender.state != .ended { return }
         
         let moveY = sender.translation(in: sender.view).y
-        print(moveY)
         if (self.isAttached && moveY > 50) || (!self.isAttached && moveY < 50) {
             self.isAttached = true
             self.mainScrollView.setContentOffset(
