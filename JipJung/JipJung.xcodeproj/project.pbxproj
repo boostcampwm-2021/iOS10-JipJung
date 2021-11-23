@@ -61,6 +61,8 @@
 		B481FC7D274521B800D1F2EA /* FavoriteMediaUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B481FC7C274521B800D1F2EA /* FavoriteMediaUseCase.swift */; };
 		B481FC7F2745238100D1F2EA /* MyFavoriteRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B481FC7E2745238100D1F2EA /* MyFavoriteRepository.swift */; };
 		B490FDBE274B771F008A4454 /* ApplicationMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B490FDBD274B771F008A4454 /* ApplicationMode.swift */; };
+		B490FE30274C9C2B008A4454 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B490FE2E274C9C2B008A4454 /* Assets.xcassets */; };
+		B490FE38274CBEB3008A4454 /* ClubSKScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B490FE37274CBEB3008A4454 /* ClubSKScene.swift */; };
 		B4B780DF2741F6FA0080DC28 /* BreathFocusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B780DE2741F6FA0080DC28 /* BreathFocusViewController.swift */; };
 		B4B780E12741F7070080DC28 /* BreathFocusViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B780E02741F7070080DC28 /* BreathFocusViewModel.swift */; };
 		B4E420D927460BBB00C39545 /* M014.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B4E420A627460BB900C39545 /* M014.jpg */; };
@@ -131,7 +133,6 @@
 		DD208D36273BDD390089A2AB /* CALayer+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD208D35273BDD390089A2AB /* CALayer+Extension.swift */; };
 		DD3902D1272FCA10009ECA82 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3902D0272FCA10009ECA82 /* AppDelegate.swift */; };
 		DD3902D3272FCA10009ECA82 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3902D2272FCA10009ECA82 /* SceneDelegate.swift */; };
-		DD3902DA272FCA12009ECA82 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DD3902D9272FCA12009ECA82 /* Assets.xcassets */; };
 		DD3902DD272FCA12009ECA82 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DD3902DB272FCA12009ECA82 /* LaunchScreen.storyboard */; };
 		DD4D030227423C54007AA4DD /* CloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4D030127423C54007AA4DD /* CloseButton.swift */; };
 		DD4D030527425611007AA4DD /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4D030427425610007AA4DD /* UILabel+Extension.swift */; };
@@ -304,6 +305,8 @@
 		B481FC7C274521B800D1F2EA /* FavoriteMediaUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteMediaUseCase.swift; sourceTree = "<group>"; };
 		B481FC7E2745238100D1F2EA /* MyFavoriteRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFavoriteRepository.swift; sourceTree = "<group>"; };
 		B490FDBD274B771F008A4454 /* ApplicationMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationMode.swift; sourceTree = "<group>"; };
+		B490FE2E274C9C2B008A4454 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B490FE37274CBEB3008A4454 /* ClubSKScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClubSKScene.swift; sourceTree = "<group>"; };
 		B4B780DE2741F6FA0080DC28 /* BreathFocusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathFocusViewController.swift; sourceTree = "<group>"; };
 		B4B780E02741F7070080DC28 /* BreathFocusViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathFocusViewModel.swift; sourceTree = "<group>"; };
 		B4E420A627460BB900C39545 /* M014.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = M014.jpg; sourceTree = "<group>"; };
@@ -376,7 +379,6 @@
 		DD3902CD272FCA10009ECA82 /* JipJung.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JipJung.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD3902D0272FCA10009ECA82 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DD3902D2272FCA10009ECA82 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		DD3902D9272FCA12009ECA82 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DD3902DC272FCA12009ECA82 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DD3902DE272FCA12009ECA82 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DD3902FC272FD388009ECA82 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
@@ -892,6 +894,7 @@
 				DD82808D273CF07800BB2A60 /* CycleAnimation.swift */,
 				DD8564C9273F9E6F00049D9B /* SlowPresent.swift */,
 				DF05FD13274ABCDF006C8689 /* WiggleAnimation.swift */,
+				B490FE37274CBEB3008A4454 /* ClubSKScene.swift */,
 			);
 			path = Animation;
 			sourceTree = "<group>";
@@ -951,8 +954,8 @@
 			children = (
 				DD3902D0272FCA10009ECA82 /* AppDelegate.swift */,
 				DD3902D2272FCA10009ECA82 /* SceneDelegate.swift */,
-				DD3902D9272FCA12009ECA82 /* Assets.xcassets */,
 				DD3902DB272FCA12009ECA82 /* LaunchScreen.storyboard */,
+				B490FE2E274C9C2B008A4454 /* Assets.xcassets */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -1323,11 +1326,11 @@
 				B4E420F827460BBB00C39545 /* M006.jpg in Resources */,
 				B4E4210427460BBB00C39545 /* M009.jpg in Resources */,
 				B4E420DA27460BBB00C39545 /* N003.mp4 in Resources */,
+				B490FE30274C9C2B008A4454 /* Assets.xcassets in Resources */,
 				B4E420FF27460BBB00C39545 /* M003.jpg in Resources */,
 				B4E420DE27460BBB00C39545 /* U000.jpg in Resources */,
 				B4E420F127460BBB00C39545 /* U002.jpg in Resources */,
 				B4E420EF27460BBB00C39545 /* U003.mp4 in Resources */,
-				DD3902DA272FCA12009ECA82 /* Assets.xcassets in Resources */,
 				B4E420DC27460BBB00C39545 /* M008.jpg in Resources */,
 				B4E420DD27460BBB00C39545 /* N003.WAV in Resources */,
 				B4E420ED27460BBB00C39545 /* N001.jpg in Resources */,
@@ -1384,7 +1387,6 @@
 				DD6E0B5A27466CC60086D374 /* M008.jpg in Resources */,
 				DD6E0B3C27466CC60086D374 /* N003.mp4 in Resources */,
 				DD6E0B3F27466CC60086D374 /* N002.jpg in Resources */,
-				DD3902DA272FCA12009ECA82 /* Assets.xcassets in Resources */,
 				DD6E0B5B27466CC60086D374 /* U002.mp4 in Resources */,
 				DD6E0B4627466CC60086D374 /* U003.WAV in Resources */,
 				DF71D22F2734455600CD980E /* GoogleService-Info.plist in Resources */,
@@ -1541,6 +1543,7 @@
 				917BDD5F274638750049E944 /* CGPoint+Extension.swift in Sources */,
 				B490FDBE274B771F008A4454 /* ApplicationMode.swift in Sources */,
 				91CE6F6F2739024800176AF2 /* Home+Enums.swift in Sources */,
+				B490FE38274CBEB3008A4454 /* ClubSKScene.swift in Sources */,
 				91CE6F6F2739024800176AF2 /* Home+Enums.swift in Sources */,
 				B4153949273BA34A004EF80F /* FocusTimeRepository.swift in Sources */,
 				B4E4210F274673E400C39545 /* UICollectionViewCell+Extension.swift in Sources */,
