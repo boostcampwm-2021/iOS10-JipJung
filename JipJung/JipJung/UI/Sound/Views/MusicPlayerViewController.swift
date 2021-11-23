@@ -10,6 +10,7 @@ import UIKit
 import SnapKit
 import RxSwift
 import RxCocoa
+import SpriteKit
 
 final class MusicPlayerViewController: UIViewController {
     private let themeColor = CGColor(red: 34.0/255.0, green: 48.0/255.0, blue: 74.0/255.0, alpha: 1)
@@ -35,6 +36,10 @@ final class MusicPlayerViewController: UIViewController {
         button.layer.cornerRadius = 8
         return button
     }()
+    private lazy var clubView: SKView = {
+        let clubView = SKView()
+        return clubView
+    }()
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -47,6 +52,13 @@ final class MusicPlayerViewController: UIViewController {
     private var playerLooper: AVPlayerLooper?
     private var queuePlayer: AVQueuePlayer?
     private var playerLayer: AVPlayerLayer?
+    private lazy var clubScene: SKScene = {
+        let clubScene = ClubSKScene()
+        clubScene.size = CGSize(width: view.frame.width,
+                                height: view.frame.height)
+        clubScene.scaleMode = .fill
+        return clubScene
+    }()
     
     // MARK: - Life Cycles
     
@@ -54,11 +66,11 @@ final class MusicPlayerViewController: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = .white
 
+        viewModel?.checkMediaMode()
         configureUI()
         bindUI()
         viewModel?.checkMusicDownloaded()
         viewModel?.checkMusicPlaying()
-        viewModel?.checkMediaMode()
     }
     
     override func viewDidLayoutSubviews() {
@@ -75,6 +87,9 @@ final class MusicPlayerViewController: UIViewController {
     
     private func configureUI() {
         tabBarController?.tabBar.isHidden = true
+        if ApplicationMode.shared.mode.value == .dark {
+            configureClubView()
+        }
         configureTopView()
         configureBottomView()
         configureNavigationBar()
@@ -105,7 +120,13 @@ final class MusicPlayerViewController: UIViewController {
     }
     
     private func configureTopView() {
-        configureVideoView()
+        switch ApplicationMode.shared.mode.value {
+        case .bright:
+            configureVideoView()
+        case .dark:
+            topView.backgroundColor = .clear
+            musicDescriptionView.gradientLayer.removeFromSuperlayer()
+        }
                 
         self.view.addSubview(topView)
         topView.snp.makeConstraints { make in
@@ -177,9 +198,14 @@ final class MusicPlayerViewController: UIViewController {
             return view
         }()
         
-        let colorHexString = viewModel?.color ?? "FFFFFF"
-        bottomView.backgroundColor = UIColor(rgb: Int(colorHexString, radix: 16) ?? 0xFFFFFF,
-                                             alpha: 1.0)
+        switch ApplicationMode.shared.mode.value {
+        case .dark:
+            bottomView.backgroundColor = .clear
+        case .bright:
+            let colorHexString = viewModel?.color ?? "FFFFFF"
+            bottomView.backgroundColor = UIColor(rgb: Int(colorHexString, radix: 16) ?? 0xFFFFFF,
+                                                 alpha: 1.0)
+        }
         
         bottomView.addSubview(maximContainerView)
         maximContainerView.snp.makeConstraints { make in
@@ -194,6 +220,16 @@ final class MusicPlayerViewController: UIViewController {
         maximTextView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+    }
+    
+    private func configureClubView() {
+        view.addSubview(clubView)
+        clubView.snp.makeConstraints {
+            $0.center.equalToSuperview()
+            $0.size.equalToSuperview()
+        }
+        
+        clubView.presentScene(clubScene)
     }
     
     private func bindUI() {
