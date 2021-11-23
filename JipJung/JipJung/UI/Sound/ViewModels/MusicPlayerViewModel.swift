@@ -156,7 +156,7 @@ final class MusicPlayerViewModel: MusicPlayerViewModelInput, MusicPlayerViewMode
             .subscribe { [weak self] mediaList in
                 guard let self = self else { return }
                 mediaList.forEach { media in
-                    if media.id == self.id {
+                    if media.id == self.id && ApplicationMode.shared.mode.value != .bright {
                         ApplicationMode.shared.convert()
                         return
                     }
@@ -170,7 +170,7 @@ final class MusicPlayerViewModel: MusicPlayerViewModelInput, MusicPlayerViewMode
             .subscribe { [weak self] mediaList in
                 guard let self = self else { return }
                 mediaList.forEach { media in
-                    if media.id == self.id {
+                    if media.id == self.id && ApplicationMode.shared.mode.value != .dark {
                         ApplicationMode.shared.convert()
                         return
                     }
