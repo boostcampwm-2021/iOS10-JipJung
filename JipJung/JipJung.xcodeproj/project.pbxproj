@@ -187,6 +187,11 @@
 		DD6E0B6727466CC60086D374 /* U002.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DD6E0B2827466CC60086D374 /* U002.jpg */; };
 		DD6E0B6827466CC60086D374 /* N003.WAV in Resources */ = {isa = PBXBuildFile; fileRef = DD6E0B2927466CC60086D374 /* N003.WAV */; };
 		DD6E0B6927466CC60086D374 /* M012.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DD6E0B2A27466CC60086D374 /* M012.jpg */; };
+		DD6FD1F4274BBA2700568A4E /* MeDailiyStaticsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6FD1F3274BBA2700568A4E /* MeDailiyStaticsCollectionViewCell.swift */; };
+		DD6FD1F6274BCEB300568A4E /* Me+Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6FD1F5274BCEB300568A4E /* Me+Enums.swift */; };
+		DD6FD1F8274BD08400568A4E /* MeHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6FD1F7274BD08400568A4E /* MeHeaderCollectionReusableView.swift */; };
+		DD7CDCAC274CBA66005ADF35 /* MeMonthYearStaticsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD7CDCAB274CBA66005ADF35 /* MeMonthYearStaticsCollectionViewCell.swift */; };
+		DD7CDCAE274CBA95005ADF35 /* MeExtraCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD7CDCAD274CBA94005ADF35 /* MeExtraCollectionViewCell.swift */; };
 		DD82808C273CAE5F00BB2A60 /* FocusViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD82808B273CAE5F00BB2A60 /* FocusViewControllerFactory.swift */; };
 		DD82808E273CF07800BB2A60 /* CycleAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD82808D273CF07800BB2A60 /* CycleAnimation.swift */; };
 		DD828092273D113200BB2A60 /* NetworkEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD828091273D113200BB2A60 /* NetworkEnums.swift */; };
@@ -445,6 +450,11 @@
 		DD6E0B2827466CC60086D374 /* U002.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = U002.jpg; sourceTree = "<group>"; };
 		DD6E0B2927466CC60086D374 /* N003.WAV */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = N003.WAV; sourceTree = "<group>"; };
 		DD6E0B2A27466CC60086D374 /* M012.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = M012.jpg; sourceTree = "<group>"; };
+		DD6FD1F3274BBA2700568A4E /* MeDailiyStaticsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeDailiyStaticsCollectionViewCell.swift; sourceTree = "<group>"; };
+		DD6FD1F5274BCEB300568A4E /* Me+Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Me+Enums.swift"; sourceTree = "<group>"; };
+		DD6FD1F7274BD08400568A4E /* MeHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
+		DD7CDCAB274CBA66005ADF35 /* MeMonthYearStaticsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeMonthYearStaticsCollectionViewCell.swift; sourceTree = "<group>"; };
+		DD7CDCAD274CBA94005ADF35 /* MeExtraCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeExtraCollectionViewCell.swift; sourceTree = "<group>"; };
 		DD82808B273CAE5F00BB2A60 /* FocusViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusViewControllerFactory.swift; sourceTree = "<group>"; };
 		DD82808D273CF07800BB2A60 /* CycleAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CycleAnimation.swift; sourceTree = "<group>"; };
 		DD828091273D113200BB2A60 /* NetworkEnums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkEnums.swift; sourceTree = "<group>"; };
@@ -779,6 +789,11 @@
 			isa = PBXGroup;
 			children = (
 				DDB5CEA727328EF400E8F9EB /* MeViewController.swift */,
+				DD6FD1F3274BBA2700568A4E /* MeDailiyStaticsCollectionViewCell.swift */,
+				DD6FD1F5274BCEB300568A4E /* Me+Enums.swift */,
+				DD6FD1F7274BD08400568A4E /* MeHeaderCollectionReusableView.swift */,
+				DD7CDCAB274CBA66005ADF35 /* MeMonthYearStaticsCollectionViewCell.swift */,
+				DD7CDCAD274CBA94005ADF35 /* MeExtraCollectionViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1520,6 +1535,7 @@
 				91655856273B6F0200C55CDC /* LocalDBEnums.swift in Sources */,
 				91655852273B618700C55CDC /* LocalFileEnums.swift in Sources */,
 				9172BBFE274226B1000E1060 /* MaximViewModel.swift in Sources */,
+				DD7CDCAC274CBA66005ADF35 /* MeMonthYearStaticsCollectionViewCell.swift in Sources */,
 				DDB5CEA227328EC300E8F9EB /* ExploreViewController.swift in Sources */,
 				DFED21CB2733702800E99641 /* MusicPlayerViewController.swift in Sources */,
 				9131514127400FBB001E7125 /* UIApplication+Extension.swift in Sources */,
@@ -1531,6 +1547,7 @@
 				DDB5CEA227328EC300E8F9EB /* ExploreViewController.swift in Sources */,
 				DD3902D1272FCA10009ECA82 /* AppDelegate.swift in Sources */,
 				DDB5CEAF273372A700E8F9EB /* Media.swift in Sources */,
+				DD6FD1F4274BBA2700568A4E /* MeDailiyStaticsCollectionViewCell.swift in Sources */,
 				911D7F7E27428430003B7C3B /* AudioPlayManager.swift in Sources */,
 				B4F36B662733B8770073609C /* SearchViewController.swift in Sources */,
 				B4F36B5127336EE20073609C /* UserDefaultsStorage.swift in Sources */,
@@ -1544,6 +1561,7 @@
 				DD208D36273BDD390089A2AB /* CALayer+Extension.swift in Sources */,
 				917BDD592745FAEC0049E944 /* CarouselView.swift in Sources */,
 				DD828095273D1F8E00BB2A60 /* FocusViewController.swift in Sources */,
+				DD6FD1F6274BCEB300568A4E /* Me+Enums.swift in Sources */,
 				B42226CC2741134100F8CA3D /* UICollectionView+Extension.swift in Sources */,
 				91D0226A273CB6050073EA2A /* DarknessMedia.swift in Sources */,
 				B40D1FB7273B60A500881A49 /* Int+Extension.swift in Sources */,
@@ -1558,9 +1576,12 @@
 				91D02268273CB5FD0073EA2A /* BrightMedia.swift in Sources */,
 				DD4D030527425611007AA4DD /* UILabel+Extension.swift in Sources */,
 				DDB5CEBE2733A49A00E8F9EB /* RealmDBManager.swift in Sources */,
+				914E1D87273A191D000CA5FB /* MediaCollectionViewCell.swift in Sources */,
+				DD6FD1F8274BD08400568A4E /* MeHeaderCollectionReusableView.swift in Sources */,
 				91655858273B773400C55CDC /* MaximListUseCase.swift in Sources */,
 				91EA47C6273846A800780C3E /* BlurCircleButton.swift in Sources */,
 				B4015CD42739151B006BD14A /* RecentMusicViewController.swift in Sources */,
+				DD7CDCAE274CBA95005ADF35 /* MeExtraCollectionViewCell.swift in Sources */,
 				DD8564CA273F9E6F00049D9B /* SlowPresent.swift in Sources */,
 				DFED21D02733931600E99641 /* MusicDescriptionView.swift in Sources */,
 				DD828092273D113200BB2A60 /* NetworkEnums.swift in Sources */,
@@ -1855,6 +1876,8 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1885,6 +1908,8 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
