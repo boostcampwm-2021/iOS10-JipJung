@@ -33,8 +33,16 @@ class AudioPlayManager {
         }
         
         if audioFileName == audioPlayer?.url?.lastPathComponent {
-            audioPlayer?.play()
-            return Single.just(true)
+            guard let audioPlayer = audioPlayer else {
+                return Single.just(false)
+            }
+            
+            let state = audioPlayer.isPlaying || autoPlay
+            
+            if state {
+                return Single.just(audioPlayer.play())
+            }
+            return Single.just(false)
         }
         
         return Single<Bool>.create { [weak self] single in
@@ -82,10 +90,12 @@ class AudioPlayManager {
     }
     
     func isPlaying(using audioFileName: String) -> Bool {
-        guard let currentAudiofileName = audioPlayer?.url?.lastPathComponent else {
+        guard let audioPlayer = audioPlayer,
+              let currentAudiofileName = audioPlayer.url?.lastPathComponent
+        else {
             return false
         }
-        
-        return currentAudiofileName == audioFileName
+
+        return audioPlayer.isPlaying && (currentAudiofileName == audioFileName)
     }
 }
