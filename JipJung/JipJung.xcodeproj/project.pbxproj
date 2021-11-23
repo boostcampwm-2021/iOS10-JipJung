@@ -214,6 +214,7 @@
 		DDB92B9D2737BD5E00EE26F0 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB92B9C2737BD5E00EE26F0 /* UIView+Extension.swift */; };
 		DDB92BB0273A263100EE26F0 /* MusicCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB92BAF273A263100EE26F0 /* MusicCollectionViewCell.swift */; };
 		DF05FD14274ABCDF006C8689 /* WiggleAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF05FD13274ABCDF006C8689 /* WiggleAnimation.swift */; };
+		DF05FD18274CA86F006C8689 /* CountdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF05FD17274CA86F006C8689 /* CountdownView.swift */; };
 		DF08B1DD2737F5010066518B /* RemoteServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF08B1DC2737F5010066518B /* RemoteServiceProvider.swift */; };
 		DF09E9B52741FAC700F5F739 /* Utils+Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF09E9B42741FAC700F5F739 /* Utils+Enums.swift */; };
 		DF1722B22740FD2300F06140 /* ApplicationLaunch.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF1722B12740FD2300F06140 /* ApplicationLaunch.swift */; };
@@ -478,6 +479,7 @@
 		DDB92B9C2737BD5E00EE26F0 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		DDB92BAF273A263100EE26F0 /* MusicCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicCollectionViewCell.swift; sourceTree = "<group>"; };
 		DF05FD13274ABCDF006C8689 /* WiggleAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiggleAnimation.swift; sourceTree = "<group>"; };
+		DF05FD17274CA86F006C8689 /* CountdownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownView.swift; sourceTree = "<group>"; };
 		DF08B1DC2737F5010066518B /* RemoteServiceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteServiceProvider.swift; sourceTree = "<group>"; };
 		DF09E9B42741FAC700F5F739 /* Utils+Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Utils+Enums.swift"; sourceTree = "<group>"; };
 		DF1722B12740FD2300F06140 /* ApplicationLaunch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationLaunch.swift; sourceTree = "<group>"; };
@@ -910,6 +912,7 @@
 				DD8564C9273F9E6F00049D9B /* SlowPresent.swift */,
 				DF05FD13274ABCDF006C8689 /* WiggleAnimation.swift */,
 				B490FE37274CBEB3008A4454 /* ClubSKScene.swift */,
+				DF05FD17274CA86F006C8689 /* CountdownView.swift */,
 			);
 			path = Animation;
 			sourceTree = "<group>";
@@ -1510,6 +1513,7 @@
 				B40D1FA9273B5F1900881A49 /* DefaultFocusViewController.swift in Sources */,
 				B40D1FAD273B5F2800881A49 /* PomodoroFocusViewController.swift in Sources */,
 				DDB5CEB32733752D00E8F9EB /* FavoriteMedia.swift in Sources */,
+				DF05FD18274CA86F006C8689 /* CountdownView.swift in Sources */,
 				9131513F27400C26001E7125 /* UIScreen+Extension.swift in Sources */,
 				DD84736527453FD700DF4FCB /* MaximCalendarHeaderCollectionViewCell.swift in Sources */,
 				DDB92B9D2737BD5E00EE26F0 /* UIView+Extension.swift in Sources */,

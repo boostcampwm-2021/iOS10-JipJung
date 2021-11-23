@@ -58,6 +58,7 @@ final class BreathFocusViewController: FocusViewController {
         textLayer.string = "Inhale"
         return textLayer
     }()
+    private let countdownView = CountdownView()
     
     private lazy var startButton: UIButton = {
         let startButton = UIButton()
@@ -129,6 +130,13 @@ final class BreathFocusViewController: FocusViewController {
         breathView.layer.addSublayer(scalingShapeLayer)
         scalingShapeLayer.addSublayer(textLayer)
         scalingShapeLayer.isHidden = true
+        
+        view.addSubview(countdownView)
+        countdownView.snp.makeConstraints {
+            $0.center.equalTo(breathView)
+            $0.size.equalTo(breathView).multipliedBy(0.2)
+        }
+        countdownView.isHidden = true
         
         view.addSubview(timeLabel)
         timeLabel.snp.makeConstraints {
@@ -245,15 +253,23 @@ final class BreathFocusViewController: FocusViewController {
             // 진입 완료 후
             self.breathShapeLayer.isHidden = true
             UIView.animate(withDuration: 3.0) {
-                self.scalingShapeLayer.isHidden = false
                 self.view.layer.backgroundColor = .none
             }
+            
+            // TODO: 버튼 동시 클릭, 나타나는 타이밍 조정하기
             UIView.animate(withDuration: 1.0) {
                 self.stopButton.layer.opacity = 1
             }
             
-            self.startInhaleExhaleAnimation()
-            self.viewModel?.startClockTimer()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.countdownView.isHidden = false
+                self.countdownView.animate(countdown: 3) {
+                    self.countdownView.isHidden = true
+                    self.scalingShapeLayer.isHidden = false
+                    self.startInhaleExhaleAnimation()
+                    self.viewModel?.startClockTimer()
+                }
+            }
         }
         
     }
@@ -299,6 +315,7 @@ final class BreathFocusViewController: FocusViewController {
     }
     
     private func startInhaleExhaleAnimation() {
+        print(#function, #line)
         let animations = WiggleAnimation(frame: breathView.bounds)
         
         let inhaleAnimation = CABasicAnimation(keyPath: "transform.scale")
