@@ -75,6 +75,10 @@ class HomeViewController: UIViewController {
     
     private var isAttached = false
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+       return .lightContent
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         

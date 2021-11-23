@@ -87,6 +87,10 @@ final class MaximViewController: UIViewController {
     private var isHeaderPresent = false
     private var disposeBag = DisposeBag()
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+       return .lightContent
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
