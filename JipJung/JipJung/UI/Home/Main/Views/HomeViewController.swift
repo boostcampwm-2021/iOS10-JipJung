@@ -335,6 +335,23 @@ class HomeViewController: UIViewController {
                 self?.present(maximViewController, animated: true)
             }
             .disposed(by: disposeBag)
+        
+        Observable.of(
+            recentPlayHistoryCollectionView.rx.modelSelected(Media.self),
+            favoriteCollectionView.rx.modelSelected(Media.self)
+        )
+            .merge()
+            .subscribe(onNext: { [weak self] media in
+                let musicPlayerView = MusicPlayerViewController(
+                    viewModel: MusicPlayerViewModel(
+                        media: media
+                    )
+                )
+                musicPlayerView.modalPresentationStyle = .pageSheet
+                musicPlayerView.modalTransitionStyle = .coverVertical
+                self?.present(musicPlayerView, animated: true)
+            })
+            .disposed(by: disposeBag)
     }
     
     private func bindUIWithViewModel() {
