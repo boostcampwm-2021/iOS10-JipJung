@@ -28,6 +28,45 @@ class HomeViewController: UIViewController {
     private lazy var carouselView = CarouselView()
     private lazy var topView = UIView()
     private lazy var bottomView = UIView()
+    private lazy var maximButton: UIButton = {
+        let maximButton = UIButton()
+        maximButton.setTitle("하루 한 줄, 오늘의 명언", for: .normal)
+        maximButton.titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
+        maximButton.makeBlurBackground()
+        maximButton.layer.masksToBounds = true
+        maximButton.layer.cornerRadius = 16
+        return maximButton
+    }()
+    private lazy var recentPlayHistoryCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.sectionInset = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16)
+        layout.itemSize = HomeMainViewSize.musicCellSize
+        layout.minimumInteritemSpacing = 8
+
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .clear
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.register(
+            MusicCollectionViewCell.self,
+            forCellWithReuseIdentifier: MusicCollectionViewCell.identifier)
+        return collectionView
+    }()
+    private lazy var favoriteCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.sectionInset = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16)
+        layout.itemSize = HomeMainViewSize.musicCellSize
+        layout.minimumInteritemSpacing = 8
+
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .clear
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.register(
+            MusicCollectionViewCell.self,
+            forCellWithReuseIdentifier: MusicCollectionViewCell.identifier)
+        return collectionView
+    }()
     private lazy var touchTransferView = TouchTransferView()
     
     private let viewModel: HomeViewModel = HomeViewModel()
@@ -76,6 +115,7 @@ class HomeViewController: UIViewController {
         configureMediaControlBackgroundView()
         configureTopView()
         configureBottomView()
+        configureCollectionViews()
         configureTouchTransferView()
     }
     
@@ -122,16 +162,6 @@ class HomeViewController: UIViewController {
         }
     }
 
-    private lazy var maximButton: UIButton = {
-        let maximButton = UIButton()
-        maximButton.setTitle("명언", for: .normal)
-        maximButton.titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
-        maximButton.makeBlurBackground()
-        maximButton.layer.masksToBounds = true
-        maximButton.layer.cornerRadius = 16
-        return maximButton
-    }()
-    
     private func configureTopView() {
         mainScrollContentsView.addSubview(topView)
         topView.snp.makeConstraints {
@@ -200,7 +230,7 @@ class HomeViewController: UIViewController {
                 topBottomViewGap + HomeMainViewSize.topViewHeight
             )
             $0.leading.trailing.bottom.equalToSuperview()
-            $0.height.equalTo(HomeMainViewSize.bottomViewHeight)
+//            $0.height.equalTo(HomeMainViewSize.bottomViewHeight)
         }
         
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(bottomViewDragged(_:)))
@@ -241,15 +271,44 @@ class HomeViewController: UIViewController {
         
         bottomView.addSubview(maximButton)
         maximButton.snp.makeConstraints {
-            $0.width.equalTo(focusButtonStackView.snp.width)
             $0.top.equalTo(focusButtonStackView.snp.bottom).offset(16)
-            $0.leading.equalTo(focusButtonStackView.snp.leading)
-            $0.height.equalTo(80)
+            $0.leading.trailing.equalToSuperview().inset(16)
+            $0.height.equalTo(70)
         }
-        maximButton.rx.tap.bind {
-            let maximViewController = MaximViewController()
-            maximViewController.modalPresentationStyle = .overCurrentContext
-            self.present(maximViewController, animated: true)
+    }
+    
+    private func configureCollectionViews() {
+        let recentPlayHistoryHeader = UIView()
+        recentPlayHistoryHeader.backgroundColor = .gray
+        bottomView.addSubview(recentPlayHistoryHeader)
+        recentPlayHistoryHeader.snp.makeConstraints {
+            $0.top.equalTo(maximButton.snp.bottom).offset(16)
+            $0.leading.trailing.equalToSuperview().inset(16)
+            $0.height.equalTo(60)
+        }
+        
+        bottomView.addSubview(recentPlayHistoryCollectionView)
+        recentPlayHistoryCollectionView.snp.makeConstraints {
+            $0.top.equalTo(recentPlayHistoryHeader.snp.bottom)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(220)
+        }
+        
+        let favoriteHeader = UIView()
+        favoriteHeader.backgroundColor = .gray
+        bottomView.addSubview(favoriteHeader)
+        favoriteHeader.snp.makeConstraints {
+            $0.top.equalTo(recentPlayHistoryCollectionView.snp.bottom).offset(8)
+            $0.leading.trailing.equalToSuperview().inset(16)
+            $0.height.equalTo(60)
+        }
+        
+        bottomView.addSubview(favoriteCollectionView)
+        favoriteCollectionView.snp.makeConstraints {
+            $0.top.equalTo(favoriteHeader.snp.bottom)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(220)
+            $0.bottom.equalToSuperview().offset(-50)
         }
     }
     
@@ -264,7 +323,18 @@ class HomeViewController: UIViewController {
     }
     
     private func bindUI() {
+        bindUIWithView()
         bindUIWithViewModel()
+    }
+    
+    private func bindUIWithView() {
+        maximButton.rx.tap
+            .bind { [weak self] in
+                let maximViewController = MaximViewController()
+                maximViewController.modalPresentationStyle = .overCurrentContext
+                self?.present(maximViewController, animated: true)
+            }
+            .disposed(by: disposeBag)
     }
     
     private func bindUIWithViewModel() {
@@ -274,6 +344,40 @@ class HomeViewController: UIViewController {
                 self?.carouselView.replaceContents(contents: mediaList)
             }
             .disposed(by: disposeBag)
+        
+        viewModel.recentPlayHistory
+            .distinctUntilChanged()
+            .bind(
+                to: recentPlayHistoryCollectionView.rx.items(
+                    cellIdentifier: MusicCollectionViewCell.identifier
+                )
+            ) { (item, element, cell) in
+                guard let cell = cell as? MusicCollectionViewCell else { return }
+
+                cell.titleView.text = element.name
+                cell.imageView.image = UIImage(named: element.thumbnailImageFileName)
+                cell.backgroundColor = UIColor(
+                    rgb: Int(element.color, radix: 16) ?? 0xFFFFFF,
+                    alpha: 1.0
+                )
+            }.disposed(by: disposeBag)
+        
+        viewModel.favoriteSoundList
+            .distinctUntilChanged()
+            .bind(
+                to: favoriteCollectionView.rx.items(
+                    cellIdentifier: MusicCollectionViewCell.identifier
+                )
+            ) { (item, element, cell) in
+                guard let cell = cell as? MusicCollectionViewCell else { return }
+                
+                cell.titleView.text = element.name
+                cell.imageView.image = UIImage(named: element.thumbnailImageFileName)
+                cell.backgroundColor = UIColor(
+                    rgb: Int(element.color, radix: 16) ?? 0xFFFFFF,
+                    alpha: 1.0
+                )
+            }.disposed(by: disposeBag)
     }
     
     private func mediaPlayButtonTouched() -> Single<Bool> {
