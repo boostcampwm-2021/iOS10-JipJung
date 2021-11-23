@@ -199,8 +199,9 @@ final class BreathFocusViewController: FocusViewController {
         }).disposed(by: disposeBag)
 
         viewModel?.clockTime.bind(onNext: { [weak self] in
-            guard let self = self else { return }
-            if $0 % 7 == 4 {
+            guard let self = self, $0 > 0 else { return }
+            print(#function, #line, $0)
+            if $0 % 7 == 3 {
                 self.textLayer.opacity = 0
                 self.textLayer.string = ""
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
@@ -252,6 +253,7 @@ final class BreathFocusViewController: FocusViewController {
         } completion: { _ in
             // 진입 완료 후
             self.breathShapeLayer.isHidden = true
+            
             UIView.animate(withDuration: 3.0) {
                 self.view.layer.backgroundColor = .none
             }
@@ -268,6 +270,7 @@ final class BreathFocusViewController: FocusViewController {
                     self.scalingShapeLayer.isHidden = false
                     self.startInhaleExhaleAnimation()
                     self.viewModel?.startClockTimer()
+//                    self.startParticleAnimation()
                 }
             }
         }
@@ -281,6 +284,8 @@ final class BreathFocusViewController: FocusViewController {
         timePickerView.isHidden = false
         minuteLabel.isHidden = false
         breathShapeLayer.isHidden = false
+        
+        self.viewModel?.resetClockTimer()
         
         UIView.animate(withDuration: 1.0) {
             self.view.layer.backgroundColor = .none
@@ -322,14 +327,14 @@ final class BreathFocusViewController: FocusViewController {
         inhaleAnimation.fromValue = 0.5
         inhaleAnimation.toValue = 1
         inhaleAnimation.beginTime = animations.beginTime
-        inhaleAnimation.duration = animations.duration / 3.0 * 2.0
+        inhaleAnimation.duration = animations.duration / 7.0 * 4.0
         inhaleAnimation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
         
         let exhaleAnimation = CABasicAnimation(keyPath: "transform.scale")
         exhaleAnimation.fromValue = 1
         exhaleAnimation.toValue = 0.5
-        exhaleAnimation.beginTime = animations.beginTime + animations.duration / 3.0 * 2.0
-        exhaleAnimation.duration = animations.duration / 3.0
+        exhaleAnimation.beginTime = animations.beginTime + animations.duration / 7.0 * 4.0
+        exhaleAnimation.duration = animations.duration / 7.0 * 3.0
         exhaleAnimation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
         
         animations.isRemovedOnCompletion = true
@@ -384,7 +389,7 @@ extension BreathFocusViewController: CAAnimationDelegate {
 
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
         print(#function, #line, flag, anim.description)
-        self.viewModel?.resetClockTimer()
+
         stopBreath()
     }
 }
