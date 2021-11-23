@@ -25,6 +25,8 @@ class MeViewController: UIViewController {
         return meCollectionView
     }()
     
+    private var grassMapView = GrassMapView()
+    
     private var disposeBag = DisposeBag()
     
     override func viewDidLoad() {
@@ -38,7 +40,7 @@ class MeViewController: UIViewController {
     private func configureNavigationbar() {
         self.navigationItem.title = "hi friends"
     }
-    
+
     private func configureCollectionView() {
         view.addSubview(meCollectionView)
         meCollectionView.snp.makeConstraints {
@@ -55,40 +57,6 @@ class MeViewController: UIViewController {
         }
         .disposed(by: disposeBag)
     }
-    
-    private lazy var grassMapView: UIView = {
-        let grassMapView = UIView()
-    
-        let weeksStackView = UIStackView()
-        weeksStackView.distribution = .fillEqually
-        weeksStackView.axis = .horizontal
-        for _ in 1...20 {
-            let weekStackView = UIStackView()
-            weekStackView.axis = .vertical
-            for _ in 1...7 {
-                let dayView = UIView(frame: CGRect(
-                    origin: .zero,
-                    size: CGSize(
-                        width: MeGrassMapViewSize.cellLength,
-                        height: MeGrassMapViewSize.cellLength)))
-                dayView.backgroundColor = .gray.withAlphaComponent(0.2)
-                weekStackView.addArrangedSubview(dayView)
-                weekStackView.distribution = .fillEqually
-                weekStackView.spacing = MeGrassMapViewSize.cellSpacing
-            }
-            weeksStackView.addArrangedSubview(weekStackView)
-            weeksStackView.distribution = .fillEqually
-            weeksStackView.spacing = MeGrassMapViewSize.cellSpacing
-        }
-        grassMapView.addSubview(weeksStackView)
-        weeksStackView.snp.makeConstraints {
-            $0.bottom.equalToSuperview()
-            $0.leading.equalToSuperview()
-            $0.trailing.equalToSuperview()
-            $0.height.equalTo(MeGrassMapViewSize.height)
-        }
-        return grassMapView
-    }()
 }
 
 extension MeViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {

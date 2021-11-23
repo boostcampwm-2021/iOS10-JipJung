@@ -194,6 +194,7 @@
 		DD6FD1F8274BD08400568A4E /* MeHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6FD1F7274BD08400568A4E /* MeHeaderCollectionReusableView.swift */; };
 		DD7CDCAC274CBA66005ADF35 /* MeMonthYearStaticsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD7CDCAB274CBA66005ADF35 /* MeMonthYearStaticsCollectionViewCell.swift */; };
 		DD7CDCAE274CBA95005ADF35 /* MeExtraCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD7CDCAD274CBA94005ADF35 /* MeExtraCollectionViewCell.swift */; };
+		DD7CDCB2274CFA43005ADF35 /* GrassMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD7CDCB1274CFA43005ADF35 /* GrassMapView.swift */; };
 		DD82808C273CAE5F00BB2A60 /* FocusViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD82808B273CAE5F00BB2A60 /* FocusViewControllerFactory.swift */; };
 		DD82808E273CF07800BB2A60 /* CycleAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD82808D273CF07800BB2A60 /* CycleAnimation.swift */; };
 		DD828092273D113200BB2A60 /* NetworkEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD828091273D113200BB2A60 /* NetworkEnums.swift */; };
@@ -461,6 +462,7 @@
 		DD6FD1F7274BD08400568A4E /* MeHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
 		DD7CDCAB274CBA66005ADF35 /* MeMonthYearStaticsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeMonthYearStaticsCollectionViewCell.swift; sourceTree = "<group>"; };
 		DD7CDCAD274CBA94005ADF35 /* MeExtraCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeExtraCollectionViewCell.swift; sourceTree = "<group>"; };
+		DD7CDCB1274CFA43005ADF35 /* GrassMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrassMapView.swift; sourceTree = "<group>"; };
 		DD82808B273CAE5F00BB2A60 /* FocusViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusViewControllerFactory.swift; sourceTree = "<group>"; };
 		DD82808D273CF07800BB2A60 /* CycleAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CycleAnimation.swift; sourceTree = "<group>"; };
 		DD828091273D113200BB2A60 /* NetworkEnums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkEnums.swift; sourceTree = "<group>"; };
@@ -803,6 +805,7 @@
 				DD6FD1F7274BD08400568A4E /* MeHeaderCollectionReusableView.swift */,
 				DD7CDCAB274CBA66005ADF35 /* MeMonthYearStaticsCollectionViewCell.swift */,
 				DD7CDCAD274CBA94005ADF35 /* MeExtraCollectionViewCell.swift */,
+				DD7CDCB1274CFA43005ADF35 /* GrassMapView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1567,6 +1570,7 @@
 				B40D1FAF273B5F2C00881A49 /* PomodoroFocusViewModel.swift in Sources */,
 				917BDD5F274638750049E944 /* CGPoint+Extension.swift in Sources */,
 				B490FDBE274B771F008A4454 /* ApplicationMode.swift in Sources */,
+				DD7CDCB2274CFA43005ADF35 /* GrassMapView.swift in Sources */,
 				91CE6F6F2739024800176AF2 /* Home+Enums.swift in Sources */,
 				B490FE38274CBEB3008A4454 /* ClubSKScene.swift in Sources */,
 				91CE6F6F2739024800176AF2 /* Home+Enums.swift in Sources */,
