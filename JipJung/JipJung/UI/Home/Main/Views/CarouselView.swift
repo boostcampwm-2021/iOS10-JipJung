@@ -12,8 +12,8 @@ import RxSwift
 import SnapKit
 
 protocol CarouselViewDelegate: AnyObject {
-    func currentViewTapped(currentView: MediaPlayView)
-    func currentViewAppear(currentView: MediaPlayView, audioFileName: String, autoPlay: Bool)
+    func currentViewTapped()
+    func currentViewAppear(audioFileName: String, autoPlay: Bool)
 }
 
 class CarouselView: UIView {
@@ -296,7 +296,7 @@ class CarouselView: UIView {
             return
         }
 
-        delegate.currentViewTapped(currentView: self.currentView)
+        delegate.currentViewTapped()
     }
     
     private func mediaPlayViewAppear(autoPlay: Bool) {
@@ -306,7 +306,7 @@ class CarouselView: UIView {
             return
         }
 
-        delegate.currentViewAppear(currentView: self.currentView, audioFileName: media.audioFileName, autoPlay: autoPlay)
+        delegate.currentViewAppear(audioFileName: media.audioFileName, autoPlay: autoPlay)
     }
 }
 
@@ -345,7 +345,7 @@ extension CarouselView {
         }
         
         let distanceX = distance.x / frame.width
-        if let direction = ScrollDirection.init(rawValue: round(distanceX)) {
+        if let direction = ScrollDirection.init(rawValue: round(distanceX * 1.3)) {
             applyPaging(with: direction)
         }
     }

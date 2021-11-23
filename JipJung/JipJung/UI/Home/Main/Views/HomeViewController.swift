@@ -349,7 +349,7 @@ extension HomeViewController: UIViewControllerTransitioningDelegate {
 }
 
 extension HomeViewController: CarouselViewDelegate {
-    func currentViewTapped(currentView: MediaPlayView) {
+    func currentViewTapped() {
         mediaPlayButtonTouched()
             .subscribe { [weak self] state in
                 if state {
@@ -363,7 +363,7 @@ extension HomeViewController: CarouselViewDelegate {
             .disposed(by: disposeBag)
     }
     
-    func currentViewAppear(currentView: MediaPlayView, audioFileName: String, autoPlay: Bool) {
+    func currentViewAppear(audioFileName: String, autoPlay: Bool) {
         return viewModel.mediaPlayViewAppear(audioFileName, autoPlay: autoPlay)
             .subscribe { [weak self] state in
                 if state {
