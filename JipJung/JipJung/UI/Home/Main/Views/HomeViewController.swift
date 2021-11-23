@@ -45,7 +45,25 @@ class HomeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        if let currentMedia = carouselView.getMediaFromCurrentView() {
+            viewModel.mediaPlayViewAppear(currentMedia.audioFileName)
+                .subscribe { [weak self] state in
+                    if state {
+                        self?.carouselView.playVideoInCurrentView()
+                    }
+                } onFailure: { error in
+                    print(error.localizedDescription)
+                }
+                .disposed(by: disposeBag)
+        }
+        
         viewModel.viewWillAppear()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        carouselView.pauseVideoInCurrentView()
     }
     
     private func configureUI() {
@@ -242,8 +260,8 @@ class HomeViewController: UIViewController {
             .disposed(by: disposeBag)
     }
     
-    private func mediaPlayButtonTouched(audioFileName: String) -> Single<Bool> {
-        return viewModel.mediaPlayButtonTouched(audioFileName)
+    private func mediaPlayButtonTouched() -> Single<Bool> {
+        return viewModel.mediaPlayViewTapped()
     }
     
     @objc private func bottomViewDragged(_ sender: UIPanGestureRecognizer) {
@@ -315,7 +333,31 @@ extension HomeViewController: UIViewControllerTransitioningDelegate {
 }
 
 extension HomeViewController: CarouselViewDelegate {
-    func currentViewTapped(audioFileName: String) -> Single<Bool> {
-        return mediaPlayButtonTouched(audioFileName: audioFileName)
+    func currentViewTapped(currentView: MediaPlayView) {
+        mediaPlayButtonTouched()
+            .subscribe { [weak self] state in
+                if state {
+                    self?.carouselView.playVideoInCurrentView()
+                } else {
+                    self?.carouselView.pauseVideoInCurrentView()
+                }
+            } onFailure: { error in
+                print(error.localizedDescription)
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    func currentViewAppear(currentView: MediaPlayView, audioFileName: String, autoPlay: Bool) {
+        return viewModel.mediaPlayViewAppear(audioFileName, autoPlay: autoPlay)
+            .subscribe { [weak self] state in
+                if state {
+                    self?.carouselView.playVideoInCurrentView()
+                } else {
+                    self?.carouselView.pauseVideoInCurrentView()
+                }
+            } onFailure: { error in
+                print(error.localizedDescription)
+            }
+            .disposed(by: disposeBag)
     }
 }

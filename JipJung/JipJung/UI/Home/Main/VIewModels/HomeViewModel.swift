@@ -13,8 +13,7 @@ import RxRelay
 protocol HomeViewModelInput {
     func viewWillAppear()
     func modeSwitchTouched()
-    func mediaPlayButtonTouched(_ audioFileName: String) -> Single<Bool>
-    func mediaCollectionCellLoaded(_ videoFileName: String) -> Single<URL>
+    func mediaPlayViewTapped() -> Single<Bool>
 }
 
 protocol HomeViewModelOutput {
@@ -28,9 +27,8 @@ final class HomeViewModel: HomeViewModelInput, HomeViewModelOutput {
     private let mediaListUseCase = MediaListUseCase()
     private let maximListUseCase = MaximListUseCase()
     private let audioPlayUseCase = AudioPlayUseCase()
-    private let videoPlayUseCase = VideoPlayUseCase()
     
-    private let bag = DisposeBag()
+    private let disposeBag = DisposeBag()
     private let brightMode = BehaviorRelay<[Media]>(value: [])
     private let darknessMode = BehaviorRelay<[Media]>(value: [])
     
@@ -46,7 +44,7 @@ final class HomeViewModel: HomeViewModelInput, HomeViewModelOutput {
                 let modeList = mode == .bright ? brightModeList : darknessModeList
                 self?.currentModeList.accept(modeList)
             }
-            .disposed(by: bag)
+            .disposed(by: disposeBag)
     }
     
     func viewWillAppear() {
@@ -58,7 +56,7 @@ final class HomeViewModel: HomeViewModelInput, HomeViewModelOutput {
             } onFailure: { error in
                 print(error.localizedDescription)
             }
-            .disposed(by: bag)
+            .disposed(by: disposeBag)
         
         mediaListUseCase.fetchMediaMyList(mode: .darkness)
             .subscribe { [weak self] in
@@ -66,7 +64,7 @@ final class HomeViewModel: HomeViewModelInput, HomeViewModelOutput {
             } onFailure: { error in
                 print(error.localizedDescription)
             }
-            .disposed(by: bag)
+            .disposed(by: disposeBag)
         
         mediaListUseCase.fetchRecentPlayHistory()
             .subscribe { [weak self] in
@@ -74,7 +72,7 @@ final class HomeViewModel: HomeViewModelInput, HomeViewModelOutput {
             } onFailure: { error in
                 print(error.localizedDescription)
             }
-            .disposed(by: bag)
+            .disposed(by: disposeBag)
         
         mediaListUseCase.fetchFavoriteMediaList()
             .subscribe { [weak self] in
@@ -82,19 +80,18 @@ final class HomeViewModel: HomeViewModelInput, HomeViewModelOutput {
             } onFailure: { error in
                 print(error.localizedDescription)
             }
-            .disposed(by: bag)
+            .disposed(by: disposeBag)
     }
     
     func modeSwitchTouched() {
         mode.accept(mode.value == .bright ? .darkness : .bright)
-        mediaPlayButtonTouched("")
     }
     
-    func mediaPlayButtonTouched(_ audioFileName: String) -> Single<Bool> {
-        return audioPlayUseCase.controlAudioPlay(audioFileName)
+    func mediaPlayViewTapped() -> Single<Bool> {
+        return audioPlayUseCase.controlAudio()
     }
     
-    func mediaCollectionCellLoaded(_ videoFileName: String) -> Single<URL> {
-        return videoPlayUseCase.ready(videoFileName)
+    func mediaPlayViewAppear(_ audioFileName: String, autoPlay: Bool = false) -> Single<Bool> {
+        return audioPlayUseCase.readyToPlay(audioFileName, autoPlay: autoPlay)
     }
 }

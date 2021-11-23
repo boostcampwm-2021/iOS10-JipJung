@@ -8,22 +8,33 @@
 import AVKit
 import Foundation
 
+import RxRelay
 import RxSwift
 
+typealias PlayState = AudioPlayManager.PlayState
+
 class AudioPlayManager {
+    enum PlayState {
+        case manual(Bool)
+        case automatics
+    }
+    
     static let shared = AudioPlayManager()
     private init() {}
     
     private let mediaResourceRepository = MediaResourceRepository()
     private let disposeBag = DisposeBag()
     
-    private var audioPlayer: AVAudioPlayer?
+    private(set) var audioPlayer: AVAudioPlayer?
     
-    func controlAudioPlay(_ audioFileName: String) -> Single<Bool> {
-        if audioFileName.isEmpty || audioFileName == audioPlayer?.url?.lastPathComponent {
-            audioPlayer?.pause()
-            audioPlayer = nil
+    func readyToPlay(_ audioFileName: String, autoPlay: Bool) -> Single<Bool> {
+        if audioFileName.isEmpty {
             return Single.just(false)
+        }
+        
+        if audioFileName == audioPlayer?.url?.lastPathComponent {
+            audioPlayer?.play()
+            return Single.just(true)
         }
         
         return Single<Bool>.create { [weak self] single in
@@ -37,7 +48,8 @@ class AudioPlayManager {
                     self?.audioPlayer = try? AVAudioPlayer(contentsOf: url)
                     self?.audioPlayer?.numberOfLoops = -1
                     self?.audioPlayer?.prepareToPlay()
-                    if let result = self?.audioPlayer?.play() {
+                    if autoPlay,
+                       let result = self?.audioPlayer?.play() {
                         single(.success(result))
                     }
                 } onFailure: { error in
@@ -48,7 +60,32 @@ class AudioPlayManager {
         }
     }
     
-    func isPlaying(of audioFileUrl: URL) -> Bool {
-        return audioPlayer?.url == audioFileUrl
+    func controlAudio(playState: PlayState) -> Single<Bool> {
+        guard let audioPlayer = audioPlayer else {
+            return Single.error(AudioError.initFailed)
+        }
+        
+        switch playState {
+        case .manual(let state):
+            if state == audioPlayer.isPlaying {
+                return Single.just(audioPlayer.isPlaying)
+            }
+            fallthrough
+        case .automatics:
+            if audioPlayer.isPlaying {
+                audioPlayer.pause()
+                return Single.just(false)
+            } else {
+                return Single.just(audioPlayer.play())
+            }
+        }
+    }
+    
+    func isPlaying(using audioFileName: String) -> Bool {
+        guard let currentAudiofileName = audioPlayer?.url?.lastPathComponent else {
+            return false
+        }
+        
+        return currentAudiofileName == audioFileName
     }
 }
