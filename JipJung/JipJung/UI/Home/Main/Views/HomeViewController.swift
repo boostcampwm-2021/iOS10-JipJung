@@ -388,8 +388,8 @@ class HomeViewController: UIViewController {
         if sender.state != .ended { return }
         
         let moveY = sender.translation(in: sender.view).y
-        
-        if (self.isAttached && moveY > 0) || (!self.isAttached && moveY < 0) {
+        print(moveY)
+        if (self.isAttached && moveY > 50) || (!self.isAttached && moveY < 50) {
             self.isAttached = true
             self.mainScrollView.setContentOffset(
                 CGPoint(x: 0, y: topBottomViewGap - UIApplication.statusBarHeight),
