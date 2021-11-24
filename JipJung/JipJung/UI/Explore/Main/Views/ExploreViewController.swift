@@ -126,7 +126,7 @@ final class ExploreViewController: UIViewController {
         scrollContentView.addSubview(soundCollectionView)
         soundCollectionView.snp.makeConstraints {
             $0.top.equalTo(soundTagCollectionView.snp.bottom).offset(20)
-            $0.height.equalTo(1200)
+            $0.height.equalTo(2400)
             $0.leading.trailing.bottom.equalToSuperview()
         }
     }
