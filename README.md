@@ -54,7 +54,7 @@
 iOS 클린 아키텍쳐 구조를 기본적으로 채용하였고 프레젠테이션 계층에 MVVM 패턴을 적용하였습니다.<br>
 클린아키텍쳐의 레이어 단위로 디렉토리 구조를 나누었습니다.
 
-![](https://i.imgur.com/mOCP7Ow.png)
+<img width="626" alt="스크린샷 2021-11-24 오후 9 10 07" src="https://user-images.githubusercontent.com/81892038/143235962-21bc577e-4e5b-4807-a761-bcf95cfde3a5.png">
 
 ### 디렉토리 구조
 ```bash
