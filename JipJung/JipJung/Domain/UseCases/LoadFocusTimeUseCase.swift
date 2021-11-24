@@ -15,7 +15,7 @@ final class LoadFocusTimeUseCase {
         self.focusTimeRepository = focusTimeRepository
     }
     
-    func loadHistory(from date: Date, nDays: Int) -> Single<[DateFocusRecordDTO]> {
+    func loadHistory(from date: Date, nDays: Int) -> Observable<[DateFocusRecordDTO]> {
         let oneDay = TimeInterval(86400)
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
@@ -31,7 +31,6 @@ final class LoadFocusTimeUseCase {
             .toArray()
             .map({$0.sorted(by: <)})
             .asObservable()
-            .asSingle()
     }
     
     func execute(seconds time: Int) -> Single<Bool> {

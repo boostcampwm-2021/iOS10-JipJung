@@ -107,7 +107,8 @@ class MeDailyStaticsCollectionViewCell: UICollectionViewCell {
     }
     
     func configureUI() {
-        self.backgroundColor = .red
+        self.backgroundColor = .tertiarySystemFill
+        self.layer.cornerRadius = 10
         
         addSubview(dateLabel)
         dateLabel.snp.makeConstraints {

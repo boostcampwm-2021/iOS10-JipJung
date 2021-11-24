@@ -68,6 +68,14 @@ class MeViewController: UIViewController {
                 cell?.alpha = CGFloat(value)
             })
         }.disposed(by: disposeBag)
+        
+        viewModel.monthIndex.bind { [weak self] monthIndexLists in
+            monthIndexLists.forEach { [weak self] index, month in
+                self?.grassMapView.setMonthLabel(index: index, month: month)
+            }
+            
+        }
+        .disposed(by: disposeBag)
     }
 }
 
