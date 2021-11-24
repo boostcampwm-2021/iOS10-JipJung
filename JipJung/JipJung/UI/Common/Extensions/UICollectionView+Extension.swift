@@ -7,7 +7,11 @@
 
 import UIKit
 
-extension UICollectionView { 
+extension UICollectionView {
+    func register<T: UICollectionViewCell>(_ cellClass: T.Type) {
+        register(T.self, forCellWithReuseIdentifier: T.identifier)
+    }
+    
     func dequeueReusableCell<T: UICollectionViewCell>(indexPath: IndexPath) -> T? {
         return self.dequeueReusableCell(withReuseIdentifier: T.identifier, for: indexPath) as? T
     }
