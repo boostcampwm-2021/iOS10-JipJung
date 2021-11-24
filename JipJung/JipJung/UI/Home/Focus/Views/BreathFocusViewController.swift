@@ -242,7 +242,7 @@ final class BreathFocusViewController: FocusViewController {
                                completion: nil)
             }
             
-        })
+        }).disposed(by: disposeBag)
     }
     
     private func startBreath() {
