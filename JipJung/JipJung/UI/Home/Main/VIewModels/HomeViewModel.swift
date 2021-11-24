@@ -84,7 +84,7 @@ final class HomeViewModel: HomeViewModelInput, HomeViewModelOutput {
     }
     
     func modeSwitchTouched() {
-        mode.accept(mode.value == .bright ? .darkness : .bright)
+        mode.accept(mode.value == .bright ? .dark : .bright)
     }
     
     func mediaPlayViewTapped() -> Single<Bool> {
