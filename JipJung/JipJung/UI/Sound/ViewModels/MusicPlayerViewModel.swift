@@ -53,8 +53,7 @@ final class MusicPlayerViewModel: MusicPlayerViewModelInput, MusicPlayerViewMode
     private let audioFileName: String
     private let videoFileName: String
     private let audioPlayUseCase: AudioPlayUseCase = AudioPlayUseCase()
-    private let videoPlayUseCase: VideoPlayUseCase = VideoPlayUseCase()
-    private let fetchMediaUrlUseCase: FetchMediaURLUseCase = FetchMediaURLUseCase()
+    private let fetchMediaURLUseCase: FetchMediaURLUseCase = FetchMediaURLUseCase()
     private let favoriteMediaUseCase: FavoriteMediaUseCase = FavoriteMediaUseCase()
     private let mediaListUseCase: MediaListUseCase = MediaListUseCase()
     private var disposeBag: DisposeBag = DisposeBag()
