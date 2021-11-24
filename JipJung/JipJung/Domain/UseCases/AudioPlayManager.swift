@@ -23,6 +23,7 @@ class AudioPlayManager {
     private init() {}
     
     private let mediaResourceRepository = MediaResourceRepository()
+    private let playHistoryRepository = PlayHistoryRepository()
     private let disposeBag = DisposeBag()
     
     private(set) var audioPlayer: AVAudioPlayer?
@@ -56,9 +57,9 @@ class AudioPlayManager {
                     self?.audioPlayer = try? AVAudioPlayer(contentsOf: url)
                     self?.audioPlayer?.numberOfLoops = -1
                     self?.audioPlayer?.prepareToPlay()
-                    if autoPlay,
-                       let result = self?.audioPlayer?.play() {
-                        single(.success(result))
+                    if autoPlay {
+                        self?.controlAudio(playState: .manual(true))
+                        single(.success(true))
                     }
                 } onFailure: { error in
                     single(.failure(error))
@@ -69,7 +70,9 @@ class AudioPlayManager {
     }
     
     func controlAudio(playState: PlayState) -> Single<Bool> {
-        guard let audioPlayer = audioPlayer else {
+        guard let audioPlayer = audioPlayer,
+              let mediaID = audioPlayer.url?.deletingPathExtension().lastPathComponent
+        else {
             return Single.error(AudioError.initFailed)
         }
         
@@ -84,7 +87,11 @@ class AudioPlayManager {
                 audioPlayer.pause()
                 return Single.just(false)
             } else {
-                return Single.just(audioPlayer.play())
+                return Single.just(mediaID)
+                    .flatMap { self.playHistoryRepository.addPlayHistory(mediaID: $0) }
+                    .map { _ in
+                        audioPlayer.play()
+                    }
             }
         }
     }
