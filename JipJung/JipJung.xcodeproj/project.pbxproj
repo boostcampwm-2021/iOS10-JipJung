@@ -11,6 +11,7 @@
 		911D7F8027428473003B7C3B /* Audio+Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 911D7F7F27428473003B7C3B /* Audio+Enums.swift */; };
 		912A72042733B99300C1A37E /* LocalFileManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 912A72032733B99300C1A37E /* LocalFileManagerTests.swift */; };
 		912A720A2733B9AC00C1A37E /* LocalFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E4178827312FEB001BA0A6 /* LocalFileManager.swift */; };
+		912E2F41274E1A7B00316884 /* PlayHistoryUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 912E2F40274E1A7B00316884 /* PlayHistoryUseCase.swift */; };
 		9131513F27400C26001E7125 /* UIScreen+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9131513E27400C26001E7125 /* UIScreen+Extension.swift */; };
 		9131514127400FBB001E7125 /* UIApplication+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9131514027400FBB001E7125 /* UIApplication+Extension.swift */; };
 		9131514327401200001E7125 /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9131514227401200001E7125 /* Array+Extension.swift */; };
@@ -229,6 +230,7 @@
 		911D7F7F27428473003B7C3B /* Audio+Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Audio+Enums.swift"; sourceTree = "<group>"; };
 		912A72012733B99300C1A37E /* LocalFileManagerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LocalFileManagerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		912A72032733B99300C1A37E /* LocalFileManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFileManagerTests.swift; sourceTree = "<group>"; };
+		912E2F40274E1A7B00316884 /* PlayHistoryUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayHistoryUseCase.swift; sourceTree = "<group>"; };
 		9131513E27400C26001E7125 /* UIScreen+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+Extension.swift"; sourceTree = "<group>"; };
 		9131514027400FBB001E7125 /* UIApplication+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Extension.swift"; sourceTree = "<group>"; };
 		9131514227401200001E7125 /* Array+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extension.swift"; sourceTree = "<group>"; };
@@ -854,6 +856,7 @@
 				B4EF13BC2744B9880086D8CD /* FetchMediaURLUseCase.swift */,
 				B481FC7C274521B800D1F2EA /* FavoriteMediaUseCase.swift */,
 				DD7CDCB3274D1E66005ADF35 /* LoadFocusTimeUseCase.swift */,
+				912E2F40274E1A7B00316884 /* PlayHistoryUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -1525,6 +1528,7 @@
 				DF09E9B52741FAC700F5F739 /* Utils+Enums.swift in Sources */,
 				B4E4210D27463C3D00C39545 /* UIColor+Extension.swift in Sources */,
 				B4153945273B9676004EF80F /* FocusRecord.swift in Sources */,
+				912E2F41274E1A7B00316884 /* PlayHistoryUseCase.swift in Sources */,
 				B4153947273BA005004EF80F /* Date+Extension.swift in Sources */,
 				DDB5CEA827328EF400E8F9EB /* MeViewController.swift in Sources */,
 				B4EF13B3274293220086D8CD /* SearchHistoryRepository.swift in Sources */,

@@ -27,6 +27,7 @@ final class HomeViewModel: HomeViewModelInput, HomeViewModelOutput {
     private let mediaListUseCase = MediaListUseCase()
     private let maximListUseCase = MaximListUseCase()
     private let audioPlayUseCase = AudioPlayUseCase()
+    private let playHistoryUseCase = PlayHistoryUseCase()
     
     private let disposeBag = DisposeBag()
     private let brightMode = BehaviorRelay<[Media]>(value: [])
@@ -66,7 +67,7 @@ final class HomeViewModel: HomeViewModelInput, HomeViewModelOutput {
             }
             .disposed(by: disposeBag)
         
-        mediaListUseCase.fetchRecentPlayHistory()
+        playHistoryUseCase.fetchPlayHistory()
             .subscribe { [weak self] in
                 self?.recentPlayHistory.accept($0)
             } onFailure: { error in
