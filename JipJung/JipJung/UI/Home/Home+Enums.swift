@@ -9,7 +9,7 @@ import CoreGraphics
 import UIKit
 
 enum MediaMode: Int {
-    case bright, darkness
+    case bright, dark
 }
 
 enum FocusMode: CaseIterable {

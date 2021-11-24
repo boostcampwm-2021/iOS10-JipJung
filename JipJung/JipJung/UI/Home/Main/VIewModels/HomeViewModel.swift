@@ -58,7 +58,7 @@ final class HomeViewModel: HomeViewModelInput, HomeViewModelOutput {
             }
             .disposed(by: disposeBag)
         
-        mediaListUseCase.fetchMediaMyList(mode: .darkness)
+        mediaListUseCase.fetchMediaMyList(mode: .dark)
             .subscribe { [weak self] in
                 self?.darknessMode.accept($0)
             } onFailure: { error in

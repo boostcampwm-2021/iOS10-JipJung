@@ -20,10 +20,8 @@ final class ExploreViewController: UIViewController {
         let searchBar = UISearchBar()
         searchBar.delegate = self
         searchBar.placeholder = "Search entire library"
+        searchBar.searchBarStyle = .minimal
         searchBar.layer.cornerRadius = 3
-        searchBar.barTintColor = .black
-        searchBar.searchTextField.textColor = .white
-        
         return searchBar
     }()
     
@@ -33,7 +31,6 @@ final class ExploreViewController: UIViewController {
         layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
         
         let categoryCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        categoryCollectionView.backgroundColor = .black
         categoryCollectionView.showsHorizontalScrollIndicator = false
         categoryCollectionView.delegate = self
         categoryCollectionView.dataSource = self
@@ -49,7 +46,6 @@ final class ExploreViewController: UIViewController {
         layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
 
         let soundContentsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        soundContentsCollectionView.backgroundColor = .black
         soundContentsCollectionView.showsHorizontalScrollIndicator = false
         soundContentsCollectionView.delegate = self
         soundContentsCollectionView.dataSource = self
@@ -73,18 +69,24 @@ final class ExploreViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configureUI()
+        configureCommonUI()
         bindUI()
         viewModel?.categorize(by: SoundTag.all.value)
-        soundTagCollectionView.selectItem(at: IndexPath(item: 0, section: 0),
-                                          animated: true,
-                                          scrollPosition: .centeredHorizontally)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
         tabBarController?.tabBar.isHidden = false
+        switch ApplicationMode.shared.mode.value {
+        case .bright:
+            configureBrightModeUI()
+        case .dark:
+            configureDarkModeUI()
+        }
+        soundTagCollectionView.selectItem(at: IndexPath(item: 0, section: 0),
+                                          animated: true,
+                                          scrollPosition: .centeredHorizontally)
     }
     
     // MARK: - Initializer
@@ -96,7 +98,7 @@ final class ExploreViewController: UIViewController {
     
     // MARK: - Helpers
     
-    private func configureUI() {
+    private func configureCommonUI() {
         view.addSubview(searchBar)
         searchBar.snp.makeConstraints {
             $0.topMargin.equalToSuperview().offset(10)
@@ -129,7 +131,43 @@ final class ExploreViewController: UIViewController {
         }
     }
     
+    private func configureBrightModeUI() {
+        view.backgroundColor = .white
+        scrollView.backgroundColor = .white
+        searchBar.backgroundColor = .white
+        searchBar.searchTextField.textColor = .black
+        soundTagCollectionView.backgroundColor = .white
+        soundCollectionView.backgroundColor = .white
+        
+        soundTagCollectionView.reloadData()
+        soundCollectionView.reloadData()
+    }
+    
+    private func configureDarkModeUI() {
+        view.backgroundColor = .black
+        scrollView.backgroundColor = .black
+        searchBar.backgroundColor = .black
+        searchBar.searchTextField.textColor = .white
+        soundTagCollectionView.backgroundColor = .black
+        soundCollectionView.backgroundColor = .black
+        
+        soundTagCollectionView.reloadData()
+        soundCollectionView.reloadData()
+    }
+    
     private func bindUI() {
+        ApplicationMode.shared.mode
+            .bind { [weak self] in
+                guard let self = self else { return }
+                switch $0 {
+                case .bright:
+                    self.configureBrightModeUI()
+                case .dark:
+                    self.configureDarkModeUI()
+                }
+            }
+            .disposed(by: disposeBag)
+        
         viewModel?.categoryItems
             .distinctUntilChanged()
             .bind(onNext: { [weak self] _ in

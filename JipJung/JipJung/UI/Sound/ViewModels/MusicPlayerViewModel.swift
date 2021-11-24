@@ -52,10 +52,12 @@ final class MusicPlayerViewModel: MusicPlayerViewModelInput, MusicPlayerViewMode
     private let id: String
     private let audioFileName: String
     private let videoFileName: String
-    private let audioPlayUseCase = AudioPlayUseCase()
-    private let fetchMediaURLUseCase = FetchMediaURLUseCase()
-    private let favoriteMediaUseCase = FavoriteMediaUseCase()
-    private var disposeBag = DisposeBag()
+    private let audioPlayUseCase: AudioPlayUseCase = AudioPlayUseCase()
+    private let videoPlayUseCase: VideoPlayUseCase = VideoPlayUseCase()
+    private let fetchMediaUrlUseCase: FetchMediaURLUseCase = FetchMediaURLUseCase()
+    private let favoriteMediaUseCase: FavoriteMediaUseCase = FavoriteMediaUseCase()
+    private let mediaListUseCase: MediaListUseCase = MediaListUseCase()
+    private var disposeBag: DisposeBag = DisposeBag()
     
     init(media: Media) {
         id = media.id
@@ -147,5 +149,35 @@ final class MusicPlayerViewModel: MusicPlayerViewModelInput, MusicPlayerViewMode
             favoriteMediaUseCase.delete(id: id)
             isFavorite.accept(false)
         }
+    }
+    
+    func checkMediaMode() {
+        mediaListUseCase.fetchMediaMyList(mode: .bright)
+            .subscribe { [weak self] mediaList in
+                guard let self = self else { return }
+                mediaList.forEach { media in
+                    if media.id == self.id && ApplicationMode.shared.mode.value != .bright {
+                        ApplicationMode.shared.convert()
+                        return
+                    }
+                }
+            } onFailure: { error in
+                print(error.localizedDescription)
+            }
+            .disposed(by: disposeBag)
+
+        mediaListUseCase.fetchMediaMyList(mode: .dark)
+            .subscribe { [weak self] mediaList in
+                guard let self = self else { return }
+                mediaList.forEach { media in
+                    if media.id == self.id && ApplicationMode.shared.mode.value != .dark {
+                        ApplicationMode.shared.convert()
+                        return
+                    }
+                }
+            } onFailure: { error in
+                print(error.localizedDescription)
+            }
+            .disposed(by: disposeBag)
     }
 }
