@@ -52,20 +52,17 @@ final class BreathFocusViewModel: BreathFocusViewModelInput, BreathFocusViewMode
     }
     
     func startClockTimer() {
-        audioPlayUseCase.controlAudio(playState: .manual(true))
-        // MARK: 위 코드 대신 아래 코드를 사용하게 되면 다른 화면 재생했을 때 버그 발생하고 있음
-//        audioPlayUseCase.readyToPlay("breath.WAV", autoPlay: true)
-//            .subscribe {
-//            [weak self] in
-//            switch $0 {
-//            case .failure(let error):
-//                print(#function, #line, error)
-//            case .success(let flag):
-//                print(#function, #line, flag)
-//            }
-//        }.disposed(by: disposeBag)
+        audioPlayUseCase.readyToPlay("breath.WAV", autoPlay: true)
+            .subscribe {
+            [weak self] in
+            switch $0 {
+            case .failure(let error):
+                print(#function, #line, error)
+            case .success(let flag):
+                print(#function, #line, flag)
+            }
+        }.disposed(by: disposeBag)
         
-        // MARK: Rx 관련 코드 수정 필요
         clockTime.accept(0)
          Observable<Int>.interval(.seconds(1), scheduler: MainScheduler.instance)
             .subscribe { [weak self] _ in
