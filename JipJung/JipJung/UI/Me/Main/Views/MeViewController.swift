@@ -27,14 +27,21 @@ class MeViewController: UIViewController {
     
     private var grassMapView = GrassMapView()
     
+    private var viewModel = MeViewModel()
     private var disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
+        
         configureNavigationbar()
         configureCollectionView()
         bindDailyStaticsCell()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.fetchFocusTimeLists()
     }
     
     private func configureNavigationbar() {
@@ -52,10 +59,15 @@ class MeViewController: UIViewController {
     }
     
     private func bindDailyStaticsCell() {
-        Observable<[Int]>.of([1, 2, 3]).bind {
-            print($0)
-        }
-        .disposed(by: disposeBag)
+        viewModel.grassPresenterObject.bind { [weak self] in
+            $0?.alphaList.enumerated().forEach({ [weak self] index, value in
+                let week = index / 7
+                let day = index % 7
+                let cell = self?.grassMapView[(week: week, day: day)]
+                cell?.backgroundColor = .green
+                cell?.alpha = CGFloat(value)
+            })
+        }.disposed(by: disposeBag)
     }
 }
 
@@ -76,6 +88,12 @@ extension MeViewController: UICollectionViewDataSource, UICollectionViewDelegate
                 let view = UIView()
                 view.backgroundColor = .blue
                 cell.setGrassMapView(grassMapView)
+                viewModel.grassPresenterObject.bind {
+                    cell.dateLabelText = $0?.statisticsPeriod
+                    cell.totalFocusLabelText = $0?.totalFocusMinute
+                    cell.averageFocusLabelText = $0?.averageFocusMinute
+                }
+                .disposed(by: disposeBag)
                 return cell
             }
         case 1:

@@ -8,8 +8,6 @@
 import UIKit
 
 class GrassMapView: UIView {
-    let dayCount = 7
-    let weekCount = 20
     private let weeksStackView = UIStackView()
     
     override init(frame: CGRect) {
@@ -25,7 +23,7 @@ class GrassMapView: UIView {
     private func configureUI() {
         weeksStackView.distribution = .fillEqually
         weeksStackView.axis = .horizontal
-        for _ in 1...20 {
+        for _ in 1...MeGrassMap.weekCount {
             let weekStackView = UIStackView()
             weekStackView.axis = .vertical
             for _ in 1...7 {
@@ -34,7 +32,8 @@ class GrassMapView: UIView {
                     size: CGSize(
                         width: MeGrassMapViewSize.cellLength,
                         height: MeGrassMapViewSize.cellLength)))
-                dayView.backgroundColor = .green.withAlphaComponent(0.2)
+                dayView.backgroundColor = .green
+                dayView.alpha = 0.2
                 weekStackView.addArrangedSubview(dayView)
                 weekStackView.distribution = .fillEqually
                 weekStackView.spacing = MeGrassMapViewSize.cellSpacing
@@ -50,5 +49,18 @@ class GrassMapView: UIView {
             $0.trailing.equalToSuperview()
             $0.height.equalTo(MeGrassMapViewSize.height)
         }
+    }
+}
+
+extension GrassMapView {
+    subscript(_ index: (week: Int, day: Int)) -> UIView? {
+        guard index.day < 7,
+              index.day >= 0,
+              index.week >= 0,
+              index.week < MeGrassMap.weekCount
+        else {
+            return nil
+        }
+        return weeksStackView.subviews[index.week].subviews[index.day]
     }
 }

@@ -8,7 +8,7 @@
 import Foundation
 import RealmSwift
 
-class FocusRecord: Object {
+class FocusRecord: Object, Decodable {
     @Persisted(primaryKey: true) var id: String
     @Persisted var focusTime: Int   // unit : second
     @Persisted var year: Int

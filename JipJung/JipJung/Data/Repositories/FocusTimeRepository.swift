@@ -10,6 +10,7 @@ import RxSwift
 
 protocol FocusTimeRepositoryProtocol {
     func save(record: FocusRecord) -> Single<Bool>
+    func load(date: Date) -> Single<[FocusRecord]>
 }
 
 final class FocusTimeRepository: FocusTimeRepositoryProtocol {
@@ -18,5 +19,9 @@ final class FocusTimeRepository: FocusTimeRepositoryProtocol {
     
     func save(record: FocusRecord) -> Single<Bool> {
         return realmDBManager.write(record) 
+    }
+    
+    func load(date: Date) -> Single<[FocusRecord]> {
+        return self.realmDBManager.search(ofType: FocusRecord.self, with: NSPredicate(format: "(year = \(date.year)) AND (month = \(date.month)) AND (day = \(date.day))"))
     }
 }

@@ -87,6 +87,25 @@ class RealmDBManager {
 
     // TODO: NSPredicte를 활용한 Search 함수를 적극적으로 이용하기 - 기존 request 함수 대체
     
+    func requestList<T: Object>() -> Single<[T]> {
+        let realm = try? Realm()
+        return Single.create { single in
+            guard let realm = realm else {
+                single(.failure(RealmError.initFailed))
+                return Disposables.create()
+            }
+            let list = realm.objects(T.self)
+            let result = try? list.compactMap({ element throws in element })
+            if let result = result {
+                single(.success(result))
+            } else {
+                single(.failure(RealmError.searchFailed))
+            }
+            
+            return Disposables.create()
+        }
+    }
+    
     func requestAllMediaList() -> Single<[Media]> {
         let realm = try? Realm()
         return Single.create { single in

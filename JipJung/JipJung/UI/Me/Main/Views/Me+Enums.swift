@@ -19,3 +19,10 @@ enum MeGrassMapViewSize {
     static let cellLength = (width - 19 * cellSpacing) / 20
     static let height = cellLength * 7 + cellSpacing * 6
 }
+
+enum MeGrassMap {
+    static let weekCount = 20
+    static var dayCount: Int {
+        weekCount * 7
+    }
+}

@@ -12,7 +12,7 @@ class MeDailyStaticsCollectionViewCell: UICollectionViewCell {
         let dateLabel = UILabel()
         dateLabel.text = "11월 11일 ~ 11월 12일"
         dateLabel.textColor = .black
-        dateLabel.font = .systemFont(ofSize: 36, weight: .bold)
+        dateLabel.font = .systemFont(ofSize: 30, weight: .bold)
         return dateLabel
     }()
     
@@ -67,6 +67,33 @@ class MeDailyStaticsCollectionViewCell: UICollectionViewCell {
         representativeValueStackView.addArrangedSubview(descriptionLabel)
         representativeValueStackView.addArrangedSubview(titleLabel)
         return representativeValueStackView
+    }
+    
+    var dateLabelText: String? {
+        get {
+            return dateLabel.text
+        }
+        set {
+            dateLabel.text = newValue
+        }
+    }
+    
+    var totalFocusLabelText: String? {
+        get {
+            return (totalFocusStackView.subviews.first as? UILabel)?.text
+        }
+        set {
+            (totalFocusStackView.subviews.first as? UILabel)?.text = newValue
+        }
+    }
+    
+    var averageFocusLabelText: String? {
+        get {
+            return (averageFocusStackView.subviews.first as? UILabel)?.text
+        }
+        set {
+            (averageFocusStackView.subviews.first as? UILabel)?.text = newValue
+        }
     }
     
     override init(frame: CGRect) {
