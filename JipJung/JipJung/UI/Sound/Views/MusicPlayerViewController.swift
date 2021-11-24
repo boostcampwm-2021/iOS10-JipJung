@@ -198,7 +198,11 @@ final class MusicPlayerViewController: UIViewController {
     private func bindUI() {
         backButton.rx.tap
             .bind { [weak self] in
-                self?.navigationController?.popViewController(animated: true)
+                if let navigationController = self?.navigationController {
+                    navigationController.popViewController(animated: true)
+                } else {
+                    self?.dismiss(animated: true)
+                }
             }
             .disposed(by: disposeBag)
         

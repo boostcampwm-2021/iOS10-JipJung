@@ -63,6 +63,10 @@ final class ExploreViewController: UIViewController {
     
     private var disposeBag: DisposeBag = DisposeBag()
     private var viewModel: ExploreViewModel?
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+       return .lightContent
+    }
 
     // MARK: - Lifecycle Methods
     

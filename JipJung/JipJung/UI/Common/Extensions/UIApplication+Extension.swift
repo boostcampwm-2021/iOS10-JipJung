@@ -16,4 +16,13 @@ extension UIApplication {
             return UIApplication.shared.statusBarFrame.height
         }
     }
+    
+    static var bottomIndicatorHeight: CGFloat {
+        if #available(iOS 11.0, *) {
+            let window = UIApplication.shared.windows.first
+            return window?.safeAreaInsets.bottom ?? 0
+        } else {
+            return -1
+        }
+    }
 }

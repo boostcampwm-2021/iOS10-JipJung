@@ -73,6 +73,10 @@ final class SearchViewController: UIViewController {
     private var cellDisposeBag: DisposeBag = DisposeBag()
     private var viewModel: SearchViewModel?
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+       return .lightContent
+    }
+
     // MARK: - Lifecycle Methods
     
     override func viewDidLoad() {
