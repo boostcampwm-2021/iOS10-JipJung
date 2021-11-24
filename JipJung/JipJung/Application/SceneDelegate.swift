@@ -26,9 +26,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.configure(tabBarController.tabBar)
         
         tabBarController.viewControllers = [
-            createMeViewController(),
             createHomeViewController(),
             createExploreNavigationViewController(),
+            createMeViewController()
         ]
         return tabBarController
     }
