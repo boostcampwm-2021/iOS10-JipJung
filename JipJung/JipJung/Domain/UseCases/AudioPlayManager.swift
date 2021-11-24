@@ -59,7 +59,12 @@ class AudioPlayManager {
                     self?.audioPlayer?.prepareToPlay()
                     if autoPlay {
                         self?.controlAudio(playState: .manual(true))
-                        single(.success(true))
+                            .subscribe(onSuccess: { state in
+                                single(.success(state))
+                            }, onFailure: { error in
+                                single(.failure(error))
+                            })
+                            .disposed(by: disposeBag)
                     }
                 } onFailure: { error in
                     single(.failure(error))
@@ -79,7 +84,7 @@ class AudioPlayManager {
         switch playState {
         case .manual(let state):
             if state == audioPlayer.isPlaying {
-                return Single.just(audioPlayer.isPlaying)
+                return Single.just(state)
             }
             fallthrough
         case .automatics:
@@ -87,11 +92,11 @@ class AudioPlayManager {
                 audioPlayer.pause()
                 return Single.just(false)
             } else {
-                return Single.just(mediaID)
-                    .flatMap { self.playHistoryRepository.addPlayHistory(mediaID: $0) }
-                    .map { _ in
-                        audioPlayer.play()
-                    }
+                if audioPlayer.play() {
+                    return playHistoryRepository.addPlayHistory(mediaID: mediaID)
+                } else {
+                    return Single.just(false)
+                }
             }
         }
     }
