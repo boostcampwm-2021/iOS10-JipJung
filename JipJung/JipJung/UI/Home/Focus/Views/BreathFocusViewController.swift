@@ -188,18 +188,24 @@ final class BreathFocusViewController: FocusViewController {
             }
             .disposed(by: disposeBag)
         
-        viewModel?.focusState.bind(onNext: { [weak self] in
+        viewModel?.focusState
+            .skip(1)
+            .distinctUntilChanged()
+            .bind(onNext: { [weak self] in
             guard let self = self else { return }
             switch $0 {
             case .running:
                 self.startBreath()
             case .stop:
+                print(#function, #line)
                 self.stopBreath()
+                self.viewModel?.saveFocusRecord()
+                self.viewModel?.resetClockTimer()
             }
         }).disposed(by: disposeBag)
 
         viewModel?.clockTime.bind(onNext: { [weak self] in
-            guard let self = self, $0 > 0 else { return }
+            guard let self = self else { return }
             print(#function, #line, $0)
             if $0 % 7 == 3 {
                 self.textLayer.opacity = 0
@@ -208,33 +214,35 @@ final class BreathFocusViewController: FocusViewController {
                     self.textLayer.string = "Exhale"
                     self.textLayer.opacity = 1
                 }
-            } else if $0 % 7 == 0 {
-                self.textLayer.opacity = 0
-                self.textLayer.string = ""
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
-                    self.textLayer.string = "Inhale"
-                    self.textLayer.opacity = 1
+            } else if $0 % 7 == 6 {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0 - 0.25) {
+                    self.textLayer.string = ""
+                    self.textLayer.opacity = 0
                 }
+            } else if $0 % 7 == 0 {
+                self.textLayer.string = "Inhale"
+                self.textLayer.opacity = 1
+                
+                UIView.animate(withDuration: 4.0,
+                               delay: 0.0,
+                               options: .allowUserInteraction,
+                               animations: {
+//                    .init(red: 129.0 / 255.0, green: 220.0 / 255.0, blue: 135.0 / 255.0, alpha: 0.8)
+                    self.view.layer.backgroundColor = .init(red: 129.0 / 255.0, green: 240.0 / 255.0, blue: 135.0 / 255.0, alpha: 0.8)
+                },
+                               completion: nil)
+            } else if $0 % 7 == 4 {
+                UIView.animate(withDuration: 3.0, // * 2.0
+                               delay: 0.0,
+                               options: .allowUserInteraction,
+                               animations: {
+//                    self.view.layer.backgroundColor = .none
+                    self.view.layer.backgroundColor = .init(red: 131.0 / 255.0, green: 79.0 / 255.0, blue: 163.0 / 255.0, alpha: 0.3)
+                },
+                               completion: nil)
             }
             
         })
-        
-        //
-        //        continueButton.rx.tap
-        //            .bind { [weak self] in
-        //                guard let self = self else { return }
-        //                self.viewModel?.changeTimerState(to: .running(isContinue: true))
-        //            }
-        //            .disposed(by: disposeBag)
-        //
-        //        exitButton.rx.tap
-        //            .bind { [weak self] in
-        //                guard let self = self else { return }
-        //                self.viewModel?.changeTimerState(to: .ready)
-        //                self.viewModel?.resetClockTimer()
-        //                self.viewModel?.saveFocusRecord()
-        //            }
-        //            .disposed(by: disposeBag)
     }
     
     private func startBreath() {
@@ -254,13 +262,15 @@ final class BreathFocusViewController: FocusViewController {
             // 진입 완료 후
             self.breathShapeLayer.isHidden = true
             
-            UIView.animate(withDuration: 3.0) {
+            UIView.animate(withDuration: 4.0) {
                 self.view.layer.backgroundColor = .none
             }
             
             // TODO: 버튼 동시 클릭, 나타나는 타이밍 조정하기
-            UIView.animate(withDuration: 1.0) {
-                self.stopButton.layer.opacity = 1
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+                UIView.animate(withDuration: 2.0) {
+                    self.stopButton.layer.opacity = 1
+                }
             }
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -270,7 +280,6 @@ final class BreathFocusViewController: FocusViewController {
                     self.scalingShapeLayer.isHidden = false
                     self.startInhaleExhaleAnimation()
                     self.viewModel?.startClockTimer()
-//                    self.startParticleAnimation()
                 }
             }
         }
@@ -284,8 +293,6 @@ final class BreathFocusViewController: FocusViewController {
         timePickerView.isHidden = false
         minuteLabel.isHidden = false
         breathShapeLayer.isHidden = false
-        
-        self.viewModel?.resetClockTimer()
         
         UIView.animate(withDuration: 1.0) {
             self.view.layer.backgroundColor = .none
@@ -390,6 +397,6 @@ extension BreathFocusViewController: CAAnimationDelegate {
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
         print(#function, #line, flag, anim.description)
 
-        stopBreath()
+        viewModel?.changeState(to: .stop)
     }
 }
