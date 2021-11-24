@@ -15,4 +15,14 @@ extension Array {
     subscript(loop index: Int) -> Element? {
         return isEmpty ? nil : self[(index + count) % count]
     }
+    
+    func elements(in range: Range<Int>) -> [Element] {
+        var result: [Element] = []
+        range.forEach { index in
+            if indices ~= index {
+                result.append(self[index])
+            }
+        }
+        return result
+    }
 }

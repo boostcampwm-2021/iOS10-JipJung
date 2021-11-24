@@ -69,7 +69,7 @@ final class HomeViewModel: HomeViewModelInput, HomeViewModelOutput {
         
         playHistoryUseCase.fetchPlayHistory()
             .subscribe { [weak self] in
-                self?.recentPlayHistory.accept($0)
+                self?.recentPlayHistory.accept($0.elements(in: 0..<6))
             } onFailure: { error in
                 print(error.localizedDescription)
             }
