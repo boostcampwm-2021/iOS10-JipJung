@@ -38,7 +38,7 @@ final class BreathFocusViewController: FocusViewController {
     private let breathView = UIView()
     private lazy var breathShapeLayer: CAShapeLayer = {
         let drawingLayer = CAShapeLayer()
-        drawingLayer.fillColor = .init(red: 0.1, green: 1.0, blue: 0.1, alpha: 0.5)
+        drawingLayer.fillColor = .init(red: 0.1, green: 1.0, blue: 0.3, alpha: 0.5)
         drawingLayer.shadowColor = .init(red: 0, green: 1.0, blue: 0, alpha: 1)
         drawingLayer.shadowOpacity = 0.9
         drawingLayer.shadowOffset = CGSize.zero
@@ -227,7 +227,6 @@ final class BreathFocusViewController: FocusViewController {
                                delay: 0.0,
                                options: .allowUserInteraction,
                                animations: {
-//                    .init(red: 129.0 / 255.0, green: 220.0 / 255.0, blue: 135.0 / 255.0, alpha: 0.8)
                     self.view.layer.backgroundColor = .init(red: 129.0 / 255.0, green: 240.0 / 255.0, blue: 135.0 / 255.0, alpha: 0.8)
                 },
                                completion: nil)
@@ -251,28 +250,27 @@ final class BreathFocusViewController: FocusViewController {
         timeLabel.isHidden = true
         timePickerView.isHidden = true
         minuteLabel.isHidden = true
-        
+
         startIntroAnimation()
-        
+
         // 진입 배경 애니메이션
         self.stopButton.layer.opacity = 0
-        UIView.animate(withDuration: 0.5, delay: .zero, options: .curveEaseIn) {
-            self.view.layer.backgroundColor = .init(red: 0.1, green: 1.0, blue: 0.1, alpha: 0.8)
+        UIView.animate(withDuration: 0.4, delay: .zero, options: .curveEaseIn) {
+            self.view.layer.backgroundColor = .init(red: 0.1, green: 1.0, blue: 0.3, alpha: 1)
         } completion: { _ in
             // 진입 완료 후
             self.breathShapeLayer.isHidden = true
-            
-            UIView.animate(withDuration: 4.0) {
+            UIView.animate(withDuration: 3) {
                 self.view.layer.backgroundColor = .none
             }
-            
+
             // TODO: 버튼 동시 클릭, 나타나는 타이밍 조정하기
             DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
                 UIView.animate(withDuration: 2.0) {
                     self.stopButton.layer.opacity = 1
                 }
             }
-            
+
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 self.countdownView.isHidden = false
                 self.countdownView.animate(countdown: 3) {
@@ -316,6 +314,7 @@ final class BreathFocusViewController: FocusViewController {
         introAnimations.duration = 0.5
         introAnimations.beginTime = 0.0
         introAnimations.isRemovedOnCompletion = true
+//        introAnimations.fillMode = CAMediaTimingFillMode.forwards
         breathShapeLayer.add(introAnimations, forKey: "scaleUpAndOpacityDown")
     }
     
