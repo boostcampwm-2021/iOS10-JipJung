@@ -28,7 +28,7 @@ class AudioPlayManager {
     
     private(set) var audioPlayer: AVAudioPlayer?
     
-    func readyToPlay(_ audioFileName: String, autoPlay: Bool) -> Single<Bool> {
+    func readyToPlay(_ audioFileName: String, autoPlay: Bool, restart: Bool) -> Single<Bool> {
         if audioFileName.isEmpty {
             return Single.just(false)
         }
@@ -58,7 +58,7 @@ class AudioPlayManager {
                     self?.audioPlayer?.numberOfLoops = -1
                     self?.audioPlayer?.prepareToPlay()
                     if autoPlay {
-                        self?.controlAudio(playState: .manual(true))
+                        self?.controlAudio(playState: .manual(true), restart: false)
                             .subscribe(onSuccess: { state in
                                 single(.success(state))
                             }, onFailure: { error in
@@ -74,7 +74,7 @@ class AudioPlayManager {
         }
     }
     
-    func controlAudio(playState: PlayState) -> Single<Bool> {
+    func controlAudio(playState: PlayState, restart: Bool) -> Single<Bool> {
         guard let audioPlayer = audioPlayer,
               let mediaID = audioPlayer.url?.deletingPathExtension().lastPathComponent
         else {
@@ -84,6 +84,9 @@ class AudioPlayManager {
         switch playState {
         case .manual(let state):
             if state == audioPlayer.isPlaying {
+                if state && restart {
+                    audioPlayer.play(atTime: 0)
+                }
                 return Single.just(state)
             }
             fallthrough
@@ -92,11 +95,8 @@ class AudioPlayManager {
                 audioPlayer.pause()
                 return Single.just(false)
             } else {
-                if audioPlayer.play() {
-                    return playHistoryRepository.addPlayHistory(mediaID: mediaID)
-                } else {
-                    return Single.just(false)
-                }
+                restart ? audioPlayer.play(atTime: 0) : audioPlayer.play()
+                return playHistoryRepository.addPlayHistory(mediaID: mediaID)
             }
         }
     }
