@@ -615,25 +615,43 @@ extension HomeViewController: CarouselViewDelegate {
     func currentViewDownSwiped(media: Media) {
         guard let mode = MediaMode(rawValue: media.mode) else { return }
         
-        viewModel.mediaPlayViewDownSwiped(media: media)
-            .subscribe { state in
-                if state {
-                    NotificationCenter.default.post(
-                        name: .refreshHome,
-                        object: nil,
-                        userInfo: [
-                            "RefreshType": [
-                                mode == .bright ? RefreshHomeData.brightMode : RefreshHomeData.darkMode
+        let alert = UIAlertController(
+            title: "목록에서 음원 삭제",
+            message: "음원 \(media.name)을 목록에서 삭제할까요?\n다운로드된 파일은 삭제되지않습니다.",
+            preferredStyle: .alert
+        )
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+        let okAction = UIAlertAction(title: "네", style: .destructive) { [weak self] _ in
+            guard let self = self else { return }
+            self.viewModel.mediaPlayViewDownSwiped(media: media)
+                .subscribe { state in
+                    if state {
+                        NotificationCenter.default.post(
+                            name: .refreshHome,
+                            object: nil,
+                            userInfo: [
+                                "RefreshType": [
+                                    mode == .bright ? RefreshHomeData.brightMode : RefreshHomeData.darkMode
+                                ]
                             ]
-                        ]
-                    )
-                } else {
-                    print("최소 하나 이상의 음원이 있어야합니다.")
+                        )
+                    } else {
+                        let alert = UIAlertController(
+                            title: "삭제 실패",
+                            message: "음원 목록에는 최소 1개 이상의 음원이 있어야합니다.",
+                            preferredStyle: .alert
+                        )
+                        alert.addAction(UIAlertAction(title: "닫기", style: .cancel))
+                        self.present(alert, animated: true)
+                    }
+                } onFailure: { error in
+                    print(error.localizedDescription)
                 }
-            } onFailure: { error in
-                print(error.localizedDescription)
-            }
-            .disposed(by: disposeBag)
+                .disposed(by: self.disposeBag)
+        }
+        alert.addAction(cancelAction)
+        alert.addAction(okAction)
+        present(alert, animated: true)
     }
     
     func currentViewAppear(audioFileName: String, autoPlay: Bool) {

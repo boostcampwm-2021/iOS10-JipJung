@@ -263,6 +263,19 @@ final class MusicPlayerViewController: UIViewController {
             }
             .disposed(by: disposeBag)
         
+        musicDescriptionView.plusButton.rx.tap
+            .bind { [weak self] _ in
+                guard let self = self else { return }
+                self.musicDescriptionView.plusButton.isSelected.toggle()
+                switch self.musicDescriptionView.plusButton.isSelected {
+                case false:
+                    self.viewModel?.removeMediaFromMode()
+                case true:
+                    self.viewModel?.saveMediaFromMode()
+                }
+            }
+            .disposed(by: disposeBag)
+        
         viewModel?.musicFileStatus
             .bind(onNext: { [weak self] in
                 guard let self = self else { return }
@@ -293,6 +306,13 @@ final class MusicPlayerViewController: UIViewController {
             .distinctUntilChanged()
             .bind(onNext: { [weak self] in
                 self?.favoriteButton.isSelected = $0
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel?.isInMusicList
+            .distinctUntilChanged()
+            .bind(onNext: { [weak self] in
+                self?.musicDescriptionView.plusButton.isSelected = $0
             })
             .disposed(by: disposeBag)
     }

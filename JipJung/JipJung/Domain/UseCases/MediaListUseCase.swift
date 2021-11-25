@@ -23,4 +23,12 @@ final class MediaListUseCase {
     func removeMediaFromMode(media: Media) -> Single<Bool> {
         return mediaListRepository.removeMediaFromMode(media: media)
     }
+    
+    func removeMediaFromMode(id: String, mode: Int) -> Single<Bool> {
+        mediaListRepository.removeMediaFromMode(id: id, mode: mode)
+    }
+    
+    func saveMediaFromMode(id: String, mode: Int) -> Single<Bool>  {
+        return mediaListRepository.saveMediaFromMode(id: id, mode: mode)
+    }
 }

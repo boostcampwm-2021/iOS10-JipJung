@@ -44,3 +44,13 @@ final class FavoriteCircleButton: MusicPlayerBaseButton {
         tintColor = .red
     }
 }
+
+final class PlusCircleButton: MusicPlayerBaseButton {
+    override func configure() {
+        super.configure()
+        self.backgroundColor = .clear
+        setImage(UIImage(systemName: "plus.circle.fill"), for: .normal)
+        setImage(UIImage(systemName: "checkmark.circle.fill"), for: .selected)
+        tintColor = .lightGray
+    }
+}
