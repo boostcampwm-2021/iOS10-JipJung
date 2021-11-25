@@ -246,11 +246,14 @@ final class BreathFocusViewController: FocusViewController {
         guard let clockTime = self.viewModel?.clockTime.value else {
             return
         }
+        let angryEmpjis = ["😡", "🤬", "🥵", "🥶", "😰"]
         let happyEmojis = ["☺️", "😘", "😍", "🥳", "🤩"]
-        let minuteString = clockTime / 60 == 0 ? "" : "\(clockTime / 60)분 "
-        let secondString = clockTime % 60 == 0 ? "" : "\(clockTime % 60)초 "
-        let message = minuteString + secondString + "집중하셨어요!" + (happyEmojis.randomElement() ?? "")
-        PushNotificationMananger.shared.presentFocusStopNotification(body: message)
+        let times = clockTime / 7
+        let message = times > 0
+        ? "\(clockTime / 7)회 호흡 운동하셨습니다." + (happyEmojis.randomElement() ?? "")
+        : "\(times)회... 반복했습니다. 집중합시다!" + (angryEmpjis.randomElement() ?? "")
+        PushNotificationMananger.shared.presentFocusStopNotification(title: .focusFinish,
+                                                                     body: message)
         FeedbackGenerator.shared.impactOccurred()
     }
     
