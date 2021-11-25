@@ -38,7 +38,7 @@ class HomeViewController: UIViewController {
         maximButton.layer.cornerRadius = 16
         return maximButton
     }()
-    private lazy var recentPlayHistoryCollectionView: UICollectionView = {
+    private lazy var playHistoryCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.sectionInset = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16)
@@ -52,6 +52,13 @@ class HomeViewController: UIViewController {
             MusicCollectionViewCell.self,
             forCellWithReuseIdentifier: MusicCollectionViewCell.identifier)
         return collectionView
+    }()
+    private lazy var playHistoryEmptyLabel: UILabel = {
+        let label = UILabel()
+        label.text = "현재 재생 기록이 없습니다."
+        label.textColor = .white
+        label.isHidden = true
+        return label
     }()
     private lazy var favoriteCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -67,6 +74,13 @@ class HomeViewController: UIViewController {
             MusicCollectionViewCell.self,
             forCellWithReuseIdentifier: MusicCollectionViewCell.identifier)
         return collectionView
+    }()
+    private lazy var favoriteEmptyLabel: UILabel = {
+        let label = UILabel()
+        label.text = "좋아요를 누른 음원이 없습니다."
+        label.textColor = .white
+        label.isHidden = true
+        return label
     }()
     private lazy var touchTransferView = TouchTransferView()
     private let clubView: SKView = SKView()
@@ -322,11 +336,16 @@ class HomeViewController: UIViewController {
             $0.height.equalTo(40)
         }
         
-        bottomView.addSubview(recentPlayHistoryCollectionView)
-        recentPlayHistoryCollectionView.snp.makeConstraints {
+        bottomView.addSubview(playHistoryCollectionView)
+        playHistoryCollectionView.snp.makeConstraints {
             $0.top.equalTo(recentPlayHistoryHeader.snp.bottom)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(220)
+        }
+        
+        bottomView.addSubview(playHistoryEmptyLabel)
+        playHistoryEmptyLabel.snp.makeConstraints {
+            $0.center.equalTo(playHistoryCollectionView)
         }
         
         let favoriteHeader = HomeListHeaderView()
@@ -338,7 +357,7 @@ class HomeViewController: UIViewController {
             .disposed(by: disposeBag)
         bottomView.addSubview(favoriteHeader)
         favoriteHeader.snp.makeConstraints {
-            $0.top.equalTo(recentPlayHistoryCollectionView.snp.bottom).offset(8)
+            $0.top.equalTo(playHistoryCollectionView.snp.bottom).offset(8)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(40)
         }
@@ -350,6 +369,12 @@ class HomeViewController: UIViewController {
             $0.height.equalTo(220)
             $0.bottom.equalToSuperview().offset(-50)
         }
+        
+        bottomView.addSubview(favoriteEmptyLabel)
+        favoriteEmptyLabel.snp.makeConstraints {
+            $0.center.equalTo(favoriteCollectionView)
+        }
+        
     }
     
     private func configureTouchTransferView() {
@@ -389,7 +414,7 @@ class HomeViewController: UIViewController {
             .disposed(by: disposeBag)
         
         Observable.of(
-            recentPlayHistoryCollectionView.rx.modelSelected(Media.self),
+            playHistoryCollectionView.rx.modelSelected(Media.self),
             favoriteCollectionView.rx.modelSelected(Media.self)
         )
             .merge()
@@ -414,10 +439,18 @@ class HomeViewController: UIViewController {
             }
             .disposed(by: disposeBag)
         
-        viewModel.recentPlayHistory
+        let playHistoryObservable = viewModel.recentPlayHistory
             .distinctUntilChanged()
+        
+        playHistoryObservable
+            .map { $0.isEmpty }
+            .bind { [weak self] state in
+                self?.playHistoryEmptyLabel.isHidden = !state
+            }.disposed(by: disposeBag)
+
+        playHistoryObservable
             .bind(
-                to: recentPlayHistoryCollectionView.rx.items(
+                to: playHistoryCollectionView.rx.items(
                     cellIdentifier: MusicCollectionViewCell.identifier
                 )
             ) { (item, element, cell) in
@@ -431,7 +464,16 @@ class HomeViewController: UIViewController {
                 )
             }.disposed(by: disposeBag)
         
-        viewModel.favoriteSoundList
+        let favoriteObservable = viewModel.favoriteSoundList
+            .distinctUntilChanged()
+        
+        favoriteObservable
+            .map { $0.isEmpty }
+            .bind { [weak self] state in
+                self?.favoriteEmptyLabel.isHidden = !state
+            }.disposed(by: disposeBag)
+
+        favoriteObservable
             .distinctUntilChanged()
             .bind(
                 to: favoriteCollectionView.rx.items(
@@ -456,11 +498,11 @@ class HomeViewController: UIViewController {
                     self.clubView.isHidden = true
                 case .dark:
                     self.clubView.isHidden = false
-                    UIView.animate(withDuration: 0.25,
+                    UIView.animate(withDuration: 0.35,
                                    delay: 0,
                                    options: [.autoreverse, .repeat],
                                    animations: {
-                        self.clubScene.view?.layer.opacity = 0.8
+                        self.clubScene.view?.layer.opacity = 0.25
                     },
                                    completion: nil)
                 }
