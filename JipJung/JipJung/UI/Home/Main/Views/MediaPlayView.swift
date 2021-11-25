@@ -113,11 +113,3 @@ final class MediaPlayView: UIView {
             .disposed(by: disposeBag)
     }
 }
-
-class MediaPlayViewModel {
-    private let fetchMediaURLUseCase = FetchMediaURLUseCase()
-    
-    func didSetMedia(media: Media) -> Single<URL> {
-        return fetchMediaURLUseCase.getMediaURL(fileName: media.videoFileName, type: .video)
-    }
-}
