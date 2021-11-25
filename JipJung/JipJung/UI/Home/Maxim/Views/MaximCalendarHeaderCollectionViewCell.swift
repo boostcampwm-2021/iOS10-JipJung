@@ -12,15 +12,15 @@ class MaximCalendarHeaderCollectionViewCell: UICollectionViewCell {
         let weekdayLabel = UILabel()
         weekdayLabel.font = .systemFont(ofSize: 20)
         weekdayLabel.textColor = .gray
-        weekdayLabel.text = "Today"
+        weekdayLabel.text = " "
         return weekdayLabel
     }()
     
     private lazy var dayButton: UIButton = {
         let dayButton = UIButton()
-        dayButton.setBackgroundImage(UIImage(systemName: "calendar"), for: .normal)
         dayButton.isUserInteractionEnabled = false
         dayButton.makeCircle()
+        dayButton.backgroundColor = .black
         return dayButton
     }()
 
@@ -40,12 +40,21 @@ class MaximCalendarHeaderCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    private(set) lazy var indicatorPointView: UIView = {
+    private lazy var indicatorPointView: UIView = {
         let indicatorPointView = UIView()
         indicatorPointView.backgroundColor = .red
         indicatorPointView.isHidden = true
         return indicatorPointView
     }()
+    
+    var indicatorPointViewIsHidden: Bool {
+        get {
+            indicatorPointView.isHidden
+        }
+        set {
+            indicatorPointView.isHidden = newValue
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)

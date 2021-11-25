@@ -138,7 +138,9 @@ final class MaximViewController: UIViewController {
     }
     
     private func bindMaximCollectionView() {
-        viewModel.maximList.bind(to: maximCollectionView.rx.items(cellIdentifier: MaximCollectionViewCell.identifier)) { index, maxim, cell in
+        viewModel.maximList
+            .map({$0.compactMap({$0})})
+            .bind(to: maximCollectionView.rx.items(cellIdentifier: MaximCollectionViewCell.identifier)) { index, maxim, cell in
             guard let cell = cell as? MaximCollectionViewCell else {
                 return
             }
@@ -174,13 +176,13 @@ final class MaximViewController: UIViewController {
             guard let cell = cell as? MaximCalendarHeaderCollectionViewCell else {
                 return
             }
-            cell.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
             cell.dayLabel.text = maxim.day
             cell.weekdayLabel.text = maxim.weekDay
             cell.dayButtonImageName = maxim.thumbnailImageAssetPath
             if self?.viewModel.selectedDate.value.item == index {
-                cell.indicatorPointView.isHidden = false
+                cell.indicatorPointViewIsHidden = false
             }
+            cell.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
         }
         .disposed(by: disposeBag)
         
@@ -188,13 +190,15 @@ final class MaximViewController: UIViewController {
         let previousObservable = dateObservable
         let currentObservable = dateObservable.skip(1)
         
-        Observable.zip(previousObservable, currentObservable).bind(onNext: { [weak self] (prev, cur) in
+        Observable.zip(previousObservable, currentObservable)
+            .debug()
+            .bind(onNext: { [weak self] (prev, cur) in
             let previousCell =
             self?.calendarHeaderCollectionView.cellForItem(at: prev) as? MaximCalendarHeaderCollectionViewCell
             let currentCell =
             self?.calendarHeaderCollectionView.cellForItem(at: cur) as? MaximCalendarHeaderCollectionViewCell
-            previousCell?.indicatorPointView.isHidden = true
-            currentCell?.indicatorPointView.isHidden = false
+            previousCell?.indicatorPointViewIsHidden = true
+            currentCell?.indicatorPointViewIsHidden = false
         })
             .disposed(by: disposeBag)
         // TODO: Today관련 bind

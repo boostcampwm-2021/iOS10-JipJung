@@ -31,14 +31,16 @@ final class MaximViewModel: MaximViewModelInput, MaximViewModelOutput {
     let selectedDate = BehaviorRelay<IndexPath>(value: IndexPath(item: 0, section: 0))
     private var disposeBag = DisposeBag()
     private let maximListUseCase: MaximListUseCase
+    private let today = Date()
     
     init(maximListUseCase: MaximListUseCase = MaximListUseCase()) {
         self.maximListUseCase = maximListUseCase
     }
 
     func fetchMaximList() {
-        maximListUseCase.fetchAllMaximList()
-            .map({ $0.map({ MaximPresenterObject(maxim: $0) })})
+        maximListUseCase.fetchMaximList()
+            .map({
+                $0.map({ MaximPresenterObject(maxim: $0) })})
             .subscribe { [weak self] in
                 self?.maximList.accept($0)
             }
