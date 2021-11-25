@@ -15,6 +15,7 @@ protocol HomeViewModelInput {
     func refresh(typeList: [RefreshHomeData])
     func modeSwitchTouched()
     func mediaPlayViewTapped() -> Single<Bool>
+    func mediaPlayViewDownSwiped(media: Media) -> Single<Bool>
     func mediaPlayViewAppear(_ audioFileName: String, autoPlay: Bool) -> Single<Bool>
 }
 
@@ -82,6 +83,13 @@ final class HomeViewModel: HomeViewModelInput, HomeViewModelOutput {
     
     func mediaPlayViewTapped() -> Single<Bool> {
         return audioPlayUseCase.controlAudio()
+    }
+    
+    func mediaPlayViewDownSwiped(media: Media) -> Single<Bool> {
+        if currentModeList.value.count == 1 {
+            return Single.just(false)
+        }
+        return mediaListUseCase.removeMediaFromMode(media: media)
     }
     
     func mediaPlayViewAppear(_ audioFileName: String, autoPlay: Bool = false) -> Single<Bool> {

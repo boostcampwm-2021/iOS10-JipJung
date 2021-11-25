@@ -85,6 +85,8 @@ class RealmDBManager {
         }
     }
     
+    // MARK: Media - All Media
+    
     func requestAllMediaList() -> Single<[Media]> {
         let realm = try? Realm()
         return Single.create { single in
@@ -104,6 +106,8 @@ class RealmDBManager {
             return Disposables.create()
         }
     }
+    
+    // MARK: Media - Mode Media
     
     func requestMediaMyList(mode: MediaMode) -> Single<[Media]> {
         let realm = try? Realm()
@@ -135,6 +139,30 @@ class RealmDBManager {
                 single(.success(result))
             } else {
                 single(.failure(RealmError.searchFailed))
+            }
+            return Disposables.create()
+        }
+    }
+    
+    func deleteMediaInMode(mediaID: String, mode: Int) -> Single<Bool> {
+        let realm = try? Realm()
+        return Single.create { single in
+            guard let realm = realm else {
+                single(.failure(RealmError.initFailed))
+                return Disposables.create()
+            }
+            
+            let deletingMedia = realm.objects(
+                mode == 0 ? BrightMedia.self : DarknessMedia.self
+            ).filter("id = %@", mediaID)
+            
+            do {
+                try realm.write({
+                    realm.delete(deletingMedia)
+                })
+                single(.success(true))
+            } catch {
+                single(.failure(RealmError.deleteFailed))
             }
             return Disposables.create()
         }

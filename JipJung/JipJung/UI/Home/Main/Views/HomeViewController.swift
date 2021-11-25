@@ -555,7 +555,27 @@ extension HomeViewController: CarouselViewDelegate {
     }
     
     func currentViewDownSwiped(media: Media) {
+        guard let mode = MediaMode(rawValue: media.mode) else { return }
         
+        viewModel.mediaPlayViewDownSwiped(media: media)
+            .subscribe { state in
+                if state {
+                    NotificationCenter.default.post(
+                        name: .refreshHome,
+                        object: nil,
+                        userInfo: [
+                            "RefreshType": [
+                                mode == .bright ? RefreshHomeData.brightMode : RefreshHomeData.darkMode
+                            ]
+                        ]
+                    )
+                } else {
+                    print("최소 하나 이상의 음원이 있어야합니다.")
+                }
+            } onFailure: { error in
+                print(error.localizedDescription)
+            }
+            .disposed(by: disposeBag)
     }
     
     func currentViewAppear(audioFileName: String, autoPlay: Bool) {
