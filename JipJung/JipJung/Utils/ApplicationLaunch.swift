@@ -39,11 +39,11 @@ final class ApplicationLaunch: NSObject {
             else {
                 throw ApplicationLaunchError.resourceJsonFileNotFound
             }
-            
+
             let data = try Data(contentsOf: url)
             let jsonDecoder = JSONDecoder()
             let jsonValue = try jsonDecoder.decode([FocusRecord].self, from: data)
-            
+
             try LocalDBMigrator.shared.migrate(dataList: jsonValue)
         } catch {
             print(error)

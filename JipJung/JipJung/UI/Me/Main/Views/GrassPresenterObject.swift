@@ -8,39 +8,36 @@
 import Foundation
 
 struct GrassPresenterObject {
-    internal init(totalFocusMinute: String, averageFocusMinute: String, statisticsPeriod: String, alphaList: [Float]) {
-        self.totalFocusMinute = totalFocusMinute
-        self.averageFocusMinute = averageFocusMinute
+    init(totalFocusHour: String, averageFocusHour: String, statisticsPeriod: String, stageList: [FocusStage]) {
+        self.totalFocusHour = totalFocusHour
+        self.averageFocusHour = averageFocusHour
         self.statisticsPeriod = statisticsPeriod
-        self.alphaList = alphaList
+        self.stageList = stageList
     }
     
-    let totalFocusMinute: String
-    let averageFocusMinute: String
+    let totalFocusHour: String
+    let averageFocusHour: String
     let statisticsPeriod: String
-    let alphaList: [Float]
+    let stageList: [FocusStage]
     
     init(dailyFocusTimes: [DateFocusRecordDTO], nDay: Int) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
-        let minute = 60
-        let totalFocusMinute = dailyFocusTimes.reduce(0) { $0 + $1.focusSecond } / minute
-        let averageFocusMinute = (Float(totalFocusMinute) / Float(nDay) * 100.0).rounded() / 100.0
+        let hourSecond = 3600.0
+        let totalFocusHour = Double((dailyFocusTimes.reduce(0.0) { $0 + Double($1.focusSecond) } / hourSecond * 10000.0)).rounded() / 10000.0
+        let averageFocusHour = (Double(totalFocusHour) / Double(nDay) * 100.0).rounded() / 100.0
         
         let maxFocusTime = dailyFocusTimes.max(by: {$0.focusSecond < $1.focusSecond})?.focusSecond ?? Int.max
         // MARK: 0 ~ 1의 범위를 0.2 ~ 1로 만들기 위한 함수
-        let alphaList = dailyFocusTimes.map { focusTime -> Float in
-            let ratio = Float(focusTime.focusSecond) / Float(maxFocusTime)
-            return 0.8 * log2(ratio + 1) + 0.2
-            }
+        let stageList = dailyFocusTimes.map { FocusStage.makeFocusStage(withSecond: $0.focusSecond)}
         let firstDate = dailyFocusTimes.first?.date ?? Date(timeIntervalSince1970: 0)
         let lastDate = dailyFocusTimes.last?.date ?? Date()
         let statisticsPeriod = [dateFormatter.string(from: firstDate), dateFormatter.string(from: lastDate)]
             .joined(separator: " ~ ")
         self.init(
-            totalFocusMinute: "\(totalFocusMinute)",
-            averageFocusMinute: "\(averageFocusMinute)",
+            totalFocusHour: "\(totalFocusHour)",
+            averageFocusHour: "\(averageFocusHour)",
             statisticsPeriod: statisticsPeriod,
-            alphaList: alphaList)
+            stageList: stageList)
     }
 }
