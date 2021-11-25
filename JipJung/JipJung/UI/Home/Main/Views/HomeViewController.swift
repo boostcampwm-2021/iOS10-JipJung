@@ -107,6 +107,8 @@ class HomeViewController: UIViewController {
         
         configureUI()
         bindUI()
+        
+        viewModel.viewDidLoad()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -123,8 +125,6 @@ class HomeViewController: UIViewController {
                 }
                 .disposed(by: disposeBag)
         }
-        
-        viewModel.viewWillAppear()
     }
     
     override func viewWillDisappear(_ animated: Bool) {

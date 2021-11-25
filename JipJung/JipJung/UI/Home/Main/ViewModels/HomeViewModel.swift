@@ -11,7 +11,7 @@ import RxSwift
 import RxRelay
 
 protocol HomeViewModelInput {
-    func viewWillAppear()
+    func viewDidLoad()
     func refresh(typeList: [RefreshHomeData])
     func modeSwitchTouched()
     func mediaPlayViewTapped() -> Single<Bool>
@@ -52,7 +52,7 @@ final class HomeViewModel: HomeViewModelInput, HomeViewModelOutput {
             .disposed(by: disposeBag)
     }
     
-    func viewWillAppear() {
+    func viewDidLoad() {
         fetchMediaMyList(mode: .bright)
         fetchMediaMyList(mode: .dark)
         fetchPlayHistory()
