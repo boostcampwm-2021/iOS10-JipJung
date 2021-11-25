@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MeDailyStaticsCollectionViewCell: UICollectionViewCell {
+class MeDailyStaticsView: UIView {
     private lazy var dateLabel: UILabel = {
         let dateLabel = UILabel()
         dateLabel.text = "11월 11일 ~ 11월 12일"
@@ -31,23 +31,9 @@ class MeDailyStaticsCollectionViewCell: UICollectionViewCell {
         representativeValuesStackView.distribution = .equalSpacing
         return representativeValuesStackView
     }()
-    private var grassMapView: UIView? = UIView()
     
-    func setGrassMapView(_ grassMapView: UIView) {
-        guard self.grassMapView != grassMapView else {
-            return
-        }
-        self.grassMapView?.removeFromSuperview()
-        self.grassMapView = grassMapView
-        addSubview(grassMapView)
-        grassMapView.snp.makeConstraints {
-            $0.top.equalTo(representativeValuesStackView.snp.bottom).offset(30)
-            $0.leading.equalToSuperview().offset(30)
-            $0.trailing.equalToSuperview().offset(-30)
-            $0.bottom.equalToSuperview().offset(-30)
-        }
-    }
-    
+    var grassMapView = GrassMapView()
+
     // MARK: 평균, 총합 등의 대표값이란 의미에서 RepresentativeValue를 썼습니다.
     private func makeFocusRepresentativeValueStackViewStackView(category: String) -> UIStackView {
         let representativeValueStackView = UIStackView()
@@ -107,7 +93,7 @@ class MeDailyStaticsCollectionViewCell: UICollectionViewCell {
     }
     
     func configureUI() {
-        self.backgroundColor = .tertiarySystemFill
+        self.backgroundColor = .systemGray6
         self.layer.cornerRadius = 10
         
         addSubview(dateLabel)
@@ -121,6 +107,14 @@ class MeDailyStaticsCollectionViewCell: UICollectionViewCell {
             $0.top.equalTo(dateLabel.snp.bottom).offset(30)
             $0.leading.equalToSuperview().offset(30)
             $0.trailing.equalToSuperview().offset(-30)
+        }
+        
+        addSubview(grassMapView)
+        grassMapView.snp.makeConstraints {
+            $0.top.equalTo(representativeValuesStackView.snp.bottom).offset(30)
+            $0.leading.equalToSuperview().offset(30)
+            $0.trailing.equalToSuperview().offset(-30)
+            $0.bottom.equalToSuperview().offset(-30)
         }
     }
 }

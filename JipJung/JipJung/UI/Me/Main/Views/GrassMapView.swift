@@ -34,8 +34,8 @@ class GrassMapView: UIView {
                     size: CGSize(
                         width: MeGrassMapViewSize.cellLength,
                         height: MeGrassMapViewSize.cellLength)))
-                dayView.backgroundColor = .green
-                dayView.alpha = 0.2
+                dayView.backgroundColor = .systemGray3
+                dayView.layer.cornerRadius = 5
                 weekStackView.addArrangedSubview(dayView)
                 weekStackView.distribution = .fillEqually
                 weekStackView.spacing = MeGrassMapViewSize.cellSpacing

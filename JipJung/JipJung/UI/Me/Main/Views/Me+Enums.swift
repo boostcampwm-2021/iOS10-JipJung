@@ -26,3 +26,35 @@ enum MeGrassMap {
         weekCount * 7
     }
 }
+
+enum FocusStage: Int {
+    // 0
+    // 0~2
+    // 2~4
+    // 4~6
+    // 6~8
+    // 8~
+    case zero, one, two, three, four, five
+    
+    static func makeFocusStage(withSecond second: Int) -> FocusStage {
+        
+        return FocusStage(rawValue: Int(ceil(Float(second) / 3600.0))) ?? FocusStage.five
+      }
+    
+    var greenColor: UIColor {
+        switch self {
+        case .zero:
+            return UIColor.systemGray3
+        case .one:
+            return UIColor(rgb: 0x009c1a)
+        case .two:
+            return UIColor(rgb: 0x22b600)
+        case .three:
+            return UIColor(rgb: 0x26cc00)
+        case .four:
+            return UIColor(rgb: 0x7be382)
+        case .five:
+            return UIColor(rgb: 0xd2f2d4)
+        }
+    }
+}

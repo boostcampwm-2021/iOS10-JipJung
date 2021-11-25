@@ -156,7 +156,7 @@
 		DD4D030527425611007AA4DD /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4D030427425610007AA4DD /* UILabel+Extension.swift */; };
 		DD4D03072743BBB9007AA4DD /* MaximCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4D03062743BBB9007AA4DD /* MaximCollectionViewCell.swift */; };
 		DD4D030927449AAC007AA4DD /* MaximPresenterObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4D030827449AAC007AA4DD /* MaximPresenterObject.swift */; };
-		DD6FD1F4274BBA2700568A4E /* MeDailyStaticsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6FD1F3274BBA2700568A4E /* MeDailyStaticsCollectionViewCell.swift */; };
+		DD6FD1F4274BBA2700568A4E /* MeDailyStaticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6FD1F3274BBA2700568A4E /* MeDailyStaticsView.swift */; };
 		DD6FD1F6274BCEB300568A4E /* Me+Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6FD1F5274BCEB300568A4E /* Me+Enums.swift */; };
 		DD6FD1F8274BD08400568A4E /* MeHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6FD1F7274BD08400568A4E /* MeHeaderCollectionReusableView.swift */; };
 		DD7CDCAC274CBA66005ADF35 /* MeMonthYearStaticsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD7CDCAB274CBA66005ADF35 /* MeMonthYearStaticsCollectionViewCell.swift */; };
@@ -384,7 +384,7 @@
 		DD4D030427425610007AA4DD /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
 		DD4D03062743BBB9007AA4DD /* MaximCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaximCollectionViewCell.swift; sourceTree = "<group>"; };
 		DD4D030827449AAC007AA4DD /* MaximPresenterObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaximPresenterObject.swift; sourceTree = "<group>"; };
-		DD6FD1F3274BBA2700568A4E /* MeDailyStaticsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeDailyStaticsCollectionViewCell.swift; sourceTree = "<group>"; };
+		DD6FD1F3274BBA2700568A4E /* MeDailyStaticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeDailyStaticsView.swift; sourceTree = "<group>"; };
 		DD6FD1F5274BCEB300568A4E /* Me+Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Me+Enums.swift"; sourceTree = "<group>"; };
 		DD6FD1F7274BD08400568A4E /* MeHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
 		DD7CDCAB274CBA66005ADF35 /* MeMonthYearStaticsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeMonthYearStaticsCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -687,7 +687,7 @@
 			isa = PBXGroup;
 			children = (
 				DDB5CEA727328EF400E8F9EB /* MeViewController.swift */,
-				DD6FD1F3274BBA2700568A4E /* MeDailyStaticsCollectionViewCell.swift */,
+				DD6FD1F3274BBA2700568A4E /* MeDailyStaticsView.swift */,
 				DD6FD1F5274BCEB300568A4E /* Me+Enums.swift */,
 				DD6FD1F7274BD08400568A4E /* MeHeaderCollectionReusableView.swift */,
 				DD7CDCAB274CBA66005ADF35 /* MeMonthYearStaticsCollectionViewCell.swift */,
@@ -1418,7 +1418,7 @@
 				DDB5CEA227328EC300E8F9EB /* ExploreViewController.swift in Sources */,
 				DD3902D1272FCA10009ECA82 /* AppDelegate.swift in Sources */,
 				DDB5CEAF273372A700E8F9EB /* Media.swift in Sources */,
-				DD6FD1F4274BBA2700568A4E /* MeDailyStaticsCollectionViewCell.swift in Sources */,
+				DD6FD1F4274BBA2700568A4E /* MeDailyStaticsView.swift in Sources */,
 				911D7F7E27428430003B7C3B /* AudioPlayManager.swift in Sources */,
 				B4F36B662733B8770073609C /* SearchViewController.swift in Sources */,
 				B4F36B5127336EE20073609C /* UserDefaultsStorage.swift in Sources */,

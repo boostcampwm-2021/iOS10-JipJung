@@ -8,17 +8,17 @@
 import Foundation
 
 struct GrassPresenterObject {
-    internal init(totalFocusMinute: String, averageFocusMinute: String, statisticsPeriod: String, alphaList: [Float]) {
+    internal init(totalFocusMinute: String, averageFocusMinute: String, statisticsPeriod: String, stageList: [FocusStage]) {
         self.totalFocusMinute = totalFocusMinute
         self.averageFocusMinute = averageFocusMinute
         self.statisticsPeriod = statisticsPeriod
-        self.alphaList = alphaList
+        self.stageList = stageList
     }
     
     let totalFocusMinute: String
     let averageFocusMinute: String
     let statisticsPeriod: String
-    let alphaList: [Float]
+    let stageList: [FocusStage]
     
     init(dailyFocusTimes: [DateFocusRecordDTO], nDay: Int) {
         let dateFormatter = DateFormatter()
@@ -29,10 +29,7 @@ struct GrassPresenterObject {
         
         let maxFocusTime = dailyFocusTimes.max(by: {$0.focusSecond < $1.focusSecond})?.focusSecond ?? Int.max
         // MARK: 0 ~ 1의 범위를 0.2 ~ 1로 만들기 위한 함수
-        let alphaList = dailyFocusTimes.map { focusTime -> Float in
-            let ratio = Float(focusTime.focusSecond) / Float(maxFocusTime)
-            return 0.8 * log2(ratio + 1) + 0.2
-            }
+        let stageList = dailyFocusTimes.map { FocusStage.makeFocusStage(withSecond: $0.focusSecond)}
         let firstDate = dailyFocusTimes.first?.date ?? Date(timeIntervalSince1970: 0)
         let lastDate = dailyFocusTimes.last?.date ?? Date()
         let statisticsPeriod = [dateFormatter.string(from: firstDate), dateFormatter.string(from: lastDate)]
@@ -41,6 +38,6 @@ struct GrassPresenterObject {
             totalFocusMinute: "\(totalFocusMinute)",
             averageFocusMinute: "\(averageFocusMinute)",
             statisticsPeriod: statisticsPeriod,
-            alphaList: alphaList)
+            stageList: stageList)
     }
 }
