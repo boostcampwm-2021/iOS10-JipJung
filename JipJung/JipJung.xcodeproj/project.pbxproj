@@ -194,6 +194,11 @@
 		DD6FD1F8274BD08400568A4E /* MeHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6FD1F7274BD08400568A4E /* MeHeaderCollectionReusableView.swift */; };
 		DD7CDCAC274CBA66005ADF35 /* MeMonthYearStaticsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD7CDCAB274CBA66005ADF35 /* MeMonthYearStaticsCollectionViewCell.swift */; };
 		DD7CDCAE274CBA95005ADF35 /* MeExtraCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD7CDCAD274CBA94005ADF35 /* MeExtraCollectionViewCell.swift */; };
+		DD7CDCB2274CFA43005ADF35 /* GrassMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD7CDCB1274CFA43005ADF35 /* GrassMapView.swift */; };
+		DD7CDCB4274D1E66005ADF35 /* LoadFocusTimeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD7CDCB3274D1E66005ADF35 /* LoadFocusTimeUseCase.swift */; };
+		DD7CDCB9274E074E005ADF35 /* DummyFocusData.json in Resources */ = {isa = PBXBuildFile; fileRef = DD7CDCB8274DFB87005ADF35 /* DummyFocusData.json */; };
+		DD7CDCBC274E1665005ADF35 /* DateFocusRecordDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD7CDCBB274E1665005ADF35 /* DateFocusRecordDTO.swift */; };
+		DD7CDCBE274E380D005ADF35 /* GrassPresenterObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD7CDCBD274E380D005ADF35 /* GrassPresenterObject.swift */; };
 		DD82808C273CAE5F00BB2A60 /* FocusViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD82808B273CAE5F00BB2A60 /* FocusViewControllerFactory.swift */; };
 		DD82808E273CF07800BB2A60 /* CycleAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD82808D273CF07800BB2A60 /* CycleAnimation.swift */; };
 		DD828092273D113200BB2A60 /* NetworkEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD828091273D113200BB2A60 /* NetworkEnums.swift */; };
@@ -461,6 +466,11 @@
 		DD6FD1F7274BD08400568A4E /* MeHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
 		DD7CDCAB274CBA66005ADF35 /* MeMonthYearStaticsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeMonthYearStaticsCollectionViewCell.swift; sourceTree = "<group>"; };
 		DD7CDCAD274CBA94005ADF35 /* MeExtraCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeExtraCollectionViewCell.swift; sourceTree = "<group>"; };
+		DD7CDCB1274CFA43005ADF35 /* GrassMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrassMapView.swift; sourceTree = "<group>"; };
+		DD7CDCB3274D1E66005ADF35 /* LoadFocusTimeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadFocusTimeUseCase.swift; sourceTree = "<group>"; };
+		DD7CDCB8274DFB87005ADF35 /* DummyFocusData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = DummyFocusData.json; sourceTree = "<group>"; };
+		DD7CDCBB274E1665005ADF35 /* DateFocusRecordDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFocusRecordDTO.swift; sourceTree = "<group>"; };
+		DD7CDCBD274E380D005ADF35 /* GrassPresenterObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrassPresenterObject.swift; sourceTree = "<group>"; };
 		DD82808B273CAE5F00BB2A60 /* FocusViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusViewControllerFactory.swift; sourceTree = "<group>"; };
 		DD82808D273CF07800BB2A60 /* CycleAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CycleAnimation.swift; sourceTree = "<group>"; };
 		DD828091273D113200BB2A60 /* NetworkEnums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkEnums.swift; sourceTree = "<group>"; };
@@ -685,6 +695,7 @@
 			children = (
 				91184BB3273D1E01007A29C8 /* sea.mp4 */,
 				91D02278273CDF610073EA2A /* DummyData.json */,
+				DD7CDCB8274DFB87005ADF35 /* DummyFocusData.json */,
 			);
 			path = Dummy;
 			sourceTree = "<group>";
@@ -803,6 +814,8 @@
 				DD6FD1F7274BD08400568A4E /* MeHeaderCollectionReusableView.swift */,
 				DD7CDCAB274CBA66005ADF35 /* MeMonthYearStaticsCollectionViewCell.swift */,
 				DD7CDCAD274CBA94005ADF35 /* MeExtraCollectionViewCell.swift */,
+				DD7CDCB1274CFA43005ADF35 /* GrassMapView.swift */,
+				DD7CDCBD274E380D005ADF35 /* GrassPresenterObject.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -865,6 +878,7 @@
 				911D7F7F27428473003B7C3B /* Audio+Enums.swift */,
 				B4EF13BC2744B9880086D8CD /* FetchMediaURLUseCase.swift */,
 				B481FC7C274521B800D1F2EA /* FavoriteMediaUseCase.swift */,
+				DD7CDCB3274D1E66005ADF35 /* LoadFocusTimeUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -1069,6 +1083,7 @@
 				91D02267273CB5FD0073EA2A /* BrightMedia.swift */,
 				91D02269273CB6050073EA2A /* DarknessMedia.swift */,
 				91D0227C273CE6F50073EA2A /* DBStructureForJSON.swift */,
+				DD7CDCBB274E1665005ADF35 /* DateFocusRecordDTO.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -1398,6 +1413,7 @@
 				DD6E0B5627466CC60086D374 /* U004.jpg in Resources */,
 				DF05FD3A274D7FD1006C8689 /* breath.WAV in Resources */,
 				DD6E0B3027466CC60086D374 /* U000.WAV in Resources */,
+				DD7CDCB9274E074E005ADF35 /* DummyFocusData.json in Resources */,
 				DD6E0B5727466CC60086D374 /* M000.jpg in Resources */,
 				DD6E0B3E27466CC60086D374 /* U003.jpg in Resources */,
 				DD6E0B3927466CC60086D374 /* N004.jpg in Resources */,
@@ -1519,8 +1535,10 @@
 				DDB5CEB32733752D00E8F9EB /* FavoriteMedia.swift in Sources */,
 				DF05FD18274CA86F006C8689 /* CountdownView.swift in Sources */,
 				9131513F27400C26001E7125 /* UIScreen+Extension.swift in Sources */,
+				DD7CDCBC274E1665005ADF35 /* DateFocusRecordDTO.swift in Sources */,
 				DD84736527453FD700DF4FCB /* MaximCalendarHeaderCollectionViewCell.swift in Sources */,
 				DDB92B9D2737BD5E00EE26F0 /* UIView+Extension.swift in Sources */,
+				DD7CDCB4274D1E66005ADF35 /* LoadFocusTimeUseCase.swift in Sources */,
 				DF1722B72741036C00F06140 /* BundleManager.swift in Sources */,
 				DDB5CEB32733752D00E8F9EB /* FavoriteMedia.swift in Sources */,
 				DDB92BB0273A263100EE26F0 /* MusicCollectionViewCell.swift in Sources */,
@@ -1567,6 +1585,7 @@
 				B40D1FAF273B5F2C00881A49 /* PomodoroFocusViewModel.swift in Sources */,
 				917BDD5F274638750049E944 /* CGPoint+Extension.swift in Sources */,
 				B490FDBE274B771F008A4454 /* ApplicationMode.swift in Sources */,
+				DD7CDCB2274CFA43005ADF35 /* GrassMapView.swift in Sources */,
 				91CE6F6F2739024800176AF2 /* Home+Enums.swift in Sources */,
 				B490FE38274CBEB3008A4454 /* ClubSKScene.swift in Sources */,
 				91CE6F6F2739024800176AF2 /* Home+Enums.swift in Sources */,
@@ -1575,6 +1594,7 @@
 				B4EF13B52742933F0086D8CD /* SearchHistoryUseCase.swift in Sources */,
 				DD208D36273BDD390089A2AB /* CALayer+Extension.swift in Sources */,
 				917BDD592745FAEC0049E944 /* CarouselView.swift in Sources */,
+				DD7CDCBE274E380D005ADF35 /* GrassPresenterObject.swift in Sources */,
 				DD828095273D1F8E00BB2A60 /* FocusViewController.swift in Sources */,
 				DD6FD1F6274BCEB300568A4E /* Me+Enums.swift in Sources */,
 				B42226CC2741134100F8CA3D /* UICollectionView+Extension.swift in Sources */,

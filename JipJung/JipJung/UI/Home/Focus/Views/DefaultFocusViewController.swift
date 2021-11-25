@@ -266,9 +266,9 @@ final class DefaultFocusViewController: FocusViewController {
         exitButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
+                self.viewModel?.saveFocusRecord()
                 self.viewModel?.changeTimerState(to: .ready)
                 self.viewModel?.resetClockTimer()
-                self.viewModel?.saveFocusRecord()
             }
             .disposed(by: disposeBag)
         
@@ -278,6 +278,7 @@ final class DefaultFocusViewController: FocusViewController {
                       let focusTime = self.viewModel?.focusTime
                 else { return }
                 if $0 == focusTime {
+                    self.viewModel?.saveFocusRecord()
                     self.viewModel?.resetClockTimer()
                     self.changeStateToReady()
                     return
