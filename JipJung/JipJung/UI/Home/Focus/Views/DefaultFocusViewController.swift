@@ -278,6 +278,7 @@ final class DefaultFocusViewController: FocusViewController {
                       let focusTime = self.viewModel?.focusTime
                 else { return }
                 if $0 == focusTime {
+                    self.viewModel?.saveFocusRecord()
                     self.viewModel?.resetClockTimer()
                     self.changeStateToReady()
                     return

@@ -71,9 +71,7 @@ class GrassMapView: UIView {
     }
     
     func setMonthLabel(index: Int, month: String) {
-        guard index < monthLabelLists.count,
-              index >= 0
-        else {
+        guard (0..<monthLabelLists.count).contains(index) else {
             return
         }
         monthLabelLists[index].text = month
@@ -82,10 +80,8 @@ class GrassMapView: UIView {
 
 extension GrassMapView {
     subscript(_ index: (week: Int, day: Int)) -> UIView? {
-        guard index.day < 7,
-              index.day >= 0,
-              index.week >= 0,
-              index.week < MeGrassMap.weekCount
+        guard (0..<7).contains(index.day),
+              (0..<MeGrassMap.weekCount).contains(index.week)
         else {
             return nil
         }

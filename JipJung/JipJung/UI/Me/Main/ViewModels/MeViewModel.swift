@@ -29,19 +29,16 @@ final class MeViewModel: MeViewModelInput, MeViewModelOutput {
     
     func fetchFocusTimeLists() {
         let nDay = MeGrassMap.dayCount - 7 + Date().weekday
-        let historySingleObservable = loadFocusTimeUseCase.loadHistory(from: Date(), nDays: nDay)
+        let historyObservable = loadFocusTimeUseCase.loadHistory(from: Date(), nDays: nDay)
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        
-        historySingleObservable.asSingle().subscribe { [weak self] in
+        historyObservable.bind { [weak self] in
             let grassPresenterObject = GrassPresenterObject(dailyFocusTimes: $0, nDay: nDay)
             self?.grassPresenterObject.accept(grassPresenterObject)
-        } onFailure: {
-            print($0)
         }
         .disposed(by: disposeBag)
         
-        historySingleObservable.flatMap({
+        // MARK: Month의 변경날짜의 index를 알기 위함
+        historyObservable.flatMap({
             return Observable.from($0.enumerated())
         })
             .filter({

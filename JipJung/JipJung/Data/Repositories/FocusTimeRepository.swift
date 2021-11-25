@@ -22,6 +22,6 @@ final class FocusTimeRepository: FocusTimeRepositoryProtocol {
     }
     
     func load(date: Date) -> Single<[FocusRecord]> {
-        return self.realmDBManager.search(ofType: FocusRecord.self, with: NSPredicate(format: "(year = \(date.year)) AND (month = \(date.month)) AND (day = \(date.day))"))
+        return realmDBManager.search(ofType: FocusRecord.self, with: NSPredicate(format: "(year = \(date.year)) AND (month = \(date.month)) AND (day = \(date.day))"))
     }
 }
