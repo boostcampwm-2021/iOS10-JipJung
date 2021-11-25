@@ -69,10 +69,7 @@ class HomeViewController: UIViewController {
         return collectionView
     }()
     private lazy var touchTransferView = TouchTransferView()
-    private lazy var clubView: SKView = {
-        let clubView = SKView()
-        return clubView
-    }()
+    private let clubView: SKView = SKView()
     private lazy var clubScene: SKScene = {
         let clubScene = ClubSKScene()
         clubScene.size = CGSize(width: view.frame.width,
