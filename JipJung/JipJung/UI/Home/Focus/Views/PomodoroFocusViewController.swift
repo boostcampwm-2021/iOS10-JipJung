@@ -298,18 +298,28 @@ final class PomodoroFocusViewController: FocusViewController {
     
     private func alertNotification() {
         guard let focusTime = self.viewModel?.focusTime,
-              let clockTime = self.viewModel?.clockTime.value
+              let clockTime = self.viewModel?.clockTime.value,
+              let mode = self.viewModel?.mode.value
         else {
             return
         }
         let sadEmojis = ["🥶", "😣", "😞", "😟", "😕"]
         let happyEmojis = ["☺️", "😘", "😍", "🥳", "🤩"]
-        let minuteString = clockTime / 60 == 0 ? "" : "\(clockTime / 60)분 "
-        let secondString = clockTime % 60 == 0 ? "" : "\(clockTime % 60)초 "
-        let message = focusTime - clockTime > 0
-        ? "완료시간 전에 종료되었어요." + (sadEmojis.randomElement() ?? "")
-        : minuteString + secondString + "집중하셨어요!" + (happyEmojis.randomElement() ?? "")
-        PushNotificationMananger.shared.presentFocusStopNotification(body: message)
+        let relaxEmojis = ["👍", "👏", "🤜", "🙌", "🙏"]
+        switch mode {
+        case .work:
+            let minuteString = clockTime / 60 == 0 ? "" : "\(clockTime / 60)분 "
+            let secondString = clockTime % 60 == 0 ? "" : "\(clockTime % 60)초 "
+            let message = focusTime - clockTime > 0
+            ? "완료시간 전에 종료되었어요." + (sadEmojis.randomElement() ?? "")
+            : minuteString + secondString + "집중하셨어요!" + (happyEmojis.randomElement() ?? "")
+            PushNotificationMananger.shared.presentFocusStopNotification(title: .focusFinish,
+                                                                         body: message)
+        case .relax:
+            let message = "휴식시간이 끝났어요! 다시 집중해볼까요?" + (relaxEmojis.randomElement() ?? "")
+            PushNotificationMananger.shared.presentFocusStopNotification(title: .relaxFinish,
+                                                                         body: message)
+        }
         FeedbackGenerator.shared.impactOccurred()
     }
     

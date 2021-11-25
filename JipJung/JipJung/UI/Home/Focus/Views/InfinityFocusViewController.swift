@@ -265,7 +265,8 @@ final class InfinityFocusViewController: FocusViewController {
         let minuteString = clockTime / 60 == 0 ? "" : "\(clockTime / 60)분 "
         let secondString = clockTime % 60 == 0 ? "" : "\(clockTime % 60)초 "
         let message = minuteString + secondString + "집중하셨어요!" + (happyEmojis.randomElement() ?? "")
-        PushNotificationMananger.shared.presentFocusStopNotification(body: message)
+        PushNotificationMananger.shared.presentFocusStopNotification(title: .focusFinish,
+                                                                     body: message)
         FeedbackGenerator.shared.impactOccurred()
     }
     

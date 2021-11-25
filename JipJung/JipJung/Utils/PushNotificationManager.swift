@@ -9,16 +9,21 @@ import Foundation
 import UserNotifications
 
 class PushNotificationMananger {
+    enum NotificationTitleType: String {
+        case focusFinish = "집중 모드 종료"
+        case relaxFinish = "휴식 종료"
+    }
+    
     static let shared = PushNotificationMananger()
     
     private init() {}
     
-    func presentFocusStopNotification(body: String) {
+    func presentFocusStopNotification(title: NotificationTitleType, body: String) {
         UNUserNotificationCenter.current().getNotificationSettings { status in
             if status.authorizationStatus == UNAuthorizationStatus.authorized {
                 let content = UNMutableNotificationContent()
                 content.badge = 0
-                content.title = "집중 모드 종료"
+                content.title = title.rawValue
                 content.body = body
                 content.sound = .default
                 
