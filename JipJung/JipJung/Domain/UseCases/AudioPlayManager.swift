@@ -33,43 +33,46 @@ class AudioPlayManager {
             return Single.just(false)
         }
         
-        if audioFileName == audioPlayer?.url?.lastPathComponent {
-            guard let audioPlayer = audioPlayer else {
-                return Single.just(false)
-            }
-            
-            let state = audioPlayer.isPlaying || autoPlay
-            
-            if state {
-                return Single.just(audioPlayer.play())
-            }
-            return Single.just(false)
-        }
-        
         return Single<Bool>.create { [weak self] single in
             guard let disposeBag = self?.disposeBag else {
                 single(.failure(AudioError.initFailed))
                 return Disposables.create()
             }
             
-            self?.mediaResourceRepository.getMediaURL(fileName: audioFileName, type: .audio)
-                .subscribe { url in
-                    self?.audioPlayer = try? AVAudioPlayer(contentsOf: url)
-                    self?.audioPlayer?.numberOfLoops = -1
-                    self?.audioPlayer?.prepareToPlay()
-                    if autoPlay {
-                        self?.controlAudio(playState: .manual(true), restart: false)
-                            .subscribe(onSuccess: { state in
-                                single(.success(state))
-                            }, onFailure: { error in
-                                single(.failure(error))
-                            })
-                            .disposed(by: disposeBag)
-                    }
-                } onFailure: { error in
-                    single(.failure(error))
+            if let audioPlayer = self?.audioPlayer,
+               audioFileName == self?.audioPlayer?.url?.lastPathComponent {
+                
+                let state = audioPlayer.isPlaying || autoPlay
+                
+                if state {
+                    self?.controlAudio(playState: .manual(true), restart: restart)
+                        .subscribe(onSuccess: { state in
+                            single(.success(state))
+                        }, onFailure: { error in
+                            single(.failure(error))
+                        })
+                        .disposed(by: disposeBag)
                 }
-                .disposed(by: disposeBag)
+            } else {
+                self?.mediaResourceRepository.getMediaURL(fileName: audioFileName, type: .audio)
+                    .subscribe { url in
+                        self?.audioPlayer = try? AVAudioPlayer(contentsOf: url)
+                        self?.audioPlayer?.numberOfLoops = -1
+                        self?.audioPlayer?.prepareToPlay()
+                        if autoPlay {
+                            self?.controlAudio(playState: .manual(true), restart: restart)
+                                .subscribe(onSuccess: { state in
+                                    single(.success(state))
+                                }, onFailure: { error in
+                                    single(.failure(error))
+                                })
+                                .disposed(by: disposeBag)
+                        }
+                    } onFailure: { error in
+                        single(.failure(error))
+                    }
+                    .disposed(by: disposeBag)
+            }
             return Disposables.create()
         }
     }
@@ -80,12 +83,12 @@ class AudioPlayManager {
         else {
             return Single.error(AudioError.initFailed)
         }
-        
         switch playState {
         case .manual(let state):
             if state == audioPlayer.isPlaying {
-                if state && restart {
-                    audioPlayer.play(atTime: 0)
+                if restart {
+                    audioPlayer.currentTime = 0
+                    audioPlayer.play()
                 }
                 return Single.just(state)
             }
@@ -95,7 +98,10 @@ class AudioPlayManager {
                 audioPlayer.pause()
                 return Single.just(false)
             } else {
-                restart ? audioPlayer.play(atTime: 0) : audioPlayer.play()
+                if restart {
+                    audioPlayer.currentTime = 0
+                }
+                audioPlayer.play()
                 return playHistoryRepository.addPlayHistory(mediaID: mediaID)
             }
         }

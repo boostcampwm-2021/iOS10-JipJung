@@ -52,14 +52,13 @@ final class BreathFocusViewModel: BreathFocusViewModelInput, BreathFocusViewMode
     }
     
     func startClockTimer() {
-        audioPlayUseCase.readyToPlay("breath.WAV", autoPlay: true)
-            .subscribe {
-            [weak self] in
+        audioPlayUseCase.readyToPlay("breath.WAV", autoPlay: true, restart: true)
+            .subscribe { [weak self] in
             switch $0 {
-            case .failure(let error):
-                print(#function, #line, error)
             case .success(let flag):
                 print(#function, #line, flag)
+            case .failure(let error):
+                print(#function, #line, error)
             }
         }.disposed(by: disposeBag)
         
