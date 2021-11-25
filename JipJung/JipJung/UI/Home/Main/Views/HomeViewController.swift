@@ -554,6 +554,10 @@ extension HomeViewController: CarouselViewDelegate {
             .disposed(by: disposeBag)
     }
     
+    func currentViewDownSwiped(media: Media) {
+        
+    }
+    
     func currentViewAppear(audioFileName: String, autoPlay: Bool) {
         return viewModel.mediaPlayViewAppear(audioFileName, autoPlay: autoPlay)
             .subscribe { [weak self] state in
