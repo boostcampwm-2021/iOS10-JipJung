@@ -13,7 +13,7 @@ class FeedbacakGenerator {
     private var heavyGenerator: UIImpactFeedbackGenerator?
     
     private init() {
-        heavyGenerator = UIImpactFeedbackGenerator(style: .heavy)
+        heavyGenerator = UIImpactFeedbackGenerator(style: .light)
     }
     
     func impactOccurred() {
