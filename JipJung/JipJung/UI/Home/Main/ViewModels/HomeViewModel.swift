@@ -30,6 +30,7 @@ final class HomeViewModel: HomeViewModelInput, HomeViewModelOutput {
     private let maximListUseCase = MaximListUseCase()
     private let audioPlayUseCase = AudioPlayUseCase()
     private let playHistoryUseCase = PlayHistoryUseCase()
+    private let favoriteMediaUseCase = FavoriteMediaUseCase()
     
     private let disposeBag = DisposeBag()
     private let brightMode = BehaviorRelay<[Media]>(value: [])
@@ -113,7 +114,7 @@ final class HomeViewModel: HomeViewModelInput, HomeViewModelOutput {
     }
     
     private func fetchFavoriteMediaList() {
-        mediaListUseCase.fetchFavoriteMediaList()
+        favoriteMediaUseCase.fetchAll()
             .subscribe { [weak self] in
                 self?.favoriteSoundList.accept($0)
             } onFailure: { error in

@@ -19,8 +19,4 @@ final class MediaListUseCase {
     func fetchMediaMyList(mode: MediaMode) -> Single<[Media]> {
         return mediaListRepository.fetchMediaMyList(mode: mode)
     }
-    
-    func fetchFavoriteMediaList() -> Single<[Media]> {
-        return mediaListRepository.fetchFavoriteMediaList()
-    }
 }

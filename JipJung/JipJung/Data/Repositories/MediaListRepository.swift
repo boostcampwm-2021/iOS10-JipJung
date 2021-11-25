@@ -19,8 +19,4 @@ final class MediaListRepository {
     func fetchMediaMyList(mode: MediaMode) -> Single<[Media]> {
         return localDBManager.requestMediaMyList(mode: mode)
     }
-    
-    func fetchFavoriteMediaList() -> Single<[Media]> {
-        return localDBManager.requestFavoriteMediaList()
-    }
 }

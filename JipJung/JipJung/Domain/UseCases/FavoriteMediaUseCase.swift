@@ -15,6 +15,10 @@ final class FavoriteMediaUseCase {
         return myFavoriteRepository.read(id: id)
     }
     
+    func fetchAll() -> Single<[Media]> {
+        return myFavoriteRepository.fetchAll()
+    }
+    
     func save(id: String, date: Date) -> Single<Bool> {
         let favoriteMedia = FavoriteMedia(id: id, addDate: date)
         return myFavoriteRepository.save(favoriteMedia)
