@@ -197,10 +197,10 @@ final class BreathFocusViewController: FocusViewController {
             case .running:
                 self.startBreath()
             case .stop:
+                self.alertNotification()
                 self.stopBreath()
                 self.viewModel?.saveFocusRecord()
                 self.viewModel?.resetClockTimer()
-                FeedbacakGenerator.shared.impactOccurred()
             }
         }).disposed(by: disposeBag)
 
@@ -240,6 +240,18 @@ final class BreathFocusViewController: FocusViewController {
             }
             
         }).disposed(by: disposeBag)
+    }
+    
+    private func alertNotification() {
+        guard let clockTime = self.viewModel?.clockTime.value else {
+            return
+        }
+        let happyEmojis = ["☺️", "😘", "😍", "🥳", "🤩"]
+        let minuteString = clockTime / 60 == 0 ? "" : "\(clockTime / 60)분 "
+        let secondString = clockTime % 60 == 0 ? "" : "\(clockTime % 60)초 "
+        let message = minuteString + secondString + "집중하셨어요!" + (happyEmojis.randomElement() ?? "")
+        PushNotificationMananger.shared.presentFocusStopNotification(body: message)
+        FeedbacakGenerator.shared.impactOccurred()
     }
     
     private func startBreath() {

@@ -250,15 +250,14 @@ final class PomodoroFocusViewController: FocusViewController {
         exitButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
+                if self.viewModel?.mode.value == .work {
+                    self.alertNotification()
+                }
                 self.viewModel?.changeTimerState(to: .ready)
                 self.viewModel?.resetClockTimer()
                 self.viewModel?.saveFocusRecord()
                 self.viewModel?.resetTotalFocusTime()
                 self.viewModel?.changeToWorkMode()
-// MARK: Todo - Jogiking
-//                if viewModel?.mode.value == .work {
-//
-//                }
             }
             .disposed(by: disposeBag)
         
@@ -268,6 +267,7 @@ final class PomodoroFocusViewController: FocusViewController {
                       let focusTime = self.viewModel?.focusTime
                 else { return }
                 if $0 == focusTime {
+                    self.alertNotification()
                     self.viewModel?.changeMode()
                     self.viewModel?.resetClockTimer()
                     self.changeStateToReady()
@@ -294,6 +294,23 @@ final class PomodoroFocusViewController: FocusViewController {
                 }
             })
             .disposed(by: disposeBag)
+    }
+    
+    private func alertNotification() {
+        guard let focusTime = self.viewModel?.focusTime,
+              let clockTime = self.viewModel?.clockTime.value
+        else {
+            return
+        }
+        let sadEmojis = ["🥶", "😣", "😞", "😟", "😕"]
+        let happyEmojis = ["☺️", "😘", "😍", "🥳", "🤩"]
+        let minuteString = clockTime / 60 == 0 ? "" : "\(clockTime / 60)분 "
+        let secondString = clockTime % 60 == 0 ? "" : "\(clockTime % 60)초 "
+        let message = focusTime - clockTime > 0
+        ? "완료시간 전에 종료되었어요." + (sadEmojis.randomElement() ?? "")
+        : minuteString + secondString + "집중하셨어요!" + (happyEmojis.randomElement() ?? "")
+        PushNotificationMananger.shared.presentFocusStopNotification(body: message)
+        FeedbacakGenerator.shared.impactOccurred()
     }
     
     private func changeStateToReady() {
