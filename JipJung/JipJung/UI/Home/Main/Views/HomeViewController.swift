@@ -130,6 +130,7 @@ class HomeViewController: UIViewController {
         configureBottomView()
         configureCollectionViews()
         configureTouchTransferView()
+        configureClubView()
     }
     
     private func configureTopBottomViewGap() {
@@ -336,21 +337,15 @@ class HomeViewController: UIViewController {
     }
     
     private func configureClubView() {
+        clubView.isHidden = true
+        
         carouselView.addSubview(clubView)
         clubView.snp.makeConstraints {
             $0.center.equalToSuperview()
             $0.size.equalToSuperview()
         }
+        
         clubView.presentScene(clubScene)
-    }
-    
-    private func configureDarkMode() {
-        configureClubView()
-    }
-    
-    private func dismissDarkMode() {
-        clubScene.removeFromParent()
-        clubView.removeFromSuperview()
     }
     
     private func bindUI() {
@@ -432,9 +427,16 @@ class HomeViewController: UIViewController {
                 guard let self = self else { return }
                 switch $0 {
                 case .bright:
-                    self.dismissDarkMode()
+                    self.clubView.isHidden = true
                 case .dark:
-                    self.configureDarkMode()
+                    self.clubView.isHidden = false
+                    UIView.animate(withDuration: 0.25,
+                                   delay: 0,
+                                   options: [.autoreverse, .repeat],
+                                   animations: {
+                        self.clubScene.view?.layer.opacity = 0.8
+                    },
+                                   completion: nil)
                 }
             }
             .disposed(by: disposeBag)
