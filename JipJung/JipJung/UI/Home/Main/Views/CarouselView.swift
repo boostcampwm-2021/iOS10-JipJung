@@ -148,9 +148,11 @@ class CarouselView: UIView {
         currentItem: Media,
         nextItem: Media
     ) {
-        previousView.replaceMedia(media: previousItem)
+        if contents.value.count != 1 {
+            previousView.replaceMedia(media: previousItem)
+            nextView.replaceMedia(media: nextItem)
+        }
         currentView.replaceMedia(media: currentItem)
-        nextView.replaceMedia(media: nextItem)
     }
     
     private func move(distanceX: CGFloat) {
