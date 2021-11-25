@@ -325,13 +325,16 @@ class HomeViewController: UIViewController {
         let recentPlayHistoryHeader = HomeListHeaderView()
         recentPlayHistoryHeader.titleLabel.text = "재생 기록"
         recentPlayHistoryHeader.allButton.rx.tap
-            .bind { _ in
+            .bind { [weak self] _ in
+                if self?.viewModel.recentPlayHistory.value.count == 0 {
+                    return
+                }
                 let playHistoryNavigationView = UINavigationController(
                     rootViewController: PlayHistoryViewController()
                 )
                 playHistoryNavigationView.modalPresentationStyle = .pageSheet
                 playHistoryNavigationView.modalTransitionStyle = .coverVertical
-                self.present(playHistoryNavigationView, animated: true)
+                self?.present(playHistoryNavigationView, animated: true)
             }
             .disposed(by: disposeBag)
         bottomView.addSubview(recentPlayHistoryHeader)
@@ -356,13 +359,16 @@ class HomeViewController: UIViewController {
         let favoriteHeader = HomeListHeaderView()
         favoriteHeader.titleLabel.text = "좋아요 누른 음원"
         favoriteHeader.allButton.rx.tap
-            .bind { _ in
+            .bind { [weak self] _ in
+                if self?.viewModel.favoriteSoundList.value.count == 0 {
+                    return
+                }
                 let favoriteNavigationView = UINavigationController(
                     rootViewController: FavoriteViewController()
                 )
                 favoriteNavigationView.modalPresentationStyle = .pageSheet
                 favoriteNavigationView.modalTransitionStyle = .coverVertical
-                self.present(favoriteNavigationView, animated: true)
+                self?.present(favoriteNavigationView, animated: true)
             }
             .disposed(by: disposeBag)
         bottomView.addSubview(favoriteHeader)
