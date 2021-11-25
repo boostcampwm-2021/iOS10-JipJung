@@ -37,6 +37,14 @@ final class PomodoroFocusViewController: FocusViewController {
         return timeLabel
     }()
     
+    private lazy var relaxLabel: UILabel = {
+        let relaxLabel = UILabel()
+        relaxLabel.text = "Relax"
+        relaxLabel.font = UIFont.boldSystemFont(ofSize: 15)
+        relaxLabel.textColor = .white
+        return relaxLabel
+    }()
+    
     private lazy var circleShapeLayer: CAShapeLayer = {
         let circleShapeLayer = createCircleShapeLayer(
             strokeColor: UIColor.systemGray,
@@ -183,6 +191,12 @@ final class PomodoroFocusViewController: FocusViewController {
             $0.width.equalTo(FocusViewButtonSize.exitButton.width)
             $0.height.equalTo(FocusViewButtonSize.exitButton.height)
         }
+        
+        view.addSubview(relaxLabel)
+        relaxLabel.snp.makeConstraints {
+            $0.top.equalTo(view.snp.centerY).multipliedBy(1.15)
+            $0.centerX.equalToSuperview()
+        }
     }
     
     private func configureProgressBar() {
@@ -239,6 +253,11 @@ final class PomodoroFocusViewController: FocusViewController {
                 self.viewModel?.changeTimerState(to: .ready)
                 self.viewModel?.resetClockTimer()
                 self.viewModel?.saveFocusRecord()
+                self.viewModel?.resetTotalFocusTime()
+// MARK: Todo - Jogiking
+//                if viewModel?.mode.value == .work {
+//
+//                }
             }
             .disposed(by: disposeBag)
         
@@ -248,12 +267,30 @@ final class PomodoroFocusViewController: FocusViewController {
                       let focusTime = self.viewModel?.focusTime
                 else { return }
                 if $0 == focusTime {
+                    self.viewModel?.changeMode()
                     self.viewModel?.resetClockTimer()
                     self.changeStateToReady()
                     return
                 }
                 self.timeLabel.text = (focusTime - $0).digitalClockFormatted
                 self.startPulseAnimation(second: $0)
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel?.mode
+            .bind(onNext: { [weak self] in
+                guard let self = self else { return }
+                switch $0 {
+                case .work:
+                    self.relaxLabel.isHidden = true
+                    self.view.backgroundColor = .clear
+                    self.startButton.setTitle("Start", for: .normal)
+                case .relax:
+                    self.relaxLabel.isHidden = false
+                    self.view.backgroundColor = UIColor(rgb: 0xA1D9BC,
+                                                        alpha: 0.6)
+                    self.startButton.setTitle("Relax", for: .normal)
+                }
             })
             .disposed(by: disposeBag)
     }
