@@ -10,6 +10,7 @@ import UIKit
 import RxCocoa
 import RxSwift
 import SnapKit
+import SpriteKit
 
 class HomeViewController: UIViewController {
     private lazy var mainScrollView: UIScrollView = {
@@ -68,6 +69,14 @@ class HomeViewController: UIViewController {
         return collectionView
     }()
     private lazy var touchTransferView = TouchTransferView()
+    private let clubView: SKView = SKView()
+    private lazy var clubScene: SKScene = {
+        let clubScene = ClubSKScene()
+        clubScene.size = CGSize(width: view.frame.width,
+                                height: view.frame.height)
+        clubScene.scaleMode = .fill
+        return clubScene
+    }()
     
     private let viewModel: HomeViewModel = HomeViewModel()
     private let disposeBag = DisposeBag()
@@ -326,6 +335,24 @@ class HomeViewController: UIViewController {
         }
     }
     
+    private func configureClubView() {
+        carouselView.addSubview(clubView)
+        clubView.snp.makeConstraints {
+            $0.center.equalToSuperview()
+            $0.size.equalToSuperview()
+        }
+        clubView.presentScene(clubScene)
+    }
+    
+    private func configureDarkMode() {
+        configureClubView()
+    }
+    
+    private func dismissDarkMode() {
+        clubScene.removeFromParent()
+        clubView.removeFromSuperview()
+    }
+    
     private func bindUI() {
         bindUIWithView()
         bindUIWithViewModel()
@@ -399,6 +426,18 @@ class HomeViewController: UIViewController {
                     alpha: 1.0
                 )
             }.disposed(by: disposeBag)
+        
+        ApplicationMode.shared.mode
+            .bind { [weak self] in
+                guard let self = self else { return }
+                switch $0 {
+                case .bright:
+                    self.dismissDarkMode()
+                case .dark:
+                    self.configureDarkMode()
+                }
+            }
+            .disposed(by: disposeBag)
     }
     
     private func mediaPlayButtonTouched() -> Single<Bool> {

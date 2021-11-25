@@ -66,6 +66,45 @@
       "audioFileName": "N004.WAV"
     },
     {
+      "id": "N005",
+      "name": "작은 폭포",
+      "explanation": "바위위로 흐르는 폭포",
+      "maxim": "곧은 소리는 소리이다.\n곧은 소리는 곧은 소리를 부른다.",
+      "speaker": "김수영",
+      "color": "553830",
+      "mode": 0,
+      "tag": "All/Nature/Relax/Focus",
+      "thumbnailImageFileName": "N005.jpg",
+      "videoFileName": "N005.mp4",
+      "audioFileName": "N005.WAV"
+    },
+    {
+      "id": "N006",
+      "name": "아침 햇살",
+      "explanation": "이른 아침 새소리",
+      "maxim": "하루를 산다는 건 그물을 싣고\n바다를 향해 떠나는 싱싱한 희망이야.",
+      "speaker": "조희선",
+      "color": "FF7F00",
+      "mode": 0,
+      "tag": "All/Nature/Relax/Focus",
+      "thumbnailImageFileName": "N006.jpg",
+      "videoFileName": "N006.mp4",
+      "audioFileName": "N006.WAV"
+    },
+    {
+      "id": "N007",
+      "name": "계곡",
+      "explanation": "단풍이 떠있는 가을의 계곡",
+      "maxim": "보고 싶은 사람 때문에/n먼 산에 단풍 물드는 사랑",
+      "speaker": "안도현",
+      "color": "964B00",
+      "mode": 0,
+      "tag": "All/Nature/Relax",
+      "thumbnailImageFileName": "N007.jpg",
+      "videoFileName": "N007.mp4",
+      "audioFileName": "N007.WAV"
+    },
+    {
       "id": "U000",
       "name": "가로등",
       "explanation": "비를 비추는 가로등",
@@ -129,6 +168,84 @@
       "thumbnailImageFileName": "U004.jpg",
       "videoFileName": "U004.mp4",
       "audioFileName": "U004.WAV"
+    },
+    {
+      "id": "U005",
+      "name": "사물놀이",
+      "explanation": "신명나는 사물놀이",
+      "maxim": "한 잔 먹세그려 또 한잔 먹세그려./n꽃 꺾어 술잔 세며 한없이 먹세그려.",
+      "speaker": "송강 정철",
+      "color": "D070FB",
+      "mode": 0,
+      "tag": "All/Urban/Relax",
+      "thumbnailImageFileName": "U005.jpg",
+      "videoFileName": "U005.mp4",
+      "audioFileName": "U005.WAV"
+    },
+    {
+      "id": "D000",
+      "name": "TechHouse Mix",
+      "explanation": "",
+      "maxim": "",
+      "speaker": "",
+      "color": "000000",
+      "mode": 1,
+      "tag": "All/Urban/Relax/Club",
+      "thumbnailImageFileName": "D000.jpg",
+      "videoFileName": "D000.mp4",
+      "audioFileName": "D000.mp3"
+    },
+    {
+      "id": "D001",
+      "name": "JazzHouse Mix",
+      "explanation": "",
+      "maxim": "",
+      "speaker": "",
+      "color": "000000",
+      "mode": 1,
+      "tag": "All/Urban/Cafe/Lounge/Club",
+      "thumbnailImageFileName": "D001.jpg",
+      "videoFileName": "D001.mp4",
+      "audioFileName": "D001.mp3"
+    },
+    {
+      "id": "D002",
+      "name": "JackinHouse Mix",
+      "explanation": "",
+      "maxim": "",
+      "speaker": "",
+      "color": "000000",
+      "mode": 1,
+      "tag": "All/Urban/Cafe/Lounge/Club",
+      "thumbnailImageFileName": "D002.jpg",
+      "videoFileName": "D002.mp4",
+      "audioFileName": "D002.mp3"
+    },
+    {
+      "id": "D003",
+      "name": "House Mix",
+      "explanation": "",
+      "maxim": "",
+      "speaker": "",
+      "color": "000000",
+      "mode": 1,
+      "tag": "All/Urban/Relax/Lounge/Club",
+      "thumbnailImageFileName": "D003.jpg",
+      "videoFileName": "D003.mp4",
+      "audioFileName": "D003.mp3"
+    },
+    {
+      "id": "D004",
+      "name": "TechHouse Mix",
+      "explanation": "",
+      "maxim": "",
+      "speaker": "",
+      "color": "000000",
+      "mode": 1,
+      "tag": "All/Urban/Relax/Club",
+      "thumbnailImageFileName": "D004.jpg",
+      "videoFileName": "D004.mp4",
+      "audioFileName": "D004.mp3"
     }
   ],
   "PlayHistory": [
@@ -181,9 +298,22 @@
     },
     {
       "id": "N002"
-    }
-  ],
-  "DarknessMedia": [
+    },
+    {
+      "id": "N003"
+    },
+    {
+      "id": "N004"
+    },
+    {
+      "id": "N005"
+    },
+    {
+      "id": "N006"
+    },
+    {
+      "id": "N007"
+    },
     {
       "id": "U000"
     },
@@ -192,6 +322,32 @@
     },
     {
       "id": "U002"
+    },
+    {
+      "id": "U003"
+    },
+    {
+      "id": "U004"
+    },
+    {
+      "id": "U005"
+    }
+  ],
+  "DarknessMedia": [
+    {
+      "id": "D000"
+    },
+    {
+      "id": "D001"
+    },
+    {
+      "id": "D002"
+    },
+    {
+      "id": "D003"
+    },
+    {
+      "id": "D004"
     }
   ]
   ,
