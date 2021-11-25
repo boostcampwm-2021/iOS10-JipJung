@@ -12,8 +12,10 @@ import RxRelay
 
 protocol HomeViewModelInput {
     func viewWillAppear()
+    func refresh(typeList: [RefreshHomeData])
     func modeSwitchTouched()
     func mediaPlayViewTapped() -> Single<Bool>
+    func mediaPlayViewAppear(_ audioFileName: String, autoPlay: Bool) -> Single<Bool>
 }
 
 protocol HomeViewModelOutput {
@@ -49,39 +51,28 @@ final class HomeViewModel: HomeViewModelInput, HomeViewModelOutput {
     }
     
     func viewWillAppear() {
-        // TODO: UserDefaults에서 현재 mode 정보 가져오기
+        fetchMediaMyList(mode: .bright)
+        fetchMediaMyList(mode: .dark)
+        fetchPlayHistory()
+        fetchFavoriteMediaList()
+    }
+    
+    func refresh(typeList: [RefreshHomeData]) {
+        if typeList.contains(.brightMode) {
+            fetchMediaMyList(mode: .bright)
+        }
         
-        mediaListUseCase.fetchMediaMyList(mode: .bright)
-            .subscribe { [weak self] in
-                self?.brightMode.accept($0)
-            } onFailure: { error in
-                print(error.localizedDescription)
-            }
-            .disposed(by: disposeBag)
+        if typeList.contains(.darkMode) {
+            fetchMediaMyList(mode: .dark)
+        }
         
-        mediaListUseCase.fetchMediaMyList(mode: .dark)
-            .subscribe { [weak self] in
-                self?.darknessMode.accept($0)
-            } onFailure: { error in
-                print(error.localizedDescription)
-            }
-            .disposed(by: disposeBag)
+        if typeList.contains(.playHistory) {
+            fetchPlayHistory()
+        }
         
-        playHistoryUseCase.fetchPlayHistory()
-            .subscribe { [weak self] in
-                self?.recentPlayHistory.accept($0.elements(in: 0..<6))
-            } onFailure: { error in
-                print(error.localizedDescription)
-            }
-            .disposed(by: disposeBag)
-        
-        mediaListUseCase.fetchFavoriteMediaList()
-            .subscribe { [weak self] in
-                self?.favoriteSoundList.accept($0)
-            } onFailure: { error in
-                print(error.localizedDescription)
-            }
-            .disposed(by: disposeBag)
+        if typeList.contains(.favorite) {
+            fetchFavoriteMediaList()
+        }
     }
     
     func modeSwitchTouched() {
@@ -94,5 +85,40 @@ final class HomeViewModel: HomeViewModelInput, HomeViewModelOutput {
     
     func mediaPlayViewAppear(_ audioFileName: String, autoPlay: Bool = false) -> Single<Bool> {
         return audioPlayUseCase.readyToPlay(audioFileName, autoPlay: autoPlay)
+    }
+    
+    private func fetchMediaMyList(mode: MediaMode) {
+        mediaListUseCase.fetchMediaMyList(mode: mode)
+            .subscribe { [weak self] in
+                switch mode {
+                case .bright:
+                    self?.brightMode.accept($0)
+                case .dark:
+                    self?.darknessMode.accept($0)
+                }
+            } onFailure: { error in
+                print(error.localizedDescription)
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    private func fetchPlayHistory() {
+        playHistoryUseCase.fetchPlayHistory()
+            .subscribe { [weak self] in
+                self?.recentPlayHistory.accept($0.elements(in: 0..<6))
+            } onFailure: { error in
+                print(error.localizedDescription)
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    private func fetchFavoriteMediaList() {
+        mediaListUseCase.fetchFavoriteMediaList()
+            .subscribe { [weak self] in
+                self?.favoriteSoundList.accept($0)
+            } onFailure: { error in
+                print(error.localizedDescription)
+            }
+            .disposed(by: disposeBag)
     }
 }

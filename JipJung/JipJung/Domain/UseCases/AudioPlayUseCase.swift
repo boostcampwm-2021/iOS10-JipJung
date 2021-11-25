@@ -16,10 +16,24 @@ final class AudioPlayUseCase {
     
     func readyToPlay(_ audioFileName: String, autoPlay: Bool, restart: Bool = false) -> Single<Bool> {
         return audioPlayManager.readyToPlay(audioFileName, autoPlay: autoPlay, restart: restart)
+            .do(onSuccess: { _ in
+                NotificationCenter.default.post(
+                    name: .refreshHome,
+                    object: nil,
+                    userInfo: ["RefreshType": [RefreshHomeData.playHistory]]
+                )
+            })
     }
     
     func controlAudio(playState: PlayState = .automatics, restart: Bool = false) -> Single<Bool> {
         return audioPlayManager.controlAudio(playState: playState, restart: restart)
+            .do(onSuccess: { _ in
+                NotificationCenter.default.post(
+                    name: .refreshHome,
+                    object: nil,
+                    userInfo: ["RefreshType": [RefreshHomeData.playHistory]]
+                )
+            })
     }
     
     func isPlaying() -> Bool {

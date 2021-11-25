@@ -14,6 +14,7 @@
 		912E2F41274E1A7B00316884 /* PlayHistoryUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 912E2F40274E1A7B00316884 /* PlayHistoryUseCase.swift */; };
 		912F3331274F4FF2000E08FB /* HomeListHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 912F3330274F4FF2000E08FB /* HomeListHeaderView.swift */; };
 		912F3333274F5489000E08FB /* MediaPlayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 912F3332274F5489000E08FB /* MediaPlayViewModel.swift */; };
+		912F3335274F6B70000E08FB /* Notification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 912F3334274F6B70000E08FB /* Notification+Extension.swift */; };
 		9131513F27400C26001E7125 /* UIScreen+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9131513E27400C26001E7125 /* UIScreen+Extension.swift */; };
 		9131514127400FBB001E7125 /* UIApplication+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9131514027400FBB001E7125 /* UIApplication+Extension.swift */; };
 		9131514327401200001E7125 /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9131514227401200001E7125 /* Array+Extension.swift */; };
@@ -235,6 +236,7 @@
 		912E2F40274E1A7B00316884 /* PlayHistoryUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayHistoryUseCase.swift; sourceTree = "<group>"; };
 		912F3330274F4FF2000E08FB /* HomeListHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeListHeaderView.swift; sourceTree = "<group>"; };
 		912F3332274F5489000E08FB /* MediaPlayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPlayViewModel.swift; sourceTree = "<group>"; };
+		912F3334274F6B70000E08FB /* Notification+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extension.swift"; sourceTree = "<group>"; };
 		9131513E27400C26001E7125 /* UIScreen+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+Extension.swift"; sourceTree = "<group>"; };
 		9131514027400FBB001E7125 /* UIApplication+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Extension.swift"; sourceTree = "<group>"; };
 		9131514227401200001E7125 /* Array+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extension.swift"; sourceTree = "<group>"; };
@@ -618,6 +620,7 @@
 				B4E4210E274673E300C39545 /* UICollectionViewCell+Extension.swift */,
 				B4E421102746753B00C39545 /* UITableViewCell+Extension.swift */,
 				917BDD5E274638750049E944 /* CGPoint+Extension.swift */,
+				912F3334274F6B70000E08FB /* Notification+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1469,6 +1472,7 @@
 				B4153941273B93B0004EF80F /* SaveFocusTimeUseCase.swift in Sources */,
 				B4015CD82739270C006BD14A /* SoundTagCollectionViewCell.swift in Sources */,
 				912F3333274F5489000E08FB /* MediaPlayViewModel.swift in Sources */,
+				912F3335274F6B70000E08FB /* Notification+Extension.swift in Sources */,
 				9198DE952733863500EBAEC8 /* Common.swift in Sources */,
 				917BDD5B2745FBDA0049E944 /* MediaPlayView.swift in Sources */,
 				DF05FD14274ABCDF006C8689 /* WiggleAnimation.swift in Sources */,

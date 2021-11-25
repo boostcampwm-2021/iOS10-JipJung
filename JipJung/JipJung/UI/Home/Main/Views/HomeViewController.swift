@@ -122,6 +122,7 @@ class HomeViewController: UIViewController {
     private func configureUI() {
         view.backgroundColor = .lightGray
         
+        configureObserver()
         configureTopBottomViewGap()
         configureMainScrollView()
         configureCarouselView()
@@ -131,6 +132,21 @@ class HomeViewController: UIViewController {
         configureCollectionViews()
         configureTouchTransferView()
         configureClubView()
+    }
+    
+    private func configureObserver() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(refresh(_:)),
+            name: .refreshHome,
+            object: nil
+        )
+    }
+    
+    @objc private func refresh(_ sender: Notification) {
+        guard let typeList = sender.userInfo?["RefreshType"] as? [RefreshHomeData] else { return }
+
+        viewModel.refresh(typeList: typeList)
     }
     
     private func configureTopBottomViewGap() {

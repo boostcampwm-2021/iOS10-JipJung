@@ -88,3 +88,7 @@ enum FileExtension {
         case mp4, avi
     }
 }
+
+enum RefreshHomeData {
+    case brightMode, darkMode, playHistory, favorite
+}
