@@ -254,6 +254,7 @@ final class PomodoroFocusViewController: FocusViewController {
                 self.viewModel?.resetClockTimer()
                 self.viewModel?.saveFocusRecord()
                 self.viewModel?.resetTotalFocusTime()
+                self.viewModel?.changeToWorkMode()
 // MARK: Todo - Jogiking
 //                if viewModel?.mode.value == .work {
 //

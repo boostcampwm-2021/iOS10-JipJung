@@ -98,6 +98,10 @@ final class PomodoroFocusViewModel: PomodoroFocusViewModelInput, PomodoroFocusVi
         }
     }
     
+    func changeToWorkMode() {
+        mode.accept(.work)
+    }
+    
     func resetTotalFocusTime() {
         totalFocusTime = 0
     }
