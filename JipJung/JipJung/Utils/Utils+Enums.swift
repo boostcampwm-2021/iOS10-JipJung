@@ -11,7 +11,7 @@ enum ApplicationLaunchError: Error {
     case resourceJsonFileNotFound
 }
 
-enum ApplicationModeType {
+enum ApplicationModeType: Int {
     case bright
     case dark
 }

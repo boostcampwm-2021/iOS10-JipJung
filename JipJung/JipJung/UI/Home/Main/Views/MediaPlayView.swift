@@ -20,15 +20,15 @@ final class MediaPlayView: UIView {
         button.isUserInteractionEnabled = false
         return button
     }()
+    private lazy var thumbnailImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.backgroundColor = .clear
+        imageView.layer.masksToBounds = true
+        return imageView
+    }()
+    private var videoPlayer = AVQueuePlayer()
     private var playerLooper: AVPlayerLooper?
-    private var videoPlayer: AVQueuePlayer? {
-        didSet {
-            let playerLayer = AVPlayerLayer(player: videoPlayer)
-            playerLayer.videoGravity = .resizeAspectFill
-            playerLayer.frame = UIScreen.main.bounds
-            layer.sublayers = [playerLayer, playButton.layer]
-        }
-    }
     
     private let viewModel = MediaPlayViewModel()
     private let disposeBag = DisposeBag()
@@ -55,7 +55,12 @@ final class MediaPlayView: UIView {
     }
     
     private func configureUI() {
-        addSubview(playButton)
+        addSubview(thumbnailImageView)
+        thumbnailImageView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        
+        thumbnailImageView.addSubview(playButton)
         playButton.snp.makeConstraints {
             $0.top.equalToSuperview().offset(UIScreen.deviceScreenSize.height * 0.4)
             $0.centerX.equalToSuperview()
@@ -79,45 +84,57 @@ final class MediaPlayView: UIView {
     }
     
     func playVideo() {
-        guard let videoPlayer = videoPlayer else { return }
+        playButton.isHidden = true
+        guard videoPlayer.currentItem != nil else { return }
         videoPlayer.currentItem?.seek(to: .zero, completionHandler: nil)
         videoPlayer.play()
-        playButton.isHidden = true
     }
     
     func pauseVideo() {
-        guard let videoPlayer = videoPlayer else { return }
-        videoPlayer.pause()
         playButton.isHidden = false
+        guard videoPlayer.currentItem != nil else { return }
+        videoPlayer.pause()
     }
     
     private func setMedia(media: Media) {
-        viewModel.didSetMedia(media: media)
-            .subscribe { [weak self] url in
-                guard let self = self else { return }
-                
-                let playerItem = AVPlayerItem(url: url)
-                self.videoPlayer = AVQueuePlayer(playerItem: playerItem)
-                
-                if let videoPlayer = self.videoPlayer {
-                    self.playerLooper = AVPlayerLooper(player: videoPlayer, templateItem: playerItem)
+        guard media.mode == ApplicationMode.shared.mode.value.rawValue else { return }
+        
+        switch ApplicationMode.shared.mode.value {
+        case .bright:
+            viewModel.didSetMedia(fileName: media.videoFileName, type: .video)
+                .subscribe { [weak self] url in
+                    guard let self = self else { return }
+                    
+                    let playerItem = AVPlayerItem(url: url)
+                    self.videoPlayer.replaceCurrentItem(with: playerItem)
+                    self.playerLooper = AVPlayerLooper(player: self.videoPlayer, templateItem: playerItem)
+                    
+                    let avPlayerLayer = AVPlayerLayer(player: self.videoPlayer)
+                    avPlayerLayer.videoGravity = .resizeAspectFill
+                    avPlayerLayer.frame = UIScreen.main.bounds
+                    
+                    self.thumbnailImageView.image = nil
+                    self.layer.sublayers = [avPlayerLayer, self.thumbnailImageView.layer]
+                } onFailure: { error in
+                    print(error.localizedDescription)
                 }
-                
-                let playerLayer = AVPlayerLayer(player: self.videoPlayer)
-                playerLayer.videoGravity = .resizeAspectFill
-                playerLayer.frame = UIScreen.main.bounds
-                self.layer.sublayers = [playerLayer, self.playButton.layer]
-            } onFailure: { error in
-                print(error.localizedDescription)
-            }
-            .disposed(by: disposeBag)
-    }
-}
-
-class MediaPlayViewModel {
-    private let fetchMediaURLUseCase = FetchMediaURLUseCase()
-    
-    func didSetMedia(media: Media) -> Single<URL> {
-        return fetchMediaURLUseCase.getMediaURL(fileName: media.videoFileName, type: .video)
+                .disposed(by: disposeBag)
+        case .dark:
+            viewModel.didSetMedia(fileName: media.thumbnailImageFileName, type: .image)
+                .subscribe { [weak self] url in
+                    guard let self = self else { return }
+                    
+                    self.videoPlayer.replaceCurrentItem(with: nil)
+                    self.layer.sublayers = [self.thumbnailImageView.layer]
+                    if let imageData = try? Data(contentsOf: url) {
+                        self.thumbnailImageView.image = UIImage(data: imageData)
+                    }
+                    self.layer.sublayers = [self.thumbnailImageView.layer]
+                } onFailure: { error in
+                    print(error.localizedDescription)
+                }
+                .disposed(by: disposeBag)
+        }
+        
     }
 }

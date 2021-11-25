@@ -61,7 +61,7 @@ final class ExploreViewController: UIViewController {
     private var viewModel: ExploreViewModel?
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-       return .lightContent
+        return ApplicationMode.shared.mode.value == .bright ? .darkContent : .lightContent
     }
 
     // MARK: - Lifecycle Methods

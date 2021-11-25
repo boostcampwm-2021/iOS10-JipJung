@@ -20,7 +20,7 @@ final class MediaListRepository {
         return localDBManager.requestMediaMyList(mode: mode)
     }
     
-    func fetchFavoriteMediaList() -> Single<[Media]> {
-        return localDBManager.requestFavoriteMediaList()
+    func removeMediaFromMode(media: Media) -> Single<Bool> {
+        return localDBManager.deleteMediaInMode(mediaID: media.id, mode: media.mode)
     }
 }

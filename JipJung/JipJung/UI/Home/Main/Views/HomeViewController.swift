@@ -38,7 +38,7 @@ class HomeViewController: UIViewController {
         maximButton.layer.cornerRadius = 16
         return maximButton
     }()
-    private lazy var recentPlayHistoryCollectionView: UICollectionView = {
+    private lazy var playHistoryCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.sectionInset = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16)
@@ -52,6 +52,13 @@ class HomeViewController: UIViewController {
             MusicCollectionViewCell.self,
             forCellWithReuseIdentifier: MusicCollectionViewCell.identifier)
         return collectionView
+    }()
+    private lazy var playHistoryEmptyLabel: UILabel = {
+        let label = UILabel()
+        label.text = "현재 재생 기록이 없습니다."
+        label.textColor = .white
+        label.isHidden = true
+        return label
     }()
     private lazy var favoriteCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -67,6 +74,13 @@ class HomeViewController: UIViewController {
             MusicCollectionViewCell.self,
             forCellWithReuseIdentifier: MusicCollectionViewCell.identifier)
         return collectionView
+    }()
+    private lazy var favoriteEmptyLabel: UILabel = {
+        let label = UILabel()
+        label.text = "좋아요를 누른 음원이 없습니다."
+        label.textColor = .white
+        label.isHidden = true
+        return label
     }()
     private lazy var touchTransferView = TouchTransferView()
     private let clubView: SKView = SKView()
@@ -93,6 +107,8 @@ class HomeViewController: UIViewController {
         
         configureUI()
         bindUI()
+        
+        viewModel.viewDidLoad()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -109,8 +125,6 @@ class HomeViewController: UIViewController {
                 }
                 .disposed(by: disposeBag)
         }
-        
-        viewModel.viewWillAppear()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -122,6 +136,7 @@ class HomeViewController: UIViewController {
     private func configureUI() {
         view.backgroundColor = .lightGray
         
+        configureObserver()
         configureTopBottomViewGap()
         configureMainScrollView()
         configureCarouselView()
@@ -131,6 +146,21 @@ class HomeViewController: UIViewController {
         configureCollectionViews()
         configureTouchTransferView()
         configureClubView()
+    }
+    
+    private func configureObserver() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(refresh(_:)),
+            name: .refreshHome,
+            object: nil
+        )
+    }
+    
+    @objc private func refresh(_ sender: Notification) {
+        guard let typeList = sender.userInfo?["RefreshType"] as? [RefreshHomeData] else { return }
+
+        viewModel.refresh(typeList: typeList)
     }
     
     private func configureTopBottomViewGap() {
@@ -225,8 +255,8 @@ class HomeViewController: UIViewController {
         
         modeSwitch.rx.tap
             .bind { [weak self] in
-                self?.viewModel.modeSwitchTouched()
                 ApplicationMode.shared.convert()
+                self?.viewModel.modeSwitchTouched()
             }
             .disposed(by: disposeBag)
         
@@ -292,29 +322,60 @@ class HomeViewController: UIViewController {
     }
     
     private func configureCollectionViews() {
-        let recentPlayHistoryHeader = UIView()
-        recentPlayHistoryHeader.backgroundColor = .gray
+        let recentPlayHistoryHeader = HomeListHeaderView()
+        recentPlayHistoryHeader.titleLabel.text = "재생 기록"
+        recentPlayHistoryHeader.allButton.rx.tap
+            .bind { [weak self] _ in
+                if self?.viewModel.recentPlayHistory.value.count == 0 {
+                    return
+                }
+                let playHistoryNavigationView = UINavigationController(
+                    rootViewController: PlayHistoryViewController()
+                )
+                playHistoryNavigationView.modalPresentationStyle = .pageSheet
+                playHistoryNavigationView.modalTransitionStyle = .coverVertical
+                self?.present(playHistoryNavigationView, animated: true)
+            }
+            .disposed(by: disposeBag)
         bottomView.addSubview(recentPlayHistoryHeader)
         recentPlayHistoryHeader.snp.makeConstraints {
             $0.top.equalTo(maximButton.snp.bottom).offset(16)
-            $0.leading.trailing.equalToSuperview().inset(16)
-            $0.height.equalTo(60)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(40)
         }
         
-        bottomView.addSubview(recentPlayHistoryCollectionView)
-        recentPlayHistoryCollectionView.snp.makeConstraints {
+        bottomView.addSubview(playHistoryCollectionView)
+        playHistoryCollectionView.snp.makeConstraints {
             $0.top.equalTo(recentPlayHistoryHeader.snp.bottom)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(220)
         }
         
-        let favoriteHeader = UIView()
-        favoriteHeader.backgroundColor = .gray
+        bottomView.addSubview(playHistoryEmptyLabel)
+        playHistoryEmptyLabel.snp.makeConstraints {
+            $0.center.equalTo(playHistoryCollectionView)
+        }
+        
+        let favoriteHeader = HomeListHeaderView()
+        favoriteHeader.titleLabel.text = "좋아요 누른 음원"
+        favoriteHeader.allButton.rx.tap
+            .bind { [weak self] _ in
+                if self?.viewModel.favoriteSoundList.value.count == 0 {
+                    return
+                }
+                let favoriteNavigationView = UINavigationController(
+                    rootViewController: FavoriteViewController()
+                )
+                favoriteNavigationView.modalPresentationStyle = .pageSheet
+                favoriteNavigationView.modalTransitionStyle = .coverVertical
+                self?.present(favoriteNavigationView, animated: true)
+            }
+            .disposed(by: disposeBag)
         bottomView.addSubview(favoriteHeader)
         favoriteHeader.snp.makeConstraints {
-            $0.top.equalTo(recentPlayHistoryCollectionView.snp.bottom).offset(8)
-            $0.leading.trailing.equalToSuperview().inset(16)
-            $0.height.equalTo(60)
+            $0.top.equalTo(playHistoryCollectionView.snp.bottom).offset(8)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(40)
         }
         
         bottomView.addSubview(favoriteCollectionView)
@@ -324,6 +385,12 @@ class HomeViewController: UIViewController {
             $0.height.equalTo(220)
             $0.bottom.equalToSuperview().offset(-50)
         }
+        
+        bottomView.addSubview(favoriteEmptyLabel)
+        favoriteEmptyLabel.snp.makeConstraints {
+            $0.center.equalTo(favoriteCollectionView)
+        }
+        
     }
     
     private func configureTouchTransferView() {
@@ -363,7 +430,7 @@ class HomeViewController: UIViewController {
             .disposed(by: disposeBag)
         
         Observable.of(
-            recentPlayHistoryCollectionView.rx.modelSelected(Media.self),
+            playHistoryCollectionView.rx.modelSelected(Media.self),
             favoriteCollectionView.rx.modelSelected(Media.self)
         )
             .merge()
@@ -388,10 +455,18 @@ class HomeViewController: UIViewController {
             }
             .disposed(by: disposeBag)
         
-        viewModel.recentPlayHistory
+        let playHistoryObservable = viewModel.recentPlayHistory
             .distinctUntilChanged()
+        
+        playHistoryObservable
+            .map { $0.isEmpty }
+            .bind { [weak self] state in
+                self?.playHistoryEmptyLabel.isHidden = !state
+            }.disposed(by: disposeBag)
+
+        playHistoryObservable
             .bind(
-                to: recentPlayHistoryCollectionView.rx.items(
+                to: playHistoryCollectionView.rx.items(
                     cellIdentifier: MusicCollectionViewCell.identifier
                 )
             ) { (item, element, cell) in
@@ -405,7 +480,16 @@ class HomeViewController: UIViewController {
                 )
             }.disposed(by: disposeBag)
         
-        viewModel.favoriteSoundList
+        let favoriteObservable = viewModel.favoriteSoundList
+            .distinctUntilChanged()
+        
+        favoriteObservable
+            .map { $0.isEmpty }
+            .bind { [weak self] state in
+                self?.favoriteEmptyLabel.isHidden = !state
+            }.disposed(by: disposeBag)
+
+        favoriteObservable
             .distinctUntilChanged()
             .bind(
                 to: favoriteCollectionView.rx.items(
@@ -430,11 +514,11 @@ class HomeViewController: UIViewController {
                     self.clubView.isHidden = true
                 case .dark:
                     self.clubView.isHidden = false
-                    UIView.animate(withDuration: 0.25,
+                    UIView.animate(withDuration: 0.35,
                                    delay: 0,
                                    options: [.autoreverse, .repeat],
                                    animations: {
-                        self.clubScene.view?.layer.opacity = 0.8
+                        self.clubScene.view?.layer.opacity = 0.25
                     },
                                    completion: nil)
                 }
@@ -521,6 +605,30 @@ extension HomeViewController: CarouselViewDelegate {
                     self?.carouselView.playVideoInCurrentView()
                 } else {
                     self?.carouselView.pauseVideoInCurrentView()
+                }
+            } onFailure: { error in
+                print(error.localizedDescription)
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    func currentViewDownSwiped(media: Media) {
+        guard let mode = MediaMode(rawValue: media.mode) else { return }
+        
+        viewModel.mediaPlayViewDownSwiped(media: media)
+            .subscribe { state in
+                if state {
+                    NotificationCenter.default.post(
+                        name: .refreshHome,
+                        object: nil,
+                        userInfo: [
+                            "RefreshType": [
+                                mode == .bright ? RefreshHomeData.brightMode : RefreshHomeData.darkMode
+                            ]
+                        ]
+                    )
+                } else {
+                    print("최소 하나 이상의 음원이 있어야합니다.")
                 }
             } onFailure: { error in
                 print(error.localizedDescription)

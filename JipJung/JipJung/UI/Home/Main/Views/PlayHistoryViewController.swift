@@ -1,5 +1,5 @@
 //
-//  FavoriteViewController.swift
+//  PlayHistoryViewController.swift
 //  JipJung
 //
 //  Created by 오현식 on 2021/11/08.
@@ -10,8 +10,8 @@ import UIKit
 import RxCocoa
 import RxSwift
 
-final class FavoriteViewController: UIViewController {
-    private lazy var favoriteCollectionView: UICollectionView = {
+final class PlayHistoryViewController: UIViewController {
+    private lazy var playHistoryCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.itemSize = CGSize(width: (UIScreen.deviceScreenSize.width-32)/2-6, height: 220)
@@ -28,7 +28,7 @@ final class FavoriteViewController: UIViewController {
         return collectionView
     }()
     
-    private let viewModel = FavoriteViewModel()
+    private let viewModel = PlayHistoryViewModel()
     private let disposeBag = DisposeBag()
     
     // MARK: - Lifecycle Methods
@@ -46,12 +46,12 @@ final class FavoriteViewController: UIViewController {
     
     private func configureUI() {
         view.backgroundColor = .white
-        navigationItem.title = "좋아요 누른 음원"
+        navigationItem.title = "재생 기록"
         navigationItem.largeTitleDisplayMode = .always
         navigationController?.navigationBar.prefersLargeTitles = true
         
-        view.addSubview(favoriteCollectionView)
-        favoriteCollectionView.snp.makeConstraints {
+        view.addSubview(playHistoryCollectionView)
+        playHistoryCollectionView.snp.makeConstraints {
             $0.top.equalTo(view.snp.topMargin)
             $0.leading.trailing.bottom.equalToSuperview()
         }
@@ -63,7 +63,7 @@ final class FavoriteViewController: UIViewController {
     }
     
     private func bindUIwithView() {
-        favoriteCollectionView.rx.modelSelected(Media.self)
+        playHistoryCollectionView.rx.modelSelected(Media.self)
             .subscribe(onNext: { [weak self] media in
                 let musicPlayerView = MusicPlayerViewController(
                     viewModel: MusicPlayerViewModel(
@@ -76,9 +76,9 @@ final class FavoriteViewController: UIViewController {
     }
     
     private func bindUIWithViewModel() {
-        viewModel.favoriteSoundList
+        viewModel.playHistory
             .bind(
-                to: favoriteCollectionView.rx.items(
+                to: playHistoryCollectionView.rx.items(
                     cellIdentifier: MusicCollectionViewCell.identifier
                 )
             ) { (item, element, cell) in

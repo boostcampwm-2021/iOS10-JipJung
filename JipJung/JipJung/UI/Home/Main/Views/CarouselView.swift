@@ -13,6 +13,7 @@ import SnapKit
 
 protocol CarouselViewDelegate: AnyObject {
     func currentViewTapped()
+    func currentViewDownSwiped(media: Media)
     func currentViewAppear(audioFileName: String, autoPlay: Bool)
 }
 
@@ -40,6 +41,7 @@ class CarouselView: UIView {
     private let currentIndex = BehaviorRelay<Int>(value: 0)
     
     private var startPoint: CGPoint = .zero
+    private var startDate: Date = .init()
     
     weak var delegate: CarouselViewDelegate?
     
@@ -148,9 +150,11 @@ class CarouselView: UIView {
         currentItem: Media,
         nextItem: Media
     ) {
-        previousView.replaceMedia(media: previousItem)
+        if contents.value.count != 1 {
+            previousView.replaceMedia(media: previousItem)
+            nextView.replaceMedia(media: nextItem)
+        }
         currentView.replaceMedia(media: currentItem)
-        nextView.replaceMedia(media: nextItem)
     }
     
     private func move(distanceX: CGFloat) {
@@ -290,13 +294,19 @@ class CarouselView: UIView {
     }
     
     private func mediaPlayViewTapped() {
+        guard let delegate = delegate else { return }
+
+        delegate.currentViewTapped()
+    }
+    
+    private func mediaPlayViewDownSwiped() {
         guard let delegate = delegate,
               let media = currentView.media.value
         else {
             return
         }
 
-        delegate.currentViewTapped()
+        delegate.currentViewDownSwiped(media: media)
     }
     
     private func mediaPlayViewAppear(autoPlay: Bool) {
@@ -318,6 +328,7 @@ extension CarouselView {
         guard let touch = touches.first else { return }
         
         startPoint = touch.location(in: self)
+        startDate = Date()
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -327,6 +338,7 @@ extension CarouselView {
         
         let movingPoint = touch.location(in: self)
         let distance = movingPoint - startPoint
+        
         move(distanceX: distance.x)
     }
     
@@ -342,11 +354,14 @@ extension CarouselView {
             applyPaging(with: .none)
             mediaPlayViewTapped()
             return
-        }
-        
-        let distanceX = distance.x / frame.width
-        if let direction = ScrollDirection.init(rawValue: round(distanceX * 1.3)) {
-            applyPaging(with: direction)
+        } else if abs(distance.x) < 30 && abs(distance.y) > 100 {
+            applyPaging(with: .none)
+            mediaPlayViewDownSwiped()
+        } else {
+            let distanceX = distance.x / frame.width
+            if let direction = ScrollDirection.init(rawValue: round(distanceX * 1.3)) {
+                applyPaging(with: direction)
+            }
         }
     }
 }
