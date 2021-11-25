@@ -7,16 +7,16 @@
 
 import UIKit
 
-class FeedbacakGenerator {
-    static let shared = FeedbacakGenerator()
+class FeedbackGenerator {
+    static let shared = FeedbackGenerator()
     
-    private var heavyGenerator: UIImpactFeedbackGenerator?
+    private var lightGenerator: UIImpactFeedbackGenerator?
     
     private init() {
-        heavyGenerator = UIImpactFeedbackGenerator(style: .light)
+        lightGenerator = UIImpactFeedbackGenerator(style: .light)
     }
     
     func impactOccurred() {
-        heavyGenerator?.impactOccurred()
+        lightGenerator?.impactOccurred()
     }
 }

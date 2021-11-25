@@ -310,7 +310,7 @@ final class PomodoroFocusViewController: FocusViewController {
         ? "완료시간 전에 종료되었어요." + (sadEmojis.randomElement() ?? "")
         : minuteString + secondString + "집중하셨어요!" + (happyEmojis.randomElement() ?? "")
         PushNotificationMananger.shared.presentFocusStopNotification(body: message)
-        FeedbacakGenerator.shared.impactOccurred()
+        FeedbackGenerator.shared.impactOccurred()
     }
     
     private func changeStateToReady() {
