@@ -86,7 +86,7 @@ final class PomodoroFocusViewModel: PomodoroFocusViewModelInput, PomodoroFocusVi
             } onFailure: { [weak self] _ in
                 self?.isFocusRecordSaved.accept(false)
             }
-            .disposed(by: disposeBag)
+            .disposed(by: disposeBag) // TODO: disposeBag 2개 쓰는 것 같은데 하나만 써도 되지 않을까요?
     }
     
     func changeMode() {

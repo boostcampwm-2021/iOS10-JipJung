@@ -11,10 +11,11 @@ import Foundation
 import Firebase
 import RealmSwift
 
-final class ApplicationLaunch {
+final class ApplicationLaunch: NSObject {
     func start() {
         configureFirebase()
         configureAudioSession()
+        configureLocalNotification()
         
         if isFirstLaunch() {
             do {
@@ -95,6 +96,30 @@ final class ApplicationLaunch {
             try AVAudioSession.sharedInstance().setActive(true)
         } catch {
             print(error)
+        }
+    }
+    
+    func configureLocalNotification() {
+        let notificationCenter = UNUserNotificationCenter.current()
+        notificationCenter.requestAuthorization(options: [.alert,
+                                                          .sound]) {
+            (didAllow, error) in
+            print(#function, #line, didAllow, error)
+        }
+        UNUserNotificationCenter.current().delegate = self
+    }
+}
+
+extension ApplicationLaunch: UNUserNotificationCenterDelegate {
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        completionHandler()
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        if #available(iOS 14.0, *) {
+            completionHandler(.banner)
+        } else {
+            completionHandler(.alert)
         }
     }
 }

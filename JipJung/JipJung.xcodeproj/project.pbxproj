@@ -190,6 +190,8 @@
 		DF05FD3A274D7FD1006C8689 /* breath.WAV in Resources */ = {isa = PBXBuildFile; fileRef = DF05FD39274D7FD1006C8689 /* breath.WAV */; };
 		DF08B1DD2737F5010066518B /* RemoteServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF08B1DC2737F5010066518B /* RemoteServiceProvider.swift */; };
 		DF09E9B52741FAC700F5F739 /* Utils+Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF09E9B42741FAC700F5F739 /* Utils+Enums.swift */; };
+		DF1496A9274F5B990053776F /* PushNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF1496A8274F5B990053776F /* PushNotificationManager.swift */; };
+		DF1496AB274F83BA0053776F /* FeedbackGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF1496AA274F83BA0053776F /* FeedbackGenerator.swift */; };
 		DF1722B22740FD2300F06140 /* ApplicationLaunch.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF1722B12740FD2300F06140 /* ApplicationLaunch.swift */; };
 		DF1722B42741013600F06140 /* LocalDBMigrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF1722B32741013600F06140 /* LocalDBMigrator.swift */; };
 		DF1722B72741036C00F06140 /* BundleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF1722B62741036C00F06140 /* BundleManager.swift */; };
@@ -417,6 +419,8 @@
 		DF05FD39274D7FD1006C8689 /* breath.WAV */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = breath.WAV; sourceTree = "<group>"; };
 		DF08B1DC2737F5010066518B /* RemoteServiceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteServiceProvider.swift; sourceTree = "<group>"; };
 		DF09E9B42741FAC700F5F739 /* Utils+Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Utils+Enums.swift"; sourceTree = "<group>"; };
+		DF1496A8274F5B990053776F /* PushNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationManager.swift; sourceTree = "<group>"; };
+		DF1496AA274F83BA0053776F /* FeedbackGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackGenerator.swift; sourceTree = "<group>"; };
 		DF1722B12740FD2300F06140 /* ApplicationLaunch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationLaunch.swift; sourceTree = "<group>"; };
 		DF1722B32741013600F06140 /* LocalDBMigrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDBMigrator.swift; sourceTree = "<group>"; };
 		DF1722B62741036C00F06140 /* BundleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleManager.swift; sourceTree = "<group>"; };
@@ -1001,6 +1005,8 @@
 				DF1722B12740FD2300F06140 /* ApplicationLaunch.swift */,
 				DF1722B32741013600F06140 /* LocalDBMigrator.swift */,
 				B490FDBD274B771F008A4454 /* ApplicationMode.swift */,
+				DF1496A8274F5B990053776F /* PushNotificationManager.swift */,
+				DF1496AA274F83BA0053776F /* FeedbackGenerator.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1379,6 +1385,7 @@
 				DDB92B9D2737BD5E00EE26F0 /* UIView+Extension.swift in Sources */,
 				DD7CDCB4274D1E66005ADF35 /* LoadFocusTimeUseCase.swift in Sources */,
 				DF1722B72741036C00F06140 /* BundleManager.swift in Sources */,
+				DF1496AB274F83BA0053776F /* FeedbackGenerator.swift in Sources */,
 				DDB5CEB32733752D00E8F9EB /* FavoriteMedia.swift in Sources */,
 				DDB92BB0273A263100EE26F0 /* MusicCollectionViewCell.swift in Sources */,
 				DDB5CEB32733752D00E8F9EB /* FavoriteMedia.swift in Sources */,
@@ -1454,6 +1461,7 @@
 				DD4D030527425611007AA4DD /* UILabel+Extension.swift in Sources */,
 				DDB5CEBE2733A49A00E8F9EB /* RealmDBManager.swift in Sources */,
 				DD6FD1F8274BD08400568A4E /* MeHeaderCollectionReusableView.swift in Sources */,
+				DF1496A9274F5B990053776F /* PushNotificationManager.swift in Sources */,
 				91655858273B773400C55CDC /* MaximListUseCase.swift in Sources */,
 				91EA47C6273846A800780C3E /* BlurCircleButton.swift in Sources */,
 				B4015CD42739151B006BD14A /* PlayHistoryViewController.swift in Sources */,

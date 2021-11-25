@@ -266,6 +266,7 @@ final class DefaultFocusViewController: FocusViewController {
         exitButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
+                self.alertNotification()
                 self.viewModel?.saveFocusRecord()
                 self.viewModel?.changeTimerState(to: .ready)
                 self.viewModel?.resetClockTimer()
@@ -278,6 +279,7 @@ final class DefaultFocusViewController: FocusViewController {
                       let focusTime = self.viewModel?.focusTime
                 else { return }
                 if $0 == focusTime {
+                    self.alertNotification()
                     self.viewModel?.saveFocusRecord()
                     self.viewModel?.resetClockTimer()
                     self.changeStateToReady()
@@ -287,6 +289,23 @@ final class DefaultFocusViewController: FocusViewController {
                 self.startPulseAnimation(second: $0)
             })
             .disposed(by: disposeBag)
+    }
+    
+    private func alertNotification() {
+        guard let focusTime = self.viewModel?.focusTime,
+              let clockTime = self.viewModel?.clockTime.value
+        else {
+            return
+        }
+        let sadEmojis = ["🥶", "😣", "😞", "😟", "😕"]
+        let happyEmojis = ["☺️", "😘", "😍", "🥳", "🤩"]
+        let minuteString = clockTime / 60 == 0 ? "" : "\(clockTime / 60)분 "
+        let secondString = clockTime % 60 == 0 ? "" : "\(clockTime % 60)초 "
+        let message = focusTime - clockTime > 0
+        ? "완료시간 전에 종료되었어요." + (sadEmojis.randomElement() ?? "")
+        : minuteString + secondString + "집중하셨어요!" + (happyEmojis.randomElement() ?? "")
+        PushNotificationMananger.shared.presentFocusStopNotification(body: message)
+        FeedbackGenerator.shared.impactOccurred()
     }
     
     private func changeStateToReady() {
