@@ -28,9 +28,15 @@ final class MyFavoriteRepository {
                 guard let self = self else { return }
                 $0.forEach { favoriteMedia in
                     self.localDBManager.delete(favoriteMedia)
-                        .subscribe(onFailure: { error in
+                        .subscribe { _ in
+                            NotificationCenter.default.post(
+                                name: .refreshHome,
+                                object: nil,
+                                userInfo: ["RefreshType": [RefreshHomeData.favorite]]
+                            )
+                        } onFailure: { error in
                             print(error.localizedDescription)
-                        })
+                        }
                         .disposed(by: self.disposeBag)
                 }
             } onFailure: { error in
