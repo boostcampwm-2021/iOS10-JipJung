@@ -20,10 +20,6 @@ final class MediaListUseCase {
         return mediaListRepository.fetchMediaMyList(mode: mode)
     }
     
-    func fetchRecentPlayHistory() -> Single<[Media]> {
-        return mediaListRepository.fetchRecentPlayHistory()
-    }
-    
     func fetchFavoriteMediaList() -> Single<[Media]> {
         return mediaListRepository.fetchFavoriteMediaList()
     }

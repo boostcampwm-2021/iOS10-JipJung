@@ -23,25 +23,13 @@ class AudioPlayManager {
     private init() {}
     
     private let mediaResourceRepository = MediaResourceRepository()
+    private let playHistoryRepository = PlayHistoryRepository()
     private let disposeBag = DisposeBag()
     
     private(set) var audioPlayer: AVAudioPlayer?
     
-    func readyToPlay(_ audioFileName: String, autoPlay: Bool) -> Single<Bool> {
+    func readyToPlay(_ audioFileName: String, autoPlay: Bool, restart: Bool) -> Single<Bool> {
         if audioFileName.isEmpty {
-            return Single.just(false)
-        }
-        
-        if audioFileName == audioPlayer?.url?.lastPathComponent {
-            guard let audioPlayer = audioPlayer else {
-                return Single.just(false)
-            }
-            
-            let state = audioPlayer.isPlaying || autoPlay
-            
-            if state {
-                return Single.just(audioPlayer.play())
-            }
             return Single.just(false)
         }
         
@@ -51,32 +39,58 @@ class AudioPlayManager {
                 return Disposables.create()
             }
             
-            self?.mediaResourceRepository.getMediaURL(fileName: audioFileName, type: .audio)
-                .subscribe { url in
-                    self?.audioPlayer = try? AVAudioPlayer(contentsOf: url)
-                    self?.audioPlayer?.numberOfLoops = -1
-                    self?.audioPlayer?.prepareToPlay()
-                    if autoPlay,
-                       let result = self?.audioPlayer?.play() {
-                        single(.success(result))
-                    }
-                } onFailure: { error in
-                    single(.failure(error))
+            if let audioPlayer = self?.audioPlayer,
+               audioFileName == self?.audioPlayer?.url?.lastPathComponent {
+                
+                let state = audioPlayer.isPlaying || autoPlay
+                
+                if state {
+                    self?.controlAudio(playState: .manual(true), restart: restart)
+                        .subscribe(onSuccess: { state in
+                            single(.success(state))
+                        }, onFailure: { error in
+                            single(.failure(error))
+                        })
+                        .disposed(by: disposeBag)
                 }
-                .disposed(by: disposeBag)
+            } else {
+                self?.mediaResourceRepository.getMediaURL(fileName: audioFileName, type: .audio)
+                    .subscribe { url in
+                        self?.audioPlayer = try? AVAudioPlayer(contentsOf: url)
+                        self?.audioPlayer?.numberOfLoops = -1
+                        self?.audioPlayer?.prepareToPlay()
+                        if autoPlay {
+                            self?.controlAudio(playState: .manual(true), restart: restart)
+                                .subscribe(onSuccess: { state in
+                                    single(.success(state))
+                                }, onFailure: { error in
+                                    single(.failure(error))
+                                })
+                                .disposed(by: disposeBag)
+                        }
+                    } onFailure: { error in
+                        single(.failure(error))
+                    }
+                    .disposed(by: disposeBag)
+            }
             return Disposables.create()
         }
     }
     
-    func controlAudio(playState: PlayState) -> Single<Bool> {
-        guard let audioPlayer = audioPlayer else {
+    func controlAudio(playState: PlayState, restart: Bool) -> Single<Bool> {
+        guard let audioPlayer = audioPlayer,
+              let mediaID = audioPlayer.url?.deletingPathExtension().lastPathComponent
+        else {
             return Single.error(AudioError.initFailed)
         }
-        
         switch playState {
         case .manual(let state):
             if state == audioPlayer.isPlaying {
-                return Single.just(audioPlayer.isPlaying)
+                if restart {
+                    audioPlayer.currentTime = 0
+                    audioPlayer.play()
+                }
+                return Single.just(state)
             }
             fallthrough
         case .automatics:
@@ -84,7 +98,11 @@ class AudioPlayManager {
                 audioPlayer.pause()
                 return Single.just(false)
             } else {
-                return Single.just(audioPlayer.play())
+                if restart {
+                    audioPlayer.currentTime = 0
+                }
+                audioPlayer.play()
+                return playHistoryRepository.addPlayHistory(mediaID: mediaID)
             }
         }
     }

@@ -251,28 +251,23 @@
   "PlayHistory": [
     {
       "id": 0,
-      "mediaID": "N000",
-      "addDate": "2012-04-23T18:25:00Z"
+      "mediaID": "N003"
     },
     {
       "id": 1,
-      "mediaID": "N001",
-      "addDate": "2012-04-23T18:25:00Z"
+      "mediaID": "N002"
     },
     {
       "id": 2,
-      "mediaID": "N002",
-      "addDate": "2012-04-23T18:25:00Z"
+      "mediaID": "N001"
     },
     {
       "id": 3,
-      "mediaID": "N003",
-      "addDate": "2012-04-23T18:25:00Z"
+      "mediaID": "U001"
     },
     {
       "id": 4,
-      "mediaID": "N004",
-      "addDate": "2012-04-23T18:25:00Z"
+      "mediaID": "U002"
     }
   ],
   "FavoriteMedia": [

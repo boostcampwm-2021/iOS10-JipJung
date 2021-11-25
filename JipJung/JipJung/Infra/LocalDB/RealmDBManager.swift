@@ -140,7 +140,9 @@ class RealmDBManager {
         }
     }
     
-    func requestRecentPlayHistory() -> Single<[Media]> {
+    // MARK: Media - RecentPlayHistory
+    
+    func requestPlayHistory() -> Single<[Media]> {
         let realm = try? Realm()
         return Single.create { single in
             guard let realm = realm else {
@@ -148,20 +150,48 @@ class RealmDBManager {
                 return Disposables.create()
             }
             
-            let playHistoryList = realm.objects(PlayHistory.self)
-            let playHistoryIDs = try? playHistoryList.compactMap({ element throws in element.mediaID})
+            var playHistoryDict: [String: Int] = [:]
+            realm.objects(PlayHistory.self)
+                .forEach { element in
+                    playHistoryDict[element.mediaID] = element.id
+                }
             
-            guard let ids = playHistoryIDs else {
-                single(.failure(RealmError.searchFailed))
-                return Disposables.create()
+            let playHistoryIDs = Array(playHistoryDict.keys)
+            let filteredMedia = realm.objects(Media.self).filter("id IN %@", playHistoryIDs)
+            let result = try? filteredMedia.compactMap({ element throws in element}).sorted {
+                guard let lhs = playHistoryDict[$0.id],
+                      let rhs = playHistoryDict[$1.id]
+                else {
+                    return false
+                }
+                return lhs > rhs
             }
-            
-            let filteredMedia = realm.objects(Media.self).filter("id IN %@", ids)
-            let result = try? filteredMedia.compactMap({ element throws in element})
             if let result = result {
                 single(.success(result))
             } else {
                 single(.failure(RealmError.searchFailed))
+            }
+            return Disposables.create()
+        }
+    }
+    
+    func createPlayHistory(mediaID: String) -> Single<Bool> {
+        let realm = try? Realm()
+        return Single.create { single in
+            var idCount = 0
+            if let lastHistory = realm?.objects(PlayHistory.self).last {
+                idCount = lastHistory.id + 1
+            }
+            
+            let newHistory = PlayHistory(id: idCount, mediaID: mediaID)
+            
+            do {
+                try realm?.write({
+                    realm?.add(newHistory, update: .all)
+                    single(.success(true))
+                })
+            } catch {
+                single(.failure(error))
             }
             return Disposables.create()
         }

@@ -23,8 +23,4 @@ final class MediaListRepository {
     func fetchFavoriteMediaList() -> Single<[Media]> {
         return localDBManager.requestFavoriteMediaList()
     }
-    
-    func fetchRecentPlayHistory() -> Single<[Media]> {
-        return localDBManager.requestRecentPlayHistory()
-    }
 }
