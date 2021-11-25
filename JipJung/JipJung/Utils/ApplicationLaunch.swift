@@ -32,21 +32,21 @@ final class ApplicationLaunch {
         try? FileManager.default.removeItem(at: Realm.Configuration.defaultConfiguration.fileURL ?? URL(fileURLWithPath: ""))
         let key = UserDefaultsKeys.wasLaunchedBefore
         UserDefaults.standard.set(false, forKey: key)
-        do {
-            guard let url = BundleManager.shared
-                    .findURL(fileNameWithExtension: "DummyFocusData.json")
-            else {
-                throw ApplicationLaunchError.resourceJsonFileNotFound
-            }
-            
-            let data = try Data(contentsOf: url)
-            let jsonDecoder = JSONDecoder()
-            let jsonValue = try jsonDecoder.decode([FocusRecord].self, from: data)
-            
-            try LocalDBMigrator.shared.migrate(dataList: jsonValue)
-        } catch {
-            print(error)
-        }
+//        do {
+//            guard let url = BundleManager.shared
+//                    .findURL(fileNameWithExtension: "DummyFocusData.json")
+//            else {
+//                throw ApplicationLaunchError.resourceJsonFileNotFound
+//            }
+//
+//            let data = try Data(contentsOf: url)
+//            let jsonDecoder = JSONDecoder()
+//            let jsonValue = try jsonDecoder.decode([FocusRecord].self, from: data)
+//
+//            try LocalDBMigrator.shared.migrate(dataList: jsonValue)
+//        } catch {
+//            print(error)
+//        }
     }
     #endif
     

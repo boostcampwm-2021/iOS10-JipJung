@@ -25,6 +25,13 @@ class GrassMapView: UIView {
         weeksStackView.distribution = .fillEqually
         weeksStackView.axis = .horizontal
         addSubview(weeksStackView)
+        weeksStackView.snp.makeConstraints {
+            $0.bottom.equalToSuperview()
+            $0.leading.equalToSuperview()
+            $0.trailing.equalToSuperview()
+            $0.height.equalTo(MeGrassMapViewSize.height)
+        }
+        
         for _ in 1...MeGrassMap.weekCount {
             let weekStackView = UIStackView()
             weekStackView.axis = .vertical
@@ -51,20 +58,14 @@ class GrassMapView: UIView {
                 $0.bottom.equalTo(weekStackView.snp.top)
                 $0.centerX.equalTo(weekStackView.snp.centerX)
             }
-            
         }
-        weeksStackView.snp.makeConstraints {
-            $0.bottom.equalToSuperview()
-            $0.leading.equalToSuperview()
-            $0.trailing.equalToSuperview()
-            $0.height.equalTo(MeGrassMapViewSize.height)
-        }
+        
     }
     
     private func makeMonthLabel() -> UILabel {
         let monthLabel = UILabel()
         monthLabel.text = ""
-        monthLabel.textColor = .black
+        monthLabel.textColor = MeGrassMap.tintColor
         monthLabel.textAlignment = .center
         monthLabel.font = .systemFont(ofSize: 16)
         return monthLabel

@@ -18,7 +18,7 @@ enum TabBarItems {
     
     enum Me {
         static let title = "Me"
-        static let image = ""
+        static let image = "person"
     }
 }
 

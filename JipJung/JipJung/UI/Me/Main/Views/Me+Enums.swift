@@ -25,9 +25,10 @@ enum MeGrassMap {
     static var dayCount: Int {
         weekCount * 7
     }
+    static let tintColor = UIColor.systemGray3
 }
 
-enum FocusStage: Int {
+enum FocusStage: Int, CaseIterable, CustomStringConvertible {
     // 0
     // 0~2
     // 2~4
@@ -44,17 +45,34 @@ enum FocusStage: Int {
     var greenColor: UIColor {
         switch self {
         case .zero:
-            return UIColor.systemGray3
+            return MeGrassMap.tintColor
         case .one:
-            return UIColor(rgb: 0x009c1a)
+            return UIColor(rgb: 0xd2f2d4)
         case .two:
-            return UIColor(rgb: 0x22b600)
+            return UIColor(rgb: 0x7be382)
         case .three:
             return UIColor(rgb: 0x26cc00)
         case .four:
-            return UIColor(rgb: 0x7be382)
+            return UIColor(rgb: 0x22b600)            
         case .five:
-            return UIColor(rgb: 0xd2f2d4)
+            return UIColor(rgb: 0x009c1a)
+        }
+    }
+    
+    var description: String {
+        switch self {
+        case .zero:
+            return "0H"
+        case .one:
+            return "~2"
+        case .two:
+            return "~4"
+        case .three:
+            return "~6"
+        case .four:
+            return "~8"
+        case .five:
+            return "8+"
         }
     }
 }
