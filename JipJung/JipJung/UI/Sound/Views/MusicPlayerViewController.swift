@@ -70,7 +70,6 @@ final class MusicPlayerViewController: UIViewController {
         configureUI()
         bindUI()
         viewModel?.checkMusicDownloaded()
-        viewModel?.checkMusicPlaying()
     }
     
     override func viewDidLayoutSubviews() {
@@ -252,6 +251,7 @@ final class MusicPlayerViewController: UIViewController {
                 } else if playButtonTitle == "Play" {
                     self.viewModel?.playMusic()
                 } else if playButtonTitle == "Download To Play" {
+                    self.playButton.setTitle("Downloading....", for: .normal)
                     self.viewModel?.playMusic()
                 }
             }
@@ -277,27 +277,33 @@ final class MusicPlayerViewController: UIViewController {
             .disposed(by: disposeBag)
         
         viewModel?.musicFileStatus
-            .bind(onNext: { [weak self] in
+            .bind(onNext: { [weak self] state in
                 guard let self = self else { return }
-                switch $0 {
-                case .isNotDownloaded:
-                    self.playButton.setTitle("Download To Play", for: .normal)
-                case .downloaded:
-                    self.playButton.setTitle("Play", for: .normal)
-                case .downloadFailed:
-                    self.playButton.setTitle("Download Failed", for: .normal)
+                DispatchQueue.main.async {
+                    switch state {
+                    case .isNotDownloaded:
+                        self.playButton.setTitle("Download To Play", for: .normal)
+                    case .downloaded:
+                        self.playButton.setTitle("Play", for: .normal)
+                        self.musicDescriptionView.plusButton.isEnabled = true
+                    case .downloadFailed:
+                        self.playButton.setTitle("Download Failed", for: .normal)
+                    }
                 }
             })
             .disposed(by: disposeBag)
         
         viewModel?.isMusicPlaying
+            .skip(1)
             .distinctUntilChanged()
-            .bind(onNext: { [weak self] in
-                switch $0 {
-                case true:
-                    self?.playButton.setTitle("Pause", for: .normal)
-                case false:
-                    self?.playButton.setTitle("Play", for: .normal)
+            .bind(onNext: { [weak self] state in
+                DispatchQueue.main.async {
+                    switch state {
+                    case true:
+                        self?.playButton.setTitle("Pause", for: .normal)
+                    case false:
+                        self?.playButton.setTitle("Play", for: .normal)
+                    }
                 }
             })
             .disposed(by: disposeBag)

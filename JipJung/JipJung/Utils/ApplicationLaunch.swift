@@ -79,7 +79,6 @@ final class ApplicationLaunch: NSObject {
             try LocalDBMigrator.shared.migrate(dataList: jsonValue.favoriteMediaList)
             try LocalDBMigrator.shared.migrate(dataList: jsonValue.brightModeList)
             try LocalDBMigrator.shared.migrate(dataList: jsonValue.darknessModeList)
-            try LocalDBMigrator.shared.migrate(dataList: jsonValue.playHistoryList)
             try LocalDBMigrator.shared.migrate(dataList: jsonValue.maximList)
         } catch {
             throw error

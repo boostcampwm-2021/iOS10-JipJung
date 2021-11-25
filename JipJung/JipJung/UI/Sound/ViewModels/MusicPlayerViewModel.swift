@@ -103,7 +103,6 @@ final class MusicPlayerViewModel: MusicPlayerViewModelInput, MusicPlayerViewMode
         mediaListUseCase.fetchMediaMyList(mode: mediaMode)
             .subscribe { [weak self] mediaList in
                 guard let self = self else { return }
-                print(mediaList)
                 mediaList.forEach { media in
                     if media.id == self.id {
                         self.isInMusicList.accept(true)
@@ -120,6 +119,7 @@ final class MusicPlayerViewModel: MusicPlayerViewModelInput, MusicPlayerViewMode
         audioPlayUseCase.readyToPlay(audioFileName, autoPlay: true)
             .subscribe { [weak self] in
                 guard $0 == true else { return }
+                self?.musicFileStatus.accept(FileStatus.downloaded)
                 self?.isMusicPlaying.accept($0)
             } onFailure: { [weak self] in
                 self?.musicFileStatus.accept(.downloadFailed)
@@ -144,6 +144,7 @@ final class MusicPlayerViewModel: MusicPlayerViewModelInput, MusicPlayerViewMode
         fetchMediaURLUseCase.getMediaURLFromLocal(fileName: audioFileName)
             .subscribe { [weak self] _ in
                 self?.musicFileStatus.accept(FileStatus.downloaded)
+                self?.checkMusicPlaying()
             } onFailure: { [weak self] _ in
                 self?.musicFileStatus.accept(FileStatus.isNotDownloaded)
             }
@@ -174,33 +175,7 @@ final class MusicPlayerViewModel: MusicPlayerViewModelInput, MusicPlayerViewMode
     }
     
     func checkMediaMode() {
-        mediaListUseCase.fetchMediaMyList(mode: .bright)
-            .subscribe { [weak self] mediaList in
-                guard let self = self else { return }
-                mediaList.forEach { media in
-                    if media.id == self.id && ApplicationMode.shared.mode.value != .bright {
-                        ApplicationMode.shared.convert()
-                        return
-                    }
-                }
-            } onFailure: { error in
-                print(error.localizedDescription)
-            }
-            .disposed(by: disposeBag)
-
-        mediaListUseCase.fetchMediaMyList(mode: .dark)
-            .subscribe { [weak self] mediaList in
-                guard let self = self else { return }
-                mediaList.forEach { media in
-                    if media.id == self.id && ApplicationMode.shared.mode.value != .dark {
-                        ApplicationMode.shared.convert()
-                        return
-                    }
-                }
-            } onFailure: { error in
-                print(error.localizedDescription)
-            }
-            .disposed(by: disposeBag)
+        ApplicationMode.shared.mode.accept(mode == 0 ? .bright : .dark)
     }
     
     func saveMediaFromMode() {
