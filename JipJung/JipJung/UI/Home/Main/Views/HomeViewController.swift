@@ -292,13 +292,18 @@ class HomeViewController: UIViewController {
     }
     
     private func configureCollectionViews() {
-        let recentPlayHistoryHeader = UIView()
-        recentPlayHistoryHeader.backgroundColor = .gray
+        let recentPlayHistoryHeader = HomeListHeaderView()
+        recentPlayHistoryHeader.titleLabel.text = "재생 기록"
+        recentPlayHistoryHeader.allButton.rx.tap
+            .bind { _ in
+                print("recent view open")
+            }
+            .disposed(by: disposeBag)
         bottomView.addSubview(recentPlayHistoryHeader)
         recentPlayHistoryHeader.snp.makeConstraints {
             $0.top.equalTo(maximButton.snp.bottom).offset(16)
-            $0.leading.trailing.equalToSuperview().inset(16)
-            $0.height.equalTo(60)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(40)
         }
         
         bottomView.addSubview(recentPlayHistoryCollectionView)
@@ -308,13 +313,18 @@ class HomeViewController: UIViewController {
             $0.height.equalTo(220)
         }
         
-        let favoriteHeader = UIView()
-        favoriteHeader.backgroundColor = .gray
+        let favoriteHeader = HomeListHeaderView()
+        favoriteHeader.titleLabel.text = "좋아요 누른 음원"
+        favoriteHeader.allButton.rx.tap
+            .bind { _ in
+                print("favorite view open")
+            }
+            .disposed(by: disposeBag)
         bottomView.addSubview(favoriteHeader)
         favoriteHeader.snp.makeConstraints {
             $0.top.equalTo(recentPlayHistoryCollectionView.snp.bottom).offset(8)
-            $0.leading.trailing.equalToSuperview().inset(16)
-            $0.height.equalTo(60)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(40)
         }
         
         bottomView.addSubview(favoriteCollectionView)

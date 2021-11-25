@@ -12,6 +12,7 @@
 		912A72042733B99300C1A37E /* LocalFileManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 912A72032733B99300C1A37E /* LocalFileManagerTests.swift */; };
 		912A720A2733B9AC00C1A37E /* LocalFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E4178827312FEB001BA0A6 /* LocalFileManager.swift */; };
 		912E2F41274E1A7B00316884 /* PlayHistoryUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 912E2F40274E1A7B00316884 /* PlayHistoryUseCase.swift */; };
+		912F3331274F4FF2000E08FB /* HomeListHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 912F3330274F4FF2000E08FB /* HomeListHeaderView.swift */; };
 		9131513F27400C26001E7125 /* UIScreen+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9131513E27400C26001E7125 /* UIScreen+Extension.swift */; };
 		9131514127400FBB001E7125 /* UIApplication+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9131514027400FBB001E7125 /* UIApplication+Extension.swift */; };
 		9131514327401200001E7125 /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9131514227401200001E7125 /* Array+Extension.swift */; };
@@ -231,6 +232,7 @@
 		912A72012733B99300C1A37E /* LocalFileManagerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LocalFileManagerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		912A72032733B99300C1A37E /* LocalFileManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFileManagerTests.swift; sourceTree = "<group>"; };
 		912E2F40274E1A7B00316884 /* PlayHistoryUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayHistoryUseCase.swift; sourceTree = "<group>"; };
+		912F3330274F4FF2000E08FB /* HomeListHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeListHeaderView.swift; sourceTree = "<group>"; };
 		9131513E27400C26001E7125 /* UIScreen+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+Extension.swift"; sourceTree = "<group>"; };
 		9131514027400FBB001E7125 /* UIApplication+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Extension.swift"; sourceTree = "<group>"; };
 		9131514227401200001E7125 /* Array+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extension.swift"; sourceTree = "<group>"; };
@@ -579,6 +581,7 @@
 				B4015CD527391529006BD14A /* FavoriteMusicViewController.swift */,
 				917BDD582745FAEC0049E944 /* CarouselView.swift */,
 				917BDD5A2745FBDA0049E944 /* MediaPlayView.swift */,
+				912F3330274F4FF2000E08FB /* HomeListHeaderView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1419,6 +1422,7 @@
 				B4EF13B52742933F0086D8CD /* SearchHistoryUseCase.swift in Sources */,
 				DD208D36273BDD390089A2AB /* CALayer+Extension.swift in Sources */,
 				917BDD592745FAEC0049E944 /* CarouselView.swift in Sources */,
+				912F3331274F4FF2000E08FB /* HomeListHeaderView.swift in Sources */,
 				DD7CDCBE274E380D005ADF35 /* GrassPresenterObject.swift in Sources */,
 				DD828095273D1F8E00BB2A60 /* FocusViewController.swift in Sources */,
 				DD6FD1F6274BCEB300568A4E /* Me+Enums.swift in Sources */,
