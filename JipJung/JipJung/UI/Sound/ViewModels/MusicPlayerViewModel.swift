@@ -28,6 +28,7 @@ protocol MusicPlayerViewModelOutput {
     var musicFileStatus: BehaviorRelay<FileStatus> { get }
     var isMusicPlaying: BehaviorRelay<Bool> { get }
     var isFavorite: BehaviorRelay<Bool> { get }
+    var isInMusicList: BehaviorRelay<Bool> { get }
     var title: String { get }
     var explanation: String { get }
     var maxim: String { get }
@@ -41,6 +42,7 @@ final class MusicPlayerViewModel: MusicPlayerViewModelInput, MusicPlayerViewMode
     let musicFileStatus: BehaviorRelay<FileStatus> = BehaviorRelay<FileStatus>(value: FileStatus.isNotDownloaded)
     let isMusicPlaying: BehaviorRelay<Bool> = BehaviorRelay<Bool>(value: false)
     let isFavorite: BehaviorRelay<Bool> = BehaviorRelay<Bool>(value: false)
+    let isInMusicList: BehaviorRelay<Bool> = BehaviorRelay<Bool>(value: false)
     let title: String
     let explanation: String
     let maxim: String
@@ -50,6 +52,7 @@ final class MusicPlayerViewModel: MusicPlayerViewModelInput, MusicPlayerViewMode
     var videoPlayerItem: AVPlayerItem?
     
     private let id: String
+    private let mode: Int
     private let audioFileName: String
     private let videoFileName: String
     private let audioPlayUseCase: AudioPlayUseCase = AudioPlayUseCase()
@@ -60,6 +63,7 @@ final class MusicPlayerViewModel: MusicPlayerViewModelInput, MusicPlayerViewMode
     
     init(media: Media) {
         id = media.id
+        mode = media.mode
         title = media.name
         explanation = media.explanation
         maxim = media.maxim
@@ -70,6 +74,7 @@ final class MusicPlayerViewModel: MusicPlayerViewModelInput, MusicPlayerViewMode
         videoFileName = media.videoFileName
         configureVideoPlayerItem()
         configureIsFavorite()
+        configureIsInMusicList()
     }
     
     private func configureVideoPlayerItem() {
@@ -87,6 +92,24 @@ final class MusicPlayerViewModel: MusicPlayerViewModelInput, MusicPlayerViewMode
             .subscribe { [weak self] in
                 guard $0.count > 0 else { return }
                 self?.isFavorite.accept(true)
+            } onFailure: { error in
+                print(error.localizedDescription)
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    private func configureIsInMusicList() {
+        let mediaMode = mode == 0 ? MediaMode.bright : MediaMode.dark
+        mediaListUseCase.fetchMediaMyList(mode: mediaMode)
+            .subscribe { [weak self] mediaList in
+                guard let self = self else { return }
+                print(mediaList)
+                mediaList.forEach { media in
+                    if media.id == self.id {
+                        self.isInMusicList.accept(true)
+                        return
+                    }
+                }
             } onFailure: { error in
                 print(error.localizedDescription)
             }
@@ -174,6 +197,42 @@ final class MusicPlayerViewModel: MusicPlayerViewModelInput, MusicPlayerViewMode
                         return
                     }
                 }
+            } onFailure: { error in
+                print(error.localizedDescription)
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    func saveMediaFromMode() {
+        mediaListUseCase.saveMediaFromMode(id: id, mode: mode)
+            .subscribe { _ in
+                NotificationCenter.default.post(
+                    name: .refreshHome,
+                    object: nil,
+                    userInfo: [
+                        "RefreshType": [
+                            self.mode == 0 ? RefreshHomeData.brightMode : RefreshHomeData.darkMode
+                        ]
+                    ]
+                )
+            } onFailure: { error in
+                print(error.localizedDescription)
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    func removeMediaFromMode() {
+        mediaListUseCase.removeMediaFromMode(id: id, mode: mode)
+            .subscribe { _ in
+                NotificationCenter.default.post(
+                    name: .refreshHome,
+                    object: nil,
+                    userInfo: [
+                        "RefreshType": [
+                            self.mode == 0 ? RefreshHomeData.brightMode : RefreshHomeData.darkMode
+                        ]
+                    ]
+                )
             } onFailure: { error in
                 print(error.localizedDescription)
             }
