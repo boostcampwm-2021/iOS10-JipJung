@@ -34,6 +34,14 @@ class MeDailyStaticsView: UIView {
     
     var grassMapView = GrassMapView()
     
+    private lazy var unitDescriptionLabel: UILabel = {
+        let label = UILabel()
+        label.text = "단위: 시간(H)"
+        label.font = .systemFont(ofSize: 12)
+        label.textColor = MeGrassMap.tintColor
+        return label
+    }()
+    
     private lazy var stageColorDescriptionStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.distribution = .fillEqually
@@ -160,12 +168,17 @@ class MeDailyStaticsView: UIView {
             $0.bottom.equalToSuperview().offset(-80)
         }
         
+        addSubview(unitDescriptionLabel)
+        unitDescriptionLabel.snp.makeConstraints {
+            $0.bottom.trailing.equalToSuperview().offset(-20)
+        }
+        
         addSubview(stageColorDescriptionStackView)
         stageColorDescriptionStackView.snp.makeConstraints {
-            $0.height.equalTo(30)
             $0.top.equalTo(grassMapView.snp.bottom).offset(30)
+            $0.bottom.equalTo(unitDescriptionLabel.snp.top).offset(-20)
             $0.leading.equalToSuperview().offset(100)
-            $0.trailing.equalToSuperview()
+            $0.trailing.equalToSuperview().offset(-20).priority(751)
         }
     }
 }

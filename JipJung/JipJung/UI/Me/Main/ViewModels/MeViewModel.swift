@@ -30,7 +30,6 @@ final class MeViewModel: MeViewModelInput, MeViewModelOutput {
     func fetchFocusTimeLists() {
         let nDay = MeGrassMap.dayCount - 7 + Date().weekday
         let historyObservable = loadFocusTimeUseCase.loadHistory(from: Date(), nDays: nDay)
-        let dateFormatter = DateFormatter()
         historyObservable.bind { [weak self] in
             let grassPresenterObject = GrassPresenterObject(dailyFocusTimes: $0, nDay: nDay)
             self?.grassPresenterObject.accept(grassPresenterObject)

@@ -32,7 +32,7 @@ struct MaximPresenterObject {
         let monthYear = "\(monthList[date.month - 1]) \(date.year)"
         let content = maxim.content
         let speaker = maxim.speaker.isEmpty ? "미상" : maxim.speaker
-        let thumbnailImageAssetPath = maxim.id + ".jpg"
+        let thumbnailImageAssetPath = maxim.thumbnailImageFileName
         self.init(day: day, weekDay: weekDay, monthYear: monthYear, content: content, speaker: speaker, thumbnailImageAssetPath: thumbnailImageAssetPath)
     }
 }
