@@ -12,8 +12,8 @@ import RxSwift
 final class MaximListRepository {
     private let localDBManager = RealmDBManager.shared
     
-    func fetchAllMaximList() -> Single<[Maxim]> {
-        return localDBManager.requestAllMaximList()
+    func fetchAllMaximList(from date: Date) -> Single<[Maxim]> {
+        return localDBManager.search(ofType: Maxim.self, with: NSPredicate(format: "date < %@", date as CVarArg))
     }
     
     func fetchFavoriteMaximList() -> Single<[Maxim]> {
