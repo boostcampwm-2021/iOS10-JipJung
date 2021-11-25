@@ -46,8 +46,12 @@ final class HomeViewModel: HomeViewModelInput, HomeViewModelOutput {
         Observable
             .combineLatest(mode, brightMode, darknessMode) { ($0, $1, $2) }
             .subscribe { [weak self] mode, brightModeList, darknessModeList in
-                let modeList = mode == .bright ? brightModeList : darknessModeList
-                self?.currentModeList.accept(modeList)
+                print(mode, brightModeList.count, darknessModeList.count)
+                if mode == .bright {
+                    self?.currentModeList.accept(brightModeList)
+                } else {
+                    self?.currentModeList.accept(darknessModeList)
+                }
             }
             .disposed(by: disposeBag)
     }

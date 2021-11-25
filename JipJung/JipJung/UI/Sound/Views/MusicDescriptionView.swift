@@ -68,6 +68,7 @@ class MusicDescriptionView: UIView {
         contentView.addSubview(plusButton)
         contentView.addSubview(tagView)
         
+        plusButton.isEnabled = false
         plusButton.snp.makeConstraints { make in
             make.top.trailing.equalToSuperview()
             make.size.equalTo(titleLabel.snp.height)

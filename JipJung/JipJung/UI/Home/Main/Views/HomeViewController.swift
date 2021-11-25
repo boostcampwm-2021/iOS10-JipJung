@@ -256,7 +256,6 @@ class HomeViewController: UIViewController {
         modeSwitch.rx.tap
             .bind { [weak self] in
                 ApplicationMode.shared.convert()
-                self?.viewModel.modeSwitchTouched()
             }
             .disposed(by: disposeBag)
         
@@ -507,20 +506,23 @@ class HomeViewController: UIViewController {
             }.disposed(by: disposeBag)
         
         ApplicationMode.shared.mode
+            .skip(1)
+            .distinctUntilChanged()
             .bind { [weak self] in
                 guard let self = self else { return }
                 switch $0 {
                 case .bright:
+                    self.viewModel.mode.accept(.bright)
                     self.clubView.isHidden = true
                 case .dark:
+                    self.viewModel.mode.accept(.dark)
                     self.clubView.isHidden = false
-                    UIView.animate(withDuration: 0.35,
-                                   delay: 0,
-                                   options: [.autoreverse, .repeat],
-                                   animations: {
+                    UIView.animate(
+                        withDuration: 0.35,
+                        delay: 0,
+                        options: [.autoreverse, .repeat]) {
                         self.clubScene.view?.layer.opacity = 0.25
-                    },
-                                   completion: nil)
+                    }
                 }
             }
             .disposed(by: disposeBag)
