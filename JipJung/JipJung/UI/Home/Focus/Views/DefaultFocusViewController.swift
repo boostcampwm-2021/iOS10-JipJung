@@ -268,6 +268,8 @@ final class DefaultFocusViewController: FocusViewController {
                 guard let self = self else { return }
                 self.viewModel?.saveFocusRecord()
                 self.viewModel?.changeTimerState(to: .ready)
+                PushNotificationMananger.shared
+                    .presentFocusStopNotification(body: "완료시간 전에 종료되었습니다.")
                 self.viewModel?.resetClockTimer()
             }
             .disposed(by: disposeBag)

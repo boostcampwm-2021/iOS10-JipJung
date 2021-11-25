@@ -200,6 +200,7 @@ final class BreathFocusViewController: FocusViewController {
                 self.stopBreath()
                 self.viewModel?.saveFocusRecord()
                 self.viewModel?.resetClockTimer()
+                FeedbacakGenerator.shared.impactOccurred()
             }
         }).disposed(by: disposeBag)
 
