@@ -78,3 +78,13 @@ enum TimerState: Equatable {
     case running(isResume: Bool)
     case paused
 }
+
+enum FileExtension {
+    enum Image: String, CaseIterable {
+        case png, jpeg, jpg, bmp
+    }
+    
+    enum Video: String, CaseIterable {
+        case mp4, avi
+    }
+}

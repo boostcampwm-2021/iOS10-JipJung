@@ -9,7 +9,7 @@ import Foundation
 
 import RxSwift
 
-class MediaPlayViewModel {
+final class MediaPlayViewModel {
     private let fetchMediaURLUseCase = FetchMediaURLUseCase()
     
     func didSetMedia(fileName: String, type: MediaType) -> Single<URL> {
