@@ -69,8 +69,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func createMeViewController() -> UIViewController {
         let meViewController = MeViewController()
-        meViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .contacts, tag: 2)
-        return meViewController
+        let meNavigationController = UINavigationController(rootViewController: meViewController)
+        meNavigationController.tabBarItem = UITabBarItem(title: TabBarItems.Me.title, image: UIImage(systemName: TabBarItems.Me.image), tag: 2)
+        meNavigationController.navigationBar.prefersLargeTitles = true
+        return meNavigationController
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

@@ -27,7 +27,12 @@ class SoundTagCollectionViewCell: UICollectionViewCell {
                 soundTagLabel.font = .systemFont(ofSize: 17, weight: .bold)
             }
             else {
-                backgroundColor = .black
+                switch ApplicationMode.shared.mode.value {
+                case .bright:
+                    backgroundColor = .white
+                case .dark:
+                    backgroundColor = .black
+                }
                 soundTagLabel.textColor = .lightGray
                 soundTagLabel.font = .systemFont(ofSize: 17, weight: .semibold)
             }
@@ -46,13 +51,19 @@ class SoundTagCollectionViewCell: UICollectionViewCell {
         configureUI()
     }
     
-    private func configureUI() {
-        backgroundColor = .black
+    func configureUI() {
         layer.cornerRadius = frame.height/2
         
         contentView.addSubview(soundTagLabel)
         soundTagLabel.snp.makeConstraints {
             $0.center.equalToSuperview()
+        }
+        
+        switch ApplicationMode.shared.mode.value {
+        case .bright:
+            backgroundColor = .white
+        case .dark:
+            backgroundColor = .black
         }
     }
 }

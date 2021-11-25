@@ -20,6 +20,10 @@ final class MyFavoriteRepository {
         let predicate = NSPredicate(format: "id == %@", id)
         return localDBManager.search(ofType: FavoriteMedia.self, with: predicate)
     }
+    
+    func fetchAll() -> Single<[Media]> {
+        return localDBManager.requestFavoriteMediaList()
+    }
 
     // MARK: - Todo: Single<Bool>을 리턴하는 형태로 개선 필요
     func delete(id: String) {
@@ -28,9 +32,15 @@ final class MyFavoriteRepository {
                 guard let self = self else { return }
                 $0.forEach { favoriteMedia in
                     self.localDBManager.delete(favoriteMedia)
-                        .subscribe(onFailure: { error in
+                        .subscribe { _ in
+                            NotificationCenter.default.post(
+                                name: .refreshHome,
+                                object: nil,
+                                userInfo: ["RefreshType": [RefreshHomeData.favorite]]
+                            )
+                        } onFailure: { error in
                             print(error.localizedDescription)
-                        })
+                        }
                         .disposed(by: self.disposeBag)
                 }
             } onFailure: { error in

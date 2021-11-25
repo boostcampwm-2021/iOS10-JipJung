@@ -10,3 +10,8 @@ import Foundation
 enum ApplicationLaunchError: Error {
     case resourceJsonFileNotFound
 }
+
+enum ApplicationModeType: Int {
+    case bright
+    case dark
+}

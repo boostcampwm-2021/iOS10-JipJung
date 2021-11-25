@@ -1,67 +1,83 @@
 //
-//  DefaultFocusViewModel.swift
+//  BreathViewModel.swift
 //  JipJung
 //
-//  Created by 오현식 on 2021/11/10.
+//  Created by 오현식 on 2021/11/15.
 //
 
 import Foundation
 import RxSwift
 import RxRelay
+import RxCocoa
 
-protocol DefaultFocusViewModelInput {
-    func changeTimerState(to timerState: TimerState)
+protocol BreathFocusViewModelInput {
+    func changeState(to: BreathFocusState)
     func startClockTimer()
-    func pauseClockTimer()
     func resetClockTimer()
     func setFocusTime(seconds: Int)
     func saveFocusRecord()
 }
 
-protocol DefaultFocusViewModelOutput {
-    var clockTime: BehaviorRelay<Int> { get }
-    var isFocusRecordSaved: BehaviorRelay<Bool> { get }
+enum BreathFocusState {
+    case running
+    case stop
 }
 
-final class DefaultFocusViewModel: DefaultFocusViewModelInput, DefaultFocusViewModelOutput {
-    var clockTime: BehaviorRelay<Int> = BehaviorRelay<Int>(value: 0)
+protocol BreathFocusViewModelOutput {
+    var clockTime: BehaviorRelay<Int> { get }
+    var isFocusRecordSaved: BehaviorRelay<Bool> { get }
+    var focusState: BehaviorRelay<BreathFocusState> { get }
+}
+
+final class BreathFocusViewModel: BreathFocusViewModelInput, BreathFocusViewModelOutput {
+    var clockTime: BehaviorRelay<Int> = BehaviorRelay<Int>(value: -1)
     var isFocusRecordSaved: BehaviorRelay<Bool> = BehaviorRelay<Bool>(value: false)
+    var focusState: BehaviorRelay<BreathFocusState> = BehaviorRelay<BreathFocusState>(value: .stop)
+    let focusTimeList: [Int] = Array<Int>(1...15)
+    var focusTime: Int = 7
     var timerState: BehaviorRelay<TimerState> = BehaviorRelay<TimerState>(value: .ready)
-    let focusTimeList: [Int] = [1, 5, 8, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180]
-    var focusTime: Int = 60
     
     private var runningStateDisposeBag: DisposeBag = DisposeBag()
     private var disposeBag: DisposeBag = DisposeBag()
     
     private let saveFocusTimeUseCase: SaveFocusTimeUseCaseProtocol
+    private let audioPlayUseCase = AudioPlayUseCase()
     
     init(saveFocusTimeUseCase: SaveFocusTimeUseCaseProtocol) {
         self.saveFocusTimeUseCase = saveFocusTimeUseCase
     }
     
-    func changeTimerState(to timerState: TimerState) {
-        self.timerState.accept(timerState)
+    func changeState(to state: BreathFocusState) {
+        self.focusState.accept(state)
     }
     
     func startClockTimer() {
-        Observable<Int>.interval(RxTimeInterval.seconds(1),
-                                 scheduler: MainScheduler.instance)
+        audioPlayUseCase.readyToPlay("breath.WAV", autoPlay: true, restart: true)
+            .subscribe { [weak self] in
+            switch $0 {
+            case .success(let flag):
+                print(#function, #line, flag)
+            case .failure(let error):
+                print(#function, #line, error)
+            }
+        }.disposed(by: disposeBag)
+        
+        clockTime.accept(0)
+         Observable<Int>.interval(.seconds(1), scheduler: MainScheduler.instance)
             .subscribe { [weak self] _ in
                 guard let self = self else { return }
                 self.clockTime.accept(self.clockTime.value + 1)
             }
             .disposed(by: runningStateDisposeBag)
     }
-    
-    func pauseClockTimer() {
-        runningStateDisposeBag = DisposeBag()
-    }
-    
+
     func resetClockTimer() {
-        clockTime.accept(0)
+        audioPlayUseCase.controlAudio(playState: .manual(false))
+        clockTime.accept(-1)
         runningStateDisposeBag = DisposeBag()
     }
-    
+
+    // 숨쉬기 횟수 설정
     func setFocusTime(seconds: Int) {
         focusTime = seconds
     }

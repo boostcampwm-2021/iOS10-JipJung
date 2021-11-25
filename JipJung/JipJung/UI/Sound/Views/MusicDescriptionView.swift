@@ -25,12 +25,7 @@ class MusicDescriptionView: UIView {
         return label
     }()
     
-    var streamingButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.tintColor = UIColor(white: 1, alpha: 0.8)
-        button.setImage(UIImage(systemName: "headphones.circle"), for: .normal)
-        return button
-    }()
+    var plusButton: PlusCircleButton = PlusCircleButton()
     
     var tagView: UIView = {
         let view = UIView()
@@ -70,18 +65,19 @@ class MusicDescriptionView: UIView {
         
         contentView.addSubview(titleLabel)
         contentView.addSubview(explanationLabel)
-        contentView.addSubview(streamingButton)
+        contentView.addSubview(plusButton)
         contentView.addSubview(tagView)
         
-        streamingButton.snp.makeConstraints { make in
+        plusButton.isEnabled = false
+        plusButton.snp.makeConstraints { make in
             make.top.trailing.equalToSuperview()
-            make.height.equalTo(titleLabel.snp.height)
+            make.size.equalTo(titleLabel.snp.height)
         }
         
         titleLabel.snp.makeConstraints { make in
             make.leading.top.equalToSuperview()
-            make.trailing.equalTo(streamingButton.snp.leading)
-            make.centerY.equalTo(streamingButton.snp.centerY)
+            make.trailing.equalTo(plusButton.snp.leading)
+            make.centerY.equalTo(plusButton.snp.centerY)
         }
 
         explanationLabel.snp.makeConstraints { make in

@@ -7,17 +7,16 @@
 
 import Foundation
 
+import RxSwift
+
 final class FetchMediaURLUseCase {
-    private let localFileManager = LocalFileManager.shared
-    private let remoteServiceProvider = RemoteServiceProvider.shared
+    private let mediaResourceRepository = MediaResourceRepository()
     
-    func execute(fileName: String) -> URL? {
-        if let fileURL = BundleManager.shared.findURL(fileNameWithExtension: fileName) {
-            return fileURL
-        }
-        if let fileURL = localFileManager.isExsit(fileName) {
-            return fileURL
-        }
-        return nil
+    func getMediaURL(fileName: String, type: MediaType) -> Single<URL> {
+        return mediaResourceRepository.getMediaURL(fileName: fileName, type: type)
+    }
+    
+    func getMediaURLFromLocal(fileName: String) -> Single<URL> {
+        return mediaResourceRepository.getMediaURLFromLocal(fileName: fileName)
     }
 }

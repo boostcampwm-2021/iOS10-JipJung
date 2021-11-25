@@ -37,6 +37,14 @@ final class PomodoroFocusViewController: FocusViewController {
         return timeLabel
     }()
     
+    private lazy var relaxLabel: UILabel = {
+        let relaxLabel = UILabel()
+        relaxLabel.text = "Relax"
+        relaxLabel.font = UIFont.boldSystemFont(ofSize: 15)
+        relaxLabel.textColor = .white
+        return relaxLabel
+    }()
+    
     private lazy var circleShapeLayer: CAShapeLayer = {
         let circleShapeLayer = createCircleShapeLayer(
             strokeColor: UIColor.systemGray,
@@ -183,6 +191,12 @@ final class PomodoroFocusViewController: FocusViewController {
             $0.width.equalTo(FocusViewButtonSize.exitButton.width)
             $0.height.equalTo(FocusViewButtonSize.exitButton.height)
         }
+        
+        view.addSubview(relaxLabel)
+        relaxLabel.snp.makeConstraints {
+            $0.top.equalTo(view.snp.centerY).multipliedBy(1.15)
+            $0.centerX.equalToSuperview()
+        }
     }
     
     private func configureProgressBar() {
@@ -215,7 +229,7 @@ final class PomodoroFocusViewController: FocusViewController {
         startButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
-                self.viewModel?.changeTimerState(to: .running(isContinue: false))
+                self.viewModel?.changeTimerState(to: .running(isResume: false))
             }
             .disposed(by: disposeBag)
         
@@ -229,16 +243,21 @@ final class PomodoroFocusViewController: FocusViewController {
         continueButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
-                self.viewModel?.changeTimerState(to: .running(isContinue: true))
+                self.viewModel?.changeTimerState(to: .running(isResume: true))
             }
             .disposed(by: disposeBag)
         
         exitButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
+                if self.viewModel?.mode.value == .work {
+                    self.alertNotification()
+                }
                 self.viewModel?.changeTimerState(to: .ready)
                 self.viewModel?.resetClockTimer()
                 self.viewModel?.saveFocusRecord()
+                self.viewModel?.resetTotalFocusTime()
+                self.viewModel?.changeToWorkMode()
             }
             .disposed(by: disposeBag)
         
@@ -248,13 +267,60 @@ final class PomodoroFocusViewController: FocusViewController {
                       let focusTime = self.viewModel?.focusTime
                 else { return }
                 if $0 == focusTime {
+                    self.alertNotification()
+                    self.viewModel?.changeMode()
                     self.viewModel?.resetClockTimer()
+                    self.changeStateToReady()
                     return
                 }
                 self.timeLabel.text = (focusTime - $0).digitalClockFormatted
                 self.startPulseAnimation(second: $0)
             })
             .disposed(by: disposeBag)
+        
+        viewModel?.mode
+            .bind(onNext: { [weak self] in
+                guard let self = self else { return }
+                switch $0 {
+                case .work:
+                    self.relaxLabel.isHidden = true
+                    self.view.backgroundColor = .clear
+                    self.startButton.setTitle("Start", for: .normal)
+                case .relax:
+                    self.relaxLabel.isHidden = false
+                    self.view.backgroundColor = UIColor(rgb: 0xA1D9BC,
+                                                        alpha: 0.6)
+                    self.startButton.setTitle("Relax", for: .normal)
+                }
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func alertNotification() {
+        guard let focusTime = self.viewModel?.focusTime,
+              let clockTime = self.viewModel?.clockTime.value,
+              let mode = self.viewModel?.mode.value
+        else {
+            return
+        }
+        let sadEmojis = ["🥶", "😣", "😞", "😟", "😕"]
+        let happyEmojis = ["☺️", "😘", "😍", "🥳", "🤩"]
+        let relaxEmojis = ["👍", "👏", "🤜", "🙌", "🙏"]
+        switch mode {
+        case .work:
+            let minuteString = clockTime / 60 == 0 ? "" : "\(clockTime / 60)분 "
+            let secondString = clockTime % 60 == 0 ? "" : "\(clockTime % 60)초 "
+            let message = focusTime - clockTime > 0
+            ? "완료시간 전에 종료되었어요." + (sadEmojis.randomElement() ?? "")
+            : minuteString + secondString + "집중하셨어요!" + (happyEmojis.randomElement() ?? "")
+            PushNotificationMananger.shared.presentFocusStopNotification(title: .focusFinish,
+                                                                         body: message)
+        case .relax:
+            let message = "휴식시간이 끝났어요! 다시 집중해볼까요?" + (relaxEmojis.randomElement() ?? "")
+            PushNotificationMananger.shared.presentFocusStopNotification(title: .relaxFinish,
+                                                                         body: message)
+        }
+        FeedbackGenerator.shared.impactOccurred()
     }
     
     private func changeStateToReady() {
@@ -293,9 +359,9 @@ final class PomodoroFocusViewController: FocusViewController {
         minuteLabel.isHidden = true
         viewModel?.startClockTimer()
         switch viewModel?.timerState.value {
-        case .running(isContinue: true):
+        case .running(isResume: true):
             resumeTimerProgressAnimation()
-        case .running(isContinue: false):
+        case .running(isResume: false):
             startTimeProgressAnimation()
         default:
             break

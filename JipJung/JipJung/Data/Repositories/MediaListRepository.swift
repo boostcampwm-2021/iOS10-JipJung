@@ -20,11 +20,16 @@ final class MediaListRepository {
         return localDBManager.requestMediaMyList(mode: mode)
     }
     
-    func fetchFavoriteMediaList() -> Single<[Media]> {
-        return localDBManager.requestFavoriteMediaList()
+    func removeMediaFromMode(media: Media) -> Single<Bool> {
+        return localDBManager.deleteMediaInMode(mediaID: media.id, mode: media.mode)
     }
     
-    func fetchRecentPlayHistory() -> Single<[Media]> {
-        return localDBManager.requestRecentPlayHistory()
+    func removeMediaFromMode(id: String, mode: Int) -> Single<Bool> {
+        return localDBManager.deleteMediaInMode(mediaID: id, mode: mode)
+    }
+    
+    func saveMediaFromMode(id: String, mode: Int) -> Single<Bool> {
+        let data = mode == 0 ? BrightMedia(id: id) : DarknessMedia(id: id)
+        return localDBManager.write(data)
     }
 }

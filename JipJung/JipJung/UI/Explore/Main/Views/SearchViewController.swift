@@ -18,9 +18,7 @@ final class SearchViewController: UIViewController {
         searchBar.delegate = self
         searchBar.placeholder = "Search entire library"
         searchBar.layer.cornerRadius = 3
-        searchBar.barTintColor = .black
-        searchBar.searchTextField.textColor = .darkGray
-        
+        searchBar.searchBarStyle = .minimal
         return searchBar
     }()
     
@@ -73,17 +71,31 @@ final class SearchViewController: UIViewController {
     private var cellDisposeBag: DisposeBag = DisposeBag()
     private var viewModel: SearchViewModel?
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+       return .lightContent
+    }
+
     // MARK: - Lifecycle Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .black
-        configureUI()
+        configureCommonUI()
         bindUI()
         viewModel?.loadSearchHistory()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        switch ApplicationMode.shared.mode.value {
+        case .bright:
+            configureBrightModeUI()
+        case .dark:
+            configureDarkModeUI()
+        }
+    }
+
     // MARK: - Initializer
 
     convenience init(viewModel: SearchViewModel) {
@@ -93,11 +105,12 @@ final class SearchViewController: UIViewController {
     
     // MARK: - Helpers
     
-    private func configureUI() {
+    private func configureCommonUI() {
         view.addSubview(searchStackView)
         searchStackView.snp.makeConstraints {
             $0.topMargin.equalToSuperview().offset(20)
-            $0.leading.trailing.equalToSuperview()
+            $0.leading.equalToSuperview().offset(10)
+            $0.trailing.equalToSuperview().offset(-15)
             $0.height.equalTo(50)
         }
         
@@ -114,7 +127,39 @@ final class SearchViewController: UIViewController {
         }
     }
     
+    private func configureBrightModeUI() {
+        view.backgroundColor = .white
+        searchBar.backgroundColor = .white
+        searchBar.searchTextField.textColor = .black
+        searchHistoryTableView.backgroundColor = .white
+        soundCollectionView.backgroundColor = .white
+        
+        searchHistoryTableView.reloadData()
+    }
+    
+    private func configureDarkModeUI() {
+        view.backgroundColor = .black
+        searchBar.backgroundColor = .black
+        searchBar.searchTextField.textColor = .white
+        searchHistoryTableView.backgroundColor = .black
+        soundCollectionView.backgroundColor = .black
+        
+        searchHistoryTableView.reloadData()
+    }
+    
     private func bindUI() {
+        ApplicationMode.shared.mode
+            .bind { [weak self] in
+                guard let self = self else { return }
+                switch $0 {
+                case .bright:
+                    self.configureBrightModeUI()
+                case .dark:
+                    self.configureDarkModeUI()
+                }
+            }
+            .disposed(by: disposeBag)
+        
         cancelButton.rx.tap
             .bind { [weak self] in
                 self?.navigationController?.popViewController(animated: true)
@@ -178,7 +223,7 @@ extension SearchViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.cell(identifier: SearchTableViewCell.identifier, for: indexPath) as? SearchTableViewCell
+        guard let cell: SearchTableViewCell = tableView.dequeueReusableCell()
         else { return UITableViewCell() }
         
         cell.searchHistory.text = viewModel?.searchHistory.value[indexPath.item]
@@ -187,6 +232,7 @@ extension SearchViewController: UITableViewDataSource {
             cellDisposeBag = DisposeBag()
         }
         
+        cell.configureUI()
         cell.deleteButton.rx.tap
             .bind { [weak self] _ in
                 self?.viewModel?.removeSearchHistory(at: indexPath.item)

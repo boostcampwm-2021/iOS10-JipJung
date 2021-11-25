@@ -39,7 +39,7 @@ final class MaximViewController: UIViewController {
         collectionViewLayout.minimumLineSpacing = lineSpacing
         collectionViewLayout.itemSize = CGSize(width: cellWidth, height: 100)
         collectionViewLayout.scrollDirection = .horizontal
-        
+
         let headerSize = 50
         let calendarHeaderCollectionView = UICollectionView(
             frame: MaximCalendarHeaderCollectionViewSize.cellSize,
@@ -52,13 +52,12 @@ final class MaximViewController: UIViewController {
         calendarHeaderCollectionView.isHidden = true
         calendarHeaderCollectionView.showsHorizontalScrollIndicator = false
         calendarHeaderCollectionView.decelerationRate = .fast
-//        calendarHeaderCollectionView.isPagingEnabled = true
         calendarHeaderCollectionView.delegate = self
         calendarHeaderCollectionView.register(
             MaximCalendarHeaderCollectionViewCell.self,
             forCellWithReuseIdentifier: MaximCalendarHeaderCollectionViewCell.identifier)
         calendarHeaderCollectionView.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
-        calendarHeaderCollectionView.backgroundColor = UIColor.white.withAlphaComponent(0.5)
+        calendarHeaderCollectionView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         return calendarHeaderCollectionView
     }()
     
@@ -66,11 +65,10 @@ final class MaximViewController: UIViewController {
         let collectionViewLayout = UICollectionViewFlowLayout()
         collectionViewLayout.itemSize = UIScreen.main.bounds.size
         collectionViewLayout.scrollDirection = .horizontal
-        collectionViewLayout.minimumLineSpacing = 5
+        collectionViewLayout.minimumLineSpacing = 2
         let screenBounds = UIScreen.main.bounds
         let maximCollectionView = UICollectionView(frame: screenBounds, collectionViewLayout: collectionViewLayout)
         maximCollectionView.decelerationRate = .fast
-//        maximCollectionView.isPagingEnabled = false
         maximCollectionView.showsHorizontalScrollIndicator = false
         maximCollectionView.delegate = self
         maximCollectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -89,18 +87,21 @@ final class MaximViewController: UIViewController {
     private var isHeaderPresent = false
     private var disposeBag = DisposeBag()
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+       return .lightContent
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
         bindMaximCollectionView()
         bindAction()
         bindCalendarHeaderCollectionView()
-        
         viewModel.fetchMaximList()
     }
     
     private func configureUI() {
-        maximCollectionView.backgroundColor = .blue
+        maximCollectionView.backgroundColor = .systemBackground
         view.addSubview(maximCollectionView)
         view.addSubview(calendarHeaderCollectionView)
         calendarHeaderCollectionView.snp.makeConstraints { [weak self] in
@@ -137,7 +138,9 @@ final class MaximViewController: UIViewController {
     }
     
     private func bindMaximCollectionView() {
-        viewModel.maximList.bind(to: maximCollectionView.rx.items(cellIdentifier: MaximCollectionViewCell.identifier)) { index, maxim, cell in
+        viewModel.maximList
+            .map({$0.compactMap({$0})})
+            .bind(to: maximCollectionView.rx.items(cellIdentifier: MaximCollectionViewCell.identifier)) { index, maxim, cell in
             guard let cell = cell as? MaximCollectionViewCell else {
                 return
             }
@@ -146,6 +149,16 @@ final class MaximViewController: UIViewController {
             cell.monthYearLabel.text = maxim.monthYear
             cell.contentLabel.text = maxim.content
             cell.speakerLabel.text = maxim.speaker
+            cell.backgroundImageName = maxim.thumbnailImageAssetPath
+            cell.isShown = false
+        }
+        .disposed(by: disposeBag)
+        
+        maximCollectionView.rx.willDisplayCell.bind {
+            guard let cell = $0.cell as? MaximCollectionViewCell else {
+                return
+            }
+            cell.isShown = true
         }
         .disposed(by: disposeBag)
 
@@ -159,26 +172,33 @@ final class MaximViewController: UIViewController {
     private func bindCalendarHeaderCollectionView() {
         viewModel.maximList.bind(
             to: calendarHeaderCollectionView.rx.items(cellIdentifier: MaximCalendarHeaderCollectionViewCell.identifier)
-        ) { _, maxim, cell in
+        ) { [weak self] index, maxim, cell in
             guard let cell = cell as? MaximCalendarHeaderCollectionViewCell else {
                 return
             }
-            cell.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
-            cell.dayButtonText = maxim.day
+            cell.dayLabel.text = maxim.day
             cell.weekdayLabel.text = maxim.weekDay
+            cell.dayButtonImageName = maxim.thumbnailImageAssetPath
+            if self?.viewModel.selectedDate.value.item == index {
+                cell.indicatorPointViewIsHidden = false
+            }
+            cell.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
         }
         .disposed(by: disposeBag)
+        
         let dateObservable = viewModel.selectedDate
         let previousObservable = dateObservable
         let currentObservable = dateObservable.skip(1)
         
-        Observable.zip(previousObservable, currentObservable).bind(onNext: { [weak self] (prev, cur) in
+        Observable.zip(previousObservable, currentObservable)
+            .debug()
+            .bind(onNext: { [weak self] (prev, cur) in
             let previousCell =
             self?.calendarHeaderCollectionView.cellForItem(at: prev) as? MaximCalendarHeaderCollectionViewCell
             let currentCell =
             self?.calendarHeaderCollectionView.cellForItem(at: cur) as? MaximCalendarHeaderCollectionViewCell
-            previousCell?.indicatorPointView.isHidden = true
-            currentCell?.indicatorPointView.isHidden = false
+            previousCell?.indicatorPointViewIsHidden = true
+            currentCell?.indicatorPointViewIsHidden = false
         })
             .disposed(by: disposeBag)
         // TODO: Today관련 bind

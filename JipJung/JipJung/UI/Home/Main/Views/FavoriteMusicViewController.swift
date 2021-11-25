@@ -1,44 +1,35 @@
 //
-//  FavoriteMusicViewController.swift
+//  FavoriteViewController.swift
 //  JipJung
 //
 //  Created by 오현식 on 2021/11/08.
 //
 
-import Foundation
 import UIKit
 
-final class FavoriteMusicViewController: UIViewController {
-    // MARK: - Subviews
-    
-    private lazy var scrollView: UIScrollView = UIScrollView()
-    private lazy var scrollContentView: UIView = UIView()
-    
-    private lazy var titleLabel: UILabel = {
-        let titleLabel = UILabel()
-        titleLabel.text = "Favorites"
-        titleLabel.font = .systemFont(ofSize: 40, weight: .heavy)
-        titleLabel.textColor = .white
-        return titleLabel
-    }()
-    
-    private lazy var favoriteMusicCollectionView: UICollectionView = {
+import RxCocoa
+import RxSwift
+
+final class FavoriteViewController: UIViewController {
+    private lazy var favoriteCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-        layout.minimumInteritemSpacing = 10
-        layout.minimumLineSpacing = 10
+        layout.itemSize = CGSize(width: (UIScreen.deviceScreenSize.width-32)/2-6, height: 220)
+        layout.sectionInset = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16)
+        layout.minimumInteritemSpacing = 8
+        layout.minimumLineSpacing = 8
 
-        let favoriteMusicCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        favoriteMusicCollectionView.backgroundColor = .black
-        favoriteMusicCollectionView.showsHorizontalScrollIndicator = false
-        favoriteMusicCollectionView.delegate = self
-        favoriteMusicCollectionView.dataSource = self
-        favoriteMusicCollectionView.register(
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.register(
             MusicCollectionViewCell.self,
-            forCellWithReuseIdentifier: MusicCollectionViewCell.identifier)
-        return favoriteMusicCollectionView
+            forCellWithReuseIdentifier: MusicCollectionViewCell.identifier
+        )
+        return collectionView
     }()
+    
+    private let viewModel = FavoriteViewModel()
+    private let disposeBag = DisposeBag()
     
     // MARK: - Lifecycle Methods
     
@@ -46,57 +37,59 @@ final class FavoriteMusicViewController: UIViewController {
         super.viewDidLoad()
         
         configureUI()
+        bindUI()
+        
+        viewModel.viewDidLoad()
     }
     
     // MARK: - Helpers
     
     private func configureUI() {
-        view.addSubview(scrollView)
-        scrollView.snp.makeConstraints {
-            $0.topMargin.leading.trailing.bottomMargin.equalToSuperview()
-        }
+        view.backgroundColor = .white
+        navigationItem.title = "좋아요 누른 음원"
+        navigationItem.largeTitleDisplayMode = .always
+        navigationController?.navigationBar.prefersLargeTitles = true
         
-        scrollView.addSubview(scrollContentView)
-        scrollContentView.snp.makeConstraints {
-            $0.width.equalToSuperview()
-            $0.centerX.top.bottom.equalToSuperview()
-        }
-        
-        scrollContentView.addSubview(titleLabel)
-        titleLabel.snp.makeConstraints {
-            $0.topMargin.equalToSuperview().offset(100)
-            $0.leading.equalToSuperview().offset(10)
-            $0.trailing.equalToSuperview().offset(-10)
-            $0.height.equalTo(50)
-        }
-        
-        scrollContentView.addSubview(favoriteMusicCollectionView)
-        favoriteMusicCollectionView.snp.makeConstraints {
-            $0.top.equalTo(titleLabel).offset(70)
-            $0.height.equalTo(1200)
+        view.addSubview(favoriteCollectionView)
+        favoriteCollectionView.snp.makeConstraints {
+            $0.top.equalTo(view.snp.topMargin)
             $0.leading.trailing.bottom.equalToSuperview()
         }
     }
-}
-
-extension FavoriteMusicViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 180, height: 200)
+    
+    private func bindUI() {
+        bindUIwithView()
+        bindUIWithViewModel()
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 1
-    }
-}
-
-extension FavoriteMusicViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+    private func bindUIwithView() {
+        favoriteCollectionView.rx.modelSelected(Media.self)
+            .subscribe(onNext: { [weak self] media in
+                let musicPlayerView = MusicPlayerViewController(
+                    viewModel: MusicPlayerViewModel(
+                        media: media
+                    )
+                )
+                self?.navigationController?.pushViewController(musicPlayerView, animated: true)
+            })
+            .disposed(by: disposeBag)
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell: MusicCollectionViewCell = collectionView.dequeueReusableCell(indexPath: indexPath) else { return  UICollectionViewCell() }
-        
-        return cell
+    private func bindUIWithViewModel() {
+        viewModel.favoriteSoundList
+            .bind(
+                to: favoriteCollectionView.rx.items(
+                    cellIdentifier: MusicCollectionViewCell.identifier
+                )
+            ) { (item, element, cell) in
+                guard let cell = cell as? MusicCollectionViewCell else { return }
+
+                cell.titleView.text = element.name
+                cell.imageView.image = UIImage(named: element.thumbnailImageFileName)
+                cell.backgroundColor = UIColor(
+                    rgb: Int(element.color, radix: 16) ?? 0xFFFFFF,
+                    alpha: 1.0
+                )
+            }.disposed(by: disposeBag)
     }
 }

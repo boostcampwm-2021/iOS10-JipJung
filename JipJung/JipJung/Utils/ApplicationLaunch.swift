@@ -11,10 +11,11 @@ import Foundation
 import Firebase
 import RealmSwift
 
-final class ApplicationLaunch {
+final class ApplicationLaunch: NSObject {
     func start() {
         configureFirebase()
         configureAudioSession()
+        configureLocalNotification()
         
         if isFirstLaunch() {
             do {
@@ -27,12 +28,28 @@ final class ApplicationLaunch {
             UserDefaults.standard.set(true, forKey: key)
         }
     }
-    
-    func makeDebugFirstLaunch() {
+    #if DEBUG
+    func makeDebugLaunch() throws {
         try? FileManager.default.removeItem(at: Realm.Configuration.defaultConfiguration.fileURL ?? URL(fileURLWithPath: ""))
         let key = UserDefaultsKeys.wasLaunchedBefore
         UserDefaults.standard.set(false, forKey: key)
+        do {
+            guard let url = BundleManager.shared
+                    .findURL(fileNameWithExtension: "DummyFocusData.json")
+            else {
+                throw ApplicationLaunchError.resourceJsonFileNotFound
+            }
+
+            let data = try Data(contentsOf: url)
+            let jsonDecoder = JSONDecoder()
+            let jsonValue = try jsonDecoder.decode([FocusRecord].self, from: data)
+
+            try LocalDBMigrator.shared.migrate(dataList: jsonValue)
+        } catch {
+            print(error)
+        }
     }
+    #endif
     
     private func isFirstLaunch() -> Bool {
         let key = UserDefaultsKeys.wasLaunchedBefore
@@ -62,12 +79,10 @@ final class ApplicationLaunch {
             try LocalDBMigrator.shared.migrate(dataList: jsonValue.favoriteMediaList)
             try LocalDBMigrator.shared.migrate(dataList: jsonValue.brightModeList)
             try LocalDBMigrator.shared.migrate(dataList: jsonValue.darknessModeList)
-            try LocalDBMigrator.shared.migrate(dataList: jsonValue.playHistoryList)
             try LocalDBMigrator.shared.migrate(dataList: jsonValue.maximList)
         } catch {
             throw error
         }
-        
     }
     
     private func configureAudioSession() {
@@ -80,6 +95,30 @@ final class ApplicationLaunch {
             try AVAudioSession.sharedInstance().setActive(true)
         } catch {
             print(error)
+        }
+    }
+    
+    func configureLocalNotification() {
+        let notificationCenter = UNUserNotificationCenter.current()
+        notificationCenter.requestAuthorization(options: [.alert,
+                                                          .sound]) {
+            (didAllow, error) in
+            print(#function, #line, didAllow, error)
+        }
+        UNUserNotificationCenter.current().delegate = self
+    }
+}
+
+extension ApplicationLaunch: UNUserNotificationCenterDelegate {
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        completionHandler()
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        if #available(iOS 14.0, *) {
+            completionHandler(.banner)
+        } else {
+            completionHandler(.alert)
         }
     }
 }

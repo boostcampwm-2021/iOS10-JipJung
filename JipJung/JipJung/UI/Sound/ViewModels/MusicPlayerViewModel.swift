@@ -5,10 +5,11 @@
 //  Created by Soohyeon Lee on 2021/11/15.
 //
 
-import Foundation
-import RxSwift
-import RxRelay
 import AVFoundation
+import Foundation
+
+import RxRelay
+import RxSwift
 
 enum FileStatus {
     case isNotDownloaded
@@ -27,6 +28,7 @@ protocol MusicPlayerViewModelOutput {
     var musicFileStatus: BehaviorRelay<FileStatus> { get }
     var isMusicPlaying: BehaviorRelay<Bool> { get }
     var isFavorite: BehaviorRelay<Bool> { get }
+    var isInMusicList: BehaviorRelay<Bool> { get }
     var title: String { get }
     var explanation: String { get }
     var maxim: String { get }
@@ -40,6 +42,7 @@ final class MusicPlayerViewModel: MusicPlayerViewModelInput, MusicPlayerViewMode
     let musicFileStatus: BehaviorRelay<FileStatus> = BehaviorRelay<FileStatus>(value: FileStatus.isNotDownloaded)
     let isMusicPlaying: BehaviorRelay<Bool> = BehaviorRelay<Bool>(value: false)
     let isFavorite: BehaviorRelay<Bool> = BehaviorRelay<Bool>(value: false)
+    let isInMusicList: BehaviorRelay<Bool> = BehaviorRelay<Bool>(value: false)
     let title: String
     let explanation: String
     let maxim: String
@@ -49,16 +52,18 @@ final class MusicPlayerViewModel: MusicPlayerViewModelInput, MusicPlayerViewMode
     var videoPlayerItem: AVPlayerItem?
     
     private let id: String
+    private let mode: Int
     private let audioFileName: String
     private let videoFileName: String
     private let audioPlayUseCase: AudioPlayUseCase = AudioPlayUseCase()
-    private let videoPlayUseCase: VideoPlayUseCase = VideoPlayUseCase()
-    private let fetchMediaUrlUseCase: FetchMediaURLUseCase = FetchMediaURLUseCase()
+    private let fetchMediaURLUseCase: FetchMediaURLUseCase = FetchMediaURLUseCase()
     private let favoriteMediaUseCase: FavoriteMediaUseCase = FavoriteMediaUseCase()
+    private let mediaListUseCase: MediaListUseCase = MediaListUseCase()
     private var disposeBag: DisposeBag = DisposeBag()
     
     init(media: Media) {
         id = media.id
+        mode = media.mode
         title = media.name
         explanation = media.explanation
         maxim = media.maxim
@@ -69,11 +74,17 @@ final class MusicPlayerViewModel: MusicPlayerViewModelInput, MusicPlayerViewMode
         videoFileName = media.videoFileName
         configureVideoPlayerItem()
         configureIsFavorite()
+        configureIsInMusicList()
     }
     
     private func configureVideoPlayerItem() {
-        guard let videoFileUrl = fetchMediaUrlUseCase.execute(fileName: videoFileName) else { return }
-        videoPlayerItem = AVPlayerItem(url: videoFileUrl)
+        fetchMediaURLUseCase.getMediaURL(fileName: videoFileName, type: .video)
+            .subscribe { [weak self] videoFileURL in
+                self?.videoPlayerItem = AVPlayerItem(url: videoFileURL)
+            } onFailure: { error in
+                print(error.localizedDescription)
+            }
+            .disposed(by: disposeBag)
     }
     
     private func configureIsFavorite() {
@@ -86,11 +97,29 @@ final class MusicPlayerViewModel: MusicPlayerViewModelInput, MusicPlayerViewMode
             }
             .disposed(by: disposeBag)
     }
+    
+    private func configureIsInMusicList() {
+        let mediaMode = mode == 0 ? MediaMode.bright : MediaMode.dark
+        mediaListUseCase.fetchMediaMyList(mode: mediaMode)
+            .subscribe { [weak self] mediaList in
+                guard let self = self else { return }
+                mediaList.forEach { media in
+                    if media.id == self.id {
+                        self.isInMusicList.accept(true)
+                        return
+                    }
+                }
+            } onFailure: { error in
+                print(error.localizedDescription)
+            }
+            .disposed(by: disposeBag)
+    }
 
     func playMusic() {
-        audioPlayUseCase.controlAudioPlay(audioFileName)
+        audioPlayUseCase.readyToPlay(audioFileName, autoPlay: true)
             .subscribe { [weak self] in
                 guard $0 == true else { return }
+                self?.musicFileStatus.accept(FileStatus.downloaded)
                 self?.isMusicPlaying.accept($0)
             } onFailure: { [weak self] in
                 self?.musicFileStatus.accept(.downloadFailed)
@@ -100,9 +129,9 @@ final class MusicPlayerViewModel: MusicPlayerViewModelInput, MusicPlayerViewMode
     }
     
     func pauseMusic() {
-        audioPlayUseCase.controlAudioPlay(audioFileName)
+        audioPlayUseCase.controlAudio(playState: .manual(false))
             .subscribe { [weak self] in
-                guard $0 else { return }
+                guard $0 == false else { return }
                 self?.isMusicPlaying.accept($0)
             } onFailure: { [weak self] in
                 self?.musicFileStatus.accept(.downloadFailed)
@@ -112,17 +141,18 @@ final class MusicPlayerViewModel: MusicPlayerViewModelInput, MusicPlayerViewMode
     }
     
     func checkMusicDownloaded() {
-        if let audioFileUrl = fetchMediaUrlUseCase.execute(fileName: audioFileName) {
-            musicFileStatus.accept(FileStatus.downloaded)
-        } else {
-            musicFileStatus.accept(FileStatus.isNotDownloaded)
-        }
+        fetchMediaURLUseCase.getMediaURLFromLocal(fileName: audioFileName)
+            .subscribe { [weak self] _ in
+                self?.musicFileStatus.accept(FileStatus.downloaded)
+                self?.checkMusicPlaying()
+            } onFailure: { [weak self] _ in
+                self?.musicFileStatus.accept(FileStatus.isNotDownloaded)
+            }
+            .disposed(by: disposeBag)
     }
     
     func checkMusicPlaying() {
-        let audioPlayManager = AudioPlayManager.shared
-        if let audioFileUrl = fetchMediaUrlUseCase.execute(fileName: audioFileName),
-           audioPlayManager.isPlaying(of: audioFileUrl) {
+        if audioPlayUseCase.isPlaying(using: audioFileName) {
             isMusicPlaying.accept(true)
         }
     }
@@ -142,5 +172,45 @@ final class MusicPlayerViewModel: MusicPlayerViewModelInput, MusicPlayerViewMode
             favoriteMediaUseCase.delete(id: id)
             isFavorite.accept(false)
         }
+    }
+    
+    func checkMediaMode() {
+        ApplicationMode.shared.mode.accept(mode == 0 ? .bright : .dark)
+    }
+    
+    func saveMediaFromMode() {
+        mediaListUseCase.saveMediaFromMode(id: id, mode: mode)
+            .subscribe { _ in
+                NotificationCenter.default.post(
+                    name: .refreshHome,
+                    object: nil,
+                    userInfo: [
+                        "RefreshType": [
+                            self.mode == 0 ? RefreshHomeData.brightMode : RefreshHomeData.darkMode
+                        ]
+                    ]
+                )
+            } onFailure: { error in
+                print(error.localizedDescription)
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    func removeMediaFromMode() {
+        mediaListUseCase.removeMediaFromMode(id: id, mode: mode)
+            .subscribe { _ in
+                NotificationCenter.default.post(
+                    name: .refreshHome,
+                    object: nil,
+                    userInfo: [
+                        "RefreshType": [
+                            self.mode == 0 ? RefreshHomeData.brightMode : RefreshHomeData.darkMode
+                        ]
+                    ]
+                )
+            } onFailure: { error in
+                print(error.localizedDescription)
+            }
+            .disposed(by: disposeBag)
     }
 }

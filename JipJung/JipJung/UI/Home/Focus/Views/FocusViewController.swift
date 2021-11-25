@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 
 class FocusViewController: UIViewController {
-    private let closeButton = CloseButton()
+    let closeButton = CloseButton()
     var disposeBag = DisposeBag()
     
     override func viewDidLoad() {

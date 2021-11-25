@@ -10,6 +10,10 @@ import Foundation
 import RxSwift
 
 final class MediaResourceRepository {
+    enum MediaResourceError: Error {
+        case notFound
+    }
+    
     private let bundleManager = BundleManager.shared
     private let localFileManager = LocalFileManager.shared
     private let remoteServiceProvider = RemoteServiceProvider.shared
@@ -27,6 +31,17 @@ final class MediaResourceRepository {
         
         return remoteServiceProvider.request(key: fileName, type: type)
             .map { try localFileManager.move(from: $0, to: fileName) }
+    }
+    
+    func getMediaURLFromLocal(fileName: String) -> Single<URL> {
+        if let fileURL = BundleManager.shared.findURL(fileNameWithExtension: fileName) {
+            return Single.just(fileURL)
+        }
+        if let fileURL = localFileManager.isExsit(fileName) {
+            return Single.just(fileURL)
+        }
+        
+        return Single.error(MediaResourceError.notFound)
     }
     
     func fetchData(fileName: String, type: MediaType) -> Single<Data> {

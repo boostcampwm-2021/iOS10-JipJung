@@ -220,7 +220,7 @@ final class InfinityFocusViewController: FocusViewController {
         startButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
-                self.viewModel?.changeTimerState(to: .running(isContinue: false))
+                self.viewModel?.changeTimerState(to: .running(isResume: false))
             }
             .disposed(by: disposeBag)
         
@@ -234,13 +234,14 @@ final class InfinityFocusViewController: FocusViewController {
         continueButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
-                self.viewModel?.changeTimerState(to: .running(isContinue: true))
+                self.viewModel?.changeTimerState(to: .running(isResume: true))
             }
             .disposed(by: disposeBag)
         
         exitButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
+                self.alertNotification()
                 self.viewModel?.changeTimerState(to: .ready)
                 self.viewModel?.resetClockTimer()
                 self.viewModel?.saveFocusRecord()
@@ -254,6 +255,19 @@ final class InfinityFocusViewController: FocusViewController {
                 self.startPulseAnimation(second: $0)
             })
             .disposed(by: disposeBag)
+    }
+    
+    private func alertNotification() {
+        guard let clockTime = self.viewModel?.clockTime.value else {
+            return
+        }
+        let happyEmojis = ["☺️", "😘", "😍", "🥳", "🤩"]
+        let minuteString = clockTime / 60 == 0 ? "" : "\(clockTime / 60)분 "
+        let secondString = clockTime % 60 == 0 ? "" : "\(clockTime % 60)초 "
+        let message = minuteString + secondString + "집중하셨어요!" + (happyEmojis.randomElement() ?? "")
+        PushNotificationMananger.shared.presentFocusStopNotification(title: .focusFinish,
+                                                                     body: message)
+        FeedbackGenerator.shared.impactOccurred()
     }
     
     private func changeStateToReady() {

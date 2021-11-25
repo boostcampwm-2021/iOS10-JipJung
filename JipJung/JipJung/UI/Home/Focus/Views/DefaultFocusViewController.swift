@@ -230,8 +230,12 @@ final class DefaultFocusViewController: FocusViewController {
                 switch $0 {
                 case .ready:
                     self.changeStateToReady()
-                case .running(let isContinue):
-                    self.changeStateToRunning()
+                case .running(let isResume):
+                    if isResume {
+                        self.changeStateToResume()
+                    } else {
+                        self.changeStateToStart(with: self.viewModel?.focusTime ?? 0)
+                    }
                 case .paused:
                     self.changeStateToPaused()
                 }
@@ -241,7 +245,7 @@ final class DefaultFocusViewController: FocusViewController {
         startButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
-                self.viewModel?.changeTimerState(to: .running(isContinue: false))
+                self.viewModel?.changeTimerState(to: .running(isResume: false))
             }
             .disposed(by: disposeBag)
         
@@ -255,16 +259,17 @@ final class DefaultFocusViewController: FocusViewController {
         continueButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
-                self.viewModel?.changeTimerState(to: .running(isContinue: true))
+                self.viewModel?.changeTimerState(to: .running(isResume: true))
             }
             .disposed(by: disposeBag)
         
         exitButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
+                self.alertNotification()
+                self.viewModel?.saveFocusRecord()
                 self.viewModel?.changeTimerState(to: .ready)
                 self.viewModel?.resetClockTimer()
-                self.viewModel?.saveFocusRecord()
             }
             .disposed(by: disposeBag)
         
@@ -274,13 +279,34 @@ final class DefaultFocusViewController: FocusViewController {
                       let focusTime = self.viewModel?.focusTime
                 else { return }
                 if $0 == focusTime {
+                    self.alertNotification()
+                    self.viewModel?.saveFocusRecord()
                     self.viewModel?.resetClockTimer()
+                    self.changeStateToReady()
                     return
                 }
                 self.timeLabel.text = (focusTime - $0).digitalClockFormatted
                 self.startPulseAnimation(second: $0)
             })
             .disposed(by: disposeBag)
+    }
+    
+    private func alertNotification() {
+        guard let focusTime = self.viewModel?.focusTime,
+              let clockTime = self.viewModel?.clockTime.value
+        else {
+            return
+        }
+        let sadEmojis = ["🥶", "😣", "😞", "😟", "😕"]
+        let happyEmojis = ["☺️", "😘", "😍", "🥳", "🤩"]
+        let minuteString = clockTime / 60 == 0 ? "" : "\(clockTime / 60)분 "
+        let secondString = clockTime % 60 == 0 ? "" : "\(clockTime % 60)초 "
+        let message = focusTime - clockTime > 0
+        ? "완료시간 전에 종료되었어요." + (sadEmojis.randomElement() ?? "")
+        : minuteString + secondString + "집중하셨어요!" + (happyEmojis.randomElement() ?? "")
+        PushNotificationMananger.shared.presentFocusStopNotification(title: .focusFinish,
+                                                                     body: message)
+        FeedbackGenerator.shared.impactOccurred()
     }
     
     private func changeStateToReady() {
@@ -312,20 +338,23 @@ final class DefaultFocusViewController: FocusViewController {
         }
     }
     
+    private func changeStateToStart(with duration: Int) {
+        changeStateToRunning()
+        resumeTimerProgressAnimation()
+        startTimeProgressAnimation(with: duration)
+    }
+    
+    private func changeStateToResume() {
+        changeStateToRunning()
+        resumeTimerProgressAnimation()
+    }
+    
     private func changeStateToRunning() {
         startButton.isHidden = true
         timeLabel.isHidden = false
         timePickerView.isHidden = true
         minuteLabel.isHidden = true
         viewModel?.startClockTimer()
-        switch viewModel?.timerState.value {
-        case .running(isContinue: true):
-            resumeTimerProgressAnimation()
-        case .running(isContinue: false):
-            startTimeProgressAnimation()
-        default:
-            break
-        }
         
         UIView.animate(withDuration: 0.5) { [weak self] in
             guard let self = self else { return }
@@ -392,11 +421,13 @@ final class DefaultFocusViewController: FocusViewController {
         return circleShapeLayer
     }
     
-    private func startTimeProgressAnimation() {
+    private func startTimeProgressAnimation(with duration: Int) {
         let animation = CABasicAnimation(keyPath: #keyPath(CAShapeLayer.strokeEnd))
         animation.fromValue = 0
         animation.toValue = 1
-        animation.duration = 100
+        print(duration)
+        print(CFTimeInterval(duration))
+        animation.duration = CFTimeInterval(duration)
         animation.fillMode = .backwards
         timeProgressLayer.add(animation, forKey: nil)
         timerView.layer.addSublayer(timeProgressLayer)

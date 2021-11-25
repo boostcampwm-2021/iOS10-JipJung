@@ -12,42 +12,49 @@ class MaximCalendarHeaderCollectionViewCell: UICollectionViewCell {
         let weekdayLabel = UILabel()
         weekdayLabel.font = .systemFont(ofSize: 20)
         weekdayLabel.textColor = .gray
-        weekdayLabel.text = "Today"
+        weekdayLabel.text = " "
         return weekdayLabel
     }()
     
     private lazy var dayButton: UIButton = {
         let dayButton = UIButton()
-        dayButton.setBackgroundImage(UIImage(systemName: "calendar"), for: .normal)
-        dayButton.setTitle("17", for: .normal)
-        dayButton.titleLabel?.font = .systemFont(ofSize: 24)
-        dayButton.setTitleColor(.black, for: .normal)
         dayButton.isUserInteractionEnabled = false
         dayButton.makeCircle()
+        dayButton.backgroundColor = .black
         return dayButton
     }()
+
+    var dayLabel: UILabel = {
+        let dayLabel = UILabel()
+        dayLabel.text = "15"
+        dayLabel.font = .systemFont(ofSize: 18, weight: .bold)
+        dayLabel.textColor = .white
+        return dayLabel
+    }()
     
-    var dayButtonText: String {
-        get {
-            dayButton.titleLabel?.text ?? ""
-        }
-        set {
-            dayButton.setTitle(newValue, for: .normal)
-        }
-    }
-    
-    var dayButtonImageURL: String = "" {
+    var dayButtonImageName: String = "" {
         didSet {
-            dayButton.setImage(UIImage(contentsOfFile: dayButtonImageURL), for: .normal)
+            dayButton.setBackgroundImage(UIImage(named: dayButtonImageName), for: .normal)
+            dayButton.backgroundColor = .black
+            dayButton.alpha = 0.8
         }
     }
     
-    private(set) lazy var indicatorPointView: UIView = {
+    private lazy var indicatorPointView: UIView = {
         let indicatorPointView = UIView()
         indicatorPointView.backgroundColor = .red
         indicatorPointView.isHidden = true
         return indicatorPointView
     }()
+    
+    var indicatorPointViewIsHidden: Bool {
+        get {
+            indicatorPointView.isHidden
+        }
+        set {
+            indicatorPointView.isHidden = newValue
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -93,6 +100,11 @@ class MaximCalendarHeaderCollectionViewCell: UICollectionViewCell {
             $0.height.equalTo(indicatorPointView.snp.width)
             $0.centerX.equalToSuperview()
             $0.top.equalTo(dayButton.snp.bottom).offset(10)
+        }
+        
+        addSubview(dayLabel)
+        dayLabel.snp.makeConstraints {
+            $0.center.equalTo(dayButton)
         }
     }
 }
