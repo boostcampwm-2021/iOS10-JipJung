@@ -41,7 +41,6 @@ final class HomeViewModel: HomeViewModelInput, HomeViewModelOutput {
     let currentModeList = BehaviorRelay<[Media]>(value: [])
     let favoriteSoundList = BehaviorRelay<[Media]>(value: [])
     let recentPlayHistory = BehaviorRelay<[Media]>(value: [])
-    let viewModelError = BehaviorRelay<Error>(value: nil)
     
     init() {
         Observable
