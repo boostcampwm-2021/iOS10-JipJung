@@ -42,33 +42,16 @@ class RealmDBManager {
         }
     }
     
-    func searchTest<T: Object>(ofType: T.Type) throws -> [T] {
+    func searchTest<T: Object>(ofType: T.Type, with predicate: NSPredicate? = nil) throws -> [T] {
         guard let realm = try? Realm() else {
             throw RealmError.initFailed
         }
         
-        return Array(realm.objects(T.self))
-    }
-    
-    func searchTest<T: Object>(ofType: T.Type, with predicate: NSPredicate?) throws -> [T] {
-        guard let realm = try? Realm() else {
-            throw RealmError.initFailed
-        }
         if let predicate = predicate {
-            let realmObjects = realm.objects(T.self).filter(predicate)
-            let elements = try? realmObjects.compactMap({ element throws in element})
-            if let elements = elements {
-                return elements
-            }
+            return Array(realm.objects(T.self).filter(predicate))
         } else {
-            let realmObjects = realm.objects(T.self)
-            let elements = try? realmObjects.compactMap({ element throws in element})
-            if let elements = elements {
-                return elements
-            }
+            return Array(realm.objects(T.self))
         }
-        
-        return []
     }
     
     func write(_ value: Object) -> Single<Bool> {
