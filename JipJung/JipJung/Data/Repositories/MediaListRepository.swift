@@ -12,6 +12,8 @@ import RxSwift
 final class MediaListRepository {
     private let localDBManager = RealmDBManager.shared
     
+    // MARK: Media
+    
     func read() -> Single<[Media]> {
         return Single.create { [weak self] single in
             guard let self = self else {
@@ -25,6 +27,40 @@ final class MediaListRepository {
             } catch {
                 single(.failure(RealmError.searchFailed))
             }
+            return Disposables.create()
+        }
+    }
+    
+    // MARK: MediaMode
+    
+    func create(mediaID: String, mode: Int) -> Single<Bool> {
+        return Single.create { [weak self] single in
+            guard let self = self else {
+                single(.failure(RealmError.initFailed))
+                return Disposables.create()
+            }
+            
+            // TODO: ViewModel에서 MediaMode를 가져오도록 변경 후 삭제
+            guard let mode = MediaMode(rawValue: mode) else {
+                single(.failure(RealmError.initFailed))
+                return Disposables.create()
+            }
+            
+            do {
+                switch mode {
+                case .bright:
+                    let brightMedia = BrightMedia(mediaID: mediaID)
+                    try brightMedia.autoIncrease()
+                    try self.localDBManager.add(brightMedia)
+                case .dark:
+                    let darknessMedia = DarknessMedia(mediaID: mediaID)
+                    try darknessMedia.autoIncrease()
+                    try self.localDBManager.add(darknessMedia)
+                }
+            } catch {
+                single(.failure(error))
+            }
+            
             return Disposables.create()
         }
     }
@@ -51,14 +87,13 @@ final class MediaListRepository {
                 }
                 
                 guard let ids = mediaMyList else {
-                    single(.failure(RealmError.searchFailed))
-                    return Disposables.create()
+                    throw RealmError.searchFailed
                 }
                 let predicate = NSPredicate.init(format: "id IN %@", ids)
                 let result = try self.localDBManager.searchTest(ofType: Media.self, with: predicate)
                 single(.success(result))
             } catch {
-                single(.failure(RealmError.searchFailed))
+                single(.failure(error))
             }
             return Disposables.create()
         }
@@ -70,10 +105,5 @@ final class MediaListRepository {
     
     func removeMediaFromMode(id: String, mode: Int) -> Single<Bool> {
         return localDBManager.deleteMediaInMode(mediaID: id, mode: mode)
-    }
-    
-    func saveMediaFromMode(id: String, mode: Int) -> Single<Bool> {
-        let data = mode == 0 ? BrightMedia(id: id) : DarknessMedia(id: id)
-        return localDBManager.write(data)
     }
 }

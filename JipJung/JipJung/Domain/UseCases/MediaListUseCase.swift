@@ -29,6 +29,6 @@ final class MediaListUseCase {
     }
     
     func saveMediaFromMode(id: String, mode: Int) -> Single<Bool>  {
-        return mediaListRepository.saveMediaFromMode(id: id, mode: mode)
+        return mediaListRepository.create(mediaID: id, mode: mode)
     }
 }
