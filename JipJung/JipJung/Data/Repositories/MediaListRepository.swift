@@ -12,8 +12,21 @@ import RxSwift
 final class MediaListRepository {
     private let localDBManager = RealmDBManager.shared
     
-    func fetchAllMediaList() -> Single<[Media]> {
-        return localDBManager.requestAllMediaList()
+    func read() -> Single<[Media]> {
+        return Single.create { [weak self] single in
+            guard let self = self else {
+                single(.failure(RealmError.initFailed))
+                return Disposables.create()
+            }
+            
+            do {
+                let result = try self.localDBManager.searchTest(ofType: Media.self)
+                single(.success(result))
+            } catch {
+                single(.failure(RealmError.searchFailed))
+            }
+            return Disposables.create()
+        }
     }
     
     func fetchMediaMyList(mode: MediaMode) -> Single<[Media]> {

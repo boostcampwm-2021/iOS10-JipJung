@@ -13,7 +13,7 @@ final class MediaListUseCase {
     private let mediaListRepository = MediaListRepository()
     
     func fetchAllMediaList() -> Single<[Media]> {
-        return mediaListRepository.fetchAllMediaList()
+        return mediaListRepository.read()
     }
     
     func fetchMediaMyList(mode: MediaMode) -> Single<[Media]> {

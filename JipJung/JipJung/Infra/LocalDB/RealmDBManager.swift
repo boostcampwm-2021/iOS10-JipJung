@@ -128,28 +128,6 @@ class RealmDBManager {
         }
     }
     
-    // MARK: Media - All Media
-    
-    func requestAllMediaList() -> Single<[Media]> {
-        let realm = try? Realm()
-        return Single.create { single in
-            guard let realm = realm else {
-                single(.failure(RealmError.initFailed))
-                return Disposables.create()
-            }
-            
-            let mediaList = realm.objects(Media.self)
-            let result = try? mediaList.compactMap({ element throws in element })
-            if let result = result {
-                single(.success(result))
-            } else {
-                single(.failure(RealmError.searchFailed))
-            }
-            
-            return Disposables.create()
-        }
-    }
-    
     // MARK: Media - Mode Media
     
     func requestMediaMyList(mode: MediaMode) -> Single<[Media]> {

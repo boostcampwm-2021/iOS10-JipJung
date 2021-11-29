@@ -49,7 +49,7 @@ final class SearchMediaUseCase {
     }
     
     private func fetchAllMediaList() {
-        mediaListRepository.fetchAllMediaList()
+        mediaListRepository.read()
             .subscribe { [weak self] in
                 self?.allMediaList.accept($0)
             } onFailure: { error in
