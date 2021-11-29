@@ -72,6 +72,10 @@ final class MusicPlayerViewController: UIViewController {
         viewModel?.checkMusicDownloaded()
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        viewModel?.pauseMusic()
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         playerLayer?.frame = topView.bounds
