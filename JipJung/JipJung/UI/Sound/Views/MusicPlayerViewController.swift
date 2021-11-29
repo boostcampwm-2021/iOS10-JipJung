@@ -72,6 +72,7 @@ final class MusicPlayerViewController: UIViewController {
     }
     
     override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
         viewModel?.pauseMusic()
     }
     
