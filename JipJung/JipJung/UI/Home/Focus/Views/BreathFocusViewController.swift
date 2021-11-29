@@ -98,6 +98,29 @@ final class BreathFocusViewController: FocusViewController {
         bindUI()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        startButton.alpha = 0
+        breathView.alpha = 0
+        let viewCenter = view.center
+        breathView.center = CGPoint(x: viewCenter.x, y: viewCenter.y * 0.9)
+        UIView.animate(withDuration: 0.6, delay: 0.3, options: []) { [weak self] in
+            self?.breathView.alpha = 1
+            self?.breathView.center = CGPoint(x: viewCenter.x, y: viewCenter.y * 0.8)
+            self?.startButton.alpha = 1
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        let viewCenter = view.center
+        UIView.animate(withDuration: 0.6) { [weak self] in
+            self?.breathView.center = viewCenter
+            self?.startButton.alpha = 0
+        }
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         breathShapeLayer.frame = breathView.bounds
@@ -109,7 +132,7 @@ final class BreathFocusViewController: FocusViewController {
     }
     
     // MARK: - Initializer
-
+    
     convenience init(viewModel: BreathFocusViewModel) {
         self.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
@@ -144,12 +167,12 @@ final class BreathFocusViewController: FocusViewController {
             $0.centerX.equalToSuperview()
         }
         
-        view.addSubview(timePickerView)
+        breathView.addSubview(timePickerView)
         timePickerView.snp.makeConstraints {
             $0.center.equalTo(breathView.snp.center)
         }
         
-        view.addSubview(minuteLabel)
+        breathView.addSubview(minuteLabel)
         minuteLabel.snp.makeConstraints {
             $0.centerY.equalTo(timePickerView)
             $0.centerX.equalTo(timePickerView.snp.centerX).offset(60)
@@ -192,18 +215,18 @@ final class BreathFocusViewController: FocusViewController {
             .skip(1)
             .distinctUntilChanged()
             .bind(onNext: { [weak self] in
-            guard let self = self else { return }
-            switch $0 {
-            case .running:
-                self.startBreath()
-            case .stop:
-                self.alertNotification()
-                self.stopBreath()
-                self.viewModel?.saveFocusRecord()
-                self.viewModel?.resetClockTimer()
-            }
-        }).disposed(by: disposeBag)
-
+                guard let self = self else { return }
+                switch $0 {
+                case .running:
+                    self.startBreath()
+                case .stop:
+                    self.alertNotification()
+                    self.stopBreath()
+                    self.viewModel?.saveFocusRecord()
+                    self.viewModel?.resetClockTimer()
+                }
+            }).disposed(by: disposeBag)
+        
         viewModel?.clockTime.bind(onNext: { [weak self] in
             guard let self = self else { return }
             if $0 % 7 == 3 {
@@ -226,7 +249,10 @@ final class BreathFocusViewController: FocusViewController {
                                delay: 0.0,
                                options: .allowUserInteraction,
                                animations: {
-                    self.view.layer.backgroundColor = .init(red: 129.0 / 255.0, green: 240.0 / 255.0, blue: 135.0 / 255.0, alpha: 0.8)
+                    self.view.layer.backgroundColor = .init(red: 129.0 / 255.0,
+                                                            green: 240.0 / 255.0,
+                                                            blue: 135.0 / 255.0,
+                                                            alpha: 0.8)
                 },
                                completion: nil)
             } else if $0 % 7 == 4 {
@@ -234,7 +260,10 @@ final class BreathFocusViewController: FocusViewController {
                                delay: 0.0,
                                options: .allowUserInteraction,
                                animations: {
-                    self.view.layer.backgroundColor = .init(red: 131.0 / 255.0, green: 79.0 / 255.0, blue: 163.0 / 255.0, alpha: 0.3)
+                    self.view.layer.backgroundColor = .init(red: 131.0 / 255.0,
+                                                            green: 79.0 / 255.0,
+                                                            blue: 163.0 / 255.0,
+                                                            alpha: 0.3)
                 },
                                completion: nil)
             }
@@ -263,9 +292,9 @@ final class BreathFocusViewController: FocusViewController {
         numberOfBreathLabel.isHidden = true
         timePickerView.isHidden = true
         minuteLabel.isHidden = true
-
+        
         startIntroAnimation()
-
+        
         // 진입 배경 애니메이션 연결 처리
         self.stopButton.layer.opacity = 0
         UIView.animate(withDuration: 0.4, delay: .zero, options: .curveEaseIn) {
@@ -276,10 +305,10 @@ final class BreathFocusViewController: FocusViewController {
             UIView.animate(withDuration: 3) {
                 self.view.layer.backgroundColor = .none
             }
-
+            
             // TODO: 버튼 동시 클릭 문제 해결, 버튼 나타나는 타이밍 조정하기
             DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
-                UIView.animate(withDuration: 2.0) {
+                UIView.animate(withDuration: 2.0, delay: .zero, options: .allowUserInteraction) {
                     self.stopButton.layer.opacity = 1
                 }
             }
@@ -316,11 +345,11 @@ final class BreathFocusViewController: FocusViewController {
         let scaleUpAnimation = CABasicAnimation(keyPath: "transform.scale")
         scaleUpAnimation.fromValue = 1.0
         scaleUpAnimation.toValue = 5.0
-
+        
         let opacityDownAnimation = CABasicAnimation(keyPath: "opacity")
         opacityDownAnimation.fromValue = 1.0
         opacityDownAnimation.toValue = 0.5
-
+        
         let introAnimations = CAAnimationGroup()
         introAnimations.animations = [scaleUpAnimation, opacityDownAnimation]
         introAnimations.repeatCount = 1
@@ -401,15 +430,7 @@ extension BreathFocusViewController: UIPickerViewDataSource {
     }
 }
 extension BreathFocusViewController: CAAnimationDelegate {
-    func animationDidStart(_ anim: CAAnimation) {
-        // MARK: 디버깅 할 때 필요해서 남겨 두었습니다
-        print(#function, #line)
-    }
-
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
-        // MARK: 디버깅 할 때 필요해서 남겨 두었습니다
-        print(#function, #line, flag, anim.description)
-
         viewModel?.changeState(to: .stop)
     }
 }
