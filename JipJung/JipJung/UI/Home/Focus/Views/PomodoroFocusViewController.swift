@@ -362,7 +362,7 @@ final class PomodoroFocusViewController: FocusViewController {
         case .running(isResume: true):
             resumeTimerProgressAnimation()
         case .running(isResume: false):
-            startTimeProgressAnimation()
+            startTimeProgressAnimation(with: viewModel?.focusTime ?? 0)
         default:
             break
         }
@@ -434,11 +434,11 @@ final class PomodoroFocusViewController: FocusViewController {
         return circleShapeLayer
     }
     
-    private func startTimeProgressAnimation() {
+    private func startTimeProgressAnimation(with duration: Int) {
         let animation = CABasicAnimation(keyPath: #keyPath(CAShapeLayer.strokeEnd))
         animation.fromValue = 0
         animation.toValue = 1
-        animation.duration = 100
+        animation.duration = CFTimeInterval(duration)
         animation.fillMode = .forwards
         timeProgressLayer.add(animation, forKey: nil)
         view.layer.addSublayer(timeProgressLayer)
