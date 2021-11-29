@@ -48,7 +48,7 @@ final class PlayHistoryRepository {
                 
                 let playHistoryIDs = Array(playHistoryDict.keys)
                 let predicate = NSPredicate.init(format: "id IN %@", playHistoryIDs)
-                let filteredMedia = self.localDBManager.searchTest(ofType: Media.self, with: predicate)
+                let filteredMedia = try self.localDBManager.searchTest(ofType: Media.self, with: predicate)
                 let result = filteredMedia.sorted {
                     guard let lhs = playHistoryDict[$0.id],
                           let rhs = playHistoryDict[$1.id]

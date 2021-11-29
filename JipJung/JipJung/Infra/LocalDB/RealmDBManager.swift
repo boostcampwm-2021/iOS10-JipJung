@@ -50,9 +50,9 @@ class RealmDBManager {
         return Array(realm.objects(T.self))
     }
     
-    func searchTest<T: Object>(ofType: T.Type, with predicate: NSPredicate?) -> [T] {
+    func searchTest<T: Object>(ofType: T.Type, with predicate: NSPredicate?) throws -> [T] {
         guard let realm = try? Realm() else {
-            return []
+            throw RealmError.initFailed
         }
         if let predicate = predicate {
             let realmObjects = realm.objects(T.self).filter(predicate)
@@ -123,43 +123,6 @@ class RealmDBManager {
                 })
             } catch {
                 single(.failure(error))
-            }
-            return Disposables.create()
-        }
-    }
-    
-    // MARK: Media - Mode Media
-    
-    func requestMediaMyList(mode: MediaMode) -> Single<[Media]> {
-        let realm = try? Realm()
-        return Single.create { single in
-            guard let realm = realm else {
-                single(.failure(RealmError.initFailed))
-                return Disposables.create()
-            }
-            
-            var mediaMyListIDs: [String]?
-            
-            switch mode {
-            case .bright:
-                let mediaMyList = realm.objects(BrightMedia.self)
-                mediaMyListIDs = try? mediaMyList.compactMap({ element throws in element.id})
-            case .dark:
-                let mediaMyList = realm.objects(DarknessMedia.self)
-                mediaMyListIDs = try? mediaMyList.compactMap({ element throws in element.id})
-            }
-            
-            guard let ids = mediaMyListIDs else {
-                single(.failure(RealmError.searchFailed))
-                return Disposables.create()
-            }
-            
-            let filteredMedia = realm.objects(Media.self).filter("id IN %@", ids)
-            let result = try? filteredMedia.compactMap({ element throws in element})
-            if let result = result {
-                single(.success(result))
-            } else {
-                single(.failure(RealmError.searchFailed))
             }
             return Disposables.create()
         }

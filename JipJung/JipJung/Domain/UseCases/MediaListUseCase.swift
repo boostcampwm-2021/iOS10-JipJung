@@ -17,7 +17,7 @@ final class MediaListUseCase {
     }
     
     func fetchMediaMyList(mode: MediaMode) -> Single<[Media]> {
-        return mediaListRepository.fetchMediaMyList(mode: mode)
+        return mediaListRepository.read(for: mode)
     }
     
     func removeMediaFromMode(media: Media) -> Single<Bool> {
