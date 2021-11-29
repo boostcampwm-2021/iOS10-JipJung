@@ -258,8 +258,6 @@ class CarouselView: UIView {
                 self.previousView.pauseVideo()
                 self.currentView.pauseVideo()
                 self.nextView.pauseVideo()
-                
-                self.mediaPlayViewTapped()
             case .right:
                 let currentIndex = self.currentIndex.value
                 let contentsCount = self.contents.value.count
@@ -275,8 +273,6 @@ class CarouselView: UIView {
                 self.previousView.pauseVideo()
                 self.currentView.pauseVideo()
                 self.nextView.pauseVideo()
-                
-                self.mediaPlayViewTapped()
             case .none:
                 break
             }
