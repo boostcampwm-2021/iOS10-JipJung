@@ -32,7 +32,6 @@ final class MusicPlayerViewController: UIViewController {
         let button = UIButton(type: .system)
         button.titleLabel?.font = .boldSystemFont(ofSize: 16)
         button.backgroundColor = .white
-        button.setTitle("Download To Play", for: .normal)
         button.layer.cornerRadius = 8
         return button
     }()
@@ -70,6 +69,11 @@ final class MusicPlayerViewController: UIViewController {
         configureUI()
         bindUI()
         viewModel?.checkMusicDownloaded()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        viewModel?.pauseMusic()
     }
     
     override func viewDidLayoutSubviews() {
@@ -277,6 +281,7 @@ final class MusicPlayerViewController: UIViewController {
             .disposed(by: disposeBag)
         
         viewModel?.musicFileStatus
+            .distinctUntilChanged()
             .bind(onNext: { [weak self] state in
                 guard let self = self else { return }
                 DispatchQueue.main.async {
