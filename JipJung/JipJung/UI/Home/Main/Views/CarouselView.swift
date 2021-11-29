@@ -14,7 +14,7 @@ import SnapKit
 protocol CarouselViewDelegate: AnyObject {
     func currentViewTapped()
     func currentViewDownSwiped(media: Media)
-    func currentViewAppear(audioFileName: String, autoPlay: Bool)
+    func currentViewAppear(media: Media, autoPlay: Bool)
 }
 
 class CarouselView: UIView {
@@ -258,8 +258,6 @@ class CarouselView: UIView {
                 self.previousView.pauseVideo()
                 self.currentView.pauseVideo()
                 self.nextView.pauseVideo()
-                
-                self.mediaPlayViewTapped()
             case .right:
                 let currentIndex = self.currentIndex.value
                 let contentsCount = self.contents.value.count
@@ -275,8 +273,6 @@ class CarouselView: UIView {
                 self.previousView.pauseVideo()
                 self.currentView.pauseVideo()
                 self.nextView.pauseVideo()
-                
-                self.mediaPlayViewTapped()
             case .none:
                 break
             }
@@ -316,7 +312,7 @@ class CarouselView: UIView {
             return
         }
 
-        delegate.currentViewAppear(audioFileName: media.audioFileName, autoPlay: autoPlay)
+        delegate.currentViewAppear(media: media, autoPlay: autoPlay)
     }
 }
 
@@ -354,7 +350,7 @@ extension CarouselView {
             applyPaging(with: .none)
             mediaPlayViewTapped()
             return
-        } else if abs(distance.x) < 30 && abs(distance.y) > 100 {
+        } else if abs(distance.x) < 30 && distance.y > 100 {
             applyPaging(with: .none)
             mediaPlayViewDownSwiped()
         } else {

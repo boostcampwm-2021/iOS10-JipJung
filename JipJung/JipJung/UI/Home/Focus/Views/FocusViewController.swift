@@ -31,7 +31,13 @@ class FocusViewController: UIViewController {
     
     private func bindCloseButton() {
         closeButton.rx.tap.bind { [weak self] _ in
-            self?.dismiss(animated: true)
+            self?.dismiss(animated: true) {
+                NotificationCenter.default.post(
+                    name: .showCarouselView,
+                    object: nil,
+                    userInfo: nil
+                )
+            }
         }
         .disposed(by: disposeBag)
     }
