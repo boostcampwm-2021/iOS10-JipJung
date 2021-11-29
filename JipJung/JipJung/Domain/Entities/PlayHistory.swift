@@ -17,9 +17,22 @@ class PlayHistory: Object, Decodable {
         super.init()
     }
     
-    convenience init(id: Int, mediaID: String) {
+    convenience init(id: Int = -1, mediaID: String) {
         self.init()
         self.id = id
         self.mediaID = mediaID
+    }
+    
+    func autoIncrease() throws {
+        guard let realm = try? Realm() else {
+            throw RealmError.initFailed
+        }
+        
+        var idCount = 0
+        if let lastHistory = realm.objects(PlayHistory.self).last {
+            idCount = lastHistory.id + 1
+        }
+        
+        id = idCount
     }
 }

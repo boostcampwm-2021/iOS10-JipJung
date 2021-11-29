@@ -12,8 +12,23 @@ import RxSwift
 final class PlayHistoryRepository {
     private let localDBManager = RealmDBManager.shared
     
-    func addPlayHistory(mediaID: String) -> Single<Bool> {
-        return localDBManager.createPlayHistory(mediaID: mediaID)
+    func create(mediaID: String) -> Single<Bool> {
+        return Single.create { [weak self] single in
+            guard let self = self else {
+                single(.failure(RealmError.initFailed))
+                return Disposables.create()
+            }
+            
+            do {
+                let newHistory = PlayHistory(mediaID: mediaID)
+                try newHistory.autoIncrease()
+                try self.localDBManager.add(newHistory)
+            } catch {
+                single(.failure(error))
+            }
+            single(.success(true))
+            return Disposables.create()
+        }
     }
     
     func read() -> Single<[Media]> {
@@ -51,11 +66,4 @@ final class PlayHistoryRepository {
             return Disposables.create()
         }
     }
-    
-//    func testPlayHistory() {
-//        let result = localDBManager.searchTest(ofType: FavoriteMedia.self).map { $0.id }
-//        let predicate = NSPredicate.init(format: "id IN %@", result)
-//        let result2 = localDBManager.searchTest(ofType: Media.self, with: predicate)
-//        print(#function, result2)
-//    }
 }

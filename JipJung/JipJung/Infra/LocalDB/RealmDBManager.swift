@@ -86,6 +86,20 @@ class RealmDBManager {
         }
     }
     
+    func add(_ value: Object) throws {
+        guard let realm = try? Realm() else {
+            throw RealmError.initFailed
+        }
+        
+        do {
+            try realm.write({
+                realm.add(value, update: .all)
+            })
+        } catch {
+            throw RealmError.addFailed
+        }
+    }
+    
     func writeData(_ value: Object) throws {
         guard let realm = try? Realm() else {
             throw RealmError.initFailed
@@ -95,7 +109,7 @@ class RealmDBManager {
                 realm.add(value, update: .all)
             })
         } catch {
-            throw RealmError.writeFailed
+            throw RealmError.addFailed
         }
     }
     
@@ -192,28 +206,6 @@ class RealmDBManager {
                 single(.success(true))
             } catch {
                 single(.failure(RealmError.deleteFailed))
-            }
-            return Disposables.create()
-        }
-    }
-    
-    func createPlayHistory(mediaID: String) -> Single<Bool> {
-        let realm = try? Realm()
-        return Single.create { single in
-            var idCount = 0
-            if let lastHistory = realm?.objects(PlayHistory.self).last {
-                idCount = lastHistory.id + 1
-            }
-            
-            let newHistory = PlayHistory(id: idCount, mediaID: mediaID)
-            
-            do {
-                try realm?.write({
-                    realm?.add(newHistory, update: .all)
-                    single(.success(true))
-                })
-            } catch {
-                single(.failure(error))
             }
             return Disposables.create()
         }
