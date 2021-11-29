@@ -181,6 +181,8 @@ final class MaximViewController: UIViewController {
             cell.dayButtonImageName = maxim.thumbnailImageAssetPath
             if self?.viewModel.selectedDate.value.item == index {
                 cell.indicatorPointViewIsHidden = false
+            } else {
+                cell.indicatorPointViewIsHidden = true
             }
             cell.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
         }
@@ -201,12 +203,6 @@ final class MaximViewController: UIViewController {
             currentCell?.indicatorPointViewIsHidden = false
         })
             .disposed(by: disposeBag)
-        // TODO: Today관련 bind
-//        viewModel.selectedDate.bind { [weak self] in
-//            guard let cell = self?.calendarHeaderCollectionView.cellForItem(at: $0) as? MaximCalendarHeaderCollectionViewCell else {
-//                return
-//            }
-//        }
     }
     
     private func showWeek(with indexPath: IndexPath) {
