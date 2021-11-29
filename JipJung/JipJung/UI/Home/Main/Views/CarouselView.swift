@@ -350,7 +350,7 @@ extension CarouselView {
             applyPaging(with: .none)
             mediaPlayViewTapped()
             return
-        } else if abs(distance.x) < 30 && abs(distance.y) > 100 {
+        } else if abs(distance.x) < 30 && distance.y > 100 {
             applyPaging(with: .none)
             mediaPlayViewDownSwiped()
         } else {
