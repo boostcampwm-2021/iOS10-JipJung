@@ -22,7 +22,7 @@ final class LoadFocusTimeUseCase {
         dateFormatter.timeZone = NSTimeZone(name: "UTC") as TimeZone?
         let dateObservable = Observable.from(Array(0..<nDays))
             .map({ date.addingTimeInterval(-oneDay * Double($0)) })
-        let focusRecordObservable = dateObservable.flatMap { self.focusTimeRepository.load(date: $0) }
+        let focusRecordObservable = dateObservable.flatMap { self.focusTimeRepository.read(date: $0) }
         return Observable.zip(dateObservable, focusRecordObservable)
             .map { date, focusRecords -> DateFocusRecordDTO in
                 let focusSecond = focusRecords.reduce(0) { $0 + $1.focusTime }
@@ -35,11 +35,15 @@ final class LoadFocusTimeUseCase {
     
     func execute(seconds time: Int) -> Single<Bool> {
         let currentDate = Date()
-        return focusTimeRepository.save(record: FocusRecord(id: UUID().uuidString,
-                                                            focusTime: time,
-                                                            year: currentDate.year,
-                                                            month: currentDate.month,
-                                                            day: currentDate.day,
-                                                            hour: currentDate.hour))
+        return focusTimeRepository.create(
+            record: FocusRecord(
+                id: UUID().uuidString,
+                focusTime: time,
+                year: currentDate.year,
+                month: currentDate.month,
+                day: currentDate.day,
+                hour: currentDate.hour
+            )
+        )
     }
 }
