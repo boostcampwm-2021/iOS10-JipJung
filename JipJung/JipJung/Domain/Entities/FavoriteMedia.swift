@@ -10,16 +10,29 @@ import Foundation
 import RealmSwift
 
 class FavoriteMedia: Object, Decodable {
-    @Persisted(primaryKey: true) var id: String
-    @Persisted var addDate: Date
+    @Persisted(primaryKey: true) var id: Int
+    @Persisted var mediaID: String
     
     private override init() {
         super.init()
     }
     
-    convenience init(id: String, addDate: Date) {
+    convenience init(id: Int = -1, mediaID: String) {
         self.init()
         self.id = id
-        self.addDate = addDate
+        self.mediaID = mediaID
+    }
+    
+    func autoIncrease() throws {
+        guard let realm = try? Realm() else {
+            throw RealmError.initFailed
+        }
+        
+        var idCount = 0
+        if let lastHistory = realm.objects(PlayHistory.self).last {
+            idCount = lastHistory.id + 1
+        }
+        
+        id = idCount
     }
 }

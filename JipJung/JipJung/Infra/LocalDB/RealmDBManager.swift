@@ -124,31 +124,4 @@ class RealmDBManager {
             throw RealmError.deleteFailed
         }
     }
-    
-    func requestFavoriteMediaList() -> Single<[Media]> {
-        let realm = try? Realm()
-        return Single.create { single in
-            guard let realm = realm else {
-                single(.failure(RealmError.initFailed))
-                return Disposables.create()
-            }
-            
-            let favoriteMediaList = realm.objects(FavoriteMedia.self)
-            let favoriteMediaIDs = try? favoriteMediaList.compactMap({ element throws in element.id})
-            
-            guard let ids = favoriteMediaIDs else {
-                single(.failure(RealmError.searchFailed))
-                return Disposables.create()
-            }
-            
-            let filteredMedia = realm.objects(Media.self).filter("id IN %@", ids)
-            let result = try? filteredMedia.compactMap({ element throws in element})
-            if let result = result {
-                single(.success(result))
-            } else {
-                single(.failure(RealmError.searchFailed))
-            }
-            return Disposables.create()
-        }
-    }
 }

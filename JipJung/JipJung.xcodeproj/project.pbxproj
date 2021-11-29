@@ -128,7 +128,7 @@
 		B42226CC2741134100F8CA3D /* UICollectionView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42226CB2741134100F8CA3D /* UICollectionView+Extension.swift */; };
 		B42226CE2741144200F8CA3D /* UITableView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42226CD2741144200F8CA3D /* UITableView+Extension.swift */; };
 		B481FC7D274521B800D1F2EA /* FavoriteMediaUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B481FC7C274521B800D1F2EA /* FavoriteMediaUseCase.swift */; };
-		B481FC7F2745238100D1F2EA /* MyFavoriteRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B481FC7E2745238100D1F2EA /* MyFavoriteRepository.swift */; };
+		B481FC7F2745238100D1F2EA /* FavoriteRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B481FC7E2745238100D1F2EA /* FavoriteRepository.swift */; };
 		B490FDBE274B771F008A4454 /* ApplicationMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B490FDBD274B771F008A4454 /* ApplicationMode.swift */; };
 		B490FE30274C9C2B008A4454 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B490FE2E274C9C2B008A4454 /* Assets.xcassets */; };
 		B490FE38274CBEB3008A4454 /* ClubSKScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B490FE37274CBEB3008A4454 /* ClubSKScene.swift */; };
@@ -354,7 +354,7 @@
 		B42226CB2741134100F8CA3D /* UICollectionView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Extension.swift"; sourceTree = "<group>"; };
 		B42226CD2741144200F8CA3D /* UITableView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Extension.swift"; sourceTree = "<group>"; };
 		B481FC7C274521B800D1F2EA /* FavoriteMediaUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteMediaUseCase.swift; sourceTree = "<group>"; };
-		B481FC7E2745238100D1F2EA /* MyFavoriteRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFavoriteRepository.swift; sourceTree = "<group>"; };
+		B481FC7E2745238100D1F2EA /* FavoriteRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteRepository.swift; sourceTree = "<group>"; };
 		B490FDBD274B771F008A4454 /* ApplicationMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationMode.swift; sourceTree = "<group>"; };
 		B490FE2E274C9C2B008A4454 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B490FE37274CBEB3008A4454 /* ClubSKScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClubSKScene.swift; sourceTree = "<group>"; };
@@ -561,7 +561,7 @@
 				91655859273B78A000C55CDC /* MediaListRepository.swift */,
 				9165585D273B8F5000C55CDC /* MaximListRepository.swift */,
 				B4EF13B2274293220086D8CD /* SearchHistoryRepository.swift */,
-				B481FC7E2745238100D1F2EA /* MyFavoriteRepository.swift */,
+				B481FC7E2745238100D1F2EA /* FavoriteRepository.swift */,
 				91A98C90274D58EF00E7DCC8 /* PlayHistoryRepository.swift */,
 			);
 			path = Repositories;
@@ -1418,7 +1418,7 @@
 				DFED21CB2733702800E99641 /* MusicPlayerViewController.swift in Sources */,
 				9131514127400FBB001E7125 /* UIApplication+Extension.swift in Sources */,
 				DF6B111127390F1900D9924E /* MediaResourceRepository.swift in Sources */,
-				B481FC7F2745238100D1F2EA /* MyFavoriteRepository.swift in Sources */,
+				B481FC7F2745238100D1F2EA /* FavoriteRepository.swift in Sources */,
 				DDB5CEB82733765500E8F9EB /* FavoriteMaxim.swift in Sources */,
 				DD82808C273CAE5F00BB2A60 /* FocusViewControllerFactory.swift in Sources */,
 				B4B780E12741F7070080DC28 /* BreathFocusViewModel.swift in Sources */,
