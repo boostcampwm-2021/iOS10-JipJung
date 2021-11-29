@@ -41,7 +41,7 @@ final class FocusTimeRepository: FocusTimeRepositoryProtocol {
             }
             
             do {
-                let predictate = NSPredicate(
+                let predicate = NSPredicate(
                     format: "(year = %@) AND (month = %@) AND (day = %@)",
                     argumentArray: [
                         date.year,
@@ -51,7 +51,7 @@ final class FocusTimeRepository: FocusTimeRepositoryProtocol {
                 )
                 let result = try self.localDBManager.searchTest(
                     ofType: FocusRecord.self,
-                    with: predictate
+                    with: predicate
                 )
                 single(.success(result))
             } catch {
