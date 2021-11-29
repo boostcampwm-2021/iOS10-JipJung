@@ -43,11 +43,11 @@ final class MediaListRepository {
                 case .bright:
                     mediaMyList = try self.localDBManager.searchTest(
                         ofType: BrightMedia.self
-                    ).map { $0.id }
+                    ).map { $0.mediaID }
                 case .dark:
                     mediaMyList = try self.localDBManager.searchTest(
                         ofType: DarknessMedia.self
-                    ).map { $0.id }
+                    ).map { $0.mediaID }
                 }
                 
                 guard let ids = mediaMyList else {
