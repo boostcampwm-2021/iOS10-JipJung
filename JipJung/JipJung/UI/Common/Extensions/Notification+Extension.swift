@@ -9,4 +9,5 @@ import Foundation
 
 extension Notification.Name {
     static let refreshHome = Notification.Name("RefreshHome")
+    static let showCarouselView = Notification.Name("ShowCarouselView")
 }

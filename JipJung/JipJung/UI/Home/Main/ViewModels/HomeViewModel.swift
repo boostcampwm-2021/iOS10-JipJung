@@ -16,7 +16,7 @@ protocol HomeViewModelInput {
     func modeSwitchTouched()
     func mediaPlayViewTapped() -> Single<Bool>
     func mediaPlayViewDownSwiped(media: Media) -> Single<Bool>
-    func mediaPlayViewAppear(_ audioFileName: String, autoPlay: Bool) -> Single<Bool>
+    func mediaPlayViewAppear(media: Media, autoPlay: Bool)
 }
 
 protocol HomeViewModelOutput {
@@ -41,12 +41,12 @@ final class HomeViewModel: HomeViewModelInput, HomeViewModelOutput {
     let currentModeList = BehaviorRelay<[Media]>(value: [])
     let favoriteSoundList = BehaviorRelay<[Media]>(value: [])
     let recentPlayHistory = BehaviorRelay<[Media]>(value: [])
+    let viewModelError = BehaviorRelay<Error>(value: nil)
     
     init() {
         Observable
             .combineLatest(mode, brightMode, darknessMode) { ($0, $1, $2) }
             .subscribe { [weak self] mode, brightModeList, darknessModeList in
-                print(mode, brightModeList.count, darknessModeList.count)
                 if mode == .bright {
                     self?.currentModeList.accept(brightModeList)
                 } else {
@@ -96,8 +96,12 @@ final class HomeViewModel: HomeViewModelInput, HomeViewModelOutput {
         return mediaListUseCase.removeMediaFromMode(media: media)
     }
     
-    func mediaPlayViewAppear(_ audioFileName: String, autoPlay: Bool = false) -> Single<Bool> {
-        return audioPlayUseCase.readyToPlay(audioFileName, autoPlay: autoPlay)
+    func mediaPlayViewAppear(media: Media, autoPlay: Bool = false) {
+        audioPlayUseCase.readyToPlay(media.audioFileName, autoPlay: autoPlay)
+            .subscribe(onFailure: { error in
+                print(error.localizedDescription)
+            })
+            .disposed(by: disposeBag)
     }
     
     private func fetchMediaMyList(mode: MediaMode) {

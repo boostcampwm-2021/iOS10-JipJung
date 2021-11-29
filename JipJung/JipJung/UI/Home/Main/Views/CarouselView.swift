@@ -14,7 +14,7 @@ import SnapKit
 protocol CarouselViewDelegate: AnyObject {
     func currentViewTapped()
     func currentViewDownSwiped(media: Media)
-    func currentViewAppear(audioFileName: String, autoPlay: Bool)
+    func currentViewAppear(media: Media, autoPlay: Bool)
 }
 
 class CarouselView: UIView {
@@ -312,7 +312,7 @@ class CarouselView: UIView {
             return
         }
 
-        delegate.currentViewAppear(audioFileName: media.audioFileName, autoPlay: autoPlay)
+        delegate.currentViewAppear(media: media, autoPlay: autoPlay)
     }
 }
 

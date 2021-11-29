@@ -114,17 +114,9 @@ class HomeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if let currentMedia = carouselView.getMediaFromCurrentView() {
-            viewModel.mediaPlayViewAppear(currentMedia.audioFileName)
-                .subscribe { [weak self] state in
-                    if state {
-                        self?.carouselView.playVideoInCurrentView()
-                    }
-                } onFailure: { error in
-                    print(error.localizedDescription)
-                }
-                .disposed(by: disposeBag)
-        }
+        guard let media = carouselView.getMediaFromCurrentView() else { return }
+        
+        viewModel.mediaPlayViewAppear(media: media)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -155,12 +147,25 @@ class HomeViewController: UIViewController {
             name: .refreshHome,
             object: nil
         )
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(showCarouselView(_:)),
+            name: .showCarouselView,
+            object: nil
+        )
     }
     
     @objc private func refresh(_ sender: Notification) {
         guard let typeList = sender.userInfo?["RefreshType"] as? [RefreshHomeData] else { return }
 
         viewModel.refresh(typeList: typeList)
+    }
+    
+    @objc private func showCarouselView(_ sender: Notification) {
+        guard let media = carouselView.getMediaFromCurrentView() else { return }
+        
+        viewModel.mediaPlayViewAppear(media: media)
     }
     
     private func configureTopBottomViewGap() {
@@ -656,17 +661,7 @@ extension HomeViewController: CarouselViewDelegate {
         present(alert, animated: true)
     }
     
-    func currentViewAppear(audioFileName: String, autoPlay: Bool) {
-        return viewModel.mediaPlayViewAppear(audioFileName, autoPlay: autoPlay)
-            .subscribe { [weak self] state in
-                if state {
-                    self?.carouselView.playVideoInCurrentView()
-                } else {
-                    self?.carouselView.pauseVideoInCurrentView()
-                }
-            } onFailure: { error in
-                print(error.localizedDescription)
-            }
-            .disposed(by: disposeBag)
+    func currentViewAppear(media: Media, autoPlay: Bool) {
+        return viewModel.mediaPlayViewAppear(media: media, autoPlay: autoPlay)
     }
 }
