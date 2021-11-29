@@ -19,7 +19,7 @@ protocol PomodoroFocusViewModelInput {
     func startClockTimer()
     func pauseClockTimer()
     func resetClockTimer()
-    func setFocusTime(seconds: Int)
+    func setFocusTime(value: Int)
     func saveFocusRecord()
 }
 
@@ -35,8 +35,9 @@ final class PomodoroFocusViewModel: PomodoroFocusViewModelInput, PomodoroFocusVi
     var timerState: BehaviorRelay<TimerState> = BehaviorRelay<TimerState>(value: .ready)
     var mode: BehaviorRelay<PomodoroMode> = BehaviorRelay<PomodoroMode>(value: .work)
     let focusTimeList: [Int] = [1, 5, 8, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180]
-    var focusTime: Int = 60
+    lazy var focusTime: Int = timeUnit
     var totalFocusTime: Int = 0
+    let timeUnit = 5
     
     private var runningStateDisposeBag: DisposeBag = DisposeBag()
     private var disposeBag: DisposeBag = DisposeBag()
@@ -74,8 +75,8 @@ final class PomodoroFocusViewModel: PomodoroFocusViewModelInput, PomodoroFocusVi
         runningStateDisposeBag = DisposeBag()
     }
     
-    func setFocusTime(seconds: Int) {
-        focusTime = seconds
+    func setFocusTime(value: Int) {
+        focusTime = value * timeUnit
     }
     
     func saveFocusRecord() {

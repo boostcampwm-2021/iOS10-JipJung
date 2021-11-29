@@ -23,7 +23,7 @@ final class PomodoroFocusViewController: FocusViewController {
     
     private lazy var minuteLabel: UILabel = {
         let minuteLabel = UILabel()
-        minuteLabel.text = "min"
+        minuteLabel.text = "sec"
         minuteLabel.textColor = .systemGray
         
         return minuteLabel
@@ -353,16 +353,22 @@ final class PomodoroFocusViewController: FocusViewController {
     }
     
     private func changeStateToRunning() {
+        // NOTE: 아직 다른 집중모드 코드에서는 이 옵셔널 바인딩하는 코드를 추가하지 않았음
+        guard let viewModel = viewModel else {
+            return
+        }
         startButton.isHidden = true
         timeLabel.isHidden = false
         timePickerView.isHidden = true
         minuteLabel.isHidden = true
-        viewModel?.startClockTimer()
-        switch viewModel?.timerState.value {
+        viewModel.startClockTimer()
+
+        switch viewModel.timerState.value {
         case .running(isResume: true):
             resumeTimerProgressAnimation()
         case .running(isResume: false):
-            startTimeProgressAnimation(with: viewModel?.focusTime ?? 0)
+            resumeTimerProgressAnimation()
+            startTimeProgressAnimation(with: viewModel.focusTime)
         default:
             break
         }
@@ -465,19 +471,24 @@ final class PomodoroFocusViewController: FocusViewController {
 
 extension PomodoroFocusViewController: UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        let focusTime = (viewModel?.focusTimeList[row] ?? 0) * 60
-        viewModel?.setFocusTime(seconds: focusTime)
-        self.timeLabel.text = focusTime.digitalClockFormatted
+        let pickerValue = (viewModel?.focusTimeList[row] ?? 0)
+        viewModel?.setFocusTime(value: pickerValue)
+        self.timeLabel.text = pickerValue.digitalClockFormatted
     }
     
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
-        guard let minuteInfo = viewModel?.focusTimeList[row] else { return UILabel() }
+        // NOTE: 시연 용이성을 위해 변경
+        guard let viewModel = viewModel else {
+            return UILabel()
+        }
+        let pickerValue = viewModel.focusTimeList[row]
+        let text = "\(pickerValue * viewModel.timeUnit)"
         timePickerView.subviews.forEach {
             $0.backgroundColor = .clear
         }
         var pickerLabel: UILabel = UILabel()
         pickerLabel = UILabel()
-        pickerLabel.text = "\(minuteInfo)"
+        pickerLabel.text = "\(text)"
         pickerLabel.textColor = UIColor.white
         pickerLabel.font = UIFont.systemFont(ofSize: 35)
         pickerLabel.textAlignment = .center
