@@ -29,7 +29,7 @@ class PlayHistory: Object, Decodable {
         }
         
         var idCount = 0
-        if let lastHistory = realm.objects(PlayHistory.self).last {
+        if let lastHistory = realm.objects(Self.self).last {
             idCount = lastHistory.id + 1
         }
         
