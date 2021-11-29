@@ -17,6 +17,6 @@ final class PlayHistoryUseCase {
     }
     
     func fetchPlayHistory() -> Single<[Media]> {
-        return playHistoryRepository.fetchPlayHistory()
+        return playHistoryRepository.read()
     }
 }

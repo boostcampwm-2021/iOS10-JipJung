@@ -42,6 +42,35 @@ class RealmDBManager {
         }
     }
     
+    func searchTest<T: Object>(ofType: T.Type) throws -> [T] {
+        guard let realm = try? Realm() else {
+            throw RealmError.initFailed
+        }
+        
+        return Array(realm.objects(T.self))
+    }
+    
+    func searchTest<T: Object>(ofType: T.Type, with predicate: NSPredicate?) -> [T] {
+        guard let realm = try? Realm() else {
+            return []
+        }
+        if let predicate = predicate {
+            let realmObjects = realm.objects(T.self).filter(predicate)
+            let elements = try? realmObjects.compactMap({ element throws in element})
+            if let elements = elements {
+                return elements
+            }
+        } else {
+            let realmObjects = realm.objects(T.self)
+            let elements = try? realmObjects.compactMap({ element throws in element})
+            if let elements = elements {
+                return elements
+            }
+        }
+        
+        return []
+    }
+    
     func write(_ value: Object) -> Single<Bool> {
         let realm = try? Realm()
         return Single.create { single in
@@ -163,41 +192,6 @@ class RealmDBManager {
                 single(.success(true))
             } catch {
                 single(.failure(RealmError.deleteFailed))
-            }
-            return Disposables.create()
-        }
-    }
-    
-    // MARK: Media - RecentPlayHistory
-    
-    func requestPlayHistory() -> Single<[Media]> {
-        let realm = try? Realm()
-        return Single.create { single in
-            guard let realm = realm else {
-                single(.failure(RealmError.initFailed))
-                return Disposables.create()
-            }
-            
-            var playHistoryDict: [String: Int] = [:]
-            realm.objects(PlayHistory.self)
-                .forEach { element in
-                    playHistoryDict[element.mediaID] = element.id
-                }
-            
-            let playHistoryIDs = Array(playHistoryDict.keys)
-            let filteredMedia = realm.objects(Media.self).filter("id IN %@", playHistoryIDs)
-            let result = try? filteredMedia.compactMap({ element throws in element}).sorted {
-                guard let lhs = playHistoryDict[$0.id],
-                      let rhs = playHistoryDict[$1.id]
-                else {
-                    return false
-                }
-                return lhs > rhs
-            }
-            if let result = result {
-                single(.success(result))
-            } else {
-                single(.failure(RealmError.searchFailed))
             }
             return Disposables.create()
         }
