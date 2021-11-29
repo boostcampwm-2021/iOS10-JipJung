@@ -21,7 +21,7 @@ final class MaximListRepository {
             
             do {
                 let predicate = NSPredicate(format: "date < %@", date as CVarArg)
-                let result = try self.localDBManager.searchTest(
+                let result = try self.localDBManager.objects(
                     ofType: Maxim.self,
                     with: predicate
                 )

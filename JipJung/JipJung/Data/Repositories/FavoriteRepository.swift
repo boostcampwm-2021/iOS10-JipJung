@@ -39,7 +39,7 @@ final class FavoriteRepository {
             }
             
             do {
-                let list = try self.localDBManager.searchTest(ofType: FavoriteMedia.self)
+                let list = try self.localDBManager.objects(ofType: FavoriteMedia.self)
                 
                 var favoriteDict: [String: Int] = [:]
                 list.forEach { element in
@@ -48,7 +48,7 @@ final class FavoriteRepository {
                 
                 let favoriteIDs = Array(favoriteDict.keys)
                 let predicate = NSPredicate.init(format: "id IN %@", favoriteIDs)
-                let filteredMedia = try self.localDBManager.searchTest(ofType: Media.self, with: predicate)
+                let filteredMedia = try self.localDBManager.objects(ofType: Media.self, with: predicate)
                 let result = filteredMedia.sorted {
                     guard let lhs = favoriteDict[$0.id],
                           let rhs = favoriteDict[$1.id]
@@ -76,7 +76,7 @@ final class FavoriteRepository {
             
             do {
                 let predicate = NSPredicate(format: "mediaID == %@", mediaID)
-                let result = try self.localDBManager.searchTest(
+                let result = try self.localDBManager.objects(
                     ofType: FavoriteMedia.self,
                     with: predicate
                 )
@@ -98,13 +98,13 @@ final class FavoriteRepository {
             do {
                 let predicate = NSPredicate(format: "mediaID = %@", mediaID)
                 
-                let deletingMedia = try self.localDBManager.searchTest(
+                let deletingMedia = try self.localDBManager.objects(
                     ofType: FavoriteMedia.self,
                     with: predicate
                 ).first
                 
                 if let deletingMedia = deletingMedia {
-                    try self.localDBManager.deleteTest(deletingMedia)
+                    try self.localDBManager.delete(deletingMedia)
                 }
                 
                 single(.success(true))

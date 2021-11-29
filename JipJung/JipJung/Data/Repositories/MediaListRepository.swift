@@ -22,7 +22,7 @@ final class MediaListRepository {
             }
             
             do {
-                let result = try self.localDBManager.searchTest(ofType: Media.self)
+                let result = try self.localDBManager.objects(ofType: Media.self)
                 single(.success(result))
             } catch {
                 single(.failure(RealmError.searchFailed))
@@ -77,11 +77,11 @@ final class MediaListRepository {
             do {
                 switch mode {
                 case .bright:
-                    mediaMyList = try self.localDBManager.searchTest(
+                    mediaMyList = try self.localDBManager.objects(
                         ofType: BrightMedia.self
                     ).map { $0.mediaID }
                 case .dark:
-                    mediaMyList = try self.localDBManager.searchTest(
+                    mediaMyList = try self.localDBManager.objects(
                         ofType: DarknessMedia.self
                     ).map { $0.mediaID }
                 }
@@ -90,7 +90,7 @@ final class MediaListRepository {
                     throw RealmError.searchFailed
                 }
                 let predicate = NSPredicate.init(format: "id IN %@", ids)
-                let result = try self.localDBManager.searchTest(ofType: Media.self, with: predicate)
+                let result = try self.localDBManager.objects(ofType: Media.self, with: predicate)
                 single(.success(result))
             } catch {
                 single(.failure(error))
@@ -117,22 +117,22 @@ final class MediaListRepository {
                 
                 switch mode {
                 case .bright:
-                    let deletingMedia = try self.localDBManager.searchTest(
+                    let deletingMedia = try self.localDBManager.objects(
                         ofType: BrightMedia.self,
                         with: predicate
                     ).first
                     
                     if let deletingMedia = deletingMedia {
-                        try self.localDBManager.deleteTest(deletingMedia)
+                        try self.localDBManager.delete(deletingMedia)
                     }
                 case .dark:
-                    let deletingMedia = try self.localDBManager.searchTest(
+                    let deletingMedia = try self.localDBManager.objects(
                         ofType: DarknessMedia.self,
                         with: predicate
                     ).first
                     
                     if let deletingMedia = deletingMedia {
-                        try self.localDBManager.deleteTest(deletingMedia)
+                        try self.localDBManager.delete(deletingMedia)
                     }
                 }
                 

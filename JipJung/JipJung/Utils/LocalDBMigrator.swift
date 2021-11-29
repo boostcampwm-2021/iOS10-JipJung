@@ -17,7 +17,7 @@ final class LocalDBMigrator {
     func migrate<T: Object>(dataList: [T]) throws {
         for data in dataList {
             do {
-                try RealmDBManager.shared.writeData(data)
+                try RealmDBManager.shared.add(data)
             } catch {
                 throw error
             }

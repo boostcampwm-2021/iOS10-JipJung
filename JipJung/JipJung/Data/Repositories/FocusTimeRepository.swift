@@ -49,7 +49,7 @@ final class FocusTimeRepository: FocusTimeRepositoryProtocol {
                         date.day
                     ]
                 )
-                let result = try self.localDBManager.searchTest(
+                let result = try self.localDBManager.objects(
                     ofType: FocusRecord.self,
                     with: predicate
                 )

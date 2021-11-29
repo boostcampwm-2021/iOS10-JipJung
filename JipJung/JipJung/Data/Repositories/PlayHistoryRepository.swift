@@ -39,7 +39,7 @@ final class PlayHistoryRepository {
             }
             
             do {
-                let list = try self.localDBManager.searchTest(ofType: PlayHistory.self)
+                let list = try self.localDBManager.objects(ofType: PlayHistory.self)
                 
                 var playHistoryDict: [String: Int] = [:]
                 list.forEach { element in
@@ -48,7 +48,7 @@ final class PlayHistoryRepository {
                 
                 let playHistoryIDs = Array(playHistoryDict.keys)
                 let predicate = NSPredicate.init(format: "id IN %@", playHistoryIDs)
-                let filteredMedia = try self.localDBManager.searchTest(ofType: Media.self, with: predicate)
+                let filteredMedia = try self.localDBManager.objects(ofType: Media.self, with: predicate)
                 let result = filteredMedia.sorted {
                     guard let lhs = playHistoryDict[$0.id],
                           let rhs = playHistoryDict[$1.id]
