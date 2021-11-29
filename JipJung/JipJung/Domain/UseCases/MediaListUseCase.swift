@@ -21,14 +21,14 @@ final class MediaListUseCase {
     }
     
     func removeMediaFromMode(media: Media) -> Single<Bool> {
-        return mediaListRepository.removeMediaFromMode(media: media)
+        return mediaListRepository.delete(mediaID: media.id, mode: media.mode)
     }
     
     func removeMediaFromMode(id: String, mode: Int) -> Single<Bool> {
-        mediaListRepository.removeMediaFromMode(id: id, mode: mode)
+        return mediaListRepository.delete(mediaID: id, mode: mode)
     }
     
-    func saveMediaFromMode(id: String, mode: Int) -> Single<Bool>  {
+    func saveMediaFromMode(id: String, mode: Int) -> Single<Bool> {
         return mediaListRepository.create(mediaID: id, mode: mode)
     }
 }

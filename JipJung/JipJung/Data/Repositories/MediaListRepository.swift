@@ -99,11 +99,48 @@ final class MediaListRepository {
         }
     }
     
-    func removeMediaFromMode(media: Media) -> Single<Bool> {
-        return localDBManager.deleteMediaInMode(mediaID: media.id, mode: media.mode)
-    }
-    
-    func removeMediaFromMode(id: String, mode: Int) -> Single<Bool> {
-        return localDBManager.deleteMediaInMode(mediaID: id, mode: mode)
+    func delete(mediaID: String, mode: Int) -> Single<Bool> {
+        return Single.create { [weak self] single in
+            guard let self = self else {
+                single(.failure(RealmError.initFailed))
+                return Disposables.create()
+            }
+            
+            // TODO: ViewModel에서 MediaMode를 가져오도록 변경 후 삭제
+            guard let mode = MediaMode(rawValue: mode) else {
+                single(.failure(RealmError.initFailed))
+                return Disposables.create()
+            }
+            
+            do {
+                let predicate = NSPredicate(format: "mediaID = %@", mediaID)
+                
+                switch mode {
+                case .bright:
+                    let deletingMedia = try self.localDBManager.searchTest(
+                        ofType: BrightMedia.self,
+                        with: predicate
+                    ).first
+                    
+                    if let deletingMedia = deletingMedia {
+                        try self.localDBManager.deleteTest(deletingMedia)
+                    }
+                case .dark:
+                    let deletingMedia = try self.localDBManager.searchTest(
+                        ofType: DarknessMedia.self,
+                        with: predicate
+                    ).first
+                    
+                    if let deletingMedia = deletingMedia {
+                        try self.localDBManager.deleteTest(deletingMedia)
+                    }
+                }
+                
+                single(.success(true))
+            } catch {
+                single(.failure(RealmError.deleteFailed))
+            }
+            return Disposables.create()
+        }
     }
 }

@@ -128,27 +128,17 @@ class RealmDBManager {
         }
     }
     
-    func deleteMediaInMode(mediaID: String, mode: Int) -> Single<Bool> {
-        let realm = try? Realm()
-        return Single.create { single in
-            guard let realm = realm else {
-                single(.failure(RealmError.initFailed))
-                return Disposables.create()
-            }
-            
-            let deletingMedia = realm.objects(
-                mode == 0 ? BrightMedia.self : DarknessMedia.self
-            ).filter("id = %@", mediaID)
-            
-            do {
-                try realm.write({
-                    realm.delete(deletingMedia)
-                })
-                single(.success(true))
-            } catch {
-                single(.failure(RealmError.deleteFailed))
-            }
-            return Disposables.create()
+    func deleteTest(_ value: Object) throws {
+        guard let realm = try? Realm() else {
+            throw RealmError.initFailed
+        }
+        
+        do {
+            try realm.write({
+                realm.delete(value)
+            })
+        } catch {
+            throw RealmError.deleteFailed
         }
     }
     
