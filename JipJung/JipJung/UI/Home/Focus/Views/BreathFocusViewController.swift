@@ -27,7 +27,7 @@ final class BreathFocusViewController: FocusViewController {
         return minuteLabel
     }()
     
-    private lazy var timeLabel: UILabel = {
+    private lazy var numberOfBreathLabel: UILabel = {
         let timeLabel = UILabel()
         timeLabel.text = "7 breaths"
         timeLabel.font = UIFont.boldSystemFont(ofSize: 21)
@@ -138,9 +138,9 @@ final class BreathFocusViewController: FocusViewController {
         }
         countdownView.isHidden = true
         
-        view.addSubview(timeLabel)
-        timeLabel.snp.makeConstraints {
-            $0.top.equalTo(breathView.snp.bottom).offset(10)
+        view.addSubview(numberOfBreathLabel)
+        numberOfBreathLabel.snp.makeConstraints {
+            $0.top.equalTo(view.snp.centerY).multipliedBy(1.2)
             $0.centerX.equalToSuperview()
         }
         
@@ -260,7 +260,7 @@ final class BreathFocusViewController: FocusViewController {
     private func startBreath() {
         startButton.isHidden = true
         stopButton.isHidden = false
-        timeLabel.isHidden = true
+        numberOfBreathLabel.isHidden = true
         timePickerView.isHidden = true
         minuteLabel.isHidden = true
 
@@ -300,7 +300,7 @@ final class BreathFocusViewController: FocusViewController {
     private func stopBreath() {
         startButton.isHidden = false
         stopButton.isHidden = true
-        timeLabel.isHidden = false
+        numberOfBreathLabel.isHidden = false
         timePickerView.isHidden = false
         minuteLabel.isHidden = false
         breathShapeLayer.isHidden = false
@@ -368,7 +368,7 @@ extension BreathFocusViewController: UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         let focusTime = (viewModel?.focusTimeList[row] ?? 0) * 7
         viewModel?.setFocusTime(seconds: focusTime)
-        self.timeLabel.text = "\(focusTime) breaths"
+        self.numberOfBreathLabel.text = "\(focusTime) breaths"
     }
     
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
