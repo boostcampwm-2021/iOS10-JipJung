@@ -12,8 +12,10 @@ import RxRelay
 
 final class DefaultFocusViewController: FocusViewController {
     // MARK: - Subviews
-    private lazy var timerView: UIView = {
-        let timerView = UIView(frame: CGRect(origin: .zero, size: CGSize(width: 300, height: 300)))
+    let timerView: UIView = {
+        let length = UIScreen.deviceScreenSize.width * 0.7
+        let size = CGSize(width: length, height: length)
+        let timerView = UIView(frame: CGRect(origin: .zero, size: size))
         return timerView
     }()
     
@@ -126,8 +128,8 @@ final class DefaultFocusViewController: FocusViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureUI()
         configureTimerUI()
+        configureUI()
         bindUI()
     }
     
@@ -405,10 +407,13 @@ final class DefaultFocusViewController: FocusViewController {
         }
     }
     
-    private func createCircleShapeLayer(strokeColor: UIColor, lineWidth: CGFloat, startAngle: CGFloat = 0, endAngle: CGFloat = 2 * CGFloat.pi) -> CAShapeLayer {
+    private func createCircleShapeLayer(strokeColor: UIColor,
+                                        lineWidth: CGFloat,
+                                        startAngle: CGFloat = 0,
+                                        endAngle: CGFloat = 2 * CGFloat.pi) -> CAShapeLayer {
         let circleShapeLayer = CAShapeLayer()
         let circlePath = UIBezierPath(arcCenter: .zero,
-                                      radius: 125,
+                                      radius: timerView.bounds.width * 0.8 * 0.5,
                                       startAngle: startAngle,
                                       endAngle: endAngle,
                                       clockwise: true)
@@ -425,8 +430,6 @@ final class DefaultFocusViewController: FocusViewController {
         let animation = CABasicAnimation(keyPath: #keyPath(CAShapeLayer.strokeEnd))
         animation.fromValue = 0
         animation.toValue = 1
-        print(duration)
-        print(CFTimeInterval(duration))
         animation.duration = CFTimeInterval(duration)
         animation.fillMode = .backwards
         timeProgressLayer.add(animation, forKey: nil)
