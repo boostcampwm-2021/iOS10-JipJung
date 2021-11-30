@@ -60,30 +60,10 @@ final class BreathFocusViewController: FocusViewController {
     }()
     private let countdownView = CountdownView()
     
-    private lazy var startButton: UIButton = {
-        let startButton = UIButton()
-        startButton.tintColor = .gray
-        let playImage = UIImage(systemName: "play.fill")?.withRenderingMode(.alwaysTemplate)
-        startButton.setImage(playImage, for: .normal)
-        startButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 12)
-        startButton.setTitle("Start", for: .normal)
-        startButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
-        startButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 0)
-        startButton.setTitleColor(UIColor.gray, for: .normal)
-        startButton.layer.cornerRadius = 25
-        startButton.backgroundColor = .white
-        return startButton
-    }()
-    
-    private lazy var stopButton: UIButton = {
-        let stopButton = UIButton()
+    private let startButton = FocusStartButton()
+    private let stopButton: FocusExitButton = {
+        let stopButton = FocusExitButton()
         stopButton.setTitle("Stop", for: .normal)
-        stopButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
-        stopButton.setTitleColor(UIColor.white, for: .normal)
-        stopButton.layer.cornerRadius = 25
-        stopButton.backgroundColor = .lightGray
-        stopButton.layer.borderColor = UIColor.white.cgColor
-        stopButton.layer.borderWidth = 2
         return stopButton
     }()
     

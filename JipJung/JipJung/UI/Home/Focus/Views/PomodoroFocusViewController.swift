@@ -72,55 +72,10 @@ final class PomodoroFocusViewController: FocusViewController {
     
     private let pulseGroupLayer = CALayer()
     
-    private lazy var startButton: UIButton = {
-        let startButton = UIButton()
-        startButton.tintColor = .gray
-        let playImage = UIImage(systemName: "play.fill")?.withRenderingMode(.alwaysTemplate)
-        startButton.setImage(playImage, for: .normal)
-        startButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 12)
-        startButton.setTitle("Start", for: .normal)
-        startButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
-        startButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 0)
-        startButton.setTitleColor(UIColor.gray, for: .normal)
-        startButton.layer.cornerRadius = 25
-        startButton.backgroundColor = .white
-        return startButton
-    }()
-    
-    private lazy var pauseButton: UIButton = {
-        let pauseButton = UIButton()
-        pauseButton.setTitle("Pause", for: .normal)
-        pauseButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
-        pauseButton.setTitleColor(UIColor.white, for: .normal)
-        pauseButton.layer.cornerRadius = 25
-        pauseButton.backgroundColor = .gray
-        pauseButton.layer.borderColor = UIColor.white.cgColor
-        pauseButton.layer.borderWidth = 2
-        return pauseButton
-    }()
-    
-    private lazy var continueButton: UIButton = {
-        let continueButton = UIButton()
-        continueButton.tintColor = .gray
-        continueButton.setTitle("Continue", for: .normal)
-        continueButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
-        continueButton.setTitleColor(UIColor.gray, for: .normal)
-        continueButton.layer.cornerRadius = 25
-        continueButton.backgroundColor = .white
-        return continueButton
-    }()
-    
-    private lazy var exitButton: UIButton = {
-        let exitButton = UIButton()
-        exitButton.setTitle("Exit", for: .normal)
-        exitButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
-        exitButton.setTitleColor(UIColor.white, for: .normal)
-        exitButton.layer.cornerRadius = 25
-        exitButton.backgroundColor = .gray
-        exitButton.layer.borderColor = UIColor.white.cgColor
-        exitButton.layer.borderWidth = 2
-        return exitButton
-    }()
+    private let startButton = FocusStartButton()
+    private let pauseButton = FocusPauseButton()
+    private let continueButton = FocusContinueButton()
+    private let exitButton = FocusExitButton()
     
     // MARK: - Private Variables
     
