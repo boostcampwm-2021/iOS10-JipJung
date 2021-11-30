@@ -12,10 +12,6 @@ import RxSwift
 final class PlayHistoryUseCase {
     private let playHistoryRepository = PlayHistoryRepository()
     
-    func addPlayHistory(mediaID: String) -> Single<Bool> {
-        return playHistoryRepository.create(mediaID: mediaID)
-    }
-    
     func fetchPlayHistory() -> Single<[Media]> {
         return playHistoryRepository.read()
     }
