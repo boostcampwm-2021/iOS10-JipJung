@@ -13,7 +13,7 @@ import RxRelay
 final class InfinityFocusViewController: FocusViewController {
     // MARK: - Subviews
     let timerView: UIView = {
-        let length = UIScreen.deviceScreenSize.width * 0.7
+        let length = FocusViewControllerSize.timerViewLength
         let size = CGSize(width: length, height: length)
         let timerView = UIView(frame: CGRect(origin: .zero, size: size))
         return timerView
@@ -99,8 +99,8 @@ final class InfinityFocusViewController: FocusViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureTimerUI()
         configureUI()
+        configureTimerUI()
         bindUI()
     }
     
@@ -113,12 +113,13 @@ final class InfinityFocusViewController: FocusViewController {
         self.timerView.center = CGPoint(x: viewCenter.x, y: viewCenter.y * 0.9)
         UIView.animate(withDuration: 0.6, delay: 0.3, options: []) { [weak self] in
             self?.timerView.alpha = 1
-            self?.timerView.center = CGPoint(x: viewCenter.x, y: viewCenter.y * 0.8)
+            self?.timerView.center = CGPoint(x: viewCenter.x, y: viewCenter.y * 0.65)
             self?.startButton.alpha = 1
         } completion: { [weak self] in
             if $0 {
                 self?.cometAnimationLayer.add(CycleAnimation(), forKey: nil)
             }
+            print(self?.cometAnimationLayer.sublayers)
         }
     }
     
@@ -129,10 +130,6 @@ final class InfinityFocusViewController: FocusViewController {
         UIView.animate(withDuration: 0.6) { [weak self] in
             self?.timerView.center = viewCenter
             self?.startButton.alpha = 0
-        } completion: { [weak self] in
-            if $0 {
-                self?.cometAnimationLayer.add(CycleAnimation(), forKey: nil)
-            }
         }
     }
     
@@ -146,13 +143,20 @@ final class InfinityFocusViewController: FocusViewController {
     
     private func configureTimerUI() {
         view.addSubview(timerView)
-        configurePulseLayer()
+        timerView.layer.addSublayer(pulseGroupLayer)
+        let pulseCount = 4
+        for _ in 0..<pulseCount {
+            let pulseLayer = createCircleShapeLayer(strokeColor: .white, lineWidth: 2)
+            pulseGroupLayer.addSublayer(pulseLayer)
+        }
+        
         timerView.layer.addSublayer(circleShapeLayer)
         timerView.addSubview(timeLabel)
         timeLabel.snp.makeConstraints {
             $0.center.equalToSuperview()
         }
-        configureCometLayer()
+        
+        timerView.layer.addSublayer(cometAnimationLayer)
     }
     
     private func configureUI() {
@@ -189,19 +193,6 @@ final class InfinityFocusViewController: FocusViewController {
             $0.width.equalTo(FocusViewButtonSize.exitButton.width)
             $0.height.equalTo(FocusViewButtonSize.exitButton.height)
         }
-    }
-    
-    private func configurePulseLayer() {
-        timerView.layer.addSublayer(pulseGroupLayer)
-        let pulseCount = 4
-        for _ in 0..<pulseCount {
-            let pulseLayer = createCircleShapeLayer(strokeColor: .white, lineWidth: 2)
-            pulseGroupLayer.addSublayer(pulseLayer)
-        }
-    }
-    
-    private func configureCometLayer() {
-        timerView.layer.addSublayer(cometAnimationLayer)
     }
     
     private func bindUI() {
@@ -352,7 +343,7 @@ final class InfinityFocusViewController: FocusViewController {
                                         endAngle: CGFloat = 2 * CGFloat.pi) -> CAShapeLayer {
         let circleShapeLayer = CAShapeLayer()
         let circlePath = UIBezierPath(arcCenter: .zero,
-                                      radius: timerView.bounds.width * 0.8 * 0.5,
+                                      radius: FocusViewControllerSize.timerViewLength * 0.5,
                                       startAngle: startAngle,
                                       endAngle: endAngle,
                                       clockwise: true)
@@ -376,7 +367,7 @@ final class InfinityFocusViewController: FocusViewController {
     private func createCometCircleShapeLayer(strokeColor: UIColor, lineWidth: CGFloat) -> CALayer {
         let circleShapeLayer = CAShapeLayer()
         let circlePath = UIBezierPath(arcCenter: .zero,
-                                      radius: timerView.bounds.width * 0.8 * 0.5,
+                                      radius: FocusViewControllerSize.timerViewLength * 0.5,
                                       startAngle: 0,
                                       endAngle: 2 * CGFloat.pi,
                                       clockwise: true)

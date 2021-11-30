@@ -174,6 +174,7 @@
 		DD84736527453FD700DF4FCB /* MaximCalendarHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD84736427453FD700DF4FCB /* MaximCalendarHeaderCollectionViewCell.swift */; };
 		DD8473672746112D00DF4FCB /* Maxim+Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8473662746112D00DF4FCB /* Maxim+Enums.swift */; };
 		DD8564CA273F9E6F00049D9B /* SlowPresent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8564C9273F9E6F00049D9B /* SlowPresent.swift */; };
+		DD97B0282755C2FA009A1E5C /* Focus+Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD97B0272755C2FA009A1E5C /* Focus+Enums.swift */; };
 		DDAA3D3D5F09E051F5BE96A6 /* Pods_JipJung.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6ECB91629425C2E076873750 /* Pods_JipJung.framework */; };
 		DDB5CE9E27328E8300E8F9EB /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB5CE9D27328E8300E8F9EB /* HomeViewController.swift */; };
 		DDB5CEA227328EC300E8F9EB /* ExploreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB5CEA127328EC300E8F9EB /* ExploreViewController.swift */; };
@@ -404,6 +405,7 @@
 		DD84736427453FD700DF4FCB /* MaximCalendarHeaderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaximCalendarHeaderCollectionViewCell.swift; sourceTree = "<group>"; };
 		DD8473662746112D00DF4FCB /* Maxim+Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Maxim+Enums.swift"; sourceTree = "<group>"; };
 		DD8564C9273F9E6F00049D9B /* SlowPresent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlowPresent.swift; sourceTree = "<group>"; };
+		DD97B0272755C2FA009A1E5C /* Focus+Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Focus+Enums.swift"; sourceTree = "<group>"; };
 		DDB5CE9D27328E8300E8F9EB /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		DDB5CEA127328EC300E8F9EB /* ExploreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreViewController.swift; sourceTree = "<group>"; };
 		DDB5CEA727328EF400E8F9EB /* MeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeViewController.swift; sourceTree = "<group>"; };
@@ -644,6 +646,7 @@
 				B40D1FB8273B674F00881A49 /* InfinityFocusViewController.swift */,
 				B4B780DE2741F6FA0080DC28 /* BreathFocusViewController.swift */,
 				DD82808B273CAE5F00BB2A60 /* FocusViewControllerFactory.swift */,
+				DD97B0272755C2FA009A1E5C /* Focus+Enums.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1450,6 +1453,7 @@
 				91D0226A273CB6050073EA2A /* DarknessMedia.swift in Sources */,
 				B40D1FB7273B60A500881A49 /* Int+Extension.swift in Sources */,
 				B40D1FB3273B5F3500881A49 /* InfinityFocusViewModel.swift in Sources */,
+				DD97B0282755C2FA009A1E5C /* Focus+Enums.swift in Sources */,
 				B4EF13B72742935B0086D8CD /* SearchViewModel.swift in Sources */,
 				91CE6F6F2739024800176AF2 /* Home+Enums.swift in Sources */,
 				B42226CE2741144200F8CA3D /* UITableView+Extension.swift in Sources */,

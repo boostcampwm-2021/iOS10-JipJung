@@ -13,7 +13,7 @@ import RxRelay
 final class DefaultFocusViewController: FocusViewController {
     // MARK: - Subviews
     let timerView: UIView = {
-        let length = UIScreen.deviceScreenSize.width * 0.7
+        let length = FocusViewControllerSize.timerViewLength
         let size = CGSize(width: length, height: length)
         let timerView = UIView(frame: CGRect(origin: .zero, size: size))
         return timerView
@@ -142,7 +142,7 @@ final class DefaultFocusViewController: FocusViewController {
         self.timerView.center = CGPoint(x: viewCenter.x, y: viewCenter.y * 0.9)
         UIView.animate(withDuration: 0.6, delay: 0.3, options: []) { [weak self] in
             self?.timerView.alpha = 1
-            self?.timerView.center = CGPoint(x: viewCenter.x, y: viewCenter.y * 0.8)
+            self?.timerView.center = CGPoint(x: viewCenter.x, y: viewCenter.y * 0.65)
             self?.startButton.alpha = 1
         }
     }
@@ -158,7 +158,12 @@ final class DefaultFocusViewController: FocusViewController {
     
     private func configureTimerUI() {
         view.addSubview(timerView)
-        configurePulseLayer()
+        timerView.layer.addSublayer(pulseGroupLayer)
+        let pulseCount = 4
+        for _ in 0..<pulseCount {
+            let pulseLayer = createCircleShapeLayer(strokeColor: .white, lineWidth: 2)
+            pulseGroupLayer.addSublayer(pulseLayer)
+        }
         
         timerView.layer.addSublayer(circleShapeLayer)
         timerView.addSubview(timeLabel)
@@ -214,15 +219,6 @@ final class DefaultFocusViewController: FocusViewController {
             $0.centerX.equalToSuperview()
             $0.width.equalTo(FocusViewButtonSize.exitButton.width)
             $0.height.equalTo(FocusViewButtonSize.exitButton.height)
-        }
-    }
-    
-    private func configurePulseLayer() {
-        timerView.layer.addSublayer(pulseGroupLayer)
-        let pulseCount = 4
-        for _ in 0..<pulseCount {
-            let pulseLayer = createCircleShapeLayer(strokeColor: .white, lineWidth: 2)
-            pulseGroupLayer.addSublayer(pulseLayer)
         }
     }
     
@@ -413,7 +409,7 @@ final class DefaultFocusViewController: FocusViewController {
                                         endAngle: CGFloat = 2 * CGFloat.pi) -> CAShapeLayer {
         let circleShapeLayer = CAShapeLayer()
         let circlePath = UIBezierPath(arcCenter: .zero,
-                                      radius: timerView.bounds.width * 0.8 * 0.5,
+                                      radius: FocusViewControllerSize.timerViewLength * 0.5,
                                       startAngle: startAngle,
                                       endAngle: endAngle,
                                       clockwise: true)

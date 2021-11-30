@@ -13,7 +13,7 @@ import RxRelay
 final class PomodoroFocusViewController: FocusViewController {
     // MARK: - Subviews
     let timerView: UIView = {
-        let length = UIScreen.deviceScreenSize.width * 0.7
+        let length = FocusViewControllerSize.timerViewLength
         let size = CGSize(width: length, height: length)
         let timerView = UIView(frame: CGRect(origin: .zero, size: size))
         return timerView
@@ -143,7 +143,7 @@ final class PomodoroFocusViewController: FocusViewController {
         self.timerView.center = CGPoint(x: viewCenter.x, y: viewCenter.y * 0.9)
         UIView.animate(withDuration: 0.6, delay: 0.3, options: []) { [weak self] in
             self?.timerView.alpha = 1
-            self?.timerView.center = CGPoint(x: viewCenter.x, y: viewCenter.y * 0.8)
+            self?.timerView.center = CGPoint(x: viewCenter.x, y: viewCenter.y * 0.65)
             self?.startButton.alpha = 1
         }
     }
@@ -244,8 +244,12 @@ final class PomodoroFocusViewController: FocusViewController {
                 switch $0 {
                 case .ready:
                     self.changeStateToReady()
-                case .running(let isContinue):
-                    self.changeStateToRunning()
+                case .running(let isResume):
+                    if isResume {
+                        self.changeStateToResume()
+                    } else {
+                        self.changeStateToStart(with: self.viewModel?.focusTime ?? 0)
+                    }
                 case .paused:
                     self.changeStateToPaused()
                 }
@@ -378,26 +382,23 @@ final class PomodoroFocusViewController: FocusViewController {
         }
     }
     
+    private func changeStateToStart(with duration: Int) {
+        changeStateToRunning()
+        resumeTimerProgressAnimation()
+        startTimeProgressAnimation(with: duration)
+    }
+    
+    private func changeStateToResume() {
+        changeStateToRunning()
+        resumeTimerProgressAnimation()
+    }
+    
     private func changeStateToRunning() {
-        // NOTE: 아직 다른 집중모드 코드에서는 이 옵셔널 바인딩하는 코드를 추가하지 않았음
-        guard let viewModel = viewModel else {
-            return
-        }
         startButton.isHidden = true
         timeLabel.isHidden = false
         timePickerView.isHidden = true
         minuteLabel.isHidden = true
-        viewModel.startClockTimer()
-
-        switch viewModel.timerState.value {
-        case .running(isResume: true):
-            resumeTimerProgressAnimation()
-        case .running(isResume: false):
-            resumeTimerProgressAnimation()
-            startTimeProgressAnimation(with: viewModel.focusTime)
-        default:
-            break
-        }
+        viewModel?.startClockTimer()
         
         UIView.animate(withDuration: 0.5) { [weak self] in
             guard let self = self else { return }
@@ -454,7 +455,7 @@ final class PomodoroFocusViewController: FocusViewController {
                                         endAngle: CGFloat = 2 * CGFloat.pi) -> CAShapeLayer {
         let circleShapeLayer = CAShapeLayer()
         let circlePath = UIBezierPath(arcCenter: .zero,
-                                      radius: timerView.bounds.width * 0.8 * 0.5,
+                                      radius: FocusViewControllerSize.timerViewLength * 0.5,
                                       startAngle: startAngle,
                                       endAngle: endAngle,
                                       clockwise: true)
