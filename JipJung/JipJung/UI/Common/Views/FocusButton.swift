@@ -39,7 +39,7 @@ final class FocusButton: BlurCircleButton {
     func set(mode: FocusMode) {
         self.mode = mode
         let modeValue = FocusMode.getValue(from: mode)
-        icon.image = UIImage(systemName: modeValue.image)
+        icon.image = UIImage(named: modeValue.image)?.withRenderingMode(.alwaysTemplate)
         titleLabel.text = modeValue.title
     }
     
