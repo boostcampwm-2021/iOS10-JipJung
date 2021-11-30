@@ -15,6 +15,7 @@ final class MaximListUseCase {
     init(maximListRepository: MaximListRepository = MaximListRepository()) {
         self.maximListRepository = maximListRepository
     }
+    
     func fetchMaximList() -> Single<[Maxim]> {
         return maximListRepository.read(from: makeTomorrow()).map {
             return $0.dropLast($0.count % 7)
