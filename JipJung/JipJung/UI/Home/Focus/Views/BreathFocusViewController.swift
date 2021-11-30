@@ -12,6 +12,7 @@ import RxRelay
 
 final class BreathFocusViewController: FocusViewController {
     // MARK: - Subviews
+    private let breathView = UIView()
     
     private lazy var timePickerView: UIPickerView = {
         let timePickerView = UIPickerView()
@@ -35,7 +36,6 @@ final class BreathFocusViewController: FocusViewController {
         return timeLabel
     }()
     
-    private let breathView = UIView()
     private lazy var breathShapeLayer: CAShapeLayer = {
         let drawingLayer = CAShapeLayer()
         drawingLayer.fillColor = .init(red: 0.1, green: 1.0, blue: 0.3, alpha: 0.5)

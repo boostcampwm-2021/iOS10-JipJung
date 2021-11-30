@@ -21,7 +21,7 @@ class CloseButton: UIButton {
     func configure() {
         setBackgroundImage(UIImage(systemName: "xmark"), for: .normal)
         titleLabel?.font = UIFont.boldSystemFont(ofSize: 24)
-        tintColor = UIColor.systemGray
+        tintColor = UIColor.white
         backgroundColor = .clear
     }
 }
