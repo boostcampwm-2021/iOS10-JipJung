@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 
 protocol MaximListRepositoriable {
-    func fetchAllMaximList(from date: Date) -> Single<[Maxim]>
+    func read(from date: Date) -> Single<[Maxim]>
 }
 
 final class MaximListUseCase {
@@ -21,7 +21,7 @@ final class MaximListUseCase {
     }
     
     func fetchWeeksMaximList() -> Single<[Maxim]> {
-        return maximListRepository.fetchAllMaximList(from: makeTomorrow()).map {
+        return maximListRepository.read(from: makeTomorrow()).map {
             $0.dropLast($0.count % 7)
         }
         .map {

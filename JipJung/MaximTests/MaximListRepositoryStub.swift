@@ -11,7 +11,7 @@ import RxSwift
 struct MaximListRepositoryStub: MaximListRepositoriable {
     let testData: [Maxim]
     
-    func fetchAllMaximList(from date: Date) -> Single<[Maxim]> {
+    func read(from date: Date) -> Single<[Maxim]> {
         return Observable.of(testData).asSingle()
     }
 }
