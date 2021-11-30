@@ -84,7 +84,8 @@ final class ExploreViewController: UIViewController {
         case .dark:
             configureDarkModeUI()
         }
-        soundTagCollectionView.selectItem(at: IndexPath(item: 0, section: 0),
+        soundTagCollectionView.selectItem(at: IndexPath(item: viewModel?.selectedTagIndex ?? 0,
+                                                        section: 0),
                                           animated: true,
                                           scrollPosition: .centeredHorizontally)
     }
@@ -210,6 +211,7 @@ extension ExploreViewController: UICollectionViewDelegateFlowLayout {
 extension ExploreViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == soundTagCollectionView {
+            viewModel?.selectedTagIndex = indexPath.item
             let tag = viewModel?.soundTagList[safe: indexPath.item]?.value ?? ""
             viewModel?.categorize(by: tag)
             

@@ -16,11 +16,13 @@ protocol ExploreViewModelInput {
 protocol ExploreViewModelOutput {
     var categoryItems: BehaviorRelay<[Media]> { get }
     var soundTagList: [SoundTag] { get }
+    var selectedTagIndex: Int { get }
 }
 
 final class ExploreViewModel: ExploreViewModelInput, ExploreViewModelOutput {
     var categoryItems: BehaviorRelay<[Media]> = BehaviorRelay<[Media]>(value: [])
     var soundTagList: [SoundTag] = SoundTag.allCases
+    var selectedTagIndex: Int = 0
     
     private var disposeBag: DisposeBag = DisposeBag()
     
