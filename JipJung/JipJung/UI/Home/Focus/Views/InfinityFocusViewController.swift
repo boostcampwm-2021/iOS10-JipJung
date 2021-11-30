@@ -12,9 +12,10 @@ import RxRelay
 
 final class InfinityFocusViewController: FocusViewController {
     // MARK: - Subviews
-    private lazy var timerView: UIView = {
-        let timerView = UIView(frame: UIScreen.main.bounds)
-        timerView.isUserInteractionEnabled = false
+    let timerView: UIView = {
+        let length = UIScreen.deviceScreenSize.width * 0.7
+        let size = CGSize(width: length, height: length)
+        let timerView = UIView(frame: CGRect(origin: .zero, size: size))
         return timerView
     }()
     
@@ -345,10 +346,13 @@ final class InfinityFocusViewController: FocusViewController {
         }
     }
     
-    private func createCircleShapeLayer(strokeColor: UIColor, lineWidth: CGFloat, startAngle: CGFloat = 0, endAngle: CGFloat = 2 * CGFloat.pi) -> CAShapeLayer {
+    private func createCircleShapeLayer(strokeColor: UIColor,
+                                        lineWidth: CGFloat,
+                                        startAngle: CGFloat = 0,
+                                        endAngle: CGFloat = 2 * CGFloat.pi) -> CAShapeLayer {
         let circleShapeLayer = CAShapeLayer()
         let circlePath = UIBezierPath(arcCenter: .zero,
-                                      radius: 125,
+                                      radius: timerView.bounds.width * 0.8 * 0.5,
                                       startAngle: startAngle,
                                       endAngle: endAngle,
                                       clockwise: true)
@@ -372,7 +376,7 @@ final class InfinityFocusViewController: FocusViewController {
     private func createCometCircleShapeLayer(strokeColor: UIColor, lineWidth: CGFloat) -> CALayer {
         let circleShapeLayer = CAShapeLayer()
         let circlePath = UIBezierPath(arcCenter: .zero,
-                                      radius: 125,
+                                      radius: timerView.bounds.width * 0.8 * 0.5,
                                       startAngle: 0,
                                       endAngle: 2 * CGFloat.pi,
                                       clockwise: true)
@@ -382,11 +386,11 @@ final class InfinityFocusViewController: FocusViewController {
         circleShapeLayer.lineCap = CAShapeLayerLineCap.round
         circleShapeLayer.lineWidth = lineWidth
         circleShapeLayer.fillColor = UIColor.clear.cgColor
-        circleShapeLayer.position = view.center
+        circleShapeLayer.position = timerView.center
         
         let gradient = CAGradientLayer()
         gradient.frame = timerView.bounds
-        gradient.position = view.center
+        gradient.position = timerView.center
         gradient.colors = [UIColor.systemGray.cgColor, strokeColor.cgColor]
         gradient.startPoint = CGPoint(x: 0.5, y: 0.5)
         gradient.endPoint = CGPoint(x: 1.0, y: 1)

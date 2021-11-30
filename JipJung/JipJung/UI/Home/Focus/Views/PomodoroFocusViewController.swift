@@ -12,6 +12,12 @@ import RxRelay
 
 final class PomodoroFocusViewController: FocusViewController {
     // MARK: - Subviews
+    let timerView: UIView = {
+        let length = UIScreen.deviceScreenSize.width * 0.7
+        let size = CGSize(width: length, height: length)
+        let timerView = UIView(frame: CGRect(origin: .zero, size: size))
+        return timerView
+    }()
     
     private lazy var timePickerView: UIPickerView = {
         let timePickerView = UIPickerView()
@@ -40,7 +46,7 @@ final class PomodoroFocusViewController: FocusViewController {
     private lazy var relaxLabel: UILabel = {
         let relaxLabel = UILabel()
         relaxLabel.text = "Relax"
-        relaxLabel.font = UIFont.boldSystemFont(ofSize: 15)
+        relaxLabel.font = UIFont.boldSystemFont(ofSize: 17)
         relaxLabel.textColor = .white
         return relaxLabel
     }()
@@ -55,7 +61,7 @@ final class PomodoroFocusViewController: FocusViewController {
     
     private lazy var timeProgressLayer: CAShapeLayer = {
         let timeProgressLayer = createCircleShapeLayer(
-            strokeColor: .secondarySystemBackground,
+            strokeColor: .white,
             lineWidth: 3,
             startAngle: -CGFloat.pi / 2,
             endAngle: 3 * CGFloat.pi / 2
@@ -63,6 +69,7 @@ final class PomodoroFocusViewController: FocusViewController {
         timeProgressLayer.fillColor = nil
         return timeProgressLayer
     }()
+    
     private let pulseGroupLayer = CALayer()
     
     private lazy var startButton: UIButton = {
@@ -122,13 +129,33 @@ final class PomodoroFocusViewController: FocusViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configurePulseLayer()
-        configureProgressBar()
+        configureTimerUI()
         configureUI()
-        
         bindUI()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.startButton.alpha = 0
+        self.timerView.alpha = 0
+        let viewCenter = view.center
+        self.timerView.center = CGPoint(x: viewCenter.x, y: viewCenter.y * 0.9)
+        UIView.animate(withDuration: 0.6, delay: 0.3, options: []) { [weak self] in
+            self?.timerView.alpha = 1
+            self?.timerView.center = CGPoint(x: viewCenter.x, y: viewCenter.y * 0.8)
+            self?.startButton.alpha = 1
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        let viewCenter = view.center
+        UIView.animate(withDuration: 0.6) { [weak self] in
+            self?.timerView.center = viewCenter
+            self?.startButton.alpha = 0
+        }
+    }
     // MARK: - Initializer
 
     convenience init(viewModel: PomodoroFocusViewModel) {
@@ -138,28 +165,31 @@ final class PomodoroFocusViewController: FocusViewController {
     
     // MARK: - Helpers
     
-    private func configureUI() {
-        view.makeBlurBackground()
-                
-        view.layer.addSublayer(circleShapeLayer)
+    private func configureTimerUI() {
+        view.addSubview(timerView)
+        configurePulseLayer()
         
-        view.addSubview(timeLabel)
+        timerView.layer.addSublayer(circleShapeLayer)
+        timerView.addSubview(timeLabel)
         timeLabel.snp.makeConstraints {
-            $0.top.equalTo(view.snp.centerY).multipliedBy(0.65)
-            $0.centerX.equalToSuperview()
+            $0.center.equalToSuperview()
         }
         
-        view.addSubview(timePickerView)
+        timerView.addSubview(timePickerView)
         timePickerView.snp.makeConstraints {
             $0.center.equalTo(timeLabel)
         }
         
-        view.addSubview(minuteLabel)
+        timerView.addSubview(minuteLabel)
         minuteLabel.snp.makeConstraints {
             $0.centerY.equalTo(timePickerView)
             $0.centerX.equalTo(timePickerView.snp.centerX).offset(60)
         }
-        
+    }
+    
+    private func configureUI() {
+        view.makeBlurBackground()
+                
         view.addSubview(startButton)
         startButton.snp.makeConstraints {
             $0.top.equalTo(view.snp.centerY).multipliedBy(1.4)
@@ -194,20 +224,16 @@ final class PomodoroFocusViewController: FocusViewController {
         
         view.addSubview(relaxLabel)
         relaxLabel.snp.makeConstraints {
-            $0.top.equalTo(view.snp.centerY).multipliedBy(1.15)
+            $0.centerY.equalToSuperview().multipliedBy(1.2)
             $0.centerX.equalToSuperview()
         }
     }
-    
-    private func configureProgressBar() {
-        view.layer.addSublayer(timeProgressLayer)
-    }
-    
+
     private func configurePulseLayer() {
-        view.layer.addSublayer(pulseGroupLayer)
+        timerView.layer.addSublayer(pulseGroupLayer)
         let pulseCount = 4
         for _ in 0..<pulseCount {
-            let pulseLayer = createCircleShapeLayer(strokeColor: .secondarySystemBackground, lineWidth: 2)
+            let pulseLayer = createCircleShapeLayer(strokeColor: .white, lineWidth: 2)
             pulseGroupLayer.addSublayer(pulseLayer)
         }
     }
@@ -422,10 +448,13 @@ final class PomodoroFocusViewController: FocusViewController {
         }
     }
     
-    private func createCircleShapeLayer(strokeColor: UIColor, lineWidth: CGFloat, startAngle: CGFloat = 0, endAngle: CGFloat = 2 * CGFloat.pi) -> CAShapeLayer {
+    private func createCircleShapeLayer(strokeColor: UIColor,
+                                        lineWidth: CGFloat,
+                                        startAngle: CGFloat = 0,
+                                        endAngle: CGFloat = 2 * CGFloat.pi) -> CAShapeLayer {
         let circleShapeLayer = CAShapeLayer()
         let circlePath = UIBezierPath(arcCenter: .zero,
-                                      radius: 125,
+                                      radius: timerView.bounds.width * 0.8 * 0.5,
                                       startAngle: startAngle,
                                       endAngle: endAngle,
                                       clockwise: true)
@@ -434,9 +463,7 @@ final class PomodoroFocusViewController: FocusViewController {
         circleShapeLayer.lineCap = CAShapeLayerLineCap.round
         circleShapeLayer.lineWidth = lineWidth
         circleShapeLayer.fillColor = UIColor.clear.cgColor
-        let centerX = view.center.x
-        let centerY = view.center.y * 0.7
-        circleShapeLayer.position = CGPoint(x: centerX, y: centerY)
+        circleShapeLayer.position = timerView.center
         return circleShapeLayer
     }
     
@@ -447,7 +474,7 @@ final class PomodoroFocusViewController: FocusViewController {
         animation.duration = CFTimeInterval(duration)
         animation.fillMode = .forwards
         timeProgressLayer.add(animation, forKey: nil)
-        view.layer.addSublayer(timeProgressLayer)
+        timerView.layer.addSublayer(timeProgressLayer)
     }
     
     private func startPulseAnimation(second: Int) {
@@ -473,7 +500,7 @@ extension PomodoroFocusViewController: UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         let pickerValue = (viewModel?.focusTimeList[row] ?? 0)
         viewModel?.setFocusTime(value: pickerValue)
-        self.timeLabel.text = pickerValue.digitalClockFormatted
+        self.timeLabel.text = (viewModel?.focusTime ?? 0).digitalClockFormatted
     }
     
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
