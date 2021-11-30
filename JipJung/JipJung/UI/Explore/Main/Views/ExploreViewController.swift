@@ -196,7 +196,8 @@ extension ExploreViewController: UICollectionViewDelegateFlowLayout {
             let count = viewModel?.soundTagList[safe: indexPath.item]?.value.count ?? 0
             return CGSize(width: count * 14, height: 30)
         } else if collectionView == soundCollectionView {
-            return CGSize(width: (collectionView.frame.size.width-32)/2-6, height: 220)
+            let cellWidth = (collectionView.frame.size.width - 32) / 2 - 6
+            return CGSize(width: cellWidth, height: cellWidth * MediaCell.ratio)
         } else {
             return CGSize(width: 50, height: 50)
         }

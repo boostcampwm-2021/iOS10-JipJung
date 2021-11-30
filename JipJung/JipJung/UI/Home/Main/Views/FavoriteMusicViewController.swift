@@ -14,7 +14,8 @@ final class FavoriteViewController: UIViewController {
     private lazy var favoriteCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.itemSize = CGSize(width: (UIScreen.deviceScreenSize.width-32)/2-6, height: 220)
+        let cellWidth = (UIScreen.deviceScreenSize.width - 32) / 2 - 6
+        layout.itemSize = CGSize(width: cellWidth, height: cellWidth * MediaCell.ratio)
         layout.sectionInset = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16)
         layout.minimumInteritemSpacing = 8
         layout.minimumLineSpacing = 8
