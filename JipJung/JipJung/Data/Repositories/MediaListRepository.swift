@@ -72,25 +72,35 @@ final class MediaListRepository {
                 return Disposables.create()
             }
             
-            var mediaMyList: [String]?
+            var mediaModeListDict: [String: Int] = [:]
             
             do {
                 switch mode {
                 case .bright:
-                    mediaMyList = try self.localDBManager.objects(
+                    try self.localDBManager.objects(
                         ofType: BrightMedia.self
-                    ).map { $0.mediaID }
+                    ).forEach { element in
+                        mediaModeListDict[element.mediaID] = element.id
+                    }
                 case .dark:
-                    mediaMyList = try self.localDBManager.objects(
+                    try self.localDBManager.objects(
                         ofType: DarknessMedia.self
-                    ).map { $0.mediaID }
+                    ).forEach { element in
+                        mediaModeListDict[element.mediaID] = element.id
+                    }
                 }
                 
-                guard let ids = mediaMyList else {
-                    throw RealmError.searchFailed
+                let mediaModeIDs = Array(mediaModeListDict.keys)
+                let predicate = NSPredicate.init(format: "id IN %@", mediaModeIDs)
+                let filteredMedia = try self.localDBManager.objects(ofType: Media.self, with: predicate)
+                let result = filteredMedia.sorted {
+                    guard let lhs = mediaModeListDict[$0.id],
+                          let rhs = mediaModeListDict[$1.id]
+                    else {
+                        return true
+                    }
+                    return lhs < rhs
                 }
-                let predicate = NSPredicate.init(format: "id IN %@", ids)
-                let result = try self.localDBManager.objects(ofType: Media.self, with: predicate)
                 single(.success(result))
             } catch {
                 single(.failure(error))
