@@ -250,24 +250,30 @@
   ],
   "BrightMedia": [
     {
-      "id": "N000"
+      "id": 0,
+      "mediaID": "N000"
     },
     {
-      "id": "N001"
+        "id": 1,
+        "mediaID": "N001"
     },
     {
-      "id": "U001"
+        "id": 2,
+        "mediaID": "U001"
     },
     {
-      "id": "U003"
+        "id": 3,
+        "mediaID": "U003"
     }
   ],
   "DarknessMedia": [
     {
-      "id": "D000"
+        "id": 0,
+        "mediaID": "D000"
     },
     {
-      "id": "D001"
+        "id": 1,
+        "mediaID": "D001"
     }
   ],
   "PlayHistory": [

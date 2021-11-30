@@ -11,13 +11,13 @@ import RxRelay
 import RxSwift
 
 final class FavoriteViewModel {
-    private let favoriteMediaUseCase = FavoriteMediaUseCase()
+    private let favoriteUseCase = FavoriteUseCase()
     private let disposeBag = DisposeBag()
     
     let favoriteSoundList = BehaviorRelay<[Media]>(value: [])
     
     func viewDidLoad() {
-        favoriteMediaUseCase.fetchAll()
+        favoriteUseCase.fetchAll()
             .subscribe { [weak self] in
                 self?.favoriteSoundList.accept($0)
             } onFailure: { error in

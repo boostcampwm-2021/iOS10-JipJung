@@ -21,11 +21,15 @@ final class SaveFocusTimeUseCase: SaveFocusTimeUseCaseProtocol {
     
     func execute(seconds time: Int) -> Single<Bool> {
         let currentDate = Date()
-        return focusTimeRepository.save(record: FocusRecord(id: UUID().uuidString,
-                                                            focusTime: time,
-                                                            year: currentDate.year,
-                                                            month: currentDate.month,
-                                                            day: currentDate.day,
-                                                            hour: currentDate.hour))
+        return focusTimeRepository.create(
+            record: FocusRecord(
+                id: UUID().uuidString,
+                focusTime: time,
+                year: currentDate.year,
+                month: currentDate.month,
+                day: currentDate.day,
+                hour: currentDate.hour
+            )
+        )
     }
 }

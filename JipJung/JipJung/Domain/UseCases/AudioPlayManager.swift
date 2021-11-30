@@ -102,7 +102,7 @@ class AudioPlayManager {
                     audioPlayer.currentTime = 0
                 }
                 audioPlayer.play()
-                return playHistoryRepository.addPlayHistory(mediaID: mediaID)
+                return playHistoryRepository.create(mediaID: mediaID)
             }
         }
     }

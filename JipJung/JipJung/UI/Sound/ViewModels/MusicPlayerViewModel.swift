@@ -57,7 +57,7 @@ final class MusicPlayerViewModel: MusicPlayerViewModelInput, MusicPlayerViewMode
     private let videoFileName: String
     private let audioPlayUseCase: AudioPlayUseCase = AudioPlayUseCase()
     private let fetchMediaURLUseCase: FetchMediaURLUseCase = FetchMediaURLUseCase()
-    private let favoriteMediaUseCase: FavoriteMediaUseCase = FavoriteMediaUseCase()
+    private let favoriteMediaUseCase: FavoriteUseCase = FavoriteUseCase()
     private let mediaListUseCase: MediaListUseCase = MediaListUseCase()
     private var disposeBag: DisposeBag = DisposeBag()
     
@@ -170,7 +170,12 @@ final class MusicPlayerViewModel: MusicPlayerViewModelInput, MusicPlayerViewMode
                 .disposed(by: disposeBag)
         case true:
             favoriteMediaUseCase.delete(id: id)
-            isFavorite.accept(false)
+                .subscribe { [weak self] _ in
+                    self?.isFavorite.accept(false)
+                } onFailure: { error in
+                    print(error.localizedDescription)
+                }
+                .disposed(by: disposeBag)
         }
     }
     
