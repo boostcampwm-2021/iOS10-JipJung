@@ -173,9 +173,22 @@ final class ExploreViewController: UIViewController {
             .distinctUntilChanged()
             .bind(onNext: { [weak self] _ in
                 guard let self = self else { return }
+                self.updateCollectionViewHeight()
                 self.soundCollectionView.reloadData()
             })
             .disposed(by: disposeBag)
+    }
+    
+    private func updateCollectionViewHeight() {
+        let defaultHeight = 600
+        let height = max(defaultHeight, (viewModel?.categoryItems.value.count ?? 0 + 1)/2 * 280)
+        
+        print(height)
+        soundCollectionView.snp.remakeConstraints {
+            $0.top.equalTo(soundTagCollectionView.snp.bottom).offset(20)
+            $0.height.equalTo(height)
+            $0.leading.trailing.bottom.equalToSuperview()
+        }
     }
 }
 
