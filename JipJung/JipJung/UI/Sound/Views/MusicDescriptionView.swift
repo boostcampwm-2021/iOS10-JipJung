@@ -69,25 +69,25 @@ class MusicDescriptionView: UIView {
         contentView.addSubview(tagView)
         
         plusButton.isEnabled = false
-        plusButton.snp.makeConstraints { make in
-            make.top.trailing.equalToSuperview()
-            make.size.equalTo(titleLabel.snp.height)
+        plusButton.snp.makeConstraints {
+            $0.top.trailing.equalToSuperview()
+            $0.size.equalTo(titleLabel.snp.height)
         }
         
-        titleLabel.snp.makeConstraints { make in
-            make.leading.top.equalToSuperview()
-            make.trailing.equalTo(plusButton.snp.leading)
-            make.centerY.equalTo(plusButton.snp.centerY)
+        titleLabel.snp.makeConstraints {
+            $0.leading.top.equalToSuperview()
+            $0.trailing.equalTo(plusButton.snp.leading)
+            $0.centerY.equalTo(plusButton.snp.centerY)
         }
 
-        explanationLabel.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview()
-            make.top.equalTo(titleLabel.snp.bottom).offset(8)
+        explanationLabel.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview()
+            $0.top.equalTo(titleLabel.snp.bottom).offset(8)
         }
 
-        tagView.snp.makeConstraints { make in
-            make.leading.trailing.bottom.equalToSuperview()
-            make.top.equalTo(explanationLabel.snp.bottom).offset(8)
+        tagView.snp.makeConstraints {
+            $0.leading.trailing.bottom.equalToSuperview()
+            $0.top.equalTo(explanationLabel.snp.bottom).offset(8)
         }
     }
 }
