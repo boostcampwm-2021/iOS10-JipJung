@@ -21,6 +21,7 @@ final class FavoriteViewController: UIViewController {
         layout.minimumLineSpacing = 8
 
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .clear
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.register(
             MusicCollectionViewCell.self,
@@ -50,7 +51,10 @@ final class FavoriteViewController: UIViewController {
         navigationItem.title = "좋아요 누른 음원"
         navigationItem.largeTitleDisplayMode = .always
         navigationController?.navigationBar.prefersLargeTitles = true
-        
+        navigationController?.navigationBar.largeTitleTextAttributes = [
+            NSAttributedString.Key.foregroundColor: UIColor.black
+        ]
+
         view.addSubview(favoriteCollectionView)
         favoriteCollectionView.snp.makeConstraints {
             $0.top.equalTo(view.snp.topMargin)

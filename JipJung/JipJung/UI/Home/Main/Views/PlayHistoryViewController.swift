@@ -21,6 +21,7 @@ final class PlayHistoryViewController: UIViewController {
         layout.minimumLineSpacing = 8
 
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .clear
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.register(
             MusicCollectionViewCell.self,
@@ -50,6 +51,9 @@ final class PlayHistoryViewController: UIViewController {
         navigationItem.title = "재생 기록"
         navigationItem.largeTitleDisplayMode = .always
         navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.largeTitleTextAttributes = [
+            NSAttributedString.Key.foregroundColor: UIColor.black
+        ]
         
         view.addSubview(playHistoryCollectionView)
         playHistoryCollectionView.snp.makeConstraints {
