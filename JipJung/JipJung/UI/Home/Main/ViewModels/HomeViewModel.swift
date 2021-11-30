@@ -84,8 +84,25 @@ final class HomeViewModel: HomeViewModelInput, HomeViewModelOutput {
         mode.accept(mode.value == .bright ? .dark : .bright)
     }
     
-    func mediaPlayViewTapped() -> Single<Bool> {
-        return audioPlayUseCase.controlAudio()
+    func mediaPlayViewTapped(media: Media) -> Single<Bool> {
+        return audioPlayUseCase.control(audioFileName: media.audioFileName, autoPlay: true, restart: false)
+    }
+    
+    func receiveNotificationForFocus(media: Media, state: Bool) {
+        if state {
+            audioPlayUseCase.control(audioFileName: media.audioFileName, autoPlay: true, restart: false)
+                .subscribe(onFailure: { error in
+                    print(error.localizedDescription)
+                })
+                .disposed(by: disposeBag)
+        } else {
+            audioPlayUseCase.control(audioFileName: media.audioFileName, state: state)
+                .subscribe(onFailure: { error in
+                    print(error.localizedDescription)
+                })
+                .disposed(by: disposeBag)
+        }
+        
     }
     
     func mediaPlayViewDownSwiped(media: Media) -> Single<Bool> {
@@ -95,8 +112,8 @@ final class HomeViewModel: HomeViewModelInput, HomeViewModelOutput {
         return mediaListUseCase.removeMediaFromMode(media: media)
     }
     
-    func mediaPlayViewAppear(media: Media, autoPlay: Bool = false) {
-        audioPlayUseCase.readyToPlay(media.audioFileName, autoPlay: autoPlay)
+    func mediaPlayViewAppear(media: Media, autoPlay: Bool = false) -> Bool {
+        return audioPlayUseCase.isPlaying(using: media.audioFileName)
             .subscribe(onFailure: { error in
                 print(error.localizedDescription)
             })
