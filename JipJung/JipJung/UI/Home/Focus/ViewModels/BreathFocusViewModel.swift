@@ -43,6 +43,8 @@ final class BreathFocusViewModel: BreathFocusViewModelInput, BreathFocusViewMode
     private let saveFocusTimeUseCase: SaveFocusTimeUseCaseProtocol
     private let audioPlayUseCase = AudioPlayUseCase()
     
+    private let breathAudioFileName = "breath.WAV"
+    
     init(saveFocusTimeUseCase: SaveFocusTimeUseCaseProtocol) {
         self.saveFocusTimeUseCase = saveFocusTimeUseCase
     }
@@ -52,31 +54,40 @@ final class BreathFocusViewModel: BreathFocusViewModelInput, BreathFocusViewMode
     }
     
     func startClockTimer() {
-        audioPlayUseCase.readyToPlay("breath.WAV", autoPlay: true, restart: true)
-            .subscribe { [weak self] in
-            switch $0 {
-            case .success(let flag):
-                print(#function, #line, flag)
-            case .failure(let error):
-                print(#function, #line, error)
-            }
-        }.disposed(by: disposeBag)
+        audioPlayUseCase.control(audioFileName: breathAudioFileName, state: true, restart: true)
+            .subscribe {
+                switch $0 {
+                case .success(let flag):
+                    print(#function, #line, flag)
+                case .failure(let error):
+                    print(#function, #line, error)
+                }
+            }.disposed(by: disposeBag)
         
         clockTime.accept(0)
-         Observable<Int>.interval(.seconds(1), scheduler: MainScheduler.instance)
+        Observable<Int>.interval(.seconds(1), scheduler: MainScheduler.instance)
             .subscribe { [weak self] _ in
                 guard let self = self else { return }
                 self.clockTime.accept(self.clockTime.value + 1)
             }
             .disposed(by: runningStateDisposeBag)
     }
-
+    
     func resetClockTimer() {
-        audioPlayUseCase.controlAudio(playState: .manual(false))
+        audioPlayUseCase.control(audioFileName: breathAudioFileName, state: false)
+            .subscribe {
+                switch $0 {
+                case .success(let flag):
+                    print(#function, #line, flag)
+                case .failure(let error):
+                    print(#function, #line, error)
+                }
+            }.disposed(by: disposeBag)
+        
         clockTime.accept(-1)
         runningStateDisposeBag = DisposeBag()
     }
-
+    
     // 숨쉬기 횟수 설정
     func setFocusTime(seconds: Int) {
         focusTime = seconds

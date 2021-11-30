@@ -154,6 +154,13 @@ class HomeViewController: UIViewController {
         
         NotificationCenter.default.addObserver(
             self,
+            selector: #selector(controlForFocus(_:)),
+            name: .controlForFocus,
+            object: nil
+        )
+        
+        NotificationCenter.default.addObserver(
+            self,
             selector: #selector(showCarouselView(_:)),
             name: .showCarouselView,
             object: nil
@@ -164,6 +171,16 @@ class HomeViewController: UIViewController {
         guard let typeList = sender.userInfo?["RefreshType"] as? [RefreshHomeData] else { return }
 
         viewModel.refresh(typeList: typeList)
+    }
+    
+    @objc private func controlForFocus(_ sender: Notification) {
+        guard let playState = sender.userInfo?["PlayState"] as? Bool,
+              let media = carouselView.getMediaFromCurrentView()
+        else {
+            return
+        }
+        
+        viewModel.receiveNotificationForFocus(media: media, state: playState)
     }
     
     @objc private func showCarouselView(_ sender: Notification) {

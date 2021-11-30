@@ -45,7 +45,14 @@ final class DefaultFocusViewModel: DefaultFocusViewModelInput, DefaultFocusViewM
     }
     
     func startClockTimer() {
-        audioPlayUseCase.controlAudio(playState: .manual(true))
+        NotificationCenter.default.post(
+            name: .controlForFocus,
+            object: nil,
+            userInfo: [
+                "PlayState": true
+            ]
+        )
+        
         Observable<Int>.interval(RxTimeInterval.seconds(1),
                                  scheduler: MainScheduler.instance)
             .subscribe { [weak self] _ in
@@ -56,12 +63,26 @@ final class DefaultFocusViewModel: DefaultFocusViewModelInput, DefaultFocusViewM
     }
     
     func pauseClockTimer() {
-        audioPlayUseCase.controlAudio(playState: .manual(false))
+        NotificationCenter.default.post(
+            name: .controlForFocus,
+            object: nil,
+            userInfo: [
+                "PlayState": false
+            ]
+        )
+        
         runningStateDisposeBag = DisposeBag()
     }
     
     func resetClockTimer() {
-        audioPlayUseCase.controlAudio(playState: .manual(false))
+        NotificationCenter.default.post(
+            name: .controlForFocus,
+            object: nil,
+            userInfo: [
+                "PlayState": false
+            ]
+        )
+        
         clockTime.accept(0)
         runningStateDisposeBag = DisposeBag()
     }
