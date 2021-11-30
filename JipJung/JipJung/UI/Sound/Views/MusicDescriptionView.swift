@@ -25,7 +25,13 @@ class MusicDescriptionView: UIView {
         return label
     }()
     
-    var plusButton: PlusCircleButton = PlusCircleButton()
+    lazy var plusButton: PlusCircleButton = {
+        let plusButton = PlusCircleButton()
+        plusButton.contentHorizontalAlignment = .fill
+        plusButton.contentVerticalAlignment = .fill
+        plusButton.imageEdgeInsets = UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 6)
+        return plusButton
+    }()
     
     var tagView: UIView = {
         let view = UIView()
