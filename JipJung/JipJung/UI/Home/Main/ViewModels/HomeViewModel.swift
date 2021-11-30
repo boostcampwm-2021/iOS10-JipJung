@@ -28,7 +28,7 @@ protocol HomeViewModelOutput {
 
 final class HomeViewModel: HomeViewModelInput, HomeViewModelOutput {
     private let mediaListUseCase = MediaListUseCase()
-    private let maximListUseCase = MaximListUseCase()
+    private let maximListUseCase = MaximListUseCase(maximListRepository: MaximListRepository())
     private let audioPlayUseCase = AudioPlayUseCase()
     private let playHistoryUseCase = PlayHistoryUseCase()
     private let favoriteUseCase = FavoriteUseCase()

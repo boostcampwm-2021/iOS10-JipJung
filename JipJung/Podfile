@@ -12,4 +12,9 @@ target 'JipJung' do
   pod "RealmSwift"
   pod "SnapKit"
   pod "Firebase/Storage"
+  target 'MaximTests' do
+    pod "Nimble"
+    pod "RxTest"
+    pod "RxBlocking"
+  end
 end

@@ -38,6 +38,16 @@
                ReferencedContainer = "container:JipJung.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "DD97B0392755F8FC009A1E5C"
+               BuildableName = "MaximTests.xctest"
+               BlueprintName = "MaximTests"
+               ReferencedContainer = "container:JipJung.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
