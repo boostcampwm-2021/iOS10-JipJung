@@ -60,7 +60,7 @@ final class MediaListRepository {
             } catch {
                 single(.failure(error))
             }
-            
+            single(.success(true))
             return Disposables.create()
         }
     }

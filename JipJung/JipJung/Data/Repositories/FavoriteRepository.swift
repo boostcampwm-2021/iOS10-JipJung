@@ -57,7 +57,6 @@ final class FavoriteRepository {
                     }
                     return lhs > rhs
                 }
-                
                 single(.success(result))
             } catch {
                 single(.failure(RealmError.searchFailed))

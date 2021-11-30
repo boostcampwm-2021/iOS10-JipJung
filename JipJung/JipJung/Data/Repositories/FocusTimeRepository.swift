@@ -28,7 +28,7 @@ final class FocusTimeRepository: FocusTimeRepositoryProtocol {
             } catch {
                 single(.failure(error))
             }
-            
+            single(.success(true))
             return Disposables.create()
         }
     }

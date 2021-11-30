@@ -57,7 +57,6 @@ final class PlayHistoryRepository {
                     }
                     return lhs > rhs
                 }
-                
                 single(.success(result))
             } catch {
                 single(.failure(RealmError.searchFailed))
