@@ -22,7 +22,12 @@ final class MaximListUseCase {
     
     func fetchWeeksMaximList() -> Single<[Maxim]> {
         return maximListRepository.fetchAllMaximList(from: makeTomorrow()).map {
-            return $0.dropLast($0.count % 7)
+            $0.dropLast($0.count % 7)
+        }
+        .map {
+            $0.sorted { lhs, rhs in
+                lhs.date > rhs.date
+            }
         }
     }
     

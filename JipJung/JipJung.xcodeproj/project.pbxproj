@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8A3D83502507671361AFBEA7 /* Pods_JipJung_MeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57A904A9E04F7D2AC26A261B /* Pods_JipJung_MeTests.framework */; };
 		911D7F7E27428430003B7C3B /* AudioPlayManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 911D7F7D27428430003B7C3B /* AudioPlayManager.swift */; };
 		911D7F8027428473003B7C3B /* Audio+Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 911D7F7F27428473003B7C3B /* Audio+Enums.swift */; };
 		912A72042733B99300C1A37E /* LocalFileManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 912A72032733B99300C1A37E /* LocalFileManagerTests.swift */; };
@@ -176,12 +177,13 @@
 		DD8473672746112D00DF4FCB /* Maxim+Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8473662746112D00DF4FCB /* Maxim+Enums.swift */; };
 		DD8564CA273F9E6F00049D9B /* SlowPresent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8564C9273F9E6F00049D9B /* SlowPresent.swift */; };
 		DD97B0282755C2FA009A1E5C /* Focus+Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD97B0272755C2FA009A1E5C /* Focus+Enums.swift */; };
-		DD97B03D2755F8FC009A1E5C /* MaximTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD97B03C2755F8FC009A1E5C /* MaximTests.swift */; };
+		DD97B03D2755F8FC009A1E5C /* MaximListUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD97B03C2755F8FC009A1E5C /* MaximListUseCaseTests.swift */; };
 		DD97B0432755FE96009A1E5C /* MaximListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91655857273B773400C55CDC /* MaximListUseCase.swift */; };
 		DD97B045275608E2009A1E5C /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4153946273BA005004EF80F /* Date+Extension.swift */; };
 		DD97B04827561135009A1E5C /* MaximListRepositoryStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD97B04727561135009A1E5C /* MaximListRepositoryStub.swift */; };
 		DD97B04927561F2B009A1E5C /* Maxim.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB5CEB02733746600E8F9EB /* Maxim.swift */; };
 		DD97B04A27562949009A1E5C /* Maxim.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB5CEB02733746600E8F9EB /* Maxim.swift */; };
+		DD97B06227562DA7009A1E5C /* MeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD97B06127562DA7009A1E5C /* MeTests.swift */; };
 		DDAA3D3D5F09E051F5BE96A6 /* Pods_JipJung.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6ECB91629425C2E076873750 /* Pods_JipJung.framework */; };
 		DDB5CE9E27328E8300E8F9EB /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB5CE9D27328E8300E8F9EB /* HomeViewController.swift */; };
 		DDB5CEA227328EC300E8F9EB /* ExploreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB5CEA127328EC300E8F9EB /* ExploreViewController.swift */; };
@@ -192,6 +194,7 @@
 		DDB5CEBE2733A49A00E8F9EB /* RealmDBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB5CEBD2733A49A00E8F9EB /* RealmDBManager.swift */; };
 		DDB92B9D2737BD5E00EE26F0 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB92B9C2737BD5E00EE26F0 /* UIView+Extension.swift */; };
 		DDB92BB0273A263100EE26F0 /* MusicCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB92BAF273A263100EE26F0 /* MusicCollectionViewCell.swift */; };
+		DDF0D7C12756340200FE8681 /* FocusRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4153944273B9676004EF80F /* FocusRecord.swift */; };
 		DF05FD14274ABCDF006C8689 /* WiggleAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF05FD13274ABCDF006C8689 /* WiggleAnimation.swift */; };
 		DF05FD18274CA86F006C8689 /* CountdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF05FD17274CA86F006C8689 /* CountdownView.swift */; };
 		DF05FD3A274D7FD1006C8689 /* breath.WAV in Resources */ = {isa = PBXBuildFile; fileRef = DF05FD39274D7FD1006C8689 /* breath.WAV */; };
@@ -233,6 +236,13 @@
 			remoteGlobalIDString = DD3902CC272FCA10009ECA82;
 			remoteInfo = JipJung;
 		};
+		DD97B06327562DA7009A1E5C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DD3902C5272FCA10009ECA82 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DD3902CC272FCA10009ECA82;
+			remoteInfo = JipJung;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -240,6 +250,8 @@
 		0B8DD22FEC5E234B31F27E14 /* Pods-JipJung.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JipJung.release.xcconfig"; path = "Target Support Files/Pods-JipJung/Pods-JipJung.release.xcconfig"; sourceTree = "<group>"; };
 		1530308276B90D1ECB8302E9 /* Pods-JipJung-MaximTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JipJung-MaximTests.release.xcconfig"; path = "Target Support Files/Pods-JipJung-MaximTests/Pods-JipJung-MaximTests.release.xcconfig"; sourceTree = "<group>"; };
 		35D5F58CC74CC2064013821E /* Pods_JipJung_MaximTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_JipJung_MaximTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		494377D0B5850D3875EADB60 /* Pods-JipJung-MeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JipJung-MeTests.release.xcconfig"; path = "Target Support Files/Pods-JipJung-MeTests/Pods-JipJung-MeTests.release.xcconfig"; sourceTree = "<group>"; };
+		57A904A9E04F7D2AC26A261B /* Pods_JipJung_MeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_JipJung_MeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6ECB91629425C2E076873750 /* Pods_JipJung.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_JipJung.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		91184BB3273D1E01007A29C8 /* sea.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = sea.mp4; sourceTree = "<group>"; };
 		911D7F7D27428430003B7C3B /* AudioPlayManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayManager.swift; sourceTree = "<group>"; };
@@ -284,6 +296,7 @@
 		91DABCBF273A4EF000E57AAE /* AudioPlayUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayUseCase.swift; sourceTree = "<group>"; };
 		91E4178827312FEB001BA0A6 /* LocalFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFileManager.swift; sourceTree = "<group>"; };
 		91EA47C5273846A800780C3E /* BlurCircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurCircleButton.swift; sourceTree = "<group>"; };
+		AA0CE16DE313933A518FE3FB /* Pods-JipJung-MeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JipJung-MeTests.debug.xcconfig"; path = "Target Support Files/Pods-JipJung-MeTests/Pods-JipJung-MeTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B2B7324890A70CF247912613 /* Pods-JipJung-MaximTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JipJung-MaximTests.debug.xcconfig"; path = "Target Support Files/Pods-JipJung-MaximTests/Pods-JipJung-MaximTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B4015CD32739151B006BD14A /* PlayHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayHistoryViewController.swift; sourceTree = "<group>"; };
 		B4015CD527391529006BD14A /* FavoriteMusicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteMusicViewController.swift; sourceTree = "<group>"; };
@@ -416,8 +429,11 @@
 		DD8564C9273F9E6F00049D9B /* SlowPresent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlowPresent.swift; sourceTree = "<group>"; };
 		DD97B0272755C2FA009A1E5C /* Focus+Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Focus+Enums.swift"; sourceTree = "<group>"; };
 		DD97B03A2755F8FC009A1E5C /* MaximTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MaximTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		DD97B03C2755F8FC009A1E5C /* MaximTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaximTests.swift; sourceTree = "<group>"; };
+		DD97B03C2755F8FC009A1E5C /* MaximListUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaximListUseCaseTests.swift; sourceTree = "<group>"; };
 		DD97B04727561135009A1E5C /* MaximListRepositoryStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaximListRepositoryStub.swift; sourceTree = "<group>"; };
+		DD97B05127562B5F009A1E5C /* MeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeTests.swift; sourceTree = "<group>"; };
+		DD97B05F27562DA7009A1E5C /* MeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DD97B06127562DA7009A1E5C /* MeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeTests.swift; sourceTree = "<group>"; };
 		DDB5CE9D27328E8300E8F9EB /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		DDB5CEA127328EC300E8F9EB /* ExploreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreViewController.swift; sourceTree = "<group>"; };
 		DDB5CEA727328EF400E8F9EB /* MeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeViewController.swift; sourceTree = "<group>"; };
@@ -475,6 +491,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				956014A70B264AA2AC664384 /* Pods_JipJung_MaximTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DD97B05C27562DA7009A1E5C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8A3D83502507671361AFBEA7 /* Pods_JipJung_MeTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -849,6 +873,8 @@
 				B4F36B5727338E9B0073609C /* UserDefaultsStorageTest */,
 				912A72022733B99300C1A37E /* LocalFileManagerTests */,
 				DD97B03B2755F8FC009A1E5C /* MaximTests */,
+				DD97B05027562B5F009A1E5C /* MeTests */,
+				DD97B06027562DA7009A1E5C /* MeTests */,
 				DD3902CE272FCA10009ECA82 /* Products */,
 				DD3902F8272FD248009ECA82 /* Frameworks */,
 				FC10DDE8A3B3F38BE43E9B68 /* Pods */,
@@ -862,6 +888,7 @@
 				B4F36B5627338E9B0073609C /* UserDefaultsStorageTest.xctest */,
 				912A72012733B99300C1A37E /* LocalFileManagerTests.xctest */,
 				DD97B03A2755F8FC009A1E5C /* MaximTests.xctest */,
+				DD97B05F27562DA7009A1E5C /* MeTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -889,6 +916,7 @@
 			children = (
 				6ECB91629425C2E076873750 /* Pods_JipJung.framework */,
 				35D5F58CC74CC2064013821E /* Pods_JipJung_MaximTests.framework */,
+				57A904A9E04F7D2AC26A261B /* Pods_JipJung_MeTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -907,10 +935,26 @@
 		DD97B03B2755F8FC009A1E5C /* MaximTests */ = {
 			isa = PBXGroup;
 			children = (
-				DD97B03C2755F8FC009A1E5C /* MaximTests.swift */,
+				DD97B03C2755F8FC009A1E5C /* MaximListUseCaseTests.swift */,
 				DD97B04727561135009A1E5C /* MaximListRepositoryStub.swift */,
 			);
 			path = MaximTests;
+			sourceTree = "<group>";
+		};
+		DD97B05027562B5F009A1E5C /* MeTests */ = {
+			isa = PBXGroup;
+			children = (
+				DD97B05127562B5F009A1E5C /* MeTests.swift */,
+			);
+			path = MeTests;
+			sourceTree = "<group>";
+		};
+		DD97B06027562DA7009A1E5C /* MeTests */ = {
+			isa = PBXGroup;
+			children = (
+				DD97B06127562DA7009A1E5C /* MeTests.swift */,
+			);
+			path = MeTests;
 			sourceTree = "<group>";
 		};
 		DDB5CE9927328E5000E8F9EB /* UI */ = {
@@ -1092,6 +1136,8 @@
 				0B8DD22FEC5E234B31F27E14 /* Pods-JipJung.release.xcconfig */,
 				B2B7324890A70CF247912613 /* Pods-JipJung-MaximTests.debug.xcconfig */,
 				1530308276B90D1ECB8302E9 /* Pods-JipJung-MaximTests.release.xcconfig */,
+				AA0CE16DE313933A518FE3FB /* Pods-JipJung-MeTests.debug.xcconfig */,
+				494377D0B5850D3875EADB60 /* Pods-JipJung-MeTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -1175,6 +1221,26 @@
 			productReference = DD97B03A2755F8FC009A1E5C /* MaximTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		DD97B05E27562DA7009A1E5C /* MeTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DD97B06527562DA7009A1E5C /* Build configuration list for PBXNativeTarget "MeTests" */;
+			buildPhases = (
+				19E785978DFA75A18FD19D28 /* [CP] Check Pods Manifest.lock */,
+				DD97B05B27562DA7009A1E5C /* Sources */,
+				DD97B05C27562DA7009A1E5C /* Frameworks */,
+				DD97B05D27562DA7009A1E5C /* Resources */,
+				4F8625CEC82E577615AA0A75 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DD97B06427562DA7009A1E5C /* PBXTargetDependency */,
+			);
+			name = MeTests;
+			productName = MeTests;
+			productReference = DD97B05F27562DA7009A1E5C /* MeTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -1199,6 +1265,9 @@
 					DD97B0392755F8FC009A1E5C = {
 						CreatedOnToolsVersion = 13.1;
 					};
+					DD97B05E27562DA7009A1E5C = {
+						CreatedOnToolsVersion = 13.1;
+					};
 				};
 			};
 			buildConfigurationList = DD3902C8272FCA10009ECA82 /* Build configuration list for PBXProject "JipJung" */;
@@ -1218,6 +1287,7 @@
 				B4F36B5527338E9B0073609C /* UserDefaultsStorageTest */,
 				912A72002733B99300C1A37E /* LocalFileManagerTests */,
 				DD97B0392755F8FC009A1E5C /* MaximTests */,
+				DD97B05E27562DA7009A1E5C /* MeTests */,
 			);
 		};
 /* End PBXProject section */
@@ -1324,9 +1394,38 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DD97B05D27562DA7009A1E5C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		19E785978DFA75A18FD19D28 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-JipJung-MeTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		422FBE53D64A355C459A434C /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1364,6 +1463,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-JipJung/Pods-JipJung-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4F8625CEC82E577615AA0A75 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-JipJung-MeTests/Pods-JipJung-MeTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-JipJung-MeTests/Pods-JipJung-MeTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-JipJung-MeTests/Pods-JipJung-MeTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		8A126E409EA1840F6BA674C7 /* [CP] Embed Pods Frameworks */ = {
@@ -1589,7 +1705,16 @@
 				DD97B045275608E2009A1E5C /* Date+Extension.swift in Sources */,
 				DD97B04927561F2B009A1E5C /* Maxim.swift in Sources */,
 				DD97B0432755FE96009A1E5C /* MaximListUseCase.swift in Sources */,
-				DD97B03D2755F8FC009A1E5C /* MaximTests.swift in Sources */,
+				DD97B03D2755F8FC009A1E5C /* MaximListUseCaseTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DD97B05B27562DA7009A1E5C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DD97B06227562DA7009A1E5C /* MeTests.swift in Sources */,
+				DDF0D7C12756340200FE8681 /* FocusRecord.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1610,6 +1735,11 @@
 			isa = PBXTargetDependency;
 			target = DD3902CC272FCA10009ECA82 /* JipJung */;
 			targetProxy = DD97B03E2755F8FC009A1E5C /* PBXContainerItemProxy */;
+		};
+		DD97B06427562DA7009A1E5C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DD3902CC272FCA10009ECA82 /* JipJung */;
+			targetProxy = DD97B06327562DA7009A1E5C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1941,6 +2071,52 @@
 			};
 			name = Release;
 		};
+		DD97B06627562DA7009A1E5C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = AA0CE16DE313933A518FE3FB /* Pods-JipJung-MeTests.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6785P7H4GT;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Albireo3754.MeTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		DD97B06727562DA7009A1E5C /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 494377D0B5850D3875EADB60 /* Pods-JipJung-MeTests.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6785P7H4GT;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Albireo3754.MeTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1985,6 +2161,15 @@
 			buildConfigurations = (
 				DD97B0412755F8FC009A1E5C /* Debug */,
 				DD97B0422755F8FC009A1E5C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DD97B06527562DA7009A1E5C /* Build configuration list for PBXNativeTarget "MeTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DD97B06627562DA7009A1E5C /* Debug */,
+				DD97B06727562DA7009A1E5C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

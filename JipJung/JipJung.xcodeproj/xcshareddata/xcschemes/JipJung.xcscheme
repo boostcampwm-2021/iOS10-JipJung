@@ -48,6 +48,16 @@
                ReferencedContainer = "container:JipJung.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "DD97B05E27562DA7009A1E5C"
+               BuildableName = "MeTests.xctest"
+               BlueprintName = "MeTests"
+               ReferencedContainer = "container:JipJung.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
