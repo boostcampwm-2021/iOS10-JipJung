@@ -73,7 +73,7 @@ final class DefaultFocusViewController: FocusViewController {
     
     private var viewModel: DefaultFocusViewModel?
     // MARK: - Initializer
-
+    
     convenience init(viewModel: DefaultFocusViewModel) {
         self.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
@@ -151,7 +151,7 @@ final class DefaultFocusViewController: FocusViewController {
             $0.width.equalTo(FocusViewButtonSize.startButton.width)
             $0.height.equalTo(FocusViewButtonSize.startButton.height)
         }
-
+        
         view.addSubview(pauseButton)
         pauseButton.snp.makeConstraints {
             $0.top.equalTo(view.snp.centerY).multipliedBy(1.4)
@@ -159,7 +159,7 @@ final class DefaultFocusViewController: FocusViewController {
             $0.width.equalTo(FocusViewButtonSize.pauseButton.width)
             $0.height.equalTo(FocusViewButtonSize.pauseButton.height)
         }
-
+        
         view.addSubview(continueButton)
         continueButton.snp.makeConstraints {
             $0.top.equalTo(view.snp.centerY).multipliedBy(1.4)
@@ -167,7 +167,7 @@ final class DefaultFocusViewController: FocusViewController {
             $0.width.equalTo(FocusViewButtonSize.continueButton.width)
             $0.height.equalTo(FocusViewButtonSize.continueButton.height)
         }
-
+        
         view.addSubview(exitButton)
         exitButton.snp.makeConstraints {
             $0.top.equalTo(view.snp.centerY).multipliedBy(1.4)
@@ -179,20 +179,27 @@ final class DefaultFocusViewController: FocusViewController {
     
     private func bindUI() {
         viewModel?.timerState.bind(onNext: { [weak self] in
-                guard let self = self else { return }
-                switch $0 {
-                case .ready:
-                    self.changeStateToReady()
-                case .running(let isResume):
-                    if isResume {
-                        self.changeStateToResume()
-                    } else {
-                        self.changeStateToStart(with: self.viewModel?.focusTime ?? 0)
-                    }
-                case .paused:
-                    self.changeStateToPaused()
+            guard let self = self,
+                  let viewModel = self.viewModel
+            else {
+                return
+            }
+            
+            switch $0 {
+            case .ready:
+                self.presentReady(value: viewModel.focusTime)
+            case .running(let isResume):
+                if isResume {
+                    self.presentResume()
+                } else {
+                    viewModel.startClockTimer()
+                    self.presentStart(with: viewModel.focusTime)
                 }
-            })
+            case .paused:
+                viewModel.pauseClockTimer()
+                self.presentPaused()
+            }
+        })
             .disposed(by: disposeBag)
         
         startButton.rx.tap
@@ -219,7 +226,7 @@ final class DefaultFocusViewController: FocusViewController {
         exitButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
-                self.alertNotification()
+                self.viewModel?.alertNotification()
                 self.viewModel?.saveFocusRecord()
                 self.viewModel?.changeTimerState(to: .ready)
                 self.viewModel?.resetClockTimer()
@@ -232,10 +239,10 @@ final class DefaultFocusViewController: FocusViewController {
                       let focusTime = self.viewModel?.focusTime
                 else { return }
                 if $0 == focusTime {
-                    self.alertNotification()
+                    self.viewModel?.alertNotification()
                     self.viewModel?.saveFocusRecord()
                     self.viewModel?.resetClockTimer()
-                    self.changeStateToReady()
+                    self.presentReady(value: focusTime)
                     return
                 }
                 self.timeLabel.text = (focusTime - $0).digitalClockFormatted
@@ -244,26 +251,8 @@ final class DefaultFocusViewController: FocusViewController {
             .disposed(by: disposeBag)
     }
     
-    private func alertNotification() {
-        guard let focusTime = self.viewModel?.focusTime,
-              let clockTime = self.viewModel?.clockTime.value
-        else {
-            return
-        }
-        let sadEmojis = ["🥶", "😣", "😞", "😟", "😕"]
-        let happyEmojis = ["☺️", "😘", "😍", "🥳", "🤩"]
-        let minuteString = clockTime / 60 == 0 ? "" : "\(clockTime / 60)분 "
-        let secondString = clockTime % 60 == 0 ? "" : "\(clockTime % 60)초 "
-        let message = focusTime - clockTime > 0
-        ? "완료시간 전에 종료되었어요." + (sadEmojis.randomElement() ?? "")
-        : minuteString + secondString + "집중하셨어요!" + (happyEmojis.randomElement() ?? "")
-        PushNotificationMananger.shared.presentFocusStopNotification(title: .focusFinish,
-                                                                     body: message)
-        FeedbackGenerator.shared.impactOccurred()
-    }
-    
-    private func changeStateToReady() {
-        timeLabel.text = viewModel?.focusTime.digitalClockFormatted
+    private func presentReady(value: Int) {
+        timeLabel.text = value.digitalClockFormatted
         pauseButton.isHidden = true
         timeLabel.isHidden = true
         timePickerView.isHidden = false
@@ -291,23 +280,22 @@ final class DefaultFocusViewController: FocusViewController {
         }
     }
     
-    private func changeStateToStart(with duration: Int) {
-        changeStateToRunning()
+    private func presentStart(with duration: Int) {
+        presentRunning()
         resumeTimerProgressAnimation()
         startTimeProgressAnimation(with: duration)
     }
     
-    private func changeStateToResume() {
-        changeStateToRunning()
+    private func presentResume() {
+        presentRunning()
         resumeTimerProgressAnimation()
     }
     
-    private func changeStateToRunning() {
+    private func presentRunning() {
         startButton.isHidden = true
         timeLabel.isHidden = false
         timePickerView.isHidden = true
         minuteLabel.isHidden = true
-        viewModel?.startClockTimer()
         
         UIView.animate(withDuration: 0.5) { [weak self] in
             guard let self = self else { return }
@@ -330,15 +318,14 @@ final class DefaultFocusViewController: FocusViewController {
         }
     }
     
-    private func changeStateToPaused() {
+    private func presentPaused() {
         startButton.isHidden = true
         pauseButton.isHidden = true
         timeLabel.isHidden = false
         timePickerView.isHidden = true
         minuteLabel.isHidden = true
-        viewModel?.pauseClockTimer()
         pauseTimerProgressAnimation()
-
+        
         UIView.animate(withDuration: 0.5) { [weak self] in
             guard let self = self else { return }
             self.continueButton.isHidden = false
@@ -363,11 +350,13 @@ final class DefaultFocusViewController: FocusViewController {
                                         startAngle: CGFloat = 0,
                                         endAngle: CGFloat = 2 * CGFloat.pi) -> CAShapeLayer {
         let circleShapeLayer = CAShapeLayer()
-        let circlePath = UIBezierPath(arcCenter: .zero,
-                                      radius: FocusViewControllerSize.timerViewLength * 0.5,
-                                      startAngle: startAngle,
-                                      endAngle: endAngle,
-                                      clockwise: true)
+        let circlePath = UIBezierPath(
+            arcCenter: .zero,
+            radius: FocusViewControllerSize.timerViewLength * 0.5,
+            startAngle: startAngle,
+            endAngle: endAngle,
+            clockwise: true
+        )
         circleShapeLayer.path = circlePath.cgPath
         circleShapeLayer.strokeColor = strokeColor.cgColor
         circleShapeLayer.lineCap = CAShapeLayerLineCap.round
@@ -414,7 +403,9 @@ extension DefaultFocusViewController: UIPickerViewDelegate {
     }
     
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
-        guard let minuteInfo = viewModel?.focusTimeList[row] else { return UILabel() }
+        guard let minuteInfo = viewModel?.focusTimeList[row] else {
+            return UILabel()
+        }
         timePickerView.subviews.forEach {
             $0.backgroundColor = .clear
         }
@@ -437,7 +428,7 @@ extension DefaultFocusViewController: UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
-     
+    
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return viewModel?.focusTimeList.count ?? 0
     }

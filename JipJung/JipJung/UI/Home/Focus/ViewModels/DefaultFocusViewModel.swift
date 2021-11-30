@@ -16,6 +16,7 @@ protocol DefaultFocusViewModelInput {
     func resetClockTimer()
     func setFocusTime(seconds: Int)
     func saveFocusRecord()
+    func alertNotification()
 }
 
 protocol DefaultFocusViewModelOutput {
@@ -78,5 +79,22 @@ final class DefaultFocusViewModel: DefaultFocusViewModelInput, DefaultFocusViewM
                 self?.isFocusRecordSaved.accept(false)
             }
             .disposed(by: disposeBag)
+    }
+    
+    func alertNotification() {
+        let clockTime = clockTime.value
+        let sadEmojis = ["🥶", "😣", "😞", "😟", "😕"]
+        let happyEmojis = ["☺️", "😘", "😍", "🥳", "🤩"]
+        let minuteString = clockTime / 60 == 0 ? "" : "\(clockTime / 60)분 "
+        let secondString = clockTime % 60 == 0 ? "" : "\(clockTime % 60)초 "
+        let message = focusTime - clockTime > 0
+        ? "완료시간 전에 종료되었어요." + (sadEmojis.randomElement() ?? "")
+        : minuteString + secondString + "집중하셨어요!" + (happyEmojis.randomElement() ?? "")
+        PushNotificationMananger.shared.presentFocusStopNotification(
+            title: .focusFinish,
+            body: message
+        )
+        
+        FeedbackGenerator.shared.impactOccurred()
     }
 }

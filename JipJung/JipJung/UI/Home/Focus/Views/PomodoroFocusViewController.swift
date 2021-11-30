@@ -198,15 +198,17 @@ final class PomodoroFocusViewController: FocusViewController {
                 guard let self = self else { return }
                 switch $0 {
                 case .ready:
-                    self.changeStateToReady()
+                    self.presentReady()
                 case .running(let isResume):
+                    self.viewModel?.startClockTimer()
                     if isResume {
-                        self.changeStateToResume()
+                        self.presentResume()
                     } else {
-                        self.changeStateToStart(with: self.viewModel?.focusTime ?? 0)
+                        self.presentStart(with: self.viewModel?.focusTime ?? 0)
                     }
                 case .paused:
-                    self.changeStateToPaused()
+                    self.viewModel?.pauseClockTimer()
+                    self.presentPaused()
                 }
             })
             .disposed(by: disposeBag)
@@ -236,7 +238,7 @@ final class PomodoroFocusViewController: FocusViewController {
             .bind { [weak self] in
                 guard let self = self else { return }
                 if self.viewModel?.mode.value == .work {
-                    self.alertNotification()
+                    self.viewModel?.alertNotification()
                 }
                 self.viewModel?.changeTimerState(to: .ready)
                 self.viewModel?.resetClockTimer()
@@ -252,10 +254,10 @@ final class PomodoroFocusViewController: FocusViewController {
                       let focusTime = self.viewModel?.focusTime
                 else { return }
                 if $0 == focusTime {
-                    self.alertNotification()
+                    self.viewModel?.alertNotification()
                     self.viewModel?.changeMode()
                     self.viewModel?.resetClockTimer()
-                    self.changeStateToReady()
+                    self.presentReady()
                     return
                 }
                 self.timeLabel.text = (focusTime - $0).digitalClockFormatted
@@ -281,34 +283,7 @@ final class PomodoroFocusViewController: FocusViewController {
             .disposed(by: disposeBag)
     }
     
-    private func alertNotification() {
-        guard let focusTime = self.viewModel?.focusTime,
-              let clockTime = self.viewModel?.clockTime.value,
-              let mode = self.viewModel?.mode.value
-        else {
-            return
-        }
-        let sadEmojis = ["🥶", "😣", "😞", "😟", "😕"]
-        let happyEmojis = ["☺️", "😘", "😍", "🥳", "🤩"]
-        let relaxEmojis = ["👍", "👏", "🤜", "🙌", "🙏"]
-        switch mode {
-        case .work:
-            let minuteString = clockTime / 60 == 0 ? "" : "\(clockTime / 60)분 "
-            let secondString = clockTime % 60 == 0 ? "" : "\(clockTime % 60)초 "
-            let message = focusTime - clockTime > 0
-            ? "완료시간 전에 종료되었어요." + (sadEmojis.randomElement() ?? "")
-            : minuteString + secondString + "집중하셨어요!" + (happyEmojis.randomElement() ?? "")
-            PushNotificationMananger.shared.presentFocusStopNotification(title: .focusFinish,
-                                                                         body: message)
-        case .relax:
-            let message = "휴식시간이 끝났어요! 다시 집중해볼까요?" + (relaxEmojis.randomElement() ?? "")
-            PushNotificationMananger.shared.presentFocusStopNotification(title: .relaxFinish,
-                                                                         body: message)
-        }
-        FeedbackGenerator.shared.impactOccurred()
-    }
-    
-    private func changeStateToReady() {
+    private func presentReady() {
         timeLabel.text = viewModel?.focusTime.digitalClockFormatted
         pauseButton.isHidden = true
         timeLabel.isHidden = true
@@ -337,23 +312,22 @@ final class PomodoroFocusViewController: FocusViewController {
         }
     }
     
-    private func changeStateToStart(with duration: Int) {
-        changeStateToRunning()
+    private func presentStart(with duration: Int) {
+        presentRunning()
         resumeTimerProgressAnimation()
         startTimeProgressAnimation(with: duration)
     }
     
-    private func changeStateToResume() {
-        changeStateToRunning()
+    private func presentResume() {
+        presentRunning()
         resumeTimerProgressAnimation()
     }
     
-    private func changeStateToRunning() {
+    private func presentRunning() {
         startButton.isHidden = true
         timeLabel.isHidden = false
         timePickerView.isHidden = true
         minuteLabel.isHidden = true
-        viewModel?.startClockTimer()
         
         UIView.animate(withDuration: 0.5) { [weak self] in
             guard let self = self else { return }
@@ -376,13 +350,13 @@ final class PomodoroFocusViewController: FocusViewController {
         }
     }
     
-    private func changeStateToPaused() {
+    private func presentPaused() {
         startButton.isHidden = true
         pauseButton.isHidden = true
         timeLabel.isHidden = false
         timePickerView.isHidden = true
         minuteLabel.isHidden = true
-        viewModel?.pauseClockTimer()
+
         pauseTimerProgressAnimation()
 
         UIView.animate(withDuration: 0.5) { [weak self] in
@@ -409,11 +383,13 @@ final class PomodoroFocusViewController: FocusViewController {
                                         startAngle: CGFloat = 0,
                                         endAngle: CGFloat = 2 * CGFloat.pi) -> CAShapeLayer {
         let circleShapeLayer = CAShapeLayer()
-        let circlePath = UIBezierPath(arcCenter: .zero,
-                                      radius: FocusViewControllerSize.timerViewLength * 0.5,
-                                      startAngle: startAngle,
-                                      endAngle: endAngle,
-                                      clockwise: true)
+        let circlePath = UIBezierPath(
+            arcCenter: .zero,
+            radius: FocusViewControllerSize.timerViewLength * 0.5,
+            startAngle: startAngle,
+            endAngle: endAngle,
+            clockwise: true
+        )
         circleShapeLayer.path = circlePath.cgPath
         circleShapeLayer.strokeColor = strokeColor.cgColor
         circleShapeLayer.lineCap = CAShapeLayerLineCap.round

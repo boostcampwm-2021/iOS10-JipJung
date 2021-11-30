@@ -200,7 +200,7 @@ final class BreathFocusViewController: FocusViewController {
                 case .running:
                     self.startBreath()
                 case .stop:
-                    self.alertNotification()
+                    self.viewModel?.alertNotification()
                     self.stopBreath()
                     self.viewModel?.saveFocusRecord()
                     self.viewModel?.resetClockTimer()
@@ -225,45 +225,38 @@ final class BreathFocusViewController: FocusViewController {
                 self.textLayer.string = "Inhale"
                 self.textLayer.opacity = 1
                 
-                UIView.animate(withDuration: 4.0,
-                               delay: 0.0,
-                               options: .allowUserInteraction,
-                               animations: {
-                    self.view.layer.backgroundColor = .init(red: 129.0 / 255.0,
-                                                            green: 240.0 / 255.0,
-                                                            blue: 135.0 / 255.0,
-                                                            alpha: 0.8)
-                },
-                               completion: nil)
+                UIView.animate(
+                    withDuration: 4.0,
+                    delay: 0.0,
+                    options: .allowUserInteraction,
+                    animations: {
+                        self.view.layer.backgroundColor = .init(
+                            red: 129.0 / 255.0,
+                            green: 240.0 / 255.0,
+                            blue: 135.0 / 255.0,
+                            alpha: 0.8
+                        )
+                    },
+                    completion: nil
+                )
             } else if $0 % 7 == 4 {
-                UIView.animate(withDuration: 3.0,
-                               delay: 0.0,
-                               options: .allowUserInteraction,
-                               animations: {
-                    self.view.layer.backgroundColor = .init(red: 131.0 / 255.0,
-                                                            green: 79.0 / 255.0,
-                                                            blue: 163.0 / 255.0,
-                                                            alpha: 0.3)
+                UIView.animate(
+                    withDuration: 3.0,
+                    delay: 0.0,
+                    options: .allowUserInteraction,
+                    animations: {
+                    self.view.layer.backgroundColor = .init(
+                        red: 131.0 / 255.0,
+                        green: 79.0 / 255.0,
+                        blue: 163.0 / 255.0,
+                        alpha: 0.3
+                    )
                 },
-                               completion: nil)
+                    completion: nil
+                )
             }
             
         }).disposed(by: disposeBag)
-    }
-    
-    private func alertNotification() {
-        guard let clockTime = self.viewModel?.clockTime.value else {
-            return
-        }
-        let angryEmpjis = ["😡", "🤬", "🥵", "🥶", "😰"]
-        let happyEmojis = ["☺️", "😘", "😍", "🥳", "🤩"]
-        let times = clockTime / 7
-        let message = times > 0
-        ? "\(clockTime / 7)회 호흡 운동하셨습니다." + (happyEmojis.randomElement() ?? "")
-        : "\(times)회... 반복했습니다. 집중합시다!" + (angryEmpjis.randomElement() ?? "")
-        PushNotificationMananger.shared.presentFocusStopNotification(title: .focusFinish,
-                                                                     body: message)
-        FeedbackGenerator.shared.impactOccurred()
     }
     
     private func startBreath() {
