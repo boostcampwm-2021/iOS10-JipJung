@@ -26,6 +26,7 @@ final class ExploreViewController: UIViewController {
         searchBar.placeholder = "Search entire library"
         searchBar.searchBarStyle = .minimal
         searchBar.layer.cornerRadius = 3
+        searchBar.searchTextField.leftView?.tintColor = .gray
         return searchBar
     }()
     

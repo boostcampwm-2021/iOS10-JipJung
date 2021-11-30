@@ -19,6 +19,7 @@ final class SearchViewController: UIViewController {
         searchBar.placeholder = "Search entire library"
         searchBar.layer.cornerRadius = 3
         searchBar.searchBarStyle = .minimal
+        searchBar.searchTextField.leftView?.tintColor = .gray
         return searchBar
     }()
     
@@ -72,7 +73,7 @@ final class SearchViewController: UIViewController {
     private var viewModel: SearchViewModel?
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-       return .lightContent
+        return ApplicationMode.shared.mode.value == .bright ? .darkContent : .lightContent
     }
 
     // MARK: - Lifecycle Methods
@@ -216,6 +217,10 @@ extension SearchViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return "History"
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        (view as? UITableViewHeaderFooterView)?.textLabel?.textColor = .gray
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
