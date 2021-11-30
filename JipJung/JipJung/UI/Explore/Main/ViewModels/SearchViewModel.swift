@@ -40,11 +40,16 @@ final class SearchViewModel: SearchViewModelInput, SearchViewModelOutput {
         var searchHistoryValue = searchHistoryUseCase.load()
         searchHistoryValue.append(keyword)
         searchHistoryUseCase.save(searchHistoryValue)
+        
+        searchHistoryValue = searchHistoryValue.reversed()
+            .elements(in: 0..<5)
         searchHistory.accept(searchHistoryValue)
     }
     
     func loadSearchHistory() {
         let searchHistoryValue = searchHistoryUseCase.load()
+            .reversed()
+            .elements(in: 0..<5)
         searchHistory.accept(searchHistoryValue)
     }
     
