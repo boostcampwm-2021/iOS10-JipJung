@@ -17,19 +17,19 @@ enum FocusMode: CaseIterable {
     
     enum Normal {
         static let title = "기본"
-        static let image = "house"
+        static let image = "focus_default"
     }
     enum Pomodoro {
         static let title = "뽀모도로"
-        static let image = "house"
+        static let image = "focus_pomodoro"
     }
     enum Infinity {
         static let title = "무한"
-        static let image = "house"
+        static let image = "focus_infinite"
     }
     enum Breath {
         static let title = "심호흡"
-        static let image = "house"
+        static let image = "focus_breath"
     }
     
     static func getValue(from mode: FocusMode) -> (title: String, image: String) {
