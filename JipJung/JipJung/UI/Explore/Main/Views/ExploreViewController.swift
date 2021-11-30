@@ -13,7 +13,11 @@ import RxCocoa
 final class ExploreViewController: UIViewController {
     // MARK: - Subviews
     
-    private lazy var scrollView: UIScrollView = UIScrollView()
+    private lazy var scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.showsVerticalScrollIndicator = false
+        return scrollView
+    }()
     private lazy var scrollContentView: UIView = UIView()
     
     private lazy var searchBar: UISearchBar = {
@@ -46,7 +50,6 @@ final class ExploreViewController: UIViewController {
         layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
 
         let soundContentsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        soundContentsCollectionView.showsHorizontalScrollIndicator = false
         soundContentsCollectionView.delegate = self
         soundContentsCollectionView.dataSource = self
         soundContentsCollectionView.register(
@@ -183,7 +186,6 @@ final class ExploreViewController: UIViewController {
         let defaultHeight = 600
         let height = max(defaultHeight, (viewModel?.categoryItems.value.count ?? 0 + 1)/2 * 280)
         
-        print(height)
         soundCollectionView.snp.remakeConstraints {
             $0.top.equalTo(soundTagCollectionView.snp.bottom).offset(20)
             $0.height.equalTo(height)
