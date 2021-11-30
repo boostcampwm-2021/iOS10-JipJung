@@ -36,6 +36,7 @@
 		917BDD5D2746268D0049E944 /* TouchTransferView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917BDD5C2746268D0049E944 /* TouchTransferView.swift */; };
 		917BDD5F274638750049E944 /* CGPoint+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917BDD5E274638750049E944 /* CGPoint+Extension.swift */; };
 		918D19A5273D21B300A13954 /* sea.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 91184BB3273D1E01007A29C8 /* sea.mp4 */; };
+		919519412755E24E0081A775 /* Common+Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 919519402755E24E0081A775 /* Common+Enums.swift */; };
 		9198DE952733863500EBAEC8 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9198DE942733863500EBAEC8 /* Common.swift */; };
 		91A98C91274D58EF00E7DCC8 /* PlayHistoryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A98C90274D58EF00E7DCC8 /* PlayHistoryRepository.swift */; };
 		91CE6F6F2739024800176AF2 /* Home+Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CE6F6E2739024800176AF2 /* Home+Enums.swift */; };
@@ -262,6 +263,7 @@
 		917BDD5A2745FBDA0049E944 /* MediaPlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPlayView.swift; sourceTree = "<group>"; };
 		917BDD5C2746268D0049E944 /* TouchTransferView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchTransferView.swift; sourceTree = "<group>"; };
 		917BDD5E274638750049E944 /* CGPoint+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+Extension.swift"; sourceTree = "<group>"; };
+		919519402755E24E0081A775 /* Common+Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Common+Enums.swift"; sourceTree = "<group>"; };
 		9198DE942733863500EBAEC8 /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		91A98C90274D58EF00E7DCC8 /* PlayHistoryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayHistoryRepository.swift; sourceTree = "<group>"; };
 		91CE6F6E2739024800176AF2 /* Home+Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Home+Enums.swift"; sourceTree = "<group>"; };
@@ -742,6 +744,14 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
+		9195193F2755E23A0081A775 /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				919519402755E24E0081A775 /* Common+Enums.swift */,
+			);
+			path = Enums;
+			sourceTree = "<group>";
+		};
 		9198DE93273385D800EBAEC8 /* Localizing */ = {
 			isa = PBXGroup;
 			children = (
@@ -986,6 +996,7 @@
 		DDB92B992737A96600EE26F0 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				9195193F2755E23A0081A775 /* Enums */,
 				9172BBEA274224DD000E1060 /* Extensions */,
 				9172BBE9274224CC000E1060 /* Views */,
 			);
@@ -1475,6 +1486,7 @@
 				DFED21D02733931600E99641 /* MusicDescriptionView.swift in Sources */,
 				912F3339274F9FF7000E08FB /* PlayHistoryViewModel.swift in Sources */,
 				DD828092273D113200BB2A60 /* NetworkEnums.swift in Sources */,
+				919519412755E24E0081A775 /* Common+Enums.swift in Sources */,
 				DD3902D3272FCA10009ECA82 /* SceneDelegate.swift in Sources */,
 				DD8473672746112D00DF4FCB /* Maxim+Enums.swift in Sources */,
 				B481FC7D274521B800D1F2EA /* FavoriteMediaUseCase.swift in Sources */,

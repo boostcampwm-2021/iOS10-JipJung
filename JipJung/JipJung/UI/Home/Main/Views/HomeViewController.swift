@@ -42,7 +42,8 @@ class HomeViewController: UIViewController {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.sectionInset = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16)
-        layout.itemSize = HomeMainViewSize.musicCellSize
+        let cellWidth = UIScreen.deviceScreenSize.width / 2.5
+        layout.itemSize = CGSize(width: cellWidth, height: cellWidth * MediaCell.ratio)
         layout.minimumInteritemSpacing = 8
 
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -64,7 +65,8 @@ class HomeViewController: UIViewController {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.sectionInset = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16)
-        layout.itemSize = HomeMainViewSize.musicCellSize
+        let cellWidth = UIScreen.deviceScreenSize.width / 2.5
+        layout.itemSize = CGSize(width: cellWidth, height: cellWidth * MediaCell.ratio)
         layout.minimumInteritemSpacing = 8
 
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
