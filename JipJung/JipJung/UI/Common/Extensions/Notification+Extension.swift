@@ -10,4 +10,5 @@ import Foundation
 extension Notification.Name {
     static let refreshHome = Notification.Name("RefreshHome")
     static let showCarouselView = Notification.Name("ShowCarouselView")
+    static let controlForFocus = Notification.Name("ControlForFocus")
 }

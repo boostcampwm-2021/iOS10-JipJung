@@ -12,9 +12,9 @@ import RxSwift
 import SnapKit
 
 protocol CarouselViewDelegate: AnyObject {
-    func currentViewTapped()
+    func currentViewTapped(media: Media)
     func currentViewDownSwiped(media: Media)
-    func currentViewAppear(media: Media, autoPlay: Bool)
+    func currentViewAppear(media: Media)
 }
 
 class CarouselView: UIView {
@@ -256,7 +256,6 @@ class CarouselView: UIView {
                 self.currentIndex.accept(nextIndex)
                 
                 self.previousView.pauseVideo()
-                self.currentView.pauseVideo()
                 self.nextView.pauseVideo()
             case .right:
                 let currentIndex = self.currentIndex.value
@@ -271,7 +270,6 @@ class CarouselView: UIView {
                 self.currentIndex.accept(nextIndex)
                 
                 self.previousView.pauseVideo()
-                self.currentView.pauseVideo()
                 self.nextView.pauseVideo()
             case .none:
                 break
@@ -290,9 +288,13 @@ class CarouselView: UIView {
     }
     
     private func mediaPlayViewTapped() {
-        guard let delegate = delegate else { return }
+        guard let delegate = delegate,
+              let media = currentView.media.value
+        else {
+            return
+        }
 
-        delegate.currentViewTapped()
+        delegate.currentViewTapped(media: media)
     }
     
     private func mediaPlayViewDownSwiped() {
@@ -312,7 +314,7 @@ class CarouselView: UIView {
             return
         }
 
-        delegate.currentViewAppear(media: media, autoPlay: autoPlay)
+        delegate.currentViewAppear(media: media)
     }
 }
 

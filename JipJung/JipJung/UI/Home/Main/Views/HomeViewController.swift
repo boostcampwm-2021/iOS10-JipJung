@@ -118,7 +118,9 @@ class HomeViewController: UIViewController {
         
         guard let media = carouselView.getMediaFromCurrentView() else { return }
         
-        viewModel.mediaPlayViewAppear(media: media)
+        if viewModel.mediaPlayViewAppear(media: media) {
+            carouselView.playVideoInCurrentView()
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -152,6 +154,13 @@ class HomeViewController: UIViewController {
         
         NotificationCenter.default.addObserver(
             self,
+            selector: #selector(controlForFocus(_:)),
+            name: .controlForFocus,
+            object: nil
+        )
+        
+        NotificationCenter.default.addObserver(
+            self,
             selector: #selector(showCarouselView(_:)),
             name: .showCarouselView,
             object: nil
@@ -164,10 +173,22 @@ class HomeViewController: UIViewController {
         viewModel.refresh(typeList: typeList)
     }
     
+    @objc private func controlForFocus(_ sender: Notification) {
+        guard let playState = sender.userInfo?["PlayState"] as? Bool,
+              let media = carouselView.getMediaFromCurrentView()
+        else {
+            return
+        }
+        
+        viewModel.receiveNotificationForFocus(media: media, state: playState)
+    }
+    
     @objc private func showCarouselView(_ sender: Notification) {
         guard let media = carouselView.getMediaFromCurrentView() else { return }
         
-        viewModel.mediaPlayViewAppear(media: media)
+        if viewModel.mediaPlayViewAppear(media: media) {
+            carouselView.playVideoInCurrentView()
+        }
     }
     
     private func configureTopBottomViewGap() {
@@ -535,8 +556,8 @@ class HomeViewController: UIViewController {
             .disposed(by: disposeBag)
     }
     
-    private func mediaPlayButtonTouched() -> Single<Bool> {
-        return viewModel.mediaPlayViewTapped()
+    private func mediaPlayButtonTouched(media: Media) -> Single<Bool> {
+        return viewModel.mediaPlayViewTapped(media: media)
     }
     
     @objc private func bottomViewDragged(_ sender: UIPanGestureRecognizer) {
@@ -607,8 +628,8 @@ extension HomeViewController: UIViewControllerTransitioningDelegate {
 }
 
 extension HomeViewController: CarouselViewDelegate {
-    func currentViewTapped() {
-        mediaPlayButtonTouched()
+    func currentViewTapped(media: Media) {
+        mediaPlayButtonTouched(media: media)
             .subscribe { [weak self] state in
                 if state {
                     self?.carouselView.playVideoInCurrentView()
@@ -663,7 +684,9 @@ extension HomeViewController: CarouselViewDelegate {
         present(alert, animated: true)
     }
     
-    func currentViewAppear(media: Media, autoPlay: Bool) {
-        return viewModel.mediaPlayViewAppear(media: media, autoPlay: autoPlay)
+    func currentViewAppear(media: Media) {
+        if viewModel.mediaPlayViewAppear(media: media) {
+            carouselView.playVideoInCurrentView()
+        }
     }
 }

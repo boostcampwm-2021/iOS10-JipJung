@@ -51,6 +51,7 @@ final class MusicPlayerViewModel: MusicPlayerViewModelInput, MusicPlayerViewMode
     let tag: [String]
     var videoPlayerItem: AVPlayerItem?
     
+    private let media: Media
     private let id: String
     private let mode: Int
     private let audioFileName: String
@@ -62,6 +63,7 @@ final class MusicPlayerViewModel: MusicPlayerViewModelInput, MusicPlayerViewMode
     private var disposeBag: DisposeBag = DisposeBag()
     
     init(media: Media) {
+        self.media = media
         id = media.id
         mode = media.mode
         title = media.name
@@ -116,7 +118,7 @@ final class MusicPlayerViewModel: MusicPlayerViewModelInput, MusicPlayerViewMode
     }
 
     func playMusic() {
-        audioPlayUseCase.readyToPlay(audioFileName, autoPlay: true)
+        audioPlayUseCase.control(audioFileName: media.audioFileName, autoPlay: true)
             .subscribe { [weak self] in
                 guard $0 == true else { return }
                 self?.musicFileStatus.accept(FileStatus.downloaded)
@@ -129,7 +131,7 @@ final class MusicPlayerViewModel: MusicPlayerViewModelInput, MusicPlayerViewMode
     }
     
     func pauseMusic() {
-        audioPlayUseCase.controlAudio(playState: .manual(false))
+        audioPlayUseCase.control(audioFileName: media.audioFileName, state: false)
             .subscribe { [weak self] in
                 guard $0 == false else { return }
                 self?.isMusicPlaying.accept($0)
