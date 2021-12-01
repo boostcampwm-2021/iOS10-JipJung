@@ -7,8 +7,8 @@
 
 import Foundation
 
-import RxSwift
 import RxRelay
+import RxSwift
 
 final class HomeViewModel {
     private let mediaListUseCase = MediaListUseCase()
@@ -86,7 +86,6 @@ final class HomeViewModel {
                 })
                 .disposed(by: disposeBag)
         }
-        
     }
     
     func mediaPlayViewDownSwiped(media: Media) -> Single<Bool> {

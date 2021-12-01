@@ -17,7 +17,7 @@ protocol CarouselViewDelegate: AnyObject {
     func currentViewAppear(media: Media)
 }
 
-class CarouselView: UIView {
+final class CarouselView: UIView {
     enum ScrollDirection: CGFloat {
         case left = -1
         case right = 1
@@ -108,7 +108,6 @@ class CarouselView: UIView {
     }
     
     private func bindUI() {
-        
         let contentsObservable = contents
             .distinctUntilChanged()
             .filter { !$0.isEmpty }
@@ -137,7 +136,6 @@ class CarouselView: UIView {
                     currentItem: currentItem,
                     nextItem: nextItem
                 )
-                
                 self?.mediaPlayViewAppear(autoPlay: false)
             } onError: { error in
                 print(error.localizedDescription)
@@ -161,6 +159,7 @@ class CarouselView: UIView {
         guard contents.value.count != 1 else {
             return
         }
+        
         previousView.snp.updateConstraints {
             $0.centerX.equalToSuperview().offset(distanceX - UIScreen.deviceScreenSize.width)
         }
@@ -238,7 +237,6 @@ class CarouselView: UIView {
                 $0?.layer.cornerRadius = 0
                 $0?.transform = CGAffineTransform.identity
             }
-            
         } completion: { [weak self] _ in
             guard let self = self else { return }
             
@@ -318,7 +316,6 @@ class CarouselView: UIView {
     }
 }
 
-// MARK: Touch Events
 extension CarouselView {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)

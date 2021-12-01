@@ -12,7 +12,7 @@ import RxSwift
 import SnapKit
 import SpriteKit
 
-class HomeViewController: UIViewController {
+final class HomeViewController: UIViewController {
     private lazy var mainScrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.showsVerticalScrollIndicator = false
@@ -30,13 +30,13 @@ class HomeViewController: UIViewController {
     private lazy var topView = UIView()
     private lazy var bottomView = UIView()
     private lazy var maximButton: UIButton = {
-        let maximButton = UIButton()
-        maximButton.setTitle("하루 한 줄, 오늘의 명언", for: .normal)
-        maximButton.titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
-        maximButton.makeBlurBackground()
-        maximButton.layer.masksToBounds = true
-        maximButton.layer.cornerRadius = 16
-        return maximButton
+        let button = UIButton()
+        button.setTitle("하루 한 줄, 오늘의 명언", for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
+        button.makeBlurBackground()
+        button.layer.masksToBounds = true
+        button.layer.cornerRadius = 16
+        return button
     }()
     private lazy var playHistoryCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -50,6 +50,8 @@ class HomeViewController: UIViewController {
         collectionView.backgroundColor = .clear
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.register(
+            MusicCollectionViewCell.self,ㅇㅇ
+            forCellWithReuseIdentifier: MusicCollectionViewCell.identifier)
             MediaCollectionViewCell.self,
             forCellWithReuseIdentifier: MediaCollectionViewCell.identifier)
         return collectionView
@@ -85,7 +87,7 @@ class HomeViewController: UIViewController {
         return label
     }()
     private lazy var touchTransferView = TouchTransferView()
-    private let clubView: SKView = SKView()
+    private lazy var clubView: SKView = SKView()
     private lazy var clubScene: SKScene = {
         let clubScene = ClubSKScene()
         clubScene.size = CGSize(width: view.frame.width,
@@ -96,8 +98,8 @@ class HomeViewController: UIViewController {
     
     private let viewModel: HomeViewModel = HomeViewModel()
     private let disposeBag = DisposeBag()
-    private var topBottomViewGap: CGFloat = 0
     
+    private var topBottomViewGap: CGFloat = 0
     private var isAttached = false
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -165,30 +167,6 @@ class HomeViewController: UIViewController {
             name: .showCarouselView,
             object: nil
         )
-    }
-    
-    @objc private func refresh(_ sender: Notification) {
-        guard let typeList = sender.userInfo?["RefreshType"] as? [RefreshHomeData] else { return }
-
-        viewModel.refresh(typeList: typeList)
-    }
-    
-    @objc private func controlForFocus(_ sender: Notification) {
-        guard let playState = sender.userInfo?["PlayState"] as? Bool,
-              let media = carouselView.getMediaFromCurrentView()
-        else {
-            return
-        }
-        
-        viewModel.receiveNotificationForFocus(media: media, state: playState)
-    }
-    
-    @objc private func showCarouselView(_ sender: Notification) {
-        guard let media = carouselView.getMediaFromCurrentView() else { return }
-        
-        if viewModel.mediaPlayViewAppear(media: media) {
-            carouselView.playVideoInCurrentView()
-        }
     }
     
     private func configureTopBottomViewGap() {
@@ -272,7 +250,7 @@ class HomeViewController: UIViewController {
         
         let modeSwitch: UIButton = {
             let button = UIButton()
-            let configuration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 30))
+            let configuration = UIImage.SymbolConfiguration(font: .preferredFont(forTextStyle: .title1))
             button.setImage(
                 UIImage(systemName: "repeat.circle.fill", withConfiguration: configuration),
                 for: .normal
@@ -282,7 +260,7 @@ class HomeViewController: UIViewController {
         }()
         
         modeSwitch.rx.tap
-            .bind { [weak self] in
+            .bind {
                 ApplicationMode.shared.convert()
             }
             .disposed(by: disposeBag)
@@ -352,7 +330,7 @@ class HomeViewController: UIViewController {
         let recentPlayHistoryHeader = HomeListHeaderView()
         recentPlayHistoryHeader.titleLabel.text = "재생 기록"
         recentPlayHistoryHeader.allButton.rx.tap
-            .bind { [weak self] _ in
+            .bind { [weak self] in
                 if self?.viewModel.recentPlayHistory.value.count == 0 {
                     return
                 }
@@ -386,7 +364,7 @@ class HomeViewController: UIViewController {
         let favoriteHeader = HomeListHeaderView()
         favoriteHeader.titleLabel.text = "좋아요 누른 음원"
         favoriteHeader.allButton.rx.tap
-            .bind { [weak self] _ in
+            .bind { [weak self] in
                 if self?.viewModel.favoriteSoundList.value.count == 0 {
                     return
                 }
@@ -424,7 +402,9 @@ class HomeViewController: UIViewController {
         touchTransferView.transferView = carouselView
         view.addSubview(touchTransferView)
         touchTransferView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(HomeMainViewSize.topViewHeight + UIApplication.statusBarHeight)
+            $0.top.equalToSuperview().offset(
+                HomeMainViewSize.topViewHeight + UIApplication.statusBarHeight
+            )
             $0.width.centerX.equalToSuperview()
             $0.height.equalTo(topBottomViewGap)
         }
@@ -496,7 +476,7 @@ class HomeViewController: UIViewController {
                 to: playHistoryCollectionView.rx.items(
                     cellIdentifier: MediaCollectionViewCell.identifier
                 )
-            ) { (item, element, cell) in
+            ) { (_, element, cell) in
                 guard let cell = cell as? MediaCollectionViewCell else { return }
 
                 cell.titleView.text = element.name
@@ -522,7 +502,7 @@ class HomeViewController: UIViewController {
                 to: favoriteCollectionView.rx.items(
                     cellIdentifier: MediaCollectionViewCell.identifier
                 )
-            ) { (item, element, cell) in
+            ) { (_, element, cell) in
                 guard let cell = cell as? MediaCollectionViewCell else { return }
                 
                 cell.titleView.text = element.name
@@ -560,8 +540,32 @@ class HomeViewController: UIViewController {
         return viewModel.mediaPlayViewTapped(media: media)
     }
     
+    @objc private func refresh(_ sender: Notification) {
+        guard let typeList = sender.userInfo?["RefreshType"] as? [RefreshHomeData] else { return }
+
+        viewModel.refresh(typeList: typeList)
+    }
+    
+    @objc private func controlForFocus(_ sender: Notification) {
+        guard let playState = sender.userInfo?["PlayState"] as? Bool,
+              let media = carouselView.getMediaFromCurrentView()
+        else {
+            return
+        }
+        
+        viewModel.receiveNotificationForFocus(media: media, state: playState)
+    }
+    
+    @objc private func showCarouselView(_ sender: Notification) {
+        guard let media = carouselView.getMediaFromCurrentView() else { return }
+        
+        if viewModel.mediaPlayViewAppear(media: media) {
+            carouselView.playVideoInCurrentView()
+        }
+    }
+    
     @objc private func bottomViewDragged(_ sender: UIPanGestureRecognizer) {
-        if sender.state != .ended { return }
+        guard sender.state == .ended else { return }
         
         let moveY = sender.translation(in: sender.view).y
         if (self.isAttached && moveY > 50) || (!self.isAttached && moveY < 50) {
@@ -583,7 +587,6 @@ class HomeViewController: UIViewController {
 
 extension HomeViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
         let currentContentsOffsetY = scrollView.contentOffset.y
         let currentTopBottomYGap = topBottomViewGap - (currentContentsOffsetY + UIApplication.statusBarHeight)
 
@@ -618,7 +621,11 @@ extension HomeViewController: UIGestureRecognizerDelegate {
 }
 
 extension HomeViewController: UIViewControllerTransitioningDelegate {
-    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func animationController(
+        forPresented presented: UIViewController,
+        presenting: UIViewController,
+        source: UIViewController
+    ) -> UIViewControllerAnimatedTransitioning? {
         return SlowPresent(duration: 0.5, animationType: .present)
     }
     

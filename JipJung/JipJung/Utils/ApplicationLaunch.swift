@@ -28,9 +28,12 @@ final class ApplicationLaunch: NSObject {
             UserDefaults.standard.set(true, forKey: key)
         }
     }
+    
     #if DEBUG
     func makeDebugLaunch() throws {
-        try? FileManager.default.removeItem(at: Realm.Configuration.defaultConfiguration.fileURL ?? URL(fileURLWithPath: ""))
+        try? FileManager.default.removeItem(
+            at: Realm.Configuration.defaultConfiguration.fileURL ?? URL(fileURLWithPath: "")
+        )
         let key = UserDefaultsKeys.wasLaunchedBefore
         UserDefaults.standard.set(false, forKey: key)
         do {
@@ -100,21 +103,25 @@ final class ApplicationLaunch: NSObject {
     
     func configureLocalNotification() {
         let notificationCenter = UNUserNotificationCenter.current()
-        notificationCenter.requestAuthorization(options: [.alert,
-                                                          .sound]) {
-            (didAllow, error) in
-            print(#function, #line, didAllow, error)
-        }
+        notificationCenter.requestAuthorization(options: [.alert, .sound]) { _, _  in }
         UNUserNotificationCenter.current().delegate = self
     }
 }
 
 extension ApplicationLaunch: UNUserNotificationCenterDelegate {
-    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+    func userNotificationCenter(
+        _ center: UNUserNotificationCenter,
+        didReceive response: UNNotificationResponse,
+        withCompletionHandler completionHandler: @escaping () -> Void
+    ) {
         completionHandler()
     }
     
-    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+    func userNotificationCenter(
+        _ center: UNUserNotificationCenter,
+        willPresent notification: UNNotification,
+        withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
+    ) {
         if #available(iOS 14.0, *) {
             completionHandler(.banner)
         } else {

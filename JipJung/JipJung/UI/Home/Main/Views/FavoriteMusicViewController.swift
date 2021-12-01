@@ -33,8 +33,6 @@ final class FavoriteViewController: UIViewController {
     private let viewModel = FavoriteViewModel()
     private let disposeBag = DisposeBag()
     
-    // MARK: - Lifecycle Methods
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -43,8 +41,6 @@ final class FavoriteViewController: UIViewController {
         
         viewModel.viewDidLoad()
     }
-    
-    // MARK: - Helpers
     
     private func configureUI() {
         view.backgroundColor = .white

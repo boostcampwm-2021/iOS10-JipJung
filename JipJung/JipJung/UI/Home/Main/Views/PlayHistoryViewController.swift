@@ -33,8 +33,6 @@ final class PlayHistoryViewController: UIViewController {
     private let viewModel = PlayHistoryViewModel()
     private let disposeBag = DisposeBag()
     
-    // MARK: - Lifecycle Methods
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -43,8 +41,6 @@ final class PlayHistoryViewController: UIViewController {
         
         viewModel.viewDidLoad()
     }
-    
-    // MARK: - Helpers
     
     private func configureUI() {
         view.backgroundColor = .white
@@ -86,7 +82,7 @@ final class PlayHistoryViewController: UIViewController {
                 to: playHistoryCollectionView.rx.items(
                     cellIdentifier: MediaCollectionViewCell.identifier
                 )
-            ) { (item, element, cell) in
+            ) { (_, element, cell) in
                 guard let cell = cell as? MediaCollectionViewCell else { return }
 
                 cell.titleView.text = element.name

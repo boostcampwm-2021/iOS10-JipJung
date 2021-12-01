@@ -10,13 +10,13 @@ import UIKit
 import SnapKit
 
 final class FocusButton: BlurCircleButton {
-    private let icon: UIImageView = {
+    private lazy var icon: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.tintColor = .white
         return imageView
     }()
-    private let titleLabel: UILabel = {
+    private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
         label.textAlignment = .center

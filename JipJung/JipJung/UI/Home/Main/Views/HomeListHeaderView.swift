@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-class HomeListHeaderView: UIView {
+final class HomeListHeaderView: UIView {
     private(set) lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
