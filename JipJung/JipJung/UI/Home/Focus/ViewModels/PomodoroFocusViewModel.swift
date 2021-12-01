@@ -120,12 +120,16 @@ final class PomodoroFocusViewModel: PomodoroFocusViewModelInput, PomodoroFocusVi
             let message = focusTime - clockTime > 0
             ? "완료시간 전에 종료되었어요." + (sadEmojis.randomElement() ?? "")
             : minuteString + secondString + "집중하셨어요!" + (happyEmojis.randomElement() ?? "")
-            PushNotificationMananger.shared.presentFocusStopNotification(title: .focusFinish,
-                                                                         body: message)
+            PushNotificationMananger.shared.presentFocusStopNotification(
+                title: .focusFinish,
+                body: message
+            )
         case .relax:
             let message = "휴식시간이 끝났어요! 다시 집중해볼까요?" + (relaxEmojis.randomElement() ?? "")
-            PushNotificationMananger.shared.presentFocusStopNotification(title: .relaxFinish,
-                                                                         body: message)
+            PushNotificationMananger.shared.presentFocusStopNotification(
+                title: .relaxFinish,
+                body: message
+            )
         }
         FeedbackGenerator.shared.impactOccurred()
     }

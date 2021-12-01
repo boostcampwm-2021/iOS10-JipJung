@@ -99,10 +99,12 @@ final class BreathFocusViewModel: BreathFocusViewModelInput, BreathFocusViewMode
         let happyEmojis = ["☺️", "😘", "😍", "🥳", "🤩"]
         let times = clockTime / 7
         let message = times > 0
-        ? "\(clockTime / 7)회 호흡 운동하셨습니다." + (happyEmojis.randomElement() ?? "")
+        ? "\(times)회 호흡 운동하셨습니다." + (happyEmojis.randomElement() ?? "")
         : "\(times)회... 반복했습니다. 집중합시다!" + (angryEmpjis.randomElement() ?? "")
-        PushNotificationMananger.shared.presentFocusStopNotification(title: .focusFinish,
-                                                                     body: message)
+        PushNotificationMananger.shared.presentFocusStopNotification(
+            title: .focusFinish,
+            body: message
+        )
         FeedbackGenerator.shared.impactOccurred()
     }
 }
