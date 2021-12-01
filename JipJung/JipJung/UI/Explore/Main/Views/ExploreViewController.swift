@@ -32,27 +32,27 @@ final class ExploreViewController: UIViewController {
         layout.scrollDirection = .horizontal
         layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
         
-        let categoryCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        categoryCollectionView.showsHorizontalScrollIndicator = false
-        categoryCollectionView.delegate = self
-        categoryCollectionView.dataSource = self
-        categoryCollectionView.register(
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.register(
             SoundTagCollectionViewCell.self,
             forCellWithReuseIdentifier: SoundTagCollectionViewCell.identifier)
-        return categoryCollectionView
+        return collectionView
     }()
     private lazy var soundCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
 
-        let soundContentsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        soundContentsCollectionView.delegate = self
-        soundContentsCollectionView.dataSource = self
-        soundContentsCollectionView.register(
-            MusicCollectionViewCell.self,
-            forCellWithReuseIdentifier: MusicCollectionViewCell.identifier)
-        return soundContentsCollectionView
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.register(
+            MediaCollectionViewCell.self,
+            forCellWithReuseIdentifier: MediaCollectionViewCell.identifier)
+        return collectionView
     }()
     
     private let disposeBag = DisposeBag()
@@ -235,17 +235,20 @@ extension ExploreViewController: UICollectionViewDelegateFlowLayout {
 }
 
 extension ExploreViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        didSelectItemAt indexPath: IndexPath
+    ) {
         if collectionView == soundTagCollectionView {
             viewModel?.selectedTagIndex = indexPath.item
             let tag = viewModel?.soundTagList[safe: indexPath.item]?.value ?? ""
             viewModel?.categorize(by: tag)
         } else if collectionView == soundCollectionView {
             let media = viewModel?.categoryItems.value[indexPath.item] ?? Media()
-            let musicPlayerViewController = MusicPlayerViewController(
-                viewModel: MusicPlayerViewModel(media: media)
+            let mediaPlayerViewController = MediaPlayerViewController(
+                viewModel: MediaPlayerViewModel(media: media)
             )
-            navigationController?.pushViewController(musicPlayerViewController, animated: true)
+            navigationController?.pushViewController(mediaPlayerViewController, animated: true)
         } else {
            return
         }
@@ -253,7 +256,10 @@ extension ExploreViewController: UICollectionViewDelegate {
 }
 
 extension ExploreViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        numberOfItemsInSection section: Int
+    ) -> Int {
         if collectionView == soundTagCollectionView {
             return viewModel?.soundTagList.count ?? 0
         } else if collectionView == soundCollectionView {
@@ -263,7 +269,10 @@ extension ExploreViewController: UICollectionViewDataSource {
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
         if collectionView == soundTagCollectionView {
             guard let cell: SoundTagCollectionViewCell = collectionView.dequeueReusableCell(indexPath: indexPath) else {
                 return  UICollectionViewCell()
@@ -271,7 +280,7 @@ extension ExploreViewController: UICollectionViewDataSource {
             cell.soundTagLabel.text = viewModel?.soundTagList[safe: indexPath.item]?.value
             return cell
         } else if collectionView == soundCollectionView {
-            guard let cell: MusicCollectionViewCell = collectionView.dequeueReusableCell(indexPath: indexPath) else {
+            guard let cell: MediaCollectionViewCell = collectionView.dequeueReusableCell(indexPath: indexPath) else {
                 return  UICollectionViewCell()
             }
 

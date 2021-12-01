@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class MusicCollectionViewCell: UICollectionViewCell {
+class MediaCollectionViewCell: UICollectionViewCell {
     lazy var imageView: UIImageView = {
         let imageView = UIImageView(frame: frame)
         imageView.image = UIImage(systemName: "photo")

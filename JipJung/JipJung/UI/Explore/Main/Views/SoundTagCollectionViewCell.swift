@@ -6,17 +6,15 @@
 //
 
 import UIKit
+
 import SnapKit
 
-class SoundTagCollectionViewCell: UICollectionViewCell {
-    // MARK: - Subviews
-    
+final class SoundTagCollectionViewCell: UICollectionViewCell {
     lazy var soundTagLabel: UILabel = {
-        let soundTagLabel = UILabel()
-        soundTagLabel.textColor = .lightGray
-        soundTagLabel.font = .systemFont(ofSize: 17, weight: .semibold)
-        
-        return soundTagLabel
+        let label = UILabel()
+        label.textColor = .lightGray
+        label.font = .systemFont(ofSize: 17, weight: .semibold)
+        return label
     }()
     
     override var isSelected: Bool {
@@ -39,8 +37,6 @@ class SoundTagCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    // MARK: - Initializers
-       
     override init(frame: CGRect) {
        super.init(frame: frame)
        configureUI()

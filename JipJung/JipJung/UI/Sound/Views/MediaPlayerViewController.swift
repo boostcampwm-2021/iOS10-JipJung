@@ -1,5 +1,5 @@
 //
-//  MusicPlayerViewController.swift
+//  MediaPlayerViewController.swift
 //  JipJung
 //
 //  Created by turu on 2021/11/04.
@@ -13,21 +13,27 @@ import RxSwift
 import RxCocoa
 import SpriteKit
 
-final class MusicPlayerViewController: UIViewController {
+final class MediaPlayerViewController: UIViewController {
     private lazy var navigationBar = UINavigationBar()
     private lazy var backButton = BackCircleButton()
     private lazy var favoriteButton = FavoriteCircleButton()
     private lazy var topView = UIView()
-    private lazy var musicDescriptionView = MusicDescriptionView()
+    private lazy var mediaDescriptionView = MediaDescriptionView()
     private lazy var tagCollectionView: UICollectionView = {
         let layout = LeftAlignCollectionViewFlowLayout()
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        let collectionView = UICollectionView(
+            frame: .zero,
+            collectionViewLayout: layout
+        )
         collectionView.backgroundColor = .clear
-        collectionView.register(TagCollectionViewCell.self, forCellWithReuseIdentifier: TagCollectionViewCell.identifier)
+        collectionView.register(
+            TagCollectionViewCell.self,
+            forCellWithReuseIdentifier: TagCollectionViewCell.identifier
+        )
         return collectionView
     }()
     private lazy var bottomView = UIView()
-    private lazy var maximTextView = MusicPlayerMaximView()
+    private lazy var maximTextView = MediaPlayerMaximView()
     private lazy var playButton: UIButton = {
         let button = UIButton(type: .system)
         button.titleLabel?.font = .boldSystemFont(ofSize: 16)
@@ -43,10 +49,8 @@ final class MusicPlayerViewController: UIViewController {
         return .lightContent
     }
     
-    // MARK: - Private Variables
-    
-    private var viewModel: MusicPlayerViewModel?
-    private var disposeBag: DisposeBag = DisposeBag()
+    private var viewModel: MediaPlayerViewModel?
+    private var disposeBag = DisposeBag()
     private var playerLooper: AVPlayerLooper?
     private var queuePlayer: AVQueuePlayer?
     private var playerLayer: AVPlayerLayer?
@@ -59,8 +63,6 @@ final class MusicPlayerViewController: UIViewController {
         clubScene.scaleMode = .fill
         return clubScene
     }()
-    
-    // MARK: - Life Cycles
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,9 +84,7 @@ final class MusicPlayerViewController: UIViewController {
         playerLayer?.frame = topView.bounds
     }
     
-    // MARK: - Initializer
-    
-    convenience init(viewModel: MusicPlayerViewModel) {
+    convenience init(viewModel: MediaPlayerViewModel) {
         self.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
     }
@@ -129,7 +129,7 @@ final class MusicPlayerViewController: UIViewController {
             configureVideoView()
         case .dark:
             topView.backgroundColor = .clear
-            musicDescriptionView.gradientLayer.removeFromSuperlayer()
+            mediaDescriptionView.gradientLayer.removeFromSuperlayer()
         }
         
         self.view.addSubview(topView)
@@ -138,16 +138,16 @@ final class MusicPlayerViewController: UIViewController {
             $0.height.equalTo(view.snp.width).multipliedBy(1.2)
         }
         
-        topView.addSubview(musicDescriptionView)
-        musicDescriptionView.snp.makeConstraints {
+        topView.addSubview(mediaDescriptionView)
+        mediaDescriptionView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalToSuperview()
             $0.height.equalTo(115)
         }
-        musicDescriptionView.titleLabel.text = viewModel?.title
-        musicDescriptionView.explanationLabel.text = viewModel?.explanation
+        mediaDescriptionView.titleLabel.text = viewModel?.title
+        mediaDescriptionView.explanationLabel.text = viewModel?.explanation
         
-        musicDescriptionView.tagView.addSubview(tagCollectionView)
+        mediaDescriptionView.tagView.addSubview(tagCollectionView)
         tagCollectionView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
@@ -267,12 +267,12 @@ final class MusicPlayerViewController: UIViewController {
             }
             .disposed(by: disposeBag)
         
-        musicDescriptionView.plusButton.rx.tap
+        mediaDescriptionView.plusButton.rx.tap
             .bind { [weak self] _ in
                 guard let self = self else { return }
-                self.musicDescriptionView.plusButton.isSelected.toggle()
+                self.mediaDescriptionView.plusButton.isSelected.toggle()
                 
-                if self.musicDescriptionView.plusButton.isSelected {
+                if self.mediaDescriptionView.plusButton.isSelected {
                     self.viewModel?.saveMediaFromMode()
                 } else {
                     self.viewModel?.removeMediaFromMode()
@@ -290,7 +290,7 @@ final class MusicPlayerViewController: UIViewController {
                         self.playButton.setTitle("Download To Play", for: .normal)
                     case .downloaded:
                         self.playButton.setTitle("Play", for: .normal)
-                        self.musicDescriptionView.plusButton.isEnabled = true
+                        self.mediaDescriptionView.plusButton.isEnabled = true
                     case .downloadFailed:
                         self.playButton.setTitle("Download Failed", for: .normal)
                     }
@@ -322,18 +322,24 @@ final class MusicPlayerViewController: UIViewController {
         viewModel?.isInMusicList
             .distinctUntilChanged()
             .bind(onNext: { [weak self] in
-                self?.musicDescriptionView.plusButton.isSelected = $0
+                self?.mediaDescriptionView.plusButton.isSelected = $0
             })
             .disposed(by: disposeBag)
     }
 }
 
-extension MusicPlayerViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+extension MediaPlayerViewController: UICollectionViewDataSource {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        numberOfItemsInSection section: Int
+    ) -> Int {
         return viewModel?.tag.count ?? 0
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
         guard let cell: TagCollectionViewCell = collectionView.dequeueReusableCell(indexPath: indexPath) else {
             return UICollectionViewCell()
         }
@@ -343,7 +349,7 @@ extension MusicPlayerViewController: UICollectionViewDataSource {
     }
 }
 
-extension MusicPlayerViewController: UICollectionViewDelegateFlowLayout {
+extension MediaPlayerViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,

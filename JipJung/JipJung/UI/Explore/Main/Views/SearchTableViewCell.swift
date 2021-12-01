@@ -6,29 +6,25 @@
 //
 
 import UIKit
+
 import SnapKit
 
-class SearchTableViewCell: UITableViewCell {
+final class SearchTableViewCell: UITableViewCell {
     lazy var searchHistory = UILabel()
     lazy var deleteButton: UIButton = {
-        let deleteButton = UIButton(type: .custom)
-        deleteButton.tintColor = .darkGray
-        deleteButton.setImage(UIImage(systemName: "xmark"), for: .normal)
-        deleteButton.backgroundColor = .clear
-        
-        return deleteButton
+        let button = UIButton(type: .custom)
+        button.tintColor = .darkGray
+        button.setImage(UIImage(systemName: "xmark"), for: .normal)
+        button.backgroundColor = .clear
+        return button
     }()
-    
     lazy var searchHistoryStackView: UIStackView = {
-        let searchHistoryStackView = UIStackView(arrangedSubviews: [searchHistory, deleteButton])
-        searchHistoryStackView.axis = .horizontal
-        searchHistoryStackView.spacing = 20
-        
-        return searchHistoryStackView
+        let stackView = UIStackView(arrangedSubviews: [searchHistory, deleteButton])
+        stackView.axis = .horizontal
+        stackView.spacing = 20
+        return stackView
     }()
     
-    // MARK: - Initializers
-       
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         configureUI()
