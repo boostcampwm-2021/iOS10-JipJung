@@ -21,6 +21,7 @@ protocol PomodoroFocusViewModelInput {
     func resetClockTimer()
     func setFocusTime(value: Int)
     func saveFocusRecord()
+    func alertNotification()
 }
 
 protocol PomodoroFocusViewModelOutput {

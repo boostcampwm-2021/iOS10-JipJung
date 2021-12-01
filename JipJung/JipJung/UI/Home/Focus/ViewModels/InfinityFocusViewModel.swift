@@ -15,6 +15,7 @@ protocol InfinityFocusViewModelInput {
     func pauseClockTimer()
     func resetClockTimer()
     func saveFocusRecord()
+    func alertNotification()
 }
 
 protocol InfinityFocusViewModelOutput {

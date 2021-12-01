@@ -16,6 +16,7 @@ protocol BreathFocusViewModelInput {
     func resetClockTimer()
     func setFocusTime(seconds: Int)
     func saveFocusRecord()
+    func alertNotification()
 }
 
 enum BreathFocusState {
