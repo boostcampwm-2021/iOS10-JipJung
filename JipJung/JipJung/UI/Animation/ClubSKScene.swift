@@ -65,32 +65,69 @@ final class ClubSKScene: SKScene {
     func animate() {
         var moveActionList: [SKAction] = [SKAction]()
         let moveActionSequence1 = SKAction.sequence(
-            [SKAction.move(to: CGPoint(x: frame.midX*3/2, y: frame.maxY),
-                           duration: 2.0),
-             SKAction.move(to: CGPoint(x: frame.midX/2,
-                                       y: frame.maxY),
-                           duration: 2.0)])
+            [
+                SKAction.move(
+                    to: CGPoint(
+                        x: frame.midX*3/2,
+                        y: frame.maxY
+                    ),
+                    duration: 2.0
+                ),
+                SKAction.move(
+                    to: CGPoint(
+                        x: frame.midX/2,
+                        y: frame.maxY
+                    ),
+                    duration: 2.0
+                )
+            ]
+        )
         moveActionList.append(SKAction.repeatForever(moveActionSequence1))
         
         let moveActionSequence2 = SKAction.sequence(
-            [SKAction.move(to: CGPoint(x: frame.midX/2,
-                                       y: frame.maxY),
-                           duration: 1.0),
-             SKAction.move(to: CGPoint(x: frame.midX*3/2,
-                                       y: frame.maxY),
-                           duration: 2.0),
-             SKAction.move(to: CGPoint(x: frame.midX,
-                                       y: frame.maxY),
-                           duration: 1.0)])
+            [
+                SKAction.move(
+                    to: CGPoint(
+                        x: frame.midX/2,
+                        y: frame.maxY
+                    ),
+                    duration: 1.0
+                ),
+                SKAction.move(
+                    to: CGPoint(
+                        x: frame.midX*3/2,
+                        y: frame.maxY
+                    ),
+                    duration: 2.0
+                ),
+                SKAction.move(
+                    to: CGPoint(
+                        x: frame.midX,
+                        y: frame.maxY
+                    ),
+                    duration: 1.0)
+            ]
+        )
         moveActionList.append(SKAction.repeatForever(moveActionSequence2))
         
         let moveActionSequence3 = SKAction.sequence(
-            [SKAction.move(to: CGPoint(x: frame.midX/2,
-                                       y: frame.maxY),
-                           duration: 2.0),
-             SKAction.move(to: CGPoint(x: frame.midX*3/2,
-                                       y: frame.maxY),
-                           duration: 2.0)])
+            [
+                SKAction.move(
+                    to: CGPoint(
+                        x: frame.midX/2,
+                        y: frame.maxY
+                    ),
+                    duration: 2.0
+                ),
+                SKAction.move(
+                    to: CGPoint(
+                        x: frame.midX*3/2,
+                        y: frame.maxY
+                    ),
+                    duration: 2.0
+                )
+            ]
+        )
         moveActionList.append(SKAction.repeatForever(moveActionSequence3))
         
         let fallOffAction1 = SKAction.customAction(withDuration: 0.25) { node, _ in

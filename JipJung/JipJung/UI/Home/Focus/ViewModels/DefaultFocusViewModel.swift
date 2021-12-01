@@ -20,7 +20,7 @@ final class DefaultFocusViewModel {
     var focusTime: Int = 60
     
     private var runningStateDisposeBag = DisposeBag()
-    private var disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
     
     private let saveFocusTimeUseCase: SaveFocusTimeUseCaseProtocol
     private let audioPlayUseCase = AudioPlayUseCase()

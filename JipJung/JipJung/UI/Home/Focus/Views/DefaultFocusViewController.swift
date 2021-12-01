@@ -12,14 +12,12 @@ import RxRelay
 import RxSwift
 
 final class DefaultFocusViewController: FocusViewController {
-    // MARK: - Subviews
-    let timerView: UIView = {
+    private lazy var timerView: UIView = {
         let length = FocusViewControllerSize.timerViewLength
         let size = CGSize(width: length, height: length)
         let view = UIView(frame: CGRect(origin: .zero, size: size))
         return view
     }()
-    
     private lazy var timePickerView: UIPickerView = {
         let pickerView = UIPickerView()
         pickerView.delegate = self
@@ -27,7 +25,6 @@ final class DefaultFocusViewController: FocusViewController {
         
         return pickerView
     }()
-    
     private lazy var minuteLabel: UILabel = {
         let label = UILabel()
         label.text = "min"
@@ -35,7 +32,6 @@ final class DefaultFocusViewController: FocusViewController {
         
         return label
     }()
-    
     private lazy var timeLabel: UILabel = {
         let label = UILabel()
         label.text = "01:00"
@@ -43,7 +39,6 @@ final class DefaultFocusViewController: FocusViewController {
         label.textColor = .white
         return label
     }()
-    
     private lazy var circleShapeLayer: CAShapeLayer = {
         let shapeLayer = createCircleShapeLayer(
             strokeColor: UIColor.systemGray,
@@ -51,7 +46,6 @@ final class DefaultFocusViewController: FocusViewController {
         )
         return shapeLayer
     }()
-    
     private lazy var timeProgressLayer: CAShapeLayer = {
         let shapeLayer = createCircleShapeLayer(
             strokeColor: .white,
@@ -70,17 +64,12 @@ final class DefaultFocusViewController: FocusViewController {
     private let continueButton = FocusContinueButton()
     private let exitButton = FocusExitButton()
     
-    // MARK: - Private Variables
-    
     private var viewModel: DefaultFocusViewModel?
-    // MARK: - Initializer
     
     convenience init(viewModel: DefaultFocusViewModel) {
         self.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
     }
-    
-    // MARK: - Lifecycle Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -138,8 +127,6 @@ final class DefaultFocusViewController: FocusViewController {
             $0.centerX.equalTo(timePickerView.snp.centerX).offset(60)
         }
     }
-    
-    // MARK: - Helpers
     
     private func configureUI() {
         view.makeBlurBackground()

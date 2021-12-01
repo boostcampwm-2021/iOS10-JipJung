@@ -11,17 +11,17 @@ import UIKit
 
 extension CALayer {
     func pauseLayer() {
-        let pausedTime = self.convertTime(CACurrentMediaTime(), from: nil)
-        self.speed = 0.0
-        self.timeOffset = pausedTime
+        let pausedTime = convertTime(CACurrentMediaTime(), from: nil)
+        speed = 0.0
+        timeOffset = pausedTime
     }
 
     func resumeLayer() {
-        let pausedTime = self.timeOffset
-        self.speed = 1.0
-        self.timeOffset = 0.0
-        self.beginTime = 0.0
+        let pausedTime = timeOffset
+        speed = 1.0
+        timeOffset = 0.0
+        beginTime = 0.0
         let timeSincePause = convertTime(CACurrentMediaTime(), from: nil) - pausedTime
-        self.beginTime = timeSincePause
+        beginTime = timeSincePause
     }
 }

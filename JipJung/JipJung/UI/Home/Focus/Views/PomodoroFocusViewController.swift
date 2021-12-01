@@ -12,14 +12,12 @@ import RxRelay
 import RxSwift
 
 final class PomodoroFocusViewController: FocusViewController {
-    // MARK: - Subviews
-    let timerView: UIView = {
+    private lazy var timerView: UIView = {
         let length = FocusViewControllerSize.timerViewLength
         let size = CGSize(width: length, height: length)
         let timerView = UIView(frame: CGRect(origin: .zero, size: size))
         return timerView
     }()
-    
     private lazy var timePickerView: UIPickerView = {
         let pickerView = UIPickerView()
         pickerView.delegate = self
@@ -27,7 +25,6 @@ final class PomodoroFocusViewController: FocusViewController {
         
         return pickerView
     }()
-    
     private lazy var minuteLabel: UILabel = {
         let label = UILabel()
         label.text = "sec"
@@ -35,7 +32,6 @@ final class PomodoroFocusViewController: FocusViewController {
         
         return label
     }()
-    
     private lazy var timeLabel: UILabel = {
         let label = UILabel()
         label.text = "01:00"
@@ -43,7 +39,6 @@ final class PomodoroFocusViewController: FocusViewController {
         label.textColor = .white
         return label
     }()
-    
     private lazy var relaxLabel: UILabel = {
         let label = UILabel()
         label.text = "Relax"
@@ -51,7 +46,6 @@ final class PomodoroFocusViewController: FocusViewController {
         label.textColor = .white
         return label
     }()
-    
     private lazy var circleShapeLayer: CAShapeLayer = {
         let shapeLayer = createCircleShapeLayer(
             strokeColor: UIColor.systemGray,
@@ -59,7 +53,6 @@ final class PomodoroFocusViewController: FocusViewController {
         )
         return shapeLayer
     }()
-    
     private lazy var timeProgressLayer: CAShapeLayer = {
         let shapeLayer = createCircleShapeLayer(
             strokeColor: .white,
@@ -78,10 +71,7 @@ final class PomodoroFocusViewController: FocusViewController {
     private let continueButton = FocusContinueButton()
     private let exitButton = FocusExitButton()
     
-    // MARK: - Private Variables
-    
     var viewModel: PomodoroFocusViewModel?
-    // MARK: - Lifecycle Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -112,14 +102,11 @@ final class PomodoroFocusViewController: FocusViewController {
             self?.startButton.alpha = 0
         }
     }
-    // MARK: - Initializer
-
+    
     convenience init(viewModel: PomodoroFocusViewModel) {
         self.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
     }
-    
-    // MARK: - Helpers
     
     private func configureTimerUI() {
         view.addSubview(timerView)

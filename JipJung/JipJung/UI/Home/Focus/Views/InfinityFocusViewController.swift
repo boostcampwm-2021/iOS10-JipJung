@@ -12,14 +12,12 @@ import RxRelay
 import RxSwift
 
 final class InfinityFocusViewController: FocusViewController {
-    // MARK: - Subviews
     let timerView: UIView = {
         let length = FocusViewControllerSize.timerViewLength
         let size = CGSize(width: length, height: length)
         let view = UIView(frame: CGRect(origin: .zero, size: size))
         return view
     }()
-    
     private lazy var timeLabel: UILabel = {
         let label = UILabel()
         label.text = "00:00"
@@ -27,7 +25,6 @@ final class InfinityFocusViewController: FocusViewController {
         label.textColor = .white
         return label
     }()
-    
     private lazy var circleShapeLayer: CAShapeLayer = {
         let shapeLayer = createCircleShapeLayer(
             strokeColor: UIColor.systemGray,
@@ -35,7 +32,6 @@ final class InfinityFocusViewController: FocusViewController {
         )
         return shapeLayer
     }()
-    
     private lazy var cometAnimationLayer: CALayer = {
         let shapeLayer = createCometCircleShapeLayer(strokeColor: .white, lineWidth: 3)
         return shapeLayer
@@ -48,11 +44,8 @@ final class InfinityFocusViewController: FocusViewController {
     private let continueButton = FocusContinueButton()
     private let exitButton = FocusExitButton()
     
-    // MARK: - Private Variables
-    
     private var viewModel: InfinityFocusViewModel?
-    // MARK: - Lifecycle Methods
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
@@ -87,14 +80,11 @@ final class InfinityFocusViewController: FocusViewController {
             self?.startButton.alpha = 0
         }
     }
-    
-    // MARK: - Initializer
 
     convenience init(viewModel: InfinityFocusViewModel) {
         self.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
     }
-    // MARK: - Helpers
     
     private func configureTimerUI() {
         view.addSubview(timerView)

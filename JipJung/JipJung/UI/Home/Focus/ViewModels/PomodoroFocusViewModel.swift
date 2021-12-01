@@ -28,7 +28,7 @@ final class PomodoroFocusViewModel {
     let timeUnit = 5
     
     private var runningStateDisposeBag = DisposeBag()
-    private var disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
     
     private let saveFocusTimeUseCase: SaveFocusTimeUseCaseProtocol
     

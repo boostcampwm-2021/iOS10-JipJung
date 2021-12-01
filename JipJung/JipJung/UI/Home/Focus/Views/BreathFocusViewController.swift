@@ -12,23 +12,18 @@ import RxRelay
 import RxSwift
 
 final class BreathFocusViewController: FocusViewController {
-    // MARK: - Subviews
-    private let breathView = UIView()
-    
     private lazy var timePickerView: UIPickerView = {
         let pickerView = UIPickerView()
         pickerView.delegate = self
         pickerView.dataSource = self
         return pickerView
     }()
-    
     private lazy var minuteLabel: UILabel = {
         let label = UILabel()
         label.text = "min"
         label.textColor = .init(white: 1.0, alpha: 0.8)
         return label
     }()
-    
     private lazy var numberOfBreathLabel: UILabel = {
         let label = UILabel()
         label.text = "7 breaths"
@@ -36,7 +31,6 @@ final class BreathFocusViewController: FocusViewController {
         label.textColor = .white
         return label
     }()
-    
     private lazy var breathShapeLayer: CAShapeLayer = {
         let shapeLayer = CAShapeLayer()
         shapeLayer.fillColor = .init(red: 0.1, green: 1.0, blue: 0.3, alpha: 0.5)
@@ -59,8 +53,9 @@ final class BreathFocusViewController: FocusViewController {
         textLayer.string = "Inhale"
         return textLayer
     }()
-    private let countdownView = CountdownView()
     
+    private let breathView = UIView()
+    private let countdownView = CountdownView()
     private let startButton = FocusStartButton()
     private let stopButton: FocusExitButton = {
         let focusExitButton = FocusExitButton()
@@ -68,10 +63,7 @@ final class BreathFocusViewController: FocusViewController {
         return focusExitButton
     }()
     
-    // MARK: - Private Variables
-    
     private var viewModel: BreathFocusViewModel?
-    // MARK: - Lifecycle Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -112,14 +104,10 @@ final class BreathFocusViewController: FocusViewController {
         startWiggleAnimation()
     }
     
-    // MARK: - Initializer
-    
     convenience init(viewModel: BreathFocusViewModel) {
         self.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
     }
-    
-    // MARK: - Helpers
     
     private func configureUI() {
         view.makeBlurBackground()
@@ -280,7 +268,6 @@ final class BreathFocusViewController: FocusViewController {
                 self.view.layer.backgroundColor = .none
             }
             
-            // TODO: 버튼 동시 클릭 문제 해결, 버튼 나타나는 타이밍 조정하기
             DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
                 UIView.animate(withDuration: 2.0, delay: .zero, options: .allowUserInteraction) {
                     self.stopButton.layer.opacity = 1

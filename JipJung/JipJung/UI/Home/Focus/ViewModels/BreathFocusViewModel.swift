@@ -25,7 +25,7 @@ final class BreathFocusViewModel {
     var timerState = BehaviorRelay<TimerState>(value: .ready)
     
     private var runningStateDisposeBag = DisposeBag()
-    private var disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
     
     private let saveFocusTimeUseCase: SaveFocusTimeUseCaseProtocol
     private let audioPlayUseCase = AudioPlayUseCase()
