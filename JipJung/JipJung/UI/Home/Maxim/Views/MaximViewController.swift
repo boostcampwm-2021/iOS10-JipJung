@@ -6,18 +6,17 @@
 //
 
 import UIKit
+
 import RxCocoa
 import RxSwift
 
 final class MaximViewController: UIViewController {
+    private var backgroundView = UIImageView()
     private lazy var closeButton: UIButton = {
         let button = CloseButton()
         button.tintColor = .white
         return button
     }()
-    
-    private var backgroundView = UIImageView()
-    
     private lazy var calendarButton: UIButton = {
         let button = UIButton()
         button.setBackgroundImage(UIImage(systemName: "calendar"), for: .normal)
@@ -25,7 +24,6 @@ final class MaximViewController: UIViewController {
         button.imageView?.frame = .init(x: 0, y: 0, width: 100, height: 100)
         return button
     }()
-    
     private lazy var calendarHeaderCollectionView: UICollectionView = {
         let collectionViewLayout = UICollectionViewFlowLayout()
         collectionViewLayout.sectionInset = UIEdgeInsets(
@@ -60,7 +58,6 @@ final class MaximViewController: UIViewController {
         calendarHeaderCollectionView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         return calendarHeaderCollectionView
     }()
-    
     private lazy var maximCollectionView: UICollectionView = {
         let collectionViewLayout = UICollectionViewFlowLayout()
         collectionViewLayout.itemSize = UIScreen.main.bounds.size
@@ -79,13 +76,9 @@ final class MaximViewController: UIViewController {
         return maximCollectionView
     }()
     
-    private lazy var viewModel: MaximViewModel = {
-        let viewModel = MaximViewModel()
-        return viewModel
-    }()
-    
     private var isHeaderPresent = false
-    private var disposeBag = DisposeBag()
+    private let viewModel = MaximViewModel()
+    private let disposeBag = DisposeBag()
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
        return .lightContent

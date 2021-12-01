@@ -7,15 +7,14 @@
 
 import UIKit
 
-class MaximCalendarHeaderCollectionViewCell: UICollectionViewCell {
+final class MaximCalendarHeaderCollectionViewCell: UICollectionViewCell {
     private(set) lazy var weekdayLabel: UILabel = {
         let weekdayLabel = UILabel()
-        weekdayLabel.font = .systemFont(ofSize: 20)
+        weekdayLabel.font = .preferredFont(forTextStyle: .title3)
         weekdayLabel.textColor = .gray
         weekdayLabel.text = " "
         return weekdayLabel
     }()
-    
     private lazy var dayButton: UIButton = {
         let dayButton = UIButton()
         dayButton.isUserInteractionEnabled = false
@@ -23,15 +22,13 @@ class MaximCalendarHeaderCollectionViewCell: UICollectionViewCell {
         dayButton.backgroundColor = .black
         return dayButton
     }()
-
-    var dayLabel: UILabel = {
+    private(set) lazy var dayLabel: UILabel = {
         let dayLabel = UILabel()
         dayLabel.text = "15"
-        dayLabel.font = .systemFont(ofSize: 18, weight: .bold)
+        dayLabel.font = .preferredFont(forTextStyle: .headline)
         dayLabel.textColor = .white
         return dayLabel
     }()
-    
     var dayButtonImageName: String = "" {
         didSet {
             dayButton.setBackgroundImage(UIImage(named: dayButtonImageName), for: .normal)
