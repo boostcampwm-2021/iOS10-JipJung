@@ -6,26 +6,15 @@
 //
 
 import Foundation
-import RxSwift
+
 import RxRelay
+import RxSwift
 
-protocol SearchViewModelInput {
-    func saveSearchKeyword(keyword: String)
-    func loadSearchHistory()
-    func removeSearchHistory(at index: Int)
-    func search(keyword: String)
-}
-
-protocol SearchViewModelOutput {
-    var searchHistory: BehaviorRelay<[String]> { get }
-    var searchResult: BehaviorRelay<[Media]> { get }
-}
-
-final class SearchViewModel: SearchViewModelInput, SearchViewModelOutput {
-    var searchHistory: BehaviorRelay<[String]> = BehaviorRelay<[String]>(value: [])
-    var searchResult: BehaviorRelay<[Media]> = BehaviorRelay<[Media]>(value: [])
+final class SearchViewModel {
+    var searchHistory = BehaviorRelay<[String]>(value: [])
+    var searchResult = BehaviorRelay<[Media]>(value: [])
     
-    private var disposeBag: DisposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
     
     private let searchHistoryUseCase: SearchHistoryUseCase
     private let searchMediaUseCase: SearchMediaUseCase

@@ -1,5 +1,5 @@
 //
-//  PlayerMaximView.swift
+//  MediaPlayerMaximView.swift
 //  JipJung
 //
 //  Created by turu on 2021/11/04.
@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-class MusicPlayerMaximView: UIView {
+class MediaPlayerMaximView: UIView {
     let maximLabel: UILabel = {
         let label = UILabel()
         let text = """

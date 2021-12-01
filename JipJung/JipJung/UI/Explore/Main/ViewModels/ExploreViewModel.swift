@@ -12,11 +12,11 @@ import RxSwift
 
 final class ExploreViewModel {
     let categoryItems = BehaviorRelay<[Media]>(value: [])
-    let soundTagList: [SoundTag] = SoundTag.allCases
-    var selectedTagIndex: Int = 0
+    let soundTagList = SoundTag.allCases
+    var selectedTagIndex = 0
     
     private let disposeBag = DisposeBag()
-    
+
     private let searchMediaUseCase: SearchMediaUseCase
     
     init(searchMediaUseCase: SearchMediaUseCase) {

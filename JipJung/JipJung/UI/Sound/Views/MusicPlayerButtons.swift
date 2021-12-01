@@ -1,5 +1,5 @@
 //
-//  MusicPlayerButtons.swift
+//  MediaPlayerButtons.swift
 //  JipJung
 //
 //  Created by turu on 2021/11/11.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MusicPlayerBaseButton: UIButton {
+class MediaPlayerBaseButton: UIButton {
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
@@ -28,7 +28,7 @@ class MusicPlayerBaseButton: UIButton {
     }
 }
 
-final class BackCircleButton: MusicPlayerBaseButton {
+final class BackCircleButton: MediaPlayerBaseButton {
     override func configure() {
         super.configure()
         setImage(UIImage(systemName: "chevron.backward"), for: .normal)
@@ -36,7 +36,7 @@ final class BackCircleButton: MusicPlayerBaseButton {
     }
 }
 
-final class FavoriteCircleButton: MusicPlayerBaseButton {
+final class FavoriteCircleButton: MediaPlayerBaseButton {
     override func configure() {
         super.configure()
         setImage(UIImage(systemName: "heart"), for: .normal)
@@ -45,7 +45,7 @@ final class FavoriteCircleButton: MusicPlayerBaseButton {
     }
 }
 
-final class PlusCircleButton: MusicPlayerBaseButton {
+final class PlusCircleButton: MediaPlayerBaseButton {
     override func configure() {
         super.configure()
         self.backgroundColor = .clear

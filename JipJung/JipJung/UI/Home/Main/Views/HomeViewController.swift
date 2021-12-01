@@ -50,8 +50,8 @@ class HomeViewController: UIViewController {
         collectionView.backgroundColor = .clear
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.register(
-            MusicCollectionViewCell.self,
-            forCellWithReuseIdentifier: MusicCollectionViewCell.identifier)
+            MediaCollectionViewCell.self,
+            forCellWithReuseIdentifier: MediaCollectionViewCell.identifier)
         return collectionView
     }()
     private lazy var playHistoryEmptyLabel: UILabel = {
@@ -73,8 +73,8 @@ class HomeViewController: UIViewController {
         collectionView.backgroundColor = .clear
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.register(
-            MusicCollectionViewCell.self,
-            forCellWithReuseIdentifier: MusicCollectionViewCell.identifier)
+            MediaCollectionViewCell.self,
+            forCellWithReuseIdentifier: MediaCollectionViewCell.identifier)
         return collectionView
     }()
     private lazy var favoriteEmptyLabel: UILabel = {
@@ -462,8 +462,8 @@ class HomeViewController: UIViewController {
         )
             .merge()
             .subscribe(onNext: { [weak self] media in
-                let musicPlayerView = MusicPlayerViewController(
-                    viewModel: MusicPlayerViewModel(
+                let musicPlayerView = MediaPlayerViewController(
+                    viewModel: MediaPlayerViewModel(
                         media: media
                     )
                 )
@@ -494,10 +494,10 @@ class HomeViewController: UIViewController {
         playHistoryObservable
             .bind(
                 to: playHistoryCollectionView.rx.items(
-                    cellIdentifier: MusicCollectionViewCell.identifier
+                    cellIdentifier: MediaCollectionViewCell.identifier
                 )
             ) { (item, element, cell) in
-                guard let cell = cell as? MusicCollectionViewCell else { return }
+                guard let cell = cell as? MediaCollectionViewCell else { return }
 
                 cell.titleView.text = element.name
                 cell.imageView.image = UIImage(named: element.thumbnailImageFileName)
@@ -520,10 +520,10 @@ class HomeViewController: UIViewController {
             .distinctUntilChanged()
             .bind(
                 to: favoriteCollectionView.rx.items(
-                    cellIdentifier: MusicCollectionViewCell.identifier
+                    cellIdentifier: MediaCollectionViewCell.identifier
                 )
             ) { (item, element, cell) in
-                guard let cell = cell as? MusicCollectionViewCell else { return }
+                guard let cell = cell as? MediaCollectionViewCell else { return }
                 
                 cell.titleView.text = element.name
                 cell.imageView.image = UIImage(named: element.thumbnailImageFileName)

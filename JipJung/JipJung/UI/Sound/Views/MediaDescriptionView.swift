@@ -1,5 +1,5 @@
 //
-//  MusicDescriptionView.swift
+//  MediaDescriptionView.swift
 //  JipJung
 //
 //  Created by turu on 2021/11/04.
@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class MusicDescriptionView: UIView {
+final class MediaDescriptionView: UIView {
     var titleLabel: UILabel = {
         let label = UILabel()
         label.font = .preferredFont(forTextStyle: .title1)

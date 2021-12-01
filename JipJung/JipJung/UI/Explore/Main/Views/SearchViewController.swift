@@ -40,10 +40,7 @@ final class SearchViewController: UIViewController {
         tableView.separatorStyle = .none
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(
-            SearchTableViewCell.self,
-            forCellReuseIdentifier: SearchTableViewCell.identifier
-        )
+        tableView.register(SearchTableViewCell.self)
         return tableView
     }()
     private lazy var soundCollectionView: UICollectionView = {
@@ -56,10 +53,7 @@ final class SearchViewController: UIViewController {
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.register(
-            MusicCollectionViewCell.self,
-            forCellWithReuseIdentifier: MusicCollectionViewCell.identifier
-        )
+        collectionView.register(MediaCollectionViewCell.self)
         return collectionView
     }()
     private lazy var emptySearchResultView: UIView = {
@@ -77,7 +71,6 @@ final class SearchViewController: UIViewController {
     }()
     
     private let disposeBag = DisposeBag()
-    
     private var cellDisposeBag = DisposeBag()
     private var viewModel: SearchViewModel?
     
@@ -225,34 +218,56 @@ extension SearchViewController: UISearchBarDelegate {
 }
 
 extension SearchViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    func tableView(
+        _ tableView: UITableView,
+        heightForRowAt indexPath: IndexPath
+    ) -> CGFloat {
         return 50
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(
+        _ tableView: UITableView,
+        didSelectRowAt indexPath: IndexPath
+    ) {
         let searchHistory = viewModel?.searchHistory.value[indexPath.item] ?? ""
         viewModel?.search(keyword: searchHistory)
     }
 }
 
 extension SearchViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(
+        _ tableView: UITableView,
+        heightForHeaderInSection section: Int
+    ) -> CGFloat {
         return 15
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(
+        _ tableView: UITableView,
+        titleForHeaderInSection section: Int
+    ) -> String? {
         return "History"
     }
     
-    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+    func tableView(
+        _ tableView: UITableView,
+        willDisplayHeaderView view: UIView,
+        forSection section: Int
+    ) {
         (view as? UITableViewHeaderFooterView)?.textLabel?.textColor = .gray
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(
+        _ tableView: UITableView,
+        numberOfRowsInSection section: Int
+    ) -> Int {
         return viewModel?.searchHistory.value.count ?? 0
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(
+        _ tableView: UITableView,
+        cellForRowAt indexPath: IndexPath
+    ) -> UITableViewCell {
         guard let cell: SearchTableViewCell = tableView.dequeueReusableCell()
         else { return UITableViewCell() }
         
@@ -273,14 +288,17 @@ extension SearchViewController: UITableViewDataSource {
 }
 
 extension SearchViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        didSelectItemAt indexPath: IndexPath
+    ) {
         let media = viewModel?.searchResult.value[indexPath.item] ?? Media()
-        let musicPlayerViewController = MusicPlayerViewController(
-            viewModel: MusicPlayerViewModel(
+        let mediaPlayerViewController = MediaPlayerViewController(
+            viewModel: MediaPlayerViewModel(
                 media: media
             )
         )
-        navigationController?.pushViewController(musicPlayerViewController, animated: true)
+        navigationController?.pushViewController(mediaPlayerViewController, animated: true)
     }
 }
 
@@ -304,12 +322,18 @@ extension SearchViewController: UICollectionViewDelegateFlowLayout {
 }
 
 extension SearchViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        numberOfItemsInSection section: Int
+    ) -> Int {
         return viewModel?.searchResult.value.count ?? 0
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell: MusicCollectionViewCell = collectionView.dequeueReusableCell(indexPath: indexPath) else {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
+        guard let cell: MediaCollectionViewCell = collectionView.dequeueReusableCell(indexPath: indexPath) else {
             return  UICollectionViewCell()
         }
         let media = viewModel?.searchResult.value[indexPath.item] ?? Media()

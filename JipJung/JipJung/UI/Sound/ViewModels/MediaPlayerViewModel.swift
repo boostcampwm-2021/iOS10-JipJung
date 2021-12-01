@@ -1,5 +1,5 @@
 //
-//  MusicPlayerViewModel.swift
+//  MediaPlayerViewModel.swift
 //  JipJung
 //
 //  Created by Soohyeon Lee on 2021/11/15.
@@ -17,7 +17,7 @@ enum FileStatus {
     case downloadFailed
 }
 
-final class MusicPlayerViewModel {
+final class MediaPlayerViewModel {
     let musicFileStatus = BehaviorRelay<FileStatus>(value: FileStatus.isNotDownloaded)
     let isMusicPlaying = BehaviorRelay<Bool>(value: false)
     let isFavorite = BehaviorRelay<Bool>(value: false)
