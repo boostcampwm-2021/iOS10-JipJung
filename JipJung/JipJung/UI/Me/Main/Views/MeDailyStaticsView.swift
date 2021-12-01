@@ -8,28 +8,28 @@
 import UIKit
 
 class MeDailyStaticsView: UIView {
-    private lazy var dateLabel: UILabel = {
-        let dateLabel = UILabel()
-        dateLabel.text = "11월 11일 ~ 11월 12일"
-        dateLabel.textColor = .systemGray
-        dateLabel.font = .systemFont(ofSize: 28, weight: .bold)
-        return dateLabel
+    private(set) lazy var grassMapView = GrassMapView()
+    private(set) lazy var dateLabel: UILabel = {
+        let label = UILabel()
+        label.text = "11월 11일 ~ 11월 12일"
+        label.textColor = .systemGray
+        label.font = .systemFont(ofSize: 28, weight: .bold)
+        return label
     }()
+    
     private lazy var totalFocusStackView: UIStackView = {
-        return makeFocusRepresentativeValueStackViewStackView(category: "Total")
+        return makeFocusRepresentativeValueStackView(category: "Total")
     }()
     private lazy var averageFocusStackView: UIStackView = {
-        return makeFocusRepresentativeValueStackViewStackView(category: "Average")
+        return makeFocusRepresentativeValueStackView(category: "Average")
     }()
     private lazy var representativeValuesStackView: UIStackView = {
-        let representativeValuesStackView = UIStackView()
-        representativeValuesStackView.addArrangedSubview(totalFocusStackView)
-        representativeValuesStackView.addArrangedSubview(averageFocusStackView)
-        representativeValuesStackView.distribution = .equalSpacing
-        return representativeValuesStackView
+        let stackView = UIStackView()
+        stackView.addArrangedSubview(totalFocusStackView)
+        stackView.addArrangedSubview(averageFocusStackView)
+        stackView.distribution = .equalSpacing
+        return stackView
     }()
-    lazy var grassMapView = GrassMapView()
-    
     private lazy var unitDescriptionLabel: UILabel = {
         let label = UILabel()
         label.text = "단위: 시간(H)"
@@ -37,7 +37,6 @@ class MeDailyStaticsView: UIView {
         label.textColor = MeGrassMap.tintColor
         return label
     }()
-    
     private lazy var stageColorDescriptionStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.distribution = .fillEqually
@@ -82,7 +81,7 @@ class MeDailyStaticsView: UIView {
     }
 
     // MARK: 평균, 총합 등의 대표값이란 의미에서 RepresentativeValue를 썼습니다.
-    private func makeFocusRepresentativeValueStackViewStackView(category: String) -> UIStackView {
+    private func makeFocusRepresentativeValueStackView(category: String) -> UIStackView {
         let representativeValueStackView = UIStackView()
         representativeValueStackView.axis = .vertical
         representativeValueStackView.alignment = .center
@@ -100,15 +99,6 @@ class MeDailyStaticsView: UIView {
         representativeValueStackView.addArrangedSubview(descriptionLabel)
         representativeValueStackView.addArrangedSubview(titleLabel)
         return representativeValueStackView
-    }
-    
-    var dateLabelText: String? {
-        get {
-            return dateLabel.text
-        }
-        set {
-            dateLabel.text = newValue
-        }
     }
     
     var totalFocusLabelText: String? {

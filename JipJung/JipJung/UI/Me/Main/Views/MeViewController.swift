@@ -55,7 +55,7 @@ class MeViewController: UIViewController {
             })
             self?.dailyStatisticsView.totalFocusLabelText = $0?.totalFocusHour
             self?.dailyStatisticsView.averageFocusLabelText = $0?.averageFocusHour
-            self?.dailyStatisticsView.dateLabelText = $0?.statisticsPeriod
+            self?.dailyStatisticsView.dateLabel.text = $0?.statisticsPeriod
         }.disposed(by: disposeBag)
         
         viewModel.monthIndex.bind { [weak self] monthIndexLists in
