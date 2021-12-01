@@ -13,7 +13,6 @@ final class MaximCollectionViewCell: UICollectionViewCell {
         button.tintColor = .white
         return button
     }()
-    
     private(set) lazy var calendarButton: UIButton = {
         let button = UIButton()
         button.setBackgroundImage(UIImage(systemName: "calendar"), for: .normal)
@@ -21,45 +20,44 @@ final class MaximCollectionViewCell: UICollectionViewCell {
         button.imageView?.frame = .init(x: 0, y: 0, width: 100, height: 100)
         return button
     }()
-    
     private(set) lazy var dayLabel: UILabel = {
-        let dateLabel = UILabel()
-        dateLabel.font = .systemFont(ofSize: 70)
-        dateLabel.textColor = .white
-        dateLabel.text = "15"
-        return dateLabel
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 70)
+        label.textColor = .white
+        label.text = "15"
+        return label
     }()
-    
     private(set) lazy var monthYearLabel: UILabel = {
-        let monthYearLabel = UILabel()
-        monthYearLabel.font = .systemFont(ofSize: 20)
-        monthYearLabel.textColor = .white
-        monthYearLabel.text = "NOV 2021"
-        return monthYearLabel
+        let label = UILabel()
+        label.font = .preferredFont(forTextStyle: .title3)
+        label.textColor = .white
+        label.text = "NOV 2021"
+        return label
     }()
-
     private(set) lazy var contentLabel: UILabel = {
-        let maximLabel = UILabel()
-        maximLabel.font = .systemFont(ofSize: 26, weight: .bold)
-        maximLabel.textColor = .white
-        maximLabel.text = "In fact, in order to understand the real Chinaman, and the Chinese civilisation, a man must be depp, broad and simple."
-        maximLabel.numberOfLines = 0
-        maximLabel.setLineSpacing(lineSpacing: 4)
-        return maximLabel
+        let label = UILabel()
+        label.font = .preferredFont(forTextStyle: .title1)
+        label.textColor = .white
+        label.text = "In fact, in order to understand the real Chinaman, and the Chinese civilisation, a man must be depp, broad and simple."
+        label.numberOfLines = 0
+        label.setLineSpacing(lineSpacing: 10)
+        return label
     }()
-    
     private(set) lazy var seperateLine: UIView = {
-        let seperateLine = UIView(frame: CGRect(x: 0, y: 0, width: 30, height: 5))
-        seperateLine.backgroundColor = .systemGray3
-        return seperateLine
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: 30, height: 5))
+        view.backgroundColor = .systemGray3
+        return view
     }()
-    
     private(set) lazy var speakerLabel: UILabel = {
-        let speakerLabel = UILabel()
-        speakerLabel.font = .italicSystemFont(ofSize: 24)
-        speakerLabel.textColor = .systemGray3
-        speakerLabel.text = "Schloar, Gu Hongming"
-        return speakerLabel
+        let label = UILabel()
+        var font = UIFont.preferredFont(forTextStyle: .subheadline)
+        if let fontDescriptor = font.fontDescriptor .withSymbolicTraits(.traitItalic) {
+            font = UIFont(descriptor: fontDescriptor, size: 0)
+        }
+        label.font = font
+        label.textColor = .systemGray3
+        label.text = "Schloar, Gu Hongming"
+        return label
     }()
     
     var isShown = false {
@@ -74,15 +72,6 @@ final class MaximCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    var backgroundImageName: String = "" {
-        didSet {
-            print(backgroundImageName)
-            backgroundView = UIImageView(image: UIImage(named: backgroundImageName))
-            backgroundColor = .black
-            backgroundView?.alpha = 0.5
-        }
-    }
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
@@ -94,6 +83,8 @@ final class MaximCollectionViewCell: UICollectionViewCell {
     }
     
     private func configureUI() {
+        backgroundColor = .black
+        
         addSubview(speakerLabel)
         speakerLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(30)

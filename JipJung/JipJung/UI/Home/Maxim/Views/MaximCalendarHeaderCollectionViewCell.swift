@@ -7,54 +7,35 @@
 
 import UIKit
 
-class MaximCalendarHeaderCollectionViewCell: UICollectionViewCell {
+final class MaximCalendarHeaderCollectionViewCell: UICollectionViewCell {
     private(set) lazy var weekdayLabel: UILabel = {
         let weekdayLabel = UILabel()
-        weekdayLabel.font = .systemFont(ofSize: 20)
+        weekdayLabel.font = .preferredFont(forTextStyle: .title3)
         weekdayLabel.textColor = .gray
         weekdayLabel.text = " "
         return weekdayLabel
     }()
-    
-    private lazy var dayButton: UIButton = {
-        let dayButton = UIButton()
-        dayButton.isUserInteractionEnabled = false
-        dayButton.makeCircle()
-        dayButton.backgroundColor = .black
-        return dayButton
-    }()
-
-    var dayLabel: UILabel = {
+    private(set) lazy var dayLabel: UILabel = {
         let dayLabel = UILabel()
         dayLabel.text = "15"
-        dayLabel.font = .systemFont(ofSize: 18, weight: .bold)
+        dayLabel.font = .preferredFont(forTextStyle: .headline)
         dayLabel.textColor = .white
         return dayLabel
     }()
-    
-    var dayButtonImageName: String = "" {
-        didSet {
-            dayButton.setBackgroundImage(UIImage(named: dayButtonImageName), for: .normal)
-            dayButton.backgroundColor = .black
-            dayButton.alpha = 0.8
-        }
-    }
-    
-    private lazy var indicatorPointView: UIView = {
+    private(set) lazy var indicatorPointView: UIView = {
         let indicatorPointView = UIView()
         indicatorPointView.backgroundColor = .red
         indicatorPointView.isHidden = true
         return indicatorPointView
     }()
-    
-    var indicatorPointViewIsHidden: Bool {
-        get {
-            indicatorPointView.isHidden
-        }
-        set {
-            indicatorPointView.isHidden = newValue
-        }
-    }
+    private(set) lazy var dayButton: UIButton = {
+        let dayButton = UIButton()
+        dayButton.isUserInteractionEnabled = false
+        dayButton.makeCircle()
+        dayButton.backgroundColor = .black
+        dayButton.alpha = 0.8
+        return dayButton
+    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -64,6 +45,10 @@ class MaximCalendarHeaderCollectionViewCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         configureUI()
+    }
+    
+    override func prepareForReuse() {
+        indicatorPointView.isHidden = true
     }
     
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {

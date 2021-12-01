@@ -8,40 +8,35 @@
 import UIKit
 
 class MeDailyStaticsView: UIView {
-    private lazy var dateLabel: UILabel = {
-        let dateLabel = UILabel()
-        dateLabel.text = "11월 11일 ~ 11월 12일"
-        dateLabel.textColor = .systemGray
-        dateLabel.font = .systemFont(ofSize: 28, weight: .bold)
-        return dateLabel
-    }()
-    
-    private lazy var totalFocusStackView: UIStackView = {
-        return makeFocusRepresentativeValueStackViewStackView(category: "Total")
-    }()
-    
-    private lazy var averageFocusStackView: UIStackView = {
-        return makeFocusRepresentativeValueStackViewStackView(category: "Average")
-    }()
-    
-    private lazy var representativeValuesStackView: UIStackView = {
-        let representativeValuesStackView = UIStackView()
-        representativeValuesStackView.addArrangedSubview(totalFocusStackView)
-        representativeValuesStackView.addArrangedSubview(averageFocusStackView)
-        representativeValuesStackView.distribution = .equalSpacing
-        return representativeValuesStackView
-    }()
-    
-    var grassMapView = GrassMapView()
-    
-    private lazy var unitDescriptionLabel: UILabel = {
+    private(set) lazy var grassMapView = GrassMapView()
+    private(set) lazy var dateLabel: UILabel = {
         let label = UILabel()
-        label.text = "단위: 시간(H)"
-        label.font = .systemFont(ofSize: 12)
-        label.textColor = MeGrassMap.tintColor
+        label.text = "11월 11일 ~ 11월 12일"
+        label.textColor = .systemGray
+        label.font = .systemFont(ofSize: 28, weight: .bold)
         return label
     }()
     
+    private lazy var totalFocusStackView: UIStackView = {
+        return makeFocusRepresentativeValueStackView(category: "Total")
+    }()
+    private lazy var averageFocusStackView: UIStackView = {
+        return makeFocusRepresentativeValueStackView(category: "Average")
+    }()
+    private lazy var representativeValuesStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.addArrangedSubview(totalFocusStackView)
+        stackView.addArrangedSubview(averageFocusStackView)
+        stackView.distribution = .equalSpacing
+        return stackView
+    }()
+    private lazy var unitDescriptionLabel: UILabel = {
+        let label = UILabel()
+        label.text = "단위: 시간(H)"
+        label.font = .preferredFont(forTextStyle: .caption1)
+        label.textColor = MeGrassMap.tintColor
+        return label
+    }()
     private lazy var stageColorDescriptionStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.distribution = .fillEqually
@@ -72,7 +67,7 @@ class MeDailyStaticsView: UIView {
             
             let colorDescriptionLabel = UILabel()
             colorDescriptionLabel.textColor = MeGrassMap.tintColor
-            colorDescriptionLabel.font = .systemFont(ofSize: 20)
+                colorDescriptionLabel.font = .preferredFont(forTextStyle: .title3)
             colorDescriptionLabel.text = "\($0)"
             colorDescriptionLabel.adjustsFontSizeToFitWidth = true
             colorDescriptionView.addSubview(colorDescriptionLabel)
@@ -86,7 +81,7 @@ class MeDailyStaticsView: UIView {
     }
 
     // MARK: 평균, 총합 등의 대표값이란 의미에서 RepresentativeValue를 썼습니다.
-    private func makeFocusRepresentativeValueStackViewStackView(category: String) -> UIStackView {
+    private func makeFocusRepresentativeValueStackView(category: String) -> UIStackView {
         let representativeValueStackView = UIStackView()
         representativeValueStackView.axis = .vertical
         representativeValueStackView.alignment = .center
@@ -94,25 +89,16 @@ class MeDailyStaticsView: UIView {
         let descriptionLabel = UILabel()
         descriptionLabel.text = "0"
         descriptionLabel.textColor = .systemGray
-        descriptionLabel.font = .systemFont(ofSize: 24)
+        descriptionLabel.font = .preferredFont(forTextStyle: .title1)
         
         let titleLabel = UILabel()
         titleLabel.text = "\(category) Focus Hours"
         titleLabel.textColor = .systemGray
-        titleLabel.font = .systemFont(ofSize: 16)
+        titleLabel.font = .preferredFont(forTextStyle: .title3)
         
         representativeValueStackView.addArrangedSubview(descriptionLabel)
         representativeValueStackView.addArrangedSubview(titleLabel)
         return representativeValueStackView
-    }
-    
-    var dateLabelText: String? {
-        get {
-            return dateLabel.text
-        }
-        set {
-            dateLabel.text = newValue
-        }
     }
     
     var totalFocusLabelText: String? {
