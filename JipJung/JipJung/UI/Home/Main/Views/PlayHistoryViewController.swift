@@ -23,7 +23,7 @@ final class PlayHistoryViewController: UIViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
         collectionView.showsHorizontalScrollIndicator = false
-        collectionView.register(MusicCollectionViewCell.self)
+        collectionView.register(MediaCollectionViewCell.self)
         return collectionView
     }()
     
