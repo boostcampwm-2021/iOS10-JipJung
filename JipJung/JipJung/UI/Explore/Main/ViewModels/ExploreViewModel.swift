@@ -6,25 +6,16 @@
 //
 
 import Foundation
-import RxSwift
+
 import RxRelay
+import RxSwift
 
-protocol ExploreViewModelInput {
-    func categorize(by tag: String)
-}
-
-protocol ExploreViewModelOutput {
-    var categoryItems: BehaviorRelay<[Media]> { get }
-    var soundTagList: [SoundTag] { get }
-    var selectedTagIndex: Int { get }
-}
-
-final class ExploreViewModel: ExploreViewModelInput, ExploreViewModelOutput {
-    var categoryItems: BehaviorRelay<[Media]> = BehaviorRelay<[Media]>(value: [])
-    var soundTagList: [SoundTag] = SoundTag.allCases
+final class ExploreViewModel {
+    let categoryItems = BehaviorRelay<[Media]>(value: [])
+    let soundTagList: [SoundTag] = SoundTag.allCases
     var selectedTagIndex: Int = 0
     
-    private var disposeBag: DisposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
     
     private let searchMediaUseCase: SearchMediaUseCase
     
@@ -33,13 +24,13 @@ final class ExploreViewModel: ExploreViewModelInput, ExploreViewModelOutput {
     }
     
     func categorize(by tag: String) {
-        guard tag.isNotEmpty else { return }
+        guard !tag.isEmpty else { return }
+        
         searchMediaUseCase.searchResult
             .bind { [weak self] in
                 self?.categoryItems.accept($0)
             }
             .disposed(by: disposeBag)
-        
         searchMediaUseCase.search(tag: tag)
     }
 }

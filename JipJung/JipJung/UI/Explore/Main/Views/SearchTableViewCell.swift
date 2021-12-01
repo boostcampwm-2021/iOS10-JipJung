@@ -9,13 +9,7 @@ import UIKit
 import SnapKit
 
 class SearchTableViewCell: UITableViewCell {
-    // MARK: - Subviews
-    
-    lazy var searchHistory: UILabel = {
-        let searchHistory = UILabel()
-        return searchHistory
-    }()
-    
+    lazy var searchHistory = UILabel()
     lazy var deleteButton: UIButton = {
         let deleteButton = UIButton(type: .custom)
         deleteButton.tintColor = .darkGray
@@ -51,8 +45,7 @@ class SearchTableViewCell: UITableViewCell {
         contentView.addSubview(searchHistoryStackView)
         searchHistoryStackView.snp.makeConstraints {
             $0.top.bottom.equalToSuperview()
-            $0.leading.equalToSuperview().offset(20)
-            $0.trailing.equalToSuperview().offset(-20)
+            $0.leading.trailing.equalToSuperview().inset(20)
         }
         
         switch ApplicationMode.shared.mode.value {

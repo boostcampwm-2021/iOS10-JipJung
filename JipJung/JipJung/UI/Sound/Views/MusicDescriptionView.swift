@@ -9,35 +9,26 @@ import UIKit
 
 import SnapKit
 
-class MusicDescriptionView: UIView {
+final class MusicDescriptionView: UIView {
     var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = ""
-        label.font = .systemFont(ofSize: 32, weight: .medium)
+        label.font = .preferredFont(forTextStyle: .title1)
         label.textColor = .white
         return label
     }()
-    
     var explanationLabel: UILabel = {
         let label = UILabel()
-        label.text = ""
-        label.textColor = UIColor(white: 1, alpha: 0.8)
+        label.textColor = .white.withAlphaComponent(0.8)
         return label
     }()
-    
-    lazy var plusButton: PlusCircleButton = {
-        let plusButton = PlusCircleButton()
-        plusButton.contentHorizontalAlignment = .fill
-        plusButton.contentVerticalAlignment = .fill
-        plusButton.imageEdgeInsets = UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 6)
-        return plusButton
+    var plusButton: PlusCircleButton = {
+        let button = PlusCircleButton()
+        button.contentHorizontalAlignment = .fill
+        button.contentVerticalAlignment = .fill
+        button.imageEdgeInsets = UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 6)
+        return button
     }()
-    
-    var tagView: UIView = {
-        let view = UIView()
-        return view
-    }()
-    
+    let tagView = UIView()
     let gradientLayer = CAGradientLayer()
     
     override init(frame: CGRect) {
@@ -55,8 +46,11 @@ class MusicDescriptionView: UIView {
         gradientLayer.frame = bounds
     }
     
-    func configure() {
-        let colors: [CGColor] = [.init(gray: 0.0, alpha: 0.5), .init(gray: 0, alpha: 0.0)]
+    private func configure() {
+        let colors: [CGColor] = [
+            .init(gray: 0.0, alpha: 0.5),
+            .init(gray: 0, alpha: 0.0)
+        ]
         gradientLayer.colors = colors        
         gradientLayer.startPoint = CGPoint(x: 0.5, y: 1.0)
         gradientLayer.endPoint = CGPoint(x: 0.5, y: 0.0)
@@ -64,9 +58,9 @@ class MusicDescriptionView: UIView {
         
         let contentView = UIView()
         addSubview(contentView)
-        contentView.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(12)
-            make.top.bottom.equalToSuperview()
+        contentView.snp.makeConstraints {
+            $0.top.bottom.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(12)
         }
         
         contentView.addSubview(titleLabel)
@@ -81,19 +75,19 @@ class MusicDescriptionView: UIView {
         }
         
         titleLabel.snp.makeConstraints {
-            $0.leading.top.equalToSuperview()
+            $0.top.leading.equalToSuperview()
             $0.trailing.equalTo(plusButton.snp.leading)
-            $0.centerY.equalTo(plusButton.snp.centerY)
+            $0.centerY.equalTo(plusButton)
         }
 
         explanationLabel.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview()
             $0.top.equalTo(titleLabel.snp.bottom).offset(8)
+            $0.leading.trailing.equalToSuperview()
         }
 
         tagView.snp.makeConstraints {
-            $0.leading.trailing.bottom.equalToSuperview()
             $0.top.equalTo(explanationLabel.snp.bottom).offset(8)
+            $0.leading.trailing.bottom.equalToSuperview()
         }
     }
 }

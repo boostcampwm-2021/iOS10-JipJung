@@ -7,43 +7,42 @@
 
 import AVKit
 import UIKit
+
 import SnapKit
 import RxSwift
 import RxCocoa
 import SpriteKit
 
 final class MusicPlayerViewController: UIViewController {
-    private let themeColor = CGColor(red: 34.0/255.0, green: 48.0/255.0, blue: 74.0/255.0, alpha: 1)
-    private let navigationBar = UINavigationBar()
-    private let backButton = BackCircleButton()
-    private let favoriteButton = FavoriteCircleButton()
-    private let topView = UIView()
-    private let musicDescriptionView = MusicDescriptionView()
-    private let tagCollectionView: UICollectionView = {
+    private lazy var navigationBar = UINavigationBar()
+    private lazy var backButton = BackCircleButton()
+    private lazy var favoriteButton = FavoriteCircleButton()
+    private lazy var topView = UIView()
+    private lazy var musicDescriptionView = MusicDescriptionView()
+    private lazy var tagCollectionView: UICollectionView = {
         let layout = LeftAlignCollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
         collectionView.register(TagCollectionViewCell.self, forCellWithReuseIdentifier: TagCollectionViewCell.identifier)
         return collectionView
     }()
-    private let bottomView = UIView()
-    private let maximTextView = MusicPlayerMaximView()
-    private let playButton: UIButton = {
+    private lazy var bottomView = UIView()
+    private lazy var maximTextView = MusicPlayerMaximView()
+    private lazy var playButton: UIButton = {
         let button = UIButton(type: .system)
         button.titleLabel?.font = .boldSystemFont(ofSize: 16)
         button.backgroundColor = .white
         button.layer.cornerRadius = 8
         return button
     }()
-    private lazy var clubView: SKView = {
-        let clubView = SKView()
-        return clubView
-    }()
+    private lazy var clubView = SKView()
+    
+    private let themeColor = CGColor(red: 34.0/255.0, green: 48.0/255.0, blue: 74.0/255.0, alpha: 1)
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
-
+    
     // MARK: - Private Variables
     
     private var viewModel: MusicPlayerViewModel?
@@ -53,8 +52,10 @@ final class MusicPlayerViewController: UIViewController {
     private var playerLayer: AVPlayerLayer?
     private lazy var clubScene: SKScene = {
         let clubScene = ClubSKScene()
-        clubScene.size = CGSize(width: view.frame.width,
-                                height: view.frame.height)
+        clubScene.size = CGSize(
+            width: view.frame.width,
+            height: view.frame.height
+        )
         clubScene.scaleMode = .fill
         return clubScene
     }()
@@ -63,8 +64,8 @@ final class MusicPlayerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .white
-
+        view.backgroundColor = .white
+        
         viewModel?.checkMediaMode()
         configureUI()
         bindUI()
@@ -82,7 +83,7 @@ final class MusicPlayerViewController: UIViewController {
     }
     
     // MARK: - Initializer
-
+    
     convenience init(viewModel: MusicPlayerViewModel) {
         self.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
@@ -100,9 +101,9 @@ final class MusicPlayerViewController: UIViewController {
     
     private func configureNavigationBar() {
         self.view.addSubview(navigationBar)
-        navigationBar.snp.makeConstraints { make in
-            make.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(44)
+        navigationBar.snp.makeConstraints {
+            $0.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.height.equalTo(44)
         }
         
         navigationBar.isTranslucent = true
@@ -112,13 +113,13 @@ final class MusicPlayerViewController: UIViewController {
         navigationBar.items = [navigationItem]
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
-        backButton.snp.makeConstraints { make in
-            make.size.equalTo(30)
+        backButton.snp.makeConstraints {
+            $0.size.equalTo(30)
         }
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: favoriteButton)
-        favoriteButton.snp.makeConstraints { make in
-            make.size.equalTo(30)
+        favoriteButton.snp.makeConstraints {
+            $0.size.equalTo(30)
         }
     }
     
@@ -130,25 +131,25 @@ final class MusicPlayerViewController: UIViewController {
             topView.backgroundColor = .clear
             musicDescriptionView.gradientLayer.removeFromSuperlayer()
         }
-                
+        
         self.view.addSubview(topView)
-        topView.snp.makeConstraints { make in
-            make.top.leading.trailing.equalToSuperview()
-            make.height.equalTo(view.snp.width).multipliedBy(1.2)
+        topView.snp.makeConstraints {
+            $0.top.leading.trailing.equalToSuperview()
+            $0.height.equalTo(view.snp.width).multipliedBy(1.2)
         }
         
         topView.addSubview(musicDescriptionView)
-        musicDescriptionView.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview()
-            make.bottom.equalToSuperview()
-            make.height.equalTo(115)
+        musicDescriptionView.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview()
+            $0.bottom.equalToSuperview()
+            $0.height.equalTo(115)
         }
         musicDescriptionView.titleLabel.text = viewModel?.title
         musicDescriptionView.explanationLabel.text = viewModel?.explanation
         
         musicDescriptionView.tagView.addSubview(tagCollectionView)
-        tagCollectionView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+        tagCollectionView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
         }
         tagCollectionView.delegate = self
         tagCollectionView.dataSource = self
@@ -166,7 +167,7 @@ final class MusicPlayerViewController: UIViewController {
             playerLooper = AVPlayerLooper(player: queuePlayer, templateItem: playerItem)
             playerLayer.videoGravity = .resizeAspectFill
         }
-
+        
         let backgroundView = UIView()
         topView.addSubview(backgroundView)
         backgroundView.backgroundColor = .clear
@@ -175,8 +176,8 @@ final class MusicPlayerViewController: UIViewController {
             backgroundView.layer.addSublayer(playerLayer)
             queuePlayer.play()
         }
-        backgroundView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+        backgroundView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
         }
     }
     
@@ -185,43 +186,42 @@ final class MusicPlayerViewController: UIViewController {
         playButton.setTitleColor(UIColor(cgColor: themeColor), for: .normal)
         
         self.view.addSubview(bottomView)
-        bottomView.snp.makeConstraints { make in
-            make.leading.trailing.bottom.equalToSuperview()
-            make.top.equalTo(topView.snp.bottom)
+        bottomView.snp.makeConstraints {
+            $0.leading.trailing.bottom.equalToSuperview()
+            $0.top.equalTo(topView.snp.bottom)
         }
         
         bottomView.addSubview(playButton)
-        playButton.snp.makeConstraints { make in
-            make.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide).inset(12)
-            make.height.equalTo(44)
+        playButton.snp.makeConstraints {
+            $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide).inset(12)
+            $0.height.equalTo(44)
         }
         
-        let maximContainerView: UIView = {
-            let view = UIView()
-            return view
-        }()
+        let maximContainerView = UIView()
         
         switch ApplicationMode.shared.mode.value {
         case .dark:
             bottomView.backgroundColor = .clear
         case .bright:
             let colorHexString = viewModel?.color ?? "FFFFFF"
-            bottomView.backgroundColor = UIColor(rgb: Int(colorHexString, radix: 16) ?? 0xFFFFFF,
-                                                 alpha: 1.0)
+            bottomView.backgroundColor = UIColor(
+                rgb: Int(colorHexString, radix: 16) ?? 0xFFFFFF,
+                alpha: 1.0
+            )
         }
         
         bottomView.addSubview(maximContainerView)
-        maximContainerView.snp.makeConstraints { make in
-            make.leading.top.trailing.equalToSuperview().inset(12)
-            make.bottom.equalTo(playButton.snp.top).offset(-12)
+        maximContainerView.snp.makeConstraints {
+            $0.top.leading.trailing.equalToSuperview().inset(12)
+            $0.bottom.equalTo(playButton.snp.top).offset(-12)
         }
         
         maximTextView.maximLabel.text = viewModel?.maxim
         maximTextView.speakerNameLabel.text = viewModel?.speaker
         
         maximContainerView.addSubview(maximTextView)
-        maximTextView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+        maximTextView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
         }
     }
     
@@ -271,11 +271,11 @@ final class MusicPlayerViewController: UIViewController {
             .bind { [weak self] _ in
                 guard let self = self else { return }
                 self.musicDescriptionView.plusButton.isSelected.toggle()
-                switch self.musicDescriptionView.plusButton.isSelected {
-                case false:
-                    self.viewModel?.removeMediaFromMode()
-                case true:
+                
+                if self.musicDescriptionView.plusButton.isSelected {
                     self.viewModel?.saveMediaFromMode()
+                } else {
+                    self.viewModel?.removeMediaFromMode()
                 }
             }
             .disposed(by: disposeBag)
@@ -303,10 +303,9 @@ final class MusicPlayerViewController: UIViewController {
             .distinctUntilChanged()
             .bind(onNext: { [weak self] state in
                 DispatchQueue.main.async {
-                    switch state {
-                    case true:
+                    if state {
                         self?.playButton.setTitle("Pause", for: .normal)
-                    case false:
+                    } else {
                         self?.playButton.setTitle("Play", for: .normal)
                     }
                 }
@@ -335,23 +334,21 @@ extension MusicPlayerViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: TagCollectionViewCell.identifier,
-            for: indexPath
-        ) as? TagCollectionViewCell
-        else {
+        guard let cell: TagCollectionViewCell = collectionView.dequeueReusableCell(indexPath: indexPath) else {
             return UICollectionViewCell()
         }
+        
         cell.tagLabel.text = viewModel?.tag[indexPath.item]
-
         return cell
     }
 }
 
 extension MusicPlayerViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath
+    ) -> CGSize {
         let label = UILabel()
         label.font = .systemFont(ofSize: 14)
         label.text = viewModel?.tag[indexPath.item]
