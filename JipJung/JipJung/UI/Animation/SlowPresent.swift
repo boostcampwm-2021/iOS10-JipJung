@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SlowPresent: NSObject {
+final class SlowPresent: NSObject {
     enum AnimationType {
         case present, dismiss
     }

@@ -6,42 +6,29 @@
 //
 
 import Foundation
-import RxSwift
+
 import RxRelay
+import RxSwift
 
 enum PomodoroMode {
     case work
     case relax
 }
 
-protocol PomodoroFocusViewModelInput {
-    func changeTimerState(to timerState: TimerState)
-    func startClockTimer()
-    func pauseClockTimer()
-    func resetClockTimer()
-    func setFocusTime(value: Int)
-    func saveFocusRecord()
-    func alertNotification()
-}
-
-protocol PomodoroFocusViewModelOutput {
-    var clockTime: BehaviorRelay<Int> { get }
-    var isFocusRecordSaved: BehaviorRelay<Bool> { get }
-    var mode: BehaviorRelay<PomodoroMode> { get }
-}
-
-final class PomodoroFocusViewModel: PomodoroFocusViewModelInput, PomodoroFocusViewModelOutput {
-    var clockTime: BehaviorRelay<Int> = BehaviorRelay<Int>(value: 0)
-    var isFocusRecordSaved: BehaviorRelay<Bool> = BehaviorRelay<Bool>(value: false)
-    var timerState: BehaviorRelay<TimerState> = BehaviorRelay<TimerState>(value: .ready)
-    var mode: BehaviorRelay<PomodoroMode> = BehaviorRelay<PomodoroMode>(value: .work)
-    let focusTimeList: [Int] = [1, 5, 8, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180]
-    lazy var focusTime: Int = timeUnit
-    var totalFocusTime: Int = 0
+final class PomodoroFocusViewModel {
+    var clockTime = BehaviorRelay<Int>(value: 0)
+    var isFocusRecordSaved = BehaviorRelay<Bool>(value: false)
+    var timerState = BehaviorRelay<TimerState>(value: .ready)
+    var mode = BehaviorRelay<PomodoroMode>(value: .work)
+    let focusTimeList = [1, 5, 8, 10, 15, 20, 25, 30, 35,
+                         40, 45, 50, 55, 60, 70, 80, 90,
+                         100, 110, 120, 130, 140, 150, 160, 170, 180]
+    lazy var focusTime = timeUnit
+    var totalFocusTime = 0
     let timeUnit = 5
     
-    private var runningStateDisposeBag: DisposeBag = DisposeBag()
-    private var disposeBag: DisposeBag = DisposeBag()
+    private var runningStateDisposeBag = DisposeBag()
+    private var disposeBag = DisposeBag()
     
     private let saveFocusTimeUseCase: SaveFocusTimeUseCaseProtocol
     

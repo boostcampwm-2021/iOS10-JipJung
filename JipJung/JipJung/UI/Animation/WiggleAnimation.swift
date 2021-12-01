@@ -7,7 +7,7 @@
 
 import UIKit
 
-class WiggleAnimation: CAAnimationGroup {
+final class WiggleAnimation: CAAnimationGroup {
     private override init() {
         super.init()
     }

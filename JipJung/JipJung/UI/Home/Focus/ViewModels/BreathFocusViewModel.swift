@@ -6,45 +6,29 @@
 //
 
 import Foundation
-import RxSwift
-import RxRelay
-import RxCocoa
 
-protocol BreathFocusViewModelInput {
-    func changeState(to: BreathFocusState)
-    func startClockTimer()
-    func resetClockTimer()
-    func setFocusTime(seconds: Int)
-    func saveFocusRecord()
-    func alertNotification()
-}
+import RxCocoa
+import RxRelay
+import RxSwift
 
 enum BreathFocusState {
     case running
     case stop
 }
 
-protocol BreathFocusViewModelOutput {
-    var clockTime: BehaviorRelay<Int> { get }
-    var isFocusRecordSaved: BehaviorRelay<Bool> { get }
-    var focusState: BehaviorRelay<BreathFocusState> { get }
-}
-
-final class BreathFocusViewModel: BreathFocusViewModelInput, BreathFocusViewModelOutput {
-    var clockTime: BehaviorRelay<Int> = BehaviorRelay<Int>(value: -1)
-    var isFocusRecordSaved: BehaviorRelay<Bool> = BehaviorRelay<Bool>(value: false)
-    var focusState: BehaviorRelay<BreathFocusState> = BehaviorRelay<BreathFocusState>(value: .stop)
-    let focusTimeList: [Int] = Array<Int>(1...15)
-    var focusTime: Int = 7
-    var timerState: BehaviorRelay<TimerState> = BehaviorRelay<TimerState>(value: .ready)
+final class BreathFocusViewModel {
+    var clockTime = BehaviorRelay<Int>(value: -1)
+    var isFocusRecordSaved = BehaviorRelay<Bool>(value: false)
+    var focusState = BehaviorRelay<BreathFocusState>(value: .stop)
+    let focusTimeList = [Int](1...15)
+    var focusTime = 7
+    var timerState = BehaviorRelay<TimerState>(value: .ready)
     
-    private var runningStateDisposeBag: DisposeBag = DisposeBag()
-    private var disposeBag: DisposeBag = DisposeBag()
+    private var runningStateDisposeBag = DisposeBag()
+    private var disposeBag = DisposeBag()
     
     private let saveFocusTimeUseCase: SaveFocusTimeUseCaseProtocol
     private let audioPlayUseCase = AudioPlayUseCase()
-    
-    private let breathAudioFileName = "breath.WAV"
     
     init(saveFocusTimeUseCase: SaveFocusTimeUseCaseProtocol) {
         self.saveFocusTimeUseCase = saveFocusTimeUseCase
@@ -55,15 +39,10 @@ final class BreathFocusViewModel: BreathFocusViewModelInput, BreathFocusViewMode
     }
     
     func startClockTimer() {
-        audioPlayUseCase.control(audioFileName: breathAudioFileName, state: true, restart: true)
-            .subscribe {
-                switch $0 {
-                case .success(let flag):
-                    print(#function, #line, flag)
-                case .failure(let error):
-                    print(#function, #line, error)
-                }
-            }.disposed(by: disposeBag)
+        audioPlayUseCase.control(audioFileName: BreathMode.audioName, autoPlay: true, restart: true)
+            .subscribe(onFailure: { error in
+                print(error.localizedDescription)
+            }).disposed(by: disposeBag)
         
         clockTime.accept(0)
         Observable<Int>.interval(.seconds(1), scheduler: MainScheduler.instance)
@@ -75,15 +54,10 @@ final class BreathFocusViewModel: BreathFocusViewModelInput, BreathFocusViewMode
     }
     
     func resetClockTimer() {
-        audioPlayUseCase.control(audioFileName: breathAudioFileName, state: false)
-            .subscribe {
-                switch $0 {
-                case .success(let flag):
-                    print(#function, #line, flag)
-                case .failure(let error):
-                    print(#function, #line, error)
-                }
-            }.disposed(by: disposeBag)
+        audioPlayUseCase.control(audioFileName: BreathMode.audioName, state: false)
+            .subscribe(onFailure: { error in
+                print(error.localizedDescription)
+            }).disposed(by: disposeBag)
         
         clockTime.accept(-1)
         runningStateDisposeBag = DisposeBag()

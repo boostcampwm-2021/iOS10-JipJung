@@ -6,38 +6,39 @@
 //
 
 import UIKit
-import RxSwift
+
 import RxCocoa
 import RxRelay
+import RxSwift
 
 final class InfinityFocusViewController: FocusViewController {
     // MARK: - Subviews
     let timerView: UIView = {
         let length = FocusViewControllerSize.timerViewLength
         let size = CGSize(width: length, height: length)
-        let timerView = UIView(frame: CGRect(origin: .zero, size: size))
-        return timerView
+        let view = UIView(frame: CGRect(origin: .zero, size: size))
+        return view
     }()
     
     private lazy var timeLabel: UILabel = {
-        let timeLabel = UILabel()
-        timeLabel.text = "00:00"
-        timeLabel.font = UIFont.boldSystemFont(ofSize: 35)
-        timeLabel.textColor = .white
-        return timeLabel
+        let label = UILabel()
+        label.text = "00:00"
+        label.font = .preferredFont(forTextStyle: .largeTitle)
+        label.textColor = .white
+        return label
     }()
     
     private lazy var circleShapeLayer: CAShapeLayer = {
-        let circleShapeLayer = createCircleShapeLayer(
+        let shapeLayer = createCircleShapeLayer(
             strokeColor: UIColor.systemGray,
             lineWidth: 3
         )
-        return circleShapeLayer
+        return shapeLayer
     }()
     
     private lazy var cometAnimationLayer: CALayer = {
-        let rotateAnimationLayer = createCometCircleShapeLayer(strokeColor: .white, lineWidth: 3)
-        return rotateAnimationLayer
+        let shapeLayer = createCometCircleShapeLayer(strokeColor: .white, lineWidth: 3)
+        return shapeLayer
     }()
     
     private let pulseGroupLayer = CALayer()

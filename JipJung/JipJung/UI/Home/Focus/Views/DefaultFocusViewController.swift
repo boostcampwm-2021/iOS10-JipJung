@@ -6,60 +6,61 @@
 //
 
 import UIKit
-import RxSwift
+
 import RxCocoa
 import RxRelay
+import RxSwift
 
 final class DefaultFocusViewController: FocusViewController {
     // MARK: - Subviews
     let timerView: UIView = {
         let length = FocusViewControllerSize.timerViewLength
         let size = CGSize(width: length, height: length)
-        let timerView = UIView(frame: CGRect(origin: .zero, size: size))
-        return timerView
+        let view = UIView(frame: CGRect(origin: .zero, size: size))
+        return view
     }()
     
     private lazy var timePickerView: UIPickerView = {
-        let timePickerView = UIPickerView()
-        timePickerView.delegate = self
-        timePickerView.dataSource = self
+        let pickerView = UIPickerView()
+        pickerView.delegate = self
+        pickerView.dataSource = self
         
-        return timePickerView
+        return pickerView
     }()
     
     private lazy var minuteLabel: UILabel = {
-        let minuteLabel = UILabel()
-        minuteLabel.text = "min"
-        minuteLabel.textColor = .systemGray
+        let label = UILabel()
+        label.text = "min"
+        label.textColor = .systemGray
         
-        return minuteLabel
+        return label
     }()
     
     private lazy var timeLabel: UILabel = {
-        let timeLabel = UILabel()
-        timeLabel.text = "01:00"
-        timeLabel.font = UIFont.boldSystemFont(ofSize: 35)
-        timeLabel.textColor = .white
-        return timeLabel
+        let label = UILabel()
+        label.text = "01:00"
+        label.font = .preferredFont(forTextStyle: .largeTitle)
+        label.textColor = .white
+        return label
     }()
     
     private lazy var circleShapeLayer: CAShapeLayer = {
-        let circleShapeLayer = createCircleShapeLayer(
+        let shapeLayer = createCircleShapeLayer(
             strokeColor: UIColor.systemGray,
             lineWidth: 3
         )
-        return circleShapeLayer
+        return shapeLayer
     }()
     
     private lazy var timeProgressLayer: CAShapeLayer = {
-        let timeProgressLayer = createCircleShapeLayer(
+        let shapeLayer = createCircleShapeLayer(
             strokeColor: .white,
             lineWidth: 3,
             startAngle: -CGFloat.pi / 2,
             endAngle: 3 * CGFloat.pi / 2
         )
-        timeProgressLayer.fillColor = nil
-        return timeProgressLayer
+        shapeLayer.fillColor = nil
+        return shapeLayer
     }()
     
     private let pulseGroupLayer = CALayer()
@@ -88,26 +89,25 @@ final class DefaultFocusViewController: FocusViewController {
         bindUI()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        self.startButton.alpha = 0
-        self.timerView.alpha = 0
-        let viewCenter = view.center
-        self.timerView.center = CGPoint(x: viewCenter.x, y: viewCenter.y * 0.9)
-        UIView.animate(withDuration: 0.6, delay: 0.3, options: []) { [weak self] in
-            self?.timerView.alpha = 1
-            self?.timerView.center = CGPoint(x: viewCenter.x, y: viewCenter.y * 0.65)
-            self?.startButton.alpha = 1
-        }
-    }
-    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         let viewCenter = view.center
         UIView.animate(withDuration: 0.6) { [weak self] in
             self?.timerView.center = viewCenter
             self?.startButton.alpha = 0
+        }
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        startButton.alpha = 0
+        timerView.alpha = 0
+        let viewCenter = view.center
+        UIView.animate(withDuration: 0.6, delay: 0.3, options: []) { [weak self] in
+            self?.timerView.alpha = 1
+            self?.timerView.center = CGPoint(x: viewCenter.x, y: viewCenter.y * 0.65)
+            self?.startButton.alpha = 1
         }
     }
     
@@ -413,7 +413,7 @@ extension DefaultFocusViewController: UIPickerViewDelegate {
         pickerLabel = UILabel()
         pickerLabel.text = "\(minuteInfo)"
         pickerLabel.textColor = UIColor.white
-        pickerLabel.font = UIFont.systemFont(ofSize: 35)
+        pickerLabel.font = .preferredFont(forTextStyle: .largeTitle)
         pickerLabel.textAlignment = .center
         
         return pickerLabel
