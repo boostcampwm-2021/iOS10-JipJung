@@ -17,32 +17,14 @@ enum FileStatus {
     case downloadFailed
 }
 
-protocol MusicPlayerViewModelInput {
-    func checkMusicDownloaded()
-    func playMusic()
-    func pauseMusic()
-    func toggleFavoriteState()
-}
-
-protocol MusicPlayerViewModelOutput {
-    var musicFileStatus: BehaviorRelay<FileStatus> { get }
-    var isMusicPlaying: BehaviorRelay<Bool> { get }
-    var isFavorite: BehaviorRelay<Bool> { get }
-    var isInMusicList: BehaviorRelay<Bool> { get }
-    var title: String { get }
-    var explanation: String { get }
-    var maxim: String { get }
-    var speaker: String { get }
-    var color: String { get }
-    var tag: [String] { get }
-    var videoPlayerItem: AVPlayerItem? { get }
-}
-
-final class MusicPlayerViewModel: MusicPlayerViewModelInput, MusicPlayerViewModelOutput {
-    let musicFileStatus: BehaviorRelay<FileStatus> = BehaviorRelay<FileStatus>(value: FileStatus.isNotDownloaded)
-    let isMusicPlaying: BehaviorRelay<Bool> = BehaviorRelay<Bool>(value: false)
-    let isFavorite: BehaviorRelay<Bool> = BehaviorRelay<Bool>(value: false)
-    let isInMusicList: BehaviorRelay<Bool> = BehaviorRelay<Bool>(value: false)
+final class MusicPlayerViewModel {
+    let musicFileStatus = BehaviorRelay<FileStatus>(value: FileStatus.isNotDownloaded)
+    let isMusicPlaying = BehaviorRelay<Bool>(value: false)
+    let isFavorite = BehaviorRelay<Bool>(value: false)
+    let isInMusicList = BehaviorRelay<Bool>(value: false)
+    
+    let media: Media
+    
     let title: String
     let explanation: String
     let maxim: String
@@ -50,17 +32,16 @@ final class MusicPlayerViewModel: MusicPlayerViewModelInput, MusicPlayerViewMode
     let color: String
     let tag: [String]
     var videoPlayerItem: AVPlayerItem?
-    
-    private let media: Media
     private let id: String
     private let mode: Int
     private let audioFileName: String
     private let videoFileName: String
-    private let audioPlayUseCase: AudioPlayUseCase = AudioPlayUseCase()
-    private let fetchMediaURLUseCase: FetchMediaURLUseCase = FetchMediaURLUseCase()
-    private let favoriteMediaUseCase: FavoriteUseCase = FavoriteUseCase()
-    private let mediaListUseCase: MediaListUseCase = MediaListUseCase()
-    private var disposeBag: DisposeBag = DisposeBag()
+    
+    private let audioPlayUseCase = AudioPlayUseCase()
+    private let fetchMediaURLUseCase = FetchMediaURLUseCase()
+    private let favoriteMediaUseCase = FavoriteUseCase()
+    private let mediaListUseCase = MediaListUseCase()
+    private let disposeBag = DisposeBag()
     
     init(media: Media) {
         self.media = media
@@ -105,11 +86,9 @@ final class MusicPlayerViewModel: MusicPlayerViewModelInput, MusicPlayerViewMode
         mediaListUseCase.fetchMediaMyList(mode: mediaMode)
             .subscribe { [weak self] mediaList in
                 guard let self = self else { return }
-                mediaList.forEach { media in
-                    if media.id == self.id {
-                        self.isInMusicList.accept(true)
-                        return
-                    }
+                
+                if mediaList.contains(self.media) {
+                    self.isInMusicList.accept(true)
                 }
             } onFailure: { error in
                 print(error.localizedDescription)
@@ -120,9 +99,10 @@ final class MusicPlayerViewModel: MusicPlayerViewModelInput, MusicPlayerViewMode
     func playMusic() {
         audioPlayUseCase.control(audioFileName: media.audioFileName, autoPlay: true)
             .subscribe { [weak self] in
-                guard $0 == true else { return }
-                self?.musicFileStatus.accept(FileStatus.downloaded)
                 self?.isMusicPlaying.accept($0)
+                if $0 {
+                    self?.musicFileStatus.accept(FileStatus.downloaded)
+                }
             } onFailure: { [weak self] in
                 self?.musicFileStatus.accept(.downloadFailed)
                 print($0.localizedDescription)
@@ -133,7 +113,6 @@ final class MusicPlayerViewModel: MusicPlayerViewModelInput, MusicPlayerViewMode
     func pauseMusic() {
         audioPlayUseCase.control(audioFileName: media.audioFileName, state: false)
             .subscribe { [weak self] in
-                guard $0 == false else { return }
                 self?.isMusicPlaying.accept($0)
             } onFailure: { [weak self] in
                 self?.musicFileStatus.accept(.downloadFailed)
@@ -154,9 +133,8 @@ final class MusicPlayerViewModel: MusicPlayerViewModelInput, MusicPlayerViewMode
     }
     
     func checkMusicPlaying() {
-        if audioPlayUseCase.isPlaying(using: audioFileName) {
-            isMusicPlaying.accept(true)
-        }
+        let isPlaying = audioPlayUseCase.isPlaying(using: audioFileName)
+        isMusicPlaying.accept(isPlaying)
     }
     
     func toggleFavoriteState() {
@@ -172,7 +150,8 @@ final class MusicPlayerViewModel: MusicPlayerViewModelInput, MusicPlayerViewMode
                 .disposed(by: disposeBag)
         case true:
             favoriteMediaUseCase.delete(id: id)
-                .subscribe { [weak self] _ in
+                .subscribe { [weak self] in
+                    guard $0 == true else { return }
                     self?.isFavorite.accept(false)
                 } onFailure: { error in
                     print(error.localizedDescription)

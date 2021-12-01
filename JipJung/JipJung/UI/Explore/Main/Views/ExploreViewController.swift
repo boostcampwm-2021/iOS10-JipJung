@@ -6,20 +6,18 @@
 //
 
 import UIKit
-import SnapKit
-import RxSwift
+
 import RxCocoa
+import RxSwift
+import SnapKit
 
 final class ExploreViewController: UIViewController {
-    // MARK: - Subviews
-    
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.showsVerticalScrollIndicator = false
         return scrollView
     }()
     private lazy var scrollContentView: UIView = UIView()
-    
     private lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.delegate = self
@@ -29,7 +27,6 @@ final class ExploreViewController: UIViewController {
         searchBar.searchTextField.leftView?.tintColor = .gray
         return searchBar
     }()
-    
     private lazy var soundTagCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -44,7 +41,6 @@ final class ExploreViewController: UIViewController {
             forCellWithReuseIdentifier: SoundTagCollectionViewCell.identifier)
         return categoryCollectionView
     }()
-
     private lazy var soundCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -59,17 +55,14 @@ final class ExploreViewController: UIViewController {
         return soundContentsCollectionView
     }()
     
-    // MARK: - Private Variables
+    private let disposeBag = DisposeBag()
     
-    private var disposeBag: DisposeBag = DisposeBag()
     private var viewModel: ExploreViewModel?
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return ApplicationMode.shared.mode.value == .bright ? .darkContent : .lightContent
     }
 
-    // MARK: - Lifecycle Methods
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -80,6 +73,7 @@ final class ExploreViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         navigationController?.setNavigationBarHidden(true, animated: animated)
         tabBarController?.tabBar.isHidden = false
         switch ApplicationMode.shared.mode.value {
@@ -88,20 +82,20 @@ final class ExploreViewController: UIViewController {
         case .dark:
             configureDarkModeUI()
         }
-        soundTagCollectionView.selectItem(at: IndexPath(item: viewModel?.selectedTagIndex ?? 0,
-                                                        section: 0),
-                                          animated: true,
-                                          scrollPosition: .centeredHorizontally)
+        soundTagCollectionView.selectItem(
+            at: IndexPath(
+                item: viewModel?.selectedTagIndex ?? 0,
+                section: 0
+            ),
+            animated: true,
+            scrollPosition: .centeredHorizontally
+        )
     }
     
-    // MARK: - Initializer
-
     convenience init(viewModel: ExploreViewModel) {
         self.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
     }
-    
-    // MARK: - Helpers
     
     private func configureCommonUI() {
         view.addSubview(searchBar)
@@ -202,13 +196,24 @@ extension ExploreViewController: UISearchBarDelegate {
 
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         dismissKeyboard()
-        navigationController?.pushViewController(SearchViewController(viewModel: SearchViewModel(searchHistoryUseCase: SearchHistoryUseCase(), searchMediaUseCase: SearchMediaUseCase())),
-                                                 animated: true)
+        
+        let searchViewController = SearchViewController(
+            viewModel: SearchViewModel(
+                searchHistoryUseCase: SearchHistoryUseCase(),
+                searchMediaUseCase: SearchMediaUseCase()
+            )
+        )
+            
+        navigationController?.pushViewController(searchViewController, animated: true)
     }
 }
 
 extension ExploreViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath
+    ) -> CGSize {
         if collectionView == soundTagCollectionView {
             let count = viewModel?.soundTagList[safe: indexPath.item]?.value.count ?? 0
             return CGSize(width: count * 14, height: 30)
@@ -220,7 +225,11 @@ extension ExploreViewController: UICollectionViewDelegateFlowLayout {
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        minimumLineSpacingForSectionAt section: Int
+    ) -> CGFloat {
         return 12
     }
 }
@@ -231,10 +240,12 @@ extension ExploreViewController: UICollectionViewDelegate {
             viewModel?.selectedTagIndex = indexPath.item
             let tag = viewModel?.soundTagList[safe: indexPath.item]?.value ?? ""
             viewModel?.categorize(by: tag)
-            
         } else if collectionView == soundCollectionView {
             let media = viewModel?.categoryItems.value[indexPath.item] ?? Media()
-            navigationController?.pushViewController(MusicPlayerViewController(viewModel: MusicPlayerViewModel(media: media)), animated: true)
+            let musicPlayerViewController = MusicPlayerViewController(
+                viewModel: MusicPlayerViewModel(media: media)
+            )
+            navigationController?.pushViewController(musicPlayerViewController, animated: true)
         } else {
            return
         }
@@ -254,18 +265,24 @@ extension ExploreViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == soundTagCollectionView {
-            guard let cell: SoundTagCollectionViewCell = collectionView.dequeueReusableCell(indexPath: indexPath) else { return  UICollectionViewCell() }
+            guard let cell: SoundTagCollectionViewCell = collectionView.dequeueReusableCell(indexPath: indexPath) else {
+                return  UICollectionViewCell()
+            }
             cell.soundTagLabel.text = viewModel?.soundTagList[safe: indexPath.item]?.value
             return cell
         } else if collectionView == soundCollectionView {
-            guard let cell: MusicCollectionViewCell = collectionView.dequeueReusableCell(indexPath: indexPath) else { return  UICollectionViewCell() }
+            guard let cell: MusicCollectionViewCell = collectionView.dequeueReusableCell(indexPath: indexPath) else {
+                return  UICollectionViewCell()
+            }
 
             let media = viewModel?.categoryItems.value[indexPath.item] ?? Media()
             cell.titleView.text = media.name
             cell.imageView.image = UIImage(named: media.thumbnailImageFileName)
             let colorHexString = viewModel?.categoryItems.value[indexPath.item].color ?? "FFFFFF"
-            cell.backgroundColor = UIColor(rgb: Int(colorHexString, radix: 16) ?? 0xFFFFFF,
-                                           alpha: 1.0).withAlphaComponent(0.7)
+            cell.backgroundColor = UIColor(
+                rgb: Int(colorHexString, radix: 16) ?? 0xFFFFFF,
+                alpha: 1.0
+            ).withAlphaComponent(0.7)
             return cell
         } else {
             return UICollectionViewCell()
