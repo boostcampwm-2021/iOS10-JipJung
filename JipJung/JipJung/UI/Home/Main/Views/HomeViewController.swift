@@ -49,11 +49,7 @@ final class HomeViewController: UIViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
         collectionView.showsHorizontalScrollIndicator = false
-        collectionView.register(
-            MusicCollectionViewCell.self,ㅇㅇ
-            forCellWithReuseIdentifier: MusicCollectionViewCell.identifier)
-            MediaCollectionViewCell.self,
-            forCellWithReuseIdentifier: MediaCollectionViewCell.identifier)
+        collectionView.register(MusicCollectionViewCell.self)
         return collectionView
     }()
     private lazy var playHistoryEmptyLabel: UILabel = {
@@ -74,9 +70,7 @@ final class HomeViewController: UIViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
         collectionView.showsHorizontalScrollIndicator = false
-        collectionView.register(
-            MediaCollectionViewCell.self,
-            forCellWithReuseIdentifier: MediaCollectionViewCell.identifier)
+        collectionView.register(MusicCollectionViewCell.self)
         return collectionView
     }()
     private lazy var favoriteEmptyLabel: UILabel = {
