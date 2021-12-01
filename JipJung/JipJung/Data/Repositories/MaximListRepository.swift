@@ -9,7 +9,7 @@ import Foundation
 
 import RxSwift
 
-final class MaximListRepository {
+final class MaximListRepository: MaximListRepositoriable {
     private let localDBManager = RealmDBManager.shared
     
     func read(from date: Date) -> Single<[Maxim]> {

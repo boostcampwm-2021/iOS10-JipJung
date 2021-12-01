@@ -9,15 +9,25 @@ import Foundation
 
 import RxSwift
 
+protocol MaximListRepositoriable {
+    func read(from date: Date) -> Single<[Maxim]>
+}
+
 final class MaximListUseCase {
-    private let maximListRepository: MaximListRepository
+    private let maximListRepository: MaximListRepositoriable
     
-    init(maximListRepository: MaximListRepository = MaximListRepository()) {
+    init(maximListRepository: MaximListRepositoriable) {
         self.maximListRepository = maximListRepository
     }
-    func fetchMaximList() -> Single<[Maxim]> {
+    
+    func fetchWeeksMaximList() -> Single<[Maxim]> {
         return maximListRepository.read(from: makeTomorrow()).map {
-            return $0.dropLast($0.count % 7)
+            $0.dropLast($0.count % 7)
+        }
+        .map {
+            $0.sorted { lhs, rhs in
+                lhs.date > rhs.date
+            }
         }
     }
     

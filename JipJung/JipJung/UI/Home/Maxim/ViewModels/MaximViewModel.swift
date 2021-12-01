@@ -33,12 +33,12 @@ final class MaximViewModel: MaximViewModelInput, MaximViewModelOutput {
     private let maximListUseCase: MaximListUseCase
     private let today = Date()
     
-    init(maximListUseCase: MaximListUseCase = MaximListUseCase()) {
+    init(maximListUseCase: MaximListUseCase = MaximListUseCase(maximListRepository: MaximListRepository())) {
         self.maximListUseCase = maximListUseCase
     }
 
     func fetchMaximList() {
-        maximListUseCase.fetchMaximList()
+        maximListUseCase.fetchWeeksMaximList()
             .map({
                 $0.map({ MaximPresenterObject(maxim: $0) })})
             .subscribe { [weak self] in

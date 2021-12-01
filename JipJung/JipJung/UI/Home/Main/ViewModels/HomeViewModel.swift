@@ -12,7 +12,7 @@ import RxRelay
 
 final class HomeViewModel {
     private let mediaListUseCase = MediaListUseCase()
-    private let maximListUseCase = MaximListUseCase()
+    private let maximListUseCase = MaximListUseCase(maximListRepository: MaximListRepository())
     private let audioPlayUseCase = AudioPlayUseCase()
     private let playHistoryUseCase = PlayHistoryUseCase()
     private let favoriteUseCase = FavoriteUseCase()
