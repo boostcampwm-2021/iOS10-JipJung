@@ -40,10 +40,7 @@ final class SearchViewController: UIViewController {
         tableView.separatorStyle = .none
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(
-            SearchTableViewCell.self,
-            forCellReuseIdentifier: SearchTableViewCell.identifier
-        )
+        tableView.register(SearchTableViewCell.self)
         return tableView
     }()
     private lazy var soundCollectionView: UICollectionView = {
@@ -56,10 +53,7 @@ final class SearchViewController: UIViewController {
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.register(
-            MediaCollectionViewCell.self,
-            forCellWithReuseIdentifier: MediaCollectionViewCell.identifier
-        )
+        collectionView.register(MediaCollectionViewCell.self)
         return collectionView
     }()
     private lazy var emptySearchResultView: UIView = {
@@ -77,7 +71,6 @@ final class SearchViewController: UIViewController {
     }()
     
     private let disposeBag = DisposeBag()
-
     private var cellDisposeBag = DisposeBag()
     private var viewModel: SearchViewModel?
     

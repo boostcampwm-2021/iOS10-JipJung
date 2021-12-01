@@ -26,10 +26,7 @@ final class MediaPlayerViewController: UIViewController {
             collectionViewLayout: layout
         )
         collectionView.backgroundColor = .clear
-        collectionView.register(
-            TagCollectionViewCell.self,
-            forCellWithReuseIdentifier: TagCollectionViewCell.identifier
-        )
+        collectionView.register(TagCollectionViewCell.self)
         return collectionView
     }()
     private lazy var bottomView = UIView()

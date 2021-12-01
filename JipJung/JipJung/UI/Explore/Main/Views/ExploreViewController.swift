@@ -36,10 +36,7 @@ final class ExploreViewController: UIViewController {
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.register(
-            SoundTagCollectionViewCell.self,
-            forCellWithReuseIdentifier: SoundTagCollectionViewCell.identifier
-        )
+        collectionView.register(SoundTagCollectionViewCell.self)
         return collectionView
     }()
     private lazy var soundCollectionView: UICollectionView = {
@@ -50,10 +47,7 @@ final class ExploreViewController: UIViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.register(
-            MediaCollectionViewCell.self,
-            forCellWithReuseIdentifier: MediaCollectionViewCell.identifier
-        )
+        collectionView.register(MediaCollectionViewCell.self)
         return collectionView
     }()
     
