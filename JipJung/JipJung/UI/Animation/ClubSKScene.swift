@@ -14,8 +14,8 @@ final class ClubSKScene: SKScene {
         animate()
     }
     
-    private var lights: [SKLightNode] = [SKLightNode]()
-    private var background: SKSpriteNode = SKSpriteNode()
+    private var lights = [SKLightNode]()
+    private var background = SKSpriteNode()
     
     func configureSpriteNode() {
         configureBackgroundNode()
@@ -25,24 +25,21 @@ final class ClubSKScene: SKScene {
     
     func configureLightNode() {
         let light1 = SKLightNode()
-        light1.position = CGPoint(x: frame.midX/2,
-                                 y: frame.maxY)
+        light1.position = CGPoint(x: frame.midX/2, y: frame.maxY)
         light1.categoryBitMask = 0b0001
         light1.falloff = 5.0
         light1.lightColor = .red
         lights.append(light1)
         
         let light2 = SKLightNode()
-        light2.position = CGPoint(x: frame.midX,
-                                 y: frame.maxY)
+        light2.position = CGPoint(x: frame.midX, y: frame.maxY)
         light2.categoryBitMask = 0b0001
         light2.falloff = 5.0
         light2.lightColor = .blue
         lights.append(light2)
-
+        
         let light3 = SKLightNode()
-        light3.position = CGPoint(x: frame.midX*3/2,
-                                 y: frame.maxY)
+        light3.position = CGPoint(x: frame.midX*3/2, y: frame.maxY)
         light3.categoryBitMask = 0b0001
         light3.falloff = 5.0
         light3.lightColor = .green
@@ -50,11 +47,11 @@ final class ClubSKScene: SKScene {
     }
     
     func configureBackgroundNode() {
-        background = SKSpriteNode(color: .white,
-                                  size: CGSize(width: frame.width,
-                                               height: frame.height))
-        background.position = CGPoint(x: frame.midX,
-                                      y: frame.midY)
+        background = SKSpriteNode(
+            color: .white,
+            size: CGSize(width: frame.width, height: frame.height)
+        )
+        background.position = CGPoint(x: frame.midX, y: frame.midY)
         background.lightingBitMask = 0b0001
     }
     
@@ -64,42 +61,85 @@ final class ClubSKScene: SKScene {
         }
         addChild(background)
     }
-
+    
     func animate() {
         var moveActionList: [SKAction] = [SKAction]()
-        let moveActionSequence1 = SKAction.sequence([SKAction.move(to: CGPoint(x: frame.midX*3/2,
-                                                                               y: frame.maxY),
-                                                                   duration: 2.0),
-                                                     SKAction.move(to: CGPoint(x: frame.midX/2,
-                                                                               y: frame.maxY),
-                                                                   duration: 2.0)])
+        let moveActionSequence1 = SKAction.sequence(
+            [
+                SKAction.move(
+                    to: CGPoint(
+                        x: frame.midX*3/2,
+                        y: frame.maxY
+                    ),
+                    duration: 2.0
+                ),
+                SKAction.move(
+                    to: CGPoint(
+                        x: frame.midX/2,
+                        y: frame.maxY
+                    ),
+                    duration: 2.0
+                )
+            ]
+        )
         moveActionList.append(SKAction.repeatForever(moveActionSequence1))
         
-        let moveActionSequence2 = SKAction.sequence([SKAction.move(to: CGPoint(x: frame.midX/2,
-                                                                               y: frame.maxY),
-                                                                   duration: 1.0),
-                                                     SKAction.move(to: CGPoint(x: frame.midX*3/2,
-                                                                               y: frame.maxY),
-                                                                   duration: 2.0),
-                                                     SKAction.move(to: CGPoint(x: frame.midX,
-                                                                               y: frame.maxY),
-                                                                   duration: 1.0)])
+        let moveActionSequence2 = SKAction.sequence(
+            [
+                SKAction.move(
+                    to: CGPoint(
+                        x: frame.midX/2,
+                        y: frame.maxY
+                    ),
+                    duration: 1.0
+                ),
+                SKAction.move(
+                    to: CGPoint(
+                        x: frame.midX*3/2,
+                        y: frame.maxY
+                    ),
+                    duration: 2.0
+                ),
+                SKAction.move(
+                    to: CGPoint(
+                        x: frame.midX,
+                        y: frame.maxY
+                    ),
+                    duration: 1.0)
+            ]
+        )
         moveActionList.append(SKAction.repeatForever(moveActionSequence2))
         
-        let moveActionSequence3 = SKAction.sequence([SKAction.move(to: CGPoint(x: frame.midX/2,
-                                                                               y: frame.maxY),
-                                                                   duration: 2.0),
-                                                     SKAction.move(to: CGPoint(x: frame.midX*3/2,
-                                                                               y: frame.maxY),
-                                                                   duration: 2.0)])
+        let moveActionSequence3 = SKAction.sequence(
+            [
+                SKAction.move(
+                    to: CGPoint(
+                        x: frame.midX/2,
+                        y: frame.maxY
+                    ),
+                    duration: 2.0
+                ),
+                SKAction.move(
+                    to: CGPoint(
+                        x: frame.midX*3/2,
+                        y: frame.maxY
+                    ),
+                    duration: 2.0
+                )
+            ]
+        )
         moveActionList.append(SKAction.repeatForever(moveActionSequence3))
         
         let fallOffAction1 = SKAction.customAction(withDuration: 0.25) { node, _ in
-            guard let node = node as? SKLightNode else { return }
+            guard let node = node as? SKLightNode else {
+                return
+            }
             node.falloff = 0
         }
         let fallOffAction2 = SKAction.customAction(withDuration: 0.25) { node, _ in
-            guard let node = node as? SKLightNode else { return }
+            guard let node = node as? SKLightNode else {
+                return
+            }
             node.falloff = 5.0
         }
         

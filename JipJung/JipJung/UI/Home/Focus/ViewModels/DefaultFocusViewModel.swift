@@ -6,33 +6,21 @@
 //
 
 import Foundation
-import RxSwift
+
 import RxRelay
+import RxSwift
 
-protocol DefaultFocusViewModelInput {
-    func changeTimerState(to timerState: TimerState)
-    func startClockTimer()
-    func pauseClockTimer()
-    func resetClockTimer()
-    func setFocusTime(seconds: Int)
-    func saveFocusRecord()
-    func alertNotification()
-}
-
-protocol DefaultFocusViewModelOutput {
-    var clockTime: BehaviorRelay<Int> { get }
-    var isFocusRecordSaved: BehaviorRelay<Bool> { get }
-}
-
-final class DefaultFocusViewModel: DefaultFocusViewModelInput, DefaultFocusViewModelOutput {
-    var clockTime: BehaviorRelay<Int> = BehaviorRelay<Int>(value: 0)
-    var isFocusRecordSaved: BehaviorRelay<Bool> = BehaviorRelay<Bool>(value: false)
-    var timerState: BehaviorRelay<TimerState> = BehaviorRelay<TimerState>(value: .ready)
-    let focusTimeList: [Int] = [1, 5, 8, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180]
-    var focusTime: Int = 60
+final class DefaultFocusViewModel {
+    var clockTime = BehaviorRelay<Int>(value: 0)
+    var isFocusRecordSaved = BehaviorRelay<Bool>(value: false)
+    var timerState = BehaviorRelay<TimerState>(value: .ready)
+    let focusTimeList = [1, 5, 8, 10, 15, 20, 25, 30, 35,
+                         40, 45, 50, 55, 60, 70, 80, 90,
+                         100, 110, 120, 130, 140, 150, 160, 170, 180]
+    var focusTime = 60
     
-    private var runningStateDisposeBag: DisposeBag = DisposeBag()
-    private var disposeBag: DisposeBag = DisposeBag()
+    private var runningStateDisposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
     
     private let saveFocusTimeUseCase: SaveFocusTimeUseCaseProtocol
     private let audioPlayUseCase = AudioPlayUseCase()

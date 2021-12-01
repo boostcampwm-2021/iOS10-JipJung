@@ -6,38 +6,35 @@
 //
 
 import UIKit
-import RxSwift
+
 import RxCocoa
 import RxRelay
+import RxSwift
 
 final class InfinityFocusViewController: FocusViewController {
-    // MARK: - Subviews
     let timerView: UIView = {
         let length = FocusViewControllerSize.timerViewLength
         let size = CGSize(width: length, height: length)
-        let timerView = UIView(frame: CGRect(origin: .zero, size: size))
-        return timerView
+        let view = UIView(frame: CGRect(origin: .zero, size: size))
+        return view
     }()
-    
     private lazy var timeLabel: UILabel = {
-        let timeLabel = UILabel()
-        timeLabel.text = "00:00"
-        timeLabel.font = UIFont.boldSystemFont(ofSize: 35)
-        timeLabel.textColor = .white
-        return timeLabel
+        let label = UILabel()
+        label.text = "00:00"
+        label.font = .preferredFont(forTextStyle: .largeTitle)
+        label.textColor = .white
+        return label
     }()
-    
     private lazy var circleShapeLayer: CAShapeLayer = {
-        let circleShapeLayer = createCircleShapeLayer(
+        let shapeLayer = createCircleShapeLayer(
             strokeColor: UIColor.systemGray,
             lineWidth: 3
         )
-        return circleShapeLayer
+        return shapeLayer
     }()
-    
     private lazy var cometAnimationLayer: CALayer = {
-        let rotateAnimationLayer = createCometCircleShapeLayer(strokeColor: .white, lineWidth: 3)
-        return rotateAnimationLayer
+        let shapeLayer = createCometCircleShapeLayer(strokeColor: .white, lineWidth: 3)
+        return shapeLayer
     }()
     
     private let pulseGroupLayer = CALayer()
@@ -47,11 +44,8 @@ final class InfinityFocusViewController: FocusViewController {
     private let continueButton = FocusContinueButton()
     private let exitButton = FocusExitButton()
     
-    // MARK: - Private Variables
-    
     private var viewModel: InfinityFocusViewModel?
-    // MARK: - Lifecycle Methods
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
@@ -86,14 +80,11 @@ final class InfinityFocusViewController: FocusViewController {
             self?.startButton.alpha = 0
         }
     }
-    
-    // MARK: - Initializer
 
     convenience init(viewModel: InfinityFocusViewModel) {
         self.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
     }
-    // MARK: - Helpers
     
     private func configureTimerUI() {
         view.addSubview(timerView)

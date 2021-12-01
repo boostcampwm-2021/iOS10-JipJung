@@ -6,51 +6,46 @@
 //
 
 import UIKit
-import RxSwift
+
 import RxCocoa
 import RxRelay
+import RxSwift
 
 final class BreathFocusViewController: FocusViewController {
-    // MARK: - Subviews
-    private let breathView = UIView()
-    
     private lazy var timePickerView: UIPickerView = {
-        let timePickerView = UIPickerView()
-        timePickerView.delegate = self
-        timePickerView.dataSource = self
-        return timePickerView
+        let pickerView = UIPickerView()
+        pickerView.delegate = self
+        pickerView.dataSource = self
+        return pickerView
     }()
-    
     private lazy var minuteLabel: UILabel = {
-        let minuteLabel = UILabel()
-        minuteLabel.text = "min"
-        minuteLabel.textColor = .init(white: 1.0, alpha: 0.8)
-        return minuteLabel
+        let label = UILabel()
+        label.text = "min"
+        label.textColor = .init(white: 1.0, alpha: 0.8)
+        return label
     }()
-    
     private lazy var numberOfBreathLabel: UILabel = {
-        let timeLabel = UILabel()
-        timeLabel.text = "7 breaths"
-        timeLabel.font = UIFont.boldSystemFont(ofSize: 21)
-        timeLabel.textColor = .white
-        return timeLabel
+        let label = UILabel()
+        label.text = "7 breaths"
+        label.font = .preferredFont(forTextStyle: .title2)
+        label.textColor = .white
+        return label
     }()
-    
     private lazy var breathShapeLayer: CAShapeLayer = {
-        let drawingLayer = CAShapeLayer()
-        drawingLayer.fillColor = .init(red: 0.1, green: 1.0, blue: 0.3, alpha: 0.5)
-        drawingLayer.shadowColor = .init(red: 0, green: 1.0, blue: 0, alpha: 1)
-        drawingLayer.shadowOpacity = 0.9
-        drawingLayer.shadowOffset = CGSize.zero
-        drawingLayer.shadowRadius = 20
-        return drawingLayer
+        let shapeLayer = CAShapeLayer()
+        shapeLayer.fillColor = .init(red: 0.1, green: 1.0, blue: 0.3, alpha: 0.5)
+        shapeLayer.shadowColor = .init(red: 0, green: 1.0, blue: 0, alpha: 1)
+        shapeLayer.shadowOpacity = 0.9
+        shapeLayer.shadowOffset = CGSize.zero
+        shapeLayer.shadowRadius = 20
+        return shapeLayer
     }()
     private lazy var scalingShapeLayer: CAShapeLayer = {
-        let scalingShapeLayer = CAShapeLayer()
-        scalingShapeLayer.fillColor = .init(gray: 0, alpha: 0)
-        scalingShapeLayer.strokeColor = UIColor.white.cgColor
-        scalingShapeLayer.lineWidth = 2.0
-        return scalingShapeLayer
+        let shapeLayer = CAShapeLayer()
+        shapeLayer.fillColor = .init(gray: 0, alpha: 0)
+        shapeLayer.strokeColor = UIColor.white.cgColor
+        shapeLayer.lineWidth = 2.0
+        return shapeLayer
     }()
     private lazy var textLayer: CATextLayer = {
         let textLayer = CATextLayer()
@@ -58,19 +53,17 @@ final class BreathFocusViewController: FocusViewController {
         textLayer.string = "Inhale"
         return textLayer
     }()
-    private let countdownView = CountdownView()
     
+    private let breathView = UIView()
+    private let countdownView = CountdownView()
     private let startButton = FocusStartButton()
     private let stopButton: FocusExitButton = {
-        let stopButton = FocusExitButton()
-        stopButton.setTitle("Stop", for: .normal)
-        return stopButton
+        let focusExitButton = FocusExitButton()
+        focusExitButton.setTitle("Stop", for: .normal)
+        return focusExitButton
     }()
     
-    // MARK: - Private Variables
-    
     private var viewModel: BreathFocusViewModel?
-    // MARK: - Lifecycle Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -111,14 +104,10 @@ final class BreathFocusViewController: FocusViewController {
         startWiggleAnimation()
     }
     
-    // MARK: - Initializer
-    
     convenience init(viewModel: BreathFocusViewModel) {
         self.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
     }
-    
-    // MARK: - Helpers
     
     private func configureUI() {
         view.makeBlurBackground()
@@ -279,7 +268,6 @@ final class BreathFocusViewController: FocusViewController {
                 self.view.layer.backgroundColor = .none
             }
             
-            // TODO: 버튼 동시 클릭 문제 해결, 버튼 나타나는 타이밍 조정하기
             DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
                 UIView.animate(withDuration: 2.0, delay: .zero, options: .allowUserInteraction) {
                     self.stopButton.layer.opacity = 1
@@ -382,7 +370,7 @@ extension BreathFocusViewController: UIPickerViewDelegate {
         pickerLabel = UILabel()
         pickerLabel.text = "\(minuteInfo)"
         pickerLabel.textColor = UIColor.white
-        pickerLabel.font = UIFont.systemFont(ofSize: 35)
+        pickerLabel.font = .preferredFont(forTextStyle: .largeTitle)
         pickerLabel.textAlignment = .center
         
         return pickerLabel

@@ -7,7 +7,7 @@
 
 import QuartzCore
 
-class PulseAnimation: CAAnimationGroup {
+final class PulseAnimation: CAAnimationGroup {
     override init() {
         super.init()
         self.scaleAnimation()

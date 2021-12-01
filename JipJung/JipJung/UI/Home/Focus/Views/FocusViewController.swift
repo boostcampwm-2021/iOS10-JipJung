@@ -6,8 +6,9 @@
 //
 
 import UIKit
-import RxSwift
+
 import RxCocoa
+import RxSwift
 
 class FocusViewController: UIViewController {
     let closeButton = CloseButton()
@@ -21,11 +22,11 @@ class FocusViewController: UIViewController {
     
     private func configureCloseButton() {
         view.addSubview(closeButton)
-        closeButton.snp.makeConstraints { make in
-            make.width.equalTo(30)
-            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(10)
-            make.leading.equalToSuperview().offset(10)
-            make.height.equalTo(30)
+        closeButton.snp.makeConstraints {
+            $0.width.equalTo(30)
+            $0.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(10)
+            $0.leading.equalToSuperview().offset(10)
+            $0.height.equalTo(30)
         }
     }
     

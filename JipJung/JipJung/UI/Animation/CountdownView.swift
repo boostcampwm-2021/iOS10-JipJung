@@ -7,12 +7,12 @@
 
 import UIKit
 
-class CountdownView: UIView {
-    let numberLabel: UILabel = {
+final class CountdownView: UIView {
+    private let numberLabel: UILabel = {
         let label = UILabel()
         label.textColor = .gray
         label.text = "3"
-        label.font = UIFont.systemFont(ofSize: 30)
+        label.font = .preferredFont(forTextStyle: .title1)
         return label
     }()
     

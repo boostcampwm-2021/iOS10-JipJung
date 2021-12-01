@@ -6,30 +6,17 @@
 //
 
 import Foundation
-import RxSwift
+
 import RxRelay
+import RxSwift
 
-protocol InfinityFocusViewModelInput {
-    func changeTimerState(to timerState: TimerState)
-    func startClockTimer()
-    func pauseClockTimer()
-    func resetClockTimer()
-    func saveFocusRecord()
-    func alertNotification()
-}
-
-protocol InfinityFocusViewModelOutput {
-    var clockTime: BehaviorRelay<Int> { get }
-    var isFocusRecordSaved: BehaviorRelay<Bool> { get }
-}
-
-final class InfinityFocusViewModel: InfinityFocusViewModelInput, InfinityFocusViewModelOutput {
-    var clockTime: BehaviorRelay<Int> = BehaviorRelay<Int>(value: 0)
-    var isFocusRecordSaved: BehaviorRelay<Bool> = BehaviorRelay<Bool>(value: false)
-    var timerState: BehaviorRelay<TimerState> = BehaviorRelay<TimerState>(value: .ready)
+final class InfinityFocusViewModel {
+    var clockTime = BehaviorRelay<Int>(value: 0)
+    var isFocusRecordSaved = BehaviorRelay<Bool>(value: false)
+    var timerState = BehaviorRelay<TimerState>(value: .ready)
     
-    private var runningStateDisposeBag: DisposeBag = DisposeBag()
-    private var disposeBag: DisposeBag = DisposeBag()
+    private var runningStateDisposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
     
     private let saveFocusTimeUseCase: SaveFocusTimeUseCaseProtocol
     private let audioPlayUseCase = AudioPlayUseCase()

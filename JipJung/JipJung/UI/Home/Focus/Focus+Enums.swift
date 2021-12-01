@@ -10,3 +10,7 @@ import UIKit
 enum FocusViewControllerSize {
     static let timerViewLength = UIScreen.deviceScreenSize.width * 0.56
 }
+
+enum BreathMode {
+    static let audioName = "breath.WAV"
+}

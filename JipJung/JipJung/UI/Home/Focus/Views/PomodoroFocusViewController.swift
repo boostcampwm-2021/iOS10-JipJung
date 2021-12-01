@@ -6,68 +6,62 @@
 //
 
 import UIKit
-import RxSwift
+
 import RxCocoa
 import RxRelay
+import RxSwift
 
 final class PomodoroFocusViewController: FocusViewController {
-    // MARK: - Subviews
-    let timerView: UIView = {
+    private lazy var timerView: UIView = {
         let length = FocusViewControllerSize.timerViewLength
         let size = CGSize(width: length, height: length)
         let timerView = UIView(frame: CGRect(origin: .zero, size: size))
         return timerView
     }()
-    
     private lazy var timePickerView: UIPickerView = {
-        let timePickerView = UIPickerView()
-        timePickerView.delegate = self
-        timePickerView.dataSource = self
+        let pickerView = UIPickerView()
+        pickerView.delegate = self
+        pickerView.dataSource = self
         
-        return timePickerView
+        return pickerView
     }()
-    
     private lazy var minuteLabel: UILabel = {
-        let minuteLabel = UILabel()
-        minuteLabel.text = "sec"
-        minuteLabel.textColor = .systemGray
+        let label = UILabel()
+        label.text = "sec"
+        label.textColor = .systemGray
         
-        return minuteLabel
+        return label
     }()
-    
     private lazy var timeLabel: UILabel = {
-        let timeLabel = UILabel()
-        timeLabel.text = "01:00"
-        timeLabel.font = UIFont.boldSystemFont(ofSize: 35)
-        timeLabel.textColor = .white
-        return timeLabel
+        let label = UILabel()
+        label.text = "01:00"
+        label.font = .preferredFont(forTextStyle: .largeTitle)
+        label.textColor = .white
+        return label
     }()
-    
     private lazy var relaxLabel: UILabel = {
-        let relaxLabel = UILabel()
-        relaxLabel.text = "Relax"
-        relaxLabel.font = UIFont.boldSystemFont(ofSize: 17)
-        relaxLabel.textColor = .white
-        return relaxLabel
+        let label = UILabel()
+        label.text = "Relax"
+        label.font = .preferredFont(forTextStyle: .headline)
+        label.textColor = .white
+        return label
     }()
-    
     private lazy var circleShapeLayer: CAShapeLayer = {
-        let circleShapeLayer = createCircleShapeLayer(
+        let shapeLayer = createCircleShapeLayer(
             strokeColor: UIColor.systemGray,
             lineWidth: 3
         )
-        return circleShapeLayer
+        return shapeLayer
     }()
-    
     private lazy var timeProgressLayer: CAShapeLayer = {
-        let timeProgressLayer = createCircleShapeLayer(
+        let shapeLayer = createCircleShapeLayer(
             strokeColor: .white,
             lineWidth: 3,
             startAngle: -CGFloat.pi / 2,
             endAngle: 3 * CGFloat.pi / 2
         )
-        timeProgressLayer.fillColor = nil
-        return timeProgressLayer
+        shapeLayer.fillColor = nil
+        return shapeLayer
     }()
     
     private let pulseGroupLayer = CALayer()
@@ -77,10 +71,7 @@ final class PomodoroFocusViewController: FocusViewController {
     private let continueButton = FocusContinueButton()
     private let exitButton = FocusExitButton()
     
-    // MARK: - Private Variables
-    
     var viewModel: PomodoroFocusViewModel?
-    // MARK: - Lifecycle Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -111,14 +102,11 @@ final class PomodoroFocusViewController: FocusViewController {
             self?.startButton.alpha = 0
         }
     }
-    // MARK: - Initializer
-
+    
     convenience init(viewModel: PomodoroFocusViewModel) {
         self.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
     }
-    
-    // MARK: - Helpers
     
     private func configureTimerUI() {
         view.addSubview(timerView)
@@ -449,7 +437,7 @@ extension PomodoroFocusViewController: UIPickerViewDelegate {
         pickerLabel = UILabel()
         pickerLabel.text = "\(text)"
         pickerLabel.textColor = UIColor.white
-        pickerLabel.font = UIFont.systemFont(ofSize: 35)
+        pickerLabel.font = .preferredFont(forTextStyle: .largeTitle)
         pickerLabel.textAlignment = .center
         
         return pickerLabel

@@ -7,7 +7,7 @@
 
 import QuartzCore
 
-class CycleAnimation: CABasicAnimation {
+final class CycleAnimation: CABasicAnimation {
     override init() {
         super.init()
         self.cycleAnimation()
