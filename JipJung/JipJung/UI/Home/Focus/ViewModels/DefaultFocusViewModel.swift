@@ -17,7 +17,7 @@ final class DefaultFocusViewModel {
     let focusTimeList = [1, 5, 8, 10, 15, 20, 25, 30, 35,
                          40, 45, 50, 55, 60, 70, 80, 90,
                          100, 110, 120, 130, 140, 150, 160, 170, 180]
-    var focusTime: Int = 60
+    var focusTime = 60
     
     private var runningStateDisposeBag = DisposeBag()
     private let disposeBag = DisposeBag()
