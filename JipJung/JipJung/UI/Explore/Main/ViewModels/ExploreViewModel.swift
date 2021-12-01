@@ -16,7 +16,7 @@ final class ExploreViewModel {
     var selectedTagIndex = 0
     
     private let disposeBag = DisposeBag()
-    
+
     private let searchMediaUseCase: SearchMediaUseCase
     
     init(searchMediaUseCase: SearchMediaUseCase) {

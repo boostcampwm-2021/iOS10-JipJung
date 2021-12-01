@@ -50,7 +50,7 @@ final class MediaPlayerViewController: UIViewController {
     }
     
     private var viewModel: MediaPlayerViewModel?
-    private var disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
     private var playerLooper: AVPlayerLooper?
     private var queuePlayer: AVQueuePlayer?
     private var playerLayer: AVPlayerLayer?

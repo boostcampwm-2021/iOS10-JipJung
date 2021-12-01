@@ -38,7 +38,8 @@ final class ExploreViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.register(
             SoundTagCollectionViewCell.self,
-            forCellWithReuseIdentifier: SoundTagCollectionViewCell.identifier)
+            forCellWithReuseIdentifier: SoundTagCollectionViewCell.identifier
+        )
         return collectionView
     }()
     private lazy var soundCollectionView: UICollectionView = {
@@ -51,7 +52,8 @@ final class ExploreViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.register(
             MediaCollectionViewCell.self,
-            forCellWithReuseIdentifier: MediaCollectionViewCell.identifier)
+            forCellWithReuseIdentifier: MediaCollectionViewCell.identifier
+        )
         return collectionView
     }()
     

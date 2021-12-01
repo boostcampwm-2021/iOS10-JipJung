@@ -1,21 +1,21 @@
 //
-//  MusicCardCollectionViewCell.swift
+//  MediaCollectionViewCell.swift
 //  JipJung
 //
 //  Created by 윤상진 on 2021/11/07.
 //
 
 import UIKit
+
 import SnapKit
 
-class MediaCollectionViewCell: UICollectionViewCell {
+final class MediaCollectionViewCell: UICollectionViewCell {
     lazy var imageView: UIImageView = {
         let imageView = UIImageView(frame: frame)
         imageView.image = UIImage(systemName: "photo")
         imageView.clipsToBounds = true
         return imageView
     }()
-    
     lazy var titleView: UILabel = {
         let label = UILabel(frame: frame)
         label.text = "몰디브 자연음"
@@ -29,8 +29,6 @@ class MediaCollectionViewCell: UICollectionViewCell {
         super.layoutSubviews()
         imageView.makeCircle()
     }
-    
-    // MARK: - Initializers
     
     override init(frame: CGRect) {
         super.init(frame: frame)

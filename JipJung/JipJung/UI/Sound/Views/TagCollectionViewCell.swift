@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-class TagCollectionViewCell: UICollectionViewCell {
+final class TagCollectionViewCell: UICollectionViewCell {
     let tagLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 14)

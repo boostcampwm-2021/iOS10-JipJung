@@ -77,7 +77,7 @@ final class SearchViewController: UIViewController {
     }()
     
     private let disposeBag = DisposeBag()
-    
+
     private var cellDisposeBag = DisposeBag()
     private var viewModel: SearchViewModel?
     

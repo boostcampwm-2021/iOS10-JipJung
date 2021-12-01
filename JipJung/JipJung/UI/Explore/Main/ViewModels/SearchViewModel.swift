@@ -7,14 +7,14 @@
 
 import Foundation
 
-import RxSwift
 import RxRelay
+import RxSwift
 
 final class SearchViewModel {
     var searchHistory = BehaviorRelay<[String]>(value: [])
     var searchResult = BehaviorRelay<[Media]>(value: [])
     
-    private var disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
     
     private let searchHistoryUseCase: SearchHistoryUseCase
     private let searchMediaUseCase: SearchMediaUseCase
