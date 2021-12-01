@@ -209,6 +209,7 @@
 		DF30FF05273CBC3B001C720E /* MusicPlayerButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF30FF04273CBC3B001C720E /* MusicPlayerButtons.swift */; };
 		DF6B111127390F1900D9924E /* MediaResourceRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6B111027390F1900D9924E /* MediaResourceRepository.swift */; };
 		DF71D22F2734455600CD980E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DF71D22E2734455600CD980E /* GoogleService-Info.plist */; };
+		DFA33D51275617D700E675BF /* FocusButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFA33D50275617D700E675BF /* FocusButtons.swift */; };
 		DFED21CB2733702800E99641 /* MusicPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFED21CA2733702800E99641 /* MusicPlayerViewController.swift */; };
 		DFED21D02733931600E99641 /* MusicDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFED21CF2733931600E99641 /* MusicDescriptionView.swift */; };
 		DFED21D92733AE8400E99641 /* MusicPlayerMaximView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFED21D82733AE8400E99641 /* MusicPlayerMaximView.swift */; };
@@ -458,6 +459,7 @@
 		DF30FF04273CBC3B001C720E /* MusicPlayerButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayerButtons.swift; sourceTree = "<group>"; };
 		DF6B111027390F1900D9924E /* MediaResourceRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaResourceRepository.swift; sourceTree = "<group>"; };
 		DF71D22E2734455600CD980E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		DFA33D50275617D700E675BF /* FocusButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusButtons.swift; sourceTree = "<group>"; };
 		DFED21CA2733702800E99641 /* MusicPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayerViewController.swift; sourceTree = "<group>"; };
 		DFED21CF2733931600E99641 /* MusicDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicDescriptionView.swift; sourceTree = "<group>"; };
 		DFED21D82733AE8400E99641 /* MusicPlayerMaximView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayerMaximView.swift; sourceTree = "<group>"; };
@@ -680,6 +682,7 @@
 				DD828094273D1F8E00BB2A60 /* FocusViewController.swift */,
 				B40D1FA8273B5F1900881A49 /* DefaultFocusViewController.swift */,
 				B40D1FAC273B5F2700881A49 /* PomodoroFocusViewController.swift */,
+				DFA33D50275617D700E675BF /* FocusButtons.swift */,
 				B40D1FB8273B674F00881A49 /* InfinityFocusViewController.swift */,
 				B4B780DE2741F6FA0080DC28 /* BreathFocusViewController.swift */,
 				DD82808B273CAE5F00BB2A60 /* FocusViewControllerFactory.swift */,
@@ -1613,6 +1616,7 @@
 				DF6B111127390F1900D9924E /* MediaResourceRepository.swift in Sources */,
 				B481FC7F2745238100D1F2EA /* FavoriteRepository.swift in Sources */,
 				DDB5CEB82733765500E8F9EB /* FavoriteMaxim.swift in Sources */,
+				DFA33D51275617D700E675BF /* FocusButtons.swift in Sources */,
 				DD82808C273CAE5F00BB2A60 /* FocusViewControllerFactory.swift in Sources */,
 				B4B780E12741F7070080DC28 /* BreathFocusViewModel.swift in Sources */,
 				DDB5CEA227328EC300E8F9EB /* ExploreViewController.swift in Sources */,

@@ -15,6 +15,7 @@ protocol InfinityFocusViewModelInput {
     func pauseClockTimer()
     func resetClockTimer()
     func saveFocusRecord()
+    func alertNotification()
 }
 
 protocol InfinityFocusViewModelOutput {
@@ -92,5 +93,18 @@ final class InfinityFocusViewModel: InfinityFocusViewModelInput, InfinityFocusVi
                 self?.isFocusRecordSaved.accept(false)
             }
             .disposed(by: disposeBag)
+    }
+    
+    func alertNotification() {
+        let clockTime = clockTime.value
+        let happyEmojis = ["☺️", "😘", "😍", "🥳", "🤩"]
+        let minuteString = clockTime / 60 == 0 ? "" : "\(clockTime / 60)분 "
+        let secondString = clockTime % 60 == 0 ? "" : "\(clockTime % 60)초 "
+        let message = minuteString + secondString + "집중하셨어요!" + (happyEmojis.randomElement() ?? "")
+        PushNotificationMananger.shared.presentFocusStopNotification(
+            title: .focusFinish,
+            body: message
+        )
+        FeedbackGenerator.shared.impactOccurred()
     }
 }
