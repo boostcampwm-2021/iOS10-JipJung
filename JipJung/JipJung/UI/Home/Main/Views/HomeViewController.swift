@@ -126,7 +126,7 @@ final class HomeViewController: UIViewController {
     }
     
     private func configureUI() {
-        view.backgroundColor = .lightGray
+        view.backgroundColor = .black
         
         configureObserver()
         configureTopBottomViewGap()
