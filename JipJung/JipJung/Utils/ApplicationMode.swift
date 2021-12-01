@@ -6,13 +6,14 @@
 //
 
 import Foundation
+
 import RxRelay
 
 final class ApplicationMode {
     static let shared = ApplicationMode()
     private init() {}
     
-    var mode: BehaviorRelay<ApplicationModeType> = BehaviorRelay<ApplicationModeType>(value: .bright)
+    let mode: BehaviorRelay<ApplicationModeType> = BehaviorRelay<ApplicationModeType>(value: .bright)
     
     func convert() {
         switch mode.value {

@@ -10,15 +10,15 @@ import UIKit
 import SnapKit
 
 class BlurCircleButton: UIView {
-    typealias Listener = () -> Void
-    var buttonClickListener: Listener?
-    
     let iconBackground: UIView = {
         let view = UIView()
         view.layer.masksToBounds = true
         view.makeBlurBackground()
         return view
     }()
+    
+    typealias Listener = () -> Void
+    var buttonClickListener: Listener?
     
     override func layoutSubviews() {
         super.layoutSubviews()

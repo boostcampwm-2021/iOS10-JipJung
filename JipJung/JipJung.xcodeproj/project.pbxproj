@@ -628,6 +628,9 @@
 		9172BBE827422479000E1060 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				91EA47C5273846A800780C3E /* BlurCircleButton.swift */,
+				91CE6F7227390AD200176AF2 /* FocusButton.swift */,
+				917BDD5C2746268D0049E944 /* TouchTransferView.swift */,
 				DDB5CE9D27328E8300E8F9EB /* HomeViewController.swift */,
 				B4015CD32739151B006BD14A /* PlayHistoryViewController.swift */,
 				B4015CD527391529006BD14A /* FavoriteMusicViewController.swift */,
@@ -644,8 +647,8 @@
 				91CE6F7227390AD200176AF2 /* FocusButton.swift */,
 				91EA47C5273846A800780C3E /* BlurCircleButton.swift */,
 				DDB92BAF273A263100EE26F0 /* MediaCollectionViewCell.swift */,
+				DDB92BAF273A263100EE26F0 /* MusicCollectionViewCell.swift */,
 				DD4D030127423C54007AA4DD /* CloseButton.swift */,
-				917BDD5C2746268D0049E944 /* TouchTransferView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";

@@ -19,7 +19,6 @@ final class PlayHistoryViewModel {
     func viewDidLoad() {
         playHistoryUseCase.fetchPlayHistory()
             .subscribe { [weak self] in
-                print($0.count)
                 self?.playHistory.accept($0)
             } onFailure: { error in
                 print(error.localizedDescription)

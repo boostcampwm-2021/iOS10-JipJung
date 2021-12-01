@@ -9,12 +9,11 @@ import UIKit
 
 class FeedbackGenerator {
     static let shared = FeedbackGenerator()
-    
-    private var lightGenerator: UIImpactFeedbackGenerator?
-    
     private init() {
         lightGenerator = UIImpactFeedbackGenerator(style: .light)
     }
+    
+    private var lightGenerator: UIImpactFeedbackGenerator?
     
     func impactOccurred() {
         lightGenerator?.impactOccurred()

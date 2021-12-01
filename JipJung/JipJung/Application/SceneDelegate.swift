@@ -7,10 +7,7 @@
 
 import UIKit
 
-import SnapKit
-
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-
     var window: UIWindow?
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -60,7 +57,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             tag: 1
         )
         
-        let exploreViewController = ExploreViewController(viewModel: ExploreViewModel(searchMediaUseCase: SearchMediaUseCase()))
+        let exploreViewController = ExploreViewController(
+            viewModel: ExploreViewModel(
+                searchMediaUseCase: SearchMediaUseCase()
+            )
+        )
         exploreViewController.tabBarItem = tabBarItem
         let exploreNavigationViewController = UINavigationController(rootViewController: exploreViewController)
         
@@ -68,9 +69,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     func createMeViewController() -> UIViewController {
+        let tabBarItem = UITabBarItem(
+            title: TabBarItems.Me.title,
+            image: UIImage(systemName: TabBarItems.Me.image),
+            tag: 2
+        )
+        
         let meViewController = MeViewController()
         let meNavigationController = UINavigationController(rootViewController: meViewController)
-        meNavigationController.tabBarItem = UITabBarItem(title: TabBarItems.Me.title, image: UIImage(systemName: TabBarItems.Me.image), tag: 2)
+        meNavigationController.tabBarItem = tabBarItem
         meNavigationController.navigationBar.prefersLargeTitles = true
         return meNavigationController
     }

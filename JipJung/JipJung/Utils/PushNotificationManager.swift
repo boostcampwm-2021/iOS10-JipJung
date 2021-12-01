@@ -15,7 +15,6 @@ class PushNotificationMananger {
     }
     
     static let shared = PushNotificationMananger()
-    
     private init() {}
     
     func presentFocusStopNotification(title: NotificationTitleType, body: String) {
@@ -27,11 +26,15 @@ class PushNotificationMananger {
                 content.body = body
                 content.sound = .default
                 
-                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 0.2,
-                                                                repeats: false)
-                let request = UNNotificationRequest(identifier: "stopFocus",
-                                                    content: content,
-                                                    trigger: trigger)
+                let trigger = UNTimeIntervalNotificationTrigger(
+                    timeInterval: 0.2,
+                    repeats: false
+                )
+                let request = UNNotificationRequest(
+                    identifier: "stopFocus",
+                    content: content,
+                    trigger: trigger
+                )
                 
                 UNUserNotificationCenter.current().add(request) { error in
                     if let error = error {

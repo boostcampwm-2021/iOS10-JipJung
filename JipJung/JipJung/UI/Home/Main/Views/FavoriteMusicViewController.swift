@@ -23,17 +23,12 @@ final class FavoriteViewController: UIViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
         collectionView.showsHorizontalScrollIndicator = false
-        collectionView.register(
-            MediaCollectionViewCell.self,
-            forCellWithReuseIdentifier: MediaCollectionViewCell.identifier
-        )
+        collectionView.register(MediaCollectionViewCell.self)
         return collectionView
     }()
     
     private let viewModel = FavoriteViewModel()
     private let disposeBag = DisposeBag()
-    
-    // MARK: - Lifecycle Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,8 +38,6 @@ final class FavoriteViewController: UIViewController {
         
         viewModel.viewDidLoad()
     }
-    
-    // MARK: - Helpers
     
     private func configureUI() {
         view.backgroundColor = .white
