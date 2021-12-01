@@ -21,32 +21,32 @@ final class MaximCollectionViewCell: UICollectionViewCell {
         return button
     }()
     private(set) lazy var dayLabel: UILabel = {
-        let dateLabel = UILabel()
-        dateLabel.font = .systemFont(ofSize: 70)
-        dateLabel.textColor = .white
-        dateLabel.text = "15"
-        return dateLabel
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 70)
+        label.textColor = .white
+        label.text = "15"
+        return label
     }()
     private(set) lazy var monthYearLabel: UILabel = {
-        let monthYearLabel = UILabel()
-        monthYearLabel.font = .preferredFont(forTextStyle: .title3)
-        monthYearLabel.textColor = .white
-        monthYearLabel.text = "NOV 2021"
-        return monthYearLabel
+        let label = UILabel()
+        label.font = .preferredFont(forTextStyle: .title3)
+        label.textColor = .white
+        label.text = "NOV 2021"
+        return label
     }()
     private(set) lazy var contentLabel: UILabel = {
-        let maximLabel = UILabel()
-        maximLabel.font = .preferredFont(forTextStyle: .title1)
-        maximLabel.textColor = .white
-        maximLabel.text = "In fact, in order to understand the real Chinaman, and the Chinese civilisation, a man must be depp, broad and simple."
-        maximLabel.numberOfLines = 0
-        maximLabel.setLineSpacing(lineSpacing: 10)
-        return maximLabel
+        let label = UILabel()
+        label.font = .preferredFont(forTextStyle: .title1)
+        label.textColor = .white
+        label.text = "In fact, in order to understand the real Chinaman, and the Chinese civilisation, a man must be depp, broad and simple."
+        label.numberOfLines = 0
+        label.setLineSpacing(lineSpacing: 10)
+        return label
     }()
     private(set) lazy var seperateLine: UIView = {
-        let seperateLine = UIView(frame: CGRect(x: 0, y: 0, width: 30, height: 5))
-        seperateLine.backgroundColor = .systemGray3
-        return seperateLine
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: 30, height: 5))
+        view.backgroundColor = .systemGray3
+        return view
     }()
     private(set) lazy var speakerLabel: UILabel = {
         let label = UILabel()
@@ -72,15 +72,6 @@ final class MaximCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    var backgroundImageName: String = "" {
-        didSet {
-            print(backgroundImageName)
-            backgroundView = UIImageView(image: UIImage(named: backgroundImageName))
-            backgroundColor = .black
-            backgroundView?.alpha = 0.5
-        }
-    }
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
@@ -92,6 +83,8 @@ final class MaximCollectionViewCell: UICollectionViewCell {
     }
     
     private func configureUI() {
+        backgroundColor = .black
+        
         addSubview(speakerLabel)
         speakerLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(30)

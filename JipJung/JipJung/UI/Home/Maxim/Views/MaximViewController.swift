@@ -39,24 +39,24 @@ final class MaximViewController: UIViewController {
         collectionViewLayout.scrollDirection = .horizontal
 
         let headerSize = 50
-        let calendarHeaderCollectionView = UICollectionView(
+        let collectionView = UICollectionView(
             frame: MaximCalendarHeaderCollectionViewSize.cellSize,
             collectionViewLayout: collectionViewLayout)
-        calendarHeaderCollectionView.contentInset = UIEdgeInsets(
+        collectionView.contentInset = UIEdgeInsets(
             top: 0,
             left: 0,
             bottom: MaximViewSize.headerHeight + MaximViewSize.nocheHeight,
             right: 0)
-        calendarHeaderCollectionView.isHidden = true
-        calendarHeaderCollectionView.showsHorizontalScrollIndicator = false
-        calendarHeaderCollectionView.decelerationRate = .fast
-        calendarHeaderCollectionView.delegate = self
-        calendarHeaderCollectionView.register(
+        collectionView.isHidden = true
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.decelerationRate = .fast
+        collectionView.delegate = self
+        collectionView.register(
             MaximCalendarHeaderCollectionViewCell.self,
             forCellWithReuseIdentifier: MaximCalendarHeaderCollectionViewCell.identifier)
-        calendarHeaderCollectionView.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
-        calendarHeaderCollectionView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
-        return calendarHeaderCollectionView
+        collectionView.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
+        collectionView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        return collectionView
     }()
     private lazy var maximCollectionView: UICollectionView = {
         let collectionViewLayout = UICollectionViewFlowLayout()
@@ -64,19 +64,20 @@ final class MaximViewController: UIViewController {
         collectionViewLayout.scrollDirection = .horizontal
         collectionViewLayout.minimumLineSpacing = 2
         let screenBounds = UIScreen.main.bounds
-        let maximCollectionView = UICollectionView(frame: screenBounds, collectionViewLayout: collectionViewLayout)
-        maximCollectionView.decelerationRate = .fast
-        maximCollectionView.showsHorizontalScrollIndicator = false
-        maximCollectionView.delegate = self
-        maximCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        maximCollectionView.register(
+        let collectionView = UICollectionView(frame: screenBounds, collectionViewLayout: collectionViewLayout)
+        collectionView.decelerationRate = .fast
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.delegate = self
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.register(
             MaximCollectionViewCell.self,
             forCellWithReuseIdentifier: MaximCollectionViewCell.identifier)
-        maximCollectionView.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
-        return maximCollectionView
+        collectionView.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
+        return collectionView
     }()
     
     private var isHeaderPresent = false
+    
     private let viewModel = MaximViewModel()
     private let disposeBag = DisposeBag()
     
@@ -142,7 +143,9 @@ final class MaximViewController: UIViewController {
             cell.monthYearLabel.text = maxim.monthYear
             cell.contentLabel.text = maxim.content
             cell.speakerLabel.text = maxim.speaker
-            cell.backgroundImageName = maxim.thumbnailImageAssetPath
+            let backgroundView = UIImageView(image: UIImage(named: maxim.thumbnailImageAssetPath))
+            backgroundView.alpha = 0.5
+            cell.backgroundView = backgroundView
             cell.isShown = false
         }
         .disposed(by: disposeBag)
@@ -165,18 +168,13 @@ final class MaximViewController: UIViewController {
     private func bindCalendarHeaderCollectionView() {
         viewModel.maximList.bind(
             to: calendarHeaderCollectionView.rx.items(cellIdentifier: MaximCalendarHeaderCollectionViewCell.identifier)
-        ) { [weak self] index, maxim, cell in
+        ) { _, maxim, cell in
             guard let cell = cell as? MaximCalendarHeaderCollectionViewCell else {
                 return
             }
             cell.dayLabel.text = maxim.day
             cell.weekdayLabel.text = maxim.weekDay
-            cell.dayButtonImageName = maxim.thumbnailImageAssetPath
-            if self?.viewModel.selectedDate.value.item == index {
-                cell.indicatorPointViewIsHidden = false
-            } else {
-                cell.indicatorPointViewIsHidden = true
-            }
+            cell.dayButton.setBackgroundImage(UIImage(named: maxim.thumbnailImageAssetPath), for: .normal)
             cell.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
         }
         .disposed(by: disposeBag)
@@ -184,23 +182,23 @@ final class MaximViewController: UIViewController {
         let dateObservable = viewModel.selectedDate
         let previousObservable = dateObservable
         let currentObservable = dateObservable.skip(1)
-        
         Observable.zip(previousObservable, currentObservable)
-            .debug()
             .bind(onNext: { [weak self] (prev, cur) in
             let previousCell =
             self?.calendarHeaderCollectionView.cellForItem(at: prev) as? MaximCalendarHeaderCollectionViewCell
             let currentCell =
             self?.calendarHeaderCollectionView.cellForItem(at: cur) as? MaximCalendarHeaderCollectionViewCell
-            previousCell?.indicatorPointViewIsHidden = true
-            currentCell?.indicatorPointViewIsHidden = false
+            previousCell?.indicatorPointView.isHidden = true
+            currentCell?.indicatorPointView.isHidden = false
         })
             .disposed(by: disposeBag)
     }
     
     private func showWeek(with indexPath: IndexPath) {
         let index = indexPath.item / 7
-        calendarHeaderCollectionView.contentOffset = CGPoint(x: CGFloat(index) * MaximCalendarHeaderCollectionViewSize.width, y: 0)
+        calendarHeaderCollectionView.contentOffset = CGPoint(
+            x: CGFloat(index) * MaximCalendarHeaderCollectionViewSize.width,
+            y: 0)
     }
     
     private func bindAction() {
