@@ -6,14 +6,16 @@
 //
 
 import UIKit
-import RxSwift
+
 import RxCocoa
+import RxSwift
 import SnapKit
 
 class MeViewController: UIViewController {
+    private lazy var dailyStatisticsView = MeDailyStaticsView()
+    
     private var viewModel = MeViewModel()
     private var disposeBag = DisposeBag()
-    private var dailyStatisticsView = MeDailyStaticsView()
     
     override func viewDidLoad() {
         super.viewDidLoad()

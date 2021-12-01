@@ -15,15 +15,12 @@ class MeDailyStaticsView: UIView {
         dateLabel.font = .systemFont(ofSize: 28, weight: .bold)
         return dateLabel
     }()
-    
     private lazy var totalFocusStackView: UIStackView = {
         return makeFocusRepresentativeValueStackViewStackView(category: "Total")
     }()
-    
     private lazy var averageFocusStackView: UIStackView = {
         return makeFocusRepresentativeValueStackViewStackView(category: "Average")
     }()
-    
     private lazy var representativeValuesStackView: UIStackView = {
         let representativeValuesStackView = UIStackView()
         representativeValuesStackView.addArrangedSubview(totalFocusStackView)
@@ -31,13 +28,12 @@ class MeDailyStaticsView: UIView {
         representativeValuesStackView.distribution = .equalSpacing
         return representativeValuesStackView
     }()
-    
-    var grassMapView = GrassMapView()
+    lazy var grassMapView = GrassMapView()
     
     private lazy var unitDescriptionLabel: UILabel = {
         let label = UILabel()
         label.text = "단위: 시간(H)"
-        label.font = .systemFont(ofSize: 12)
+        label.font = .preferredFont(forTextStyle: .caption1)
         label.textColor = MeGrassMap.tintColor
         return label
     }()
@@ -72,7 +68,7 @@ class MeDailyStaticsView: UIView {
             
             let colorDescriptionLabel = UILabel()
             colorDescriptionLabel.textColor = MeGrassMap.tintColor
-            colorDescriptionLabel.font = .systemFont(ofSize: 20)
+                colorDescriptionLabel.font = .preferredFont(forTextStyle: .title3)
             colorDescriptionLabel.text = "\($0)"
             colorDescriptionLabel.adjustsFontSizeToFitWidth = true
             colorDescriptionView.addSubview(colorDescriptionLabel)
@@ -94,12 +90,12 @@ class MeDailyStaticsView: UIView {
         let descriptionLabel = UILabel()
         descriptionLabel.text = "0"
         descriptionLabel.textColor = .systemGray
-        descriptionLabel.font = .systemFont(ofSize: 24)
+        descriptionLabel.font = .preferredFont(forTextStyle: .title1)
         
         let titleLabel = UILabel()
         titleLabel.text = "\(category) Focus Hours"
         titleLabel.textColor = .systemGray
-        titleLabel.font = .systemFont(ofSize: 16)
+        titleLabel.font = .preferredFont(forTextStyle: .title3)
         
         representativeValueStackView.addArrangedSubview(descriptionLabel)
         representativeValueStackView.addArrangedSubview(titleLabel)

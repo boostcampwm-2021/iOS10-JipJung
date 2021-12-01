@@ -160,9 +160,6 @@
 		DD4D030927449AAC007AA4DD /* MaximPresenterObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4D030827449AAC007AA4DD /* MaximPresenterObject.swift */; };
 		DD6FD1F4274BBA2700568A4E /* MeDailyStaticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6FD1F3274BBA2700568A4E /* MeDailyStaticsView.swift */; };
 		DD6FD1F6274BCEB300568A4E /* Me+Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6FD1F5274BCEB300568A4E /* Me+Enums.swift */; };
-		DD6FD1F8274BD08400568A4E /* MeHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6FD1F7274BD08400568A4E /* MeHeaderCollectionReusableView.swift */; };
-		DD7CDCAC274CBA66005ADF35 /* MeMonthYearStaticsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD7CDCAB274CBA66005ADF35 /* MeMonthYearStaticsCollectionViewCell.swift */; };
-		DD7CDCAE274CBA95005ADF35 /* MeExtraCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD7CDCAD274CBA94005ADF35 /* MeExtraCollectionViewCell.swift */; };
 		DD7CDCB2274CFA43005ADF35 /* GrassMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD7CDCB1274CFA43005ADF35 /* GrassMapView.swift */; };
 		DD7CDCB4274D1E66005ADF35 /* LoadFocusTimeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD7CDCB3274D1E66005ADF35 /* LoadFocusTimeUseCase.swift */; };
 		DD7CDCB9274E074E005ADF35 /* DummyFocusData.json in Resources */ = {isa = PBXBuildFile; fileRef = DD7CDCB8274DFB87005ADF35 /* DummyFocusData.json */; };
@@ -410,9 +407,6 @@
 		DD4D030827449AAC007AA4DD /* MaximPresenterObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaximPresenterObject.swift; sourceTree = "<group>"; };
 		DD6FD1F3274BBA2700568A4E /* MeDailyStaticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeDailyStaticsView.swift; sourceTree = "<group>"; };
 		DD6FD1F5274BCEB300568A4E /* Me+Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Me+Enums.swift"; sourceTree = "<group>"; };
-		DD6FD1F7274BD08400568A4E /* MeHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
-		DD7CDCAB274CBA66005ADF35 /* MeMonthYearStaticsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeMonthYearStaticsCollectionViewCell.swift; sourceTree = "<group>"; };
-		DD7CDCAD274CBA94005ADF35 /* MeExtraCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeExtraCollectionViewCell.swift; sourceTree = "<group>"; };
 		DD7CDCB1274CFA43005ADF35 /* GrassMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrassMapView.swift; sourceTree = "<group>"; };
 		DD7CDCB3274D1E66005ADF35 /* LoadFocusTimeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadFocusTimeUseCase.swift; sourceTree = "<group>"; };
 		DD7CDCB8274DFB87005ADF35 /* DummyFocusData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = DummyFocusData.json; sourceTree = "<group>"; };
@@ -729,9 +723,6 @@
 			children = (
 				DDB5CEA727328EF400E8F9EB /* MeViewController.swift */,
 				DD6FD1F3274BBA2700568A4E /* MeDailyStaticsView.swift */,
-				DD6FD1F7274BD08400568A4E /* MeHeaderCollectionReusableView.swift */,
-				DD7CDCAB274CBA66005ADF35 /* MeMonthYearStaticsCollectionViewCell.swift */,
-				DD7CDCAD274CBA94005ADF35 /* MeExtraCollectionViewCell.swift */,
 				DD7CDCB1274CFA43005ADF35 /* GrassMapView.swift */,
 				DD7CDCBD274E380D005ADF35 /* GrassPresenterObject.swift */,
 			);
@@ -1609,7 +1600,6 @@
 				91655856273B6F0200C55CDC /* LocalDBEnums.swift in Sources */,
 				91655852273B618700C55CDC /* LocalFileEnums.swift in Sources */,
 				9172BBFE274226B1000E1060 /* MaximViewModel.swift in Sources */,
-				DD7CDCAC274CBA66005ADF35 /* MeMonthYearStaticsCollectionViewCell.swift in Sources */,
 				DDB5CEA227328EC300E8F9EB /* ExploreViewController.swift in Sources */,
 				DFED21CB2733702800E99641 /* MusicPlayerViewController.swift in Sources */,
 				9131514127400FBB001E7125 /* UIApplication+Extension.swift in Sources */,
@@ -1657,12 +1647,10 @@
 				91D02268273CB5FD0073EA2A /* BrightMedia.swift in Sources */,
 				DD4D030527425611007AA4DD /* UILabel+Extension.swift in Sources */,
 				DDB5CEBE2733A49A00E8F9EB /* RealmDBManager.swift in Sources */,
-				DD6FD1F8274BD08400568A4E /* MeHeaderCollectionReusableView.swift in Sources */,
 				DF1496A9274F5B990053776F /* PushNotificationManager.swift in Sources */,
 				91655858273B773400C55CDC /* MaximListUseCase.swift in Sources */,
 				91EA47C6273846A800780C3E /* BlurCircleButton.swift in Sources */,
 				B4015CD42739151B006BD14A /* PlayHistoryViewController.swift in Sources */,
-				DD7CDCAE274CBA95005ADF35 /* MeExtraCollectionViewCell.swift in Sources */,
 				DD8564CA273F9E6F00049D9B /* SlowPresent.swift in Sources */,
 				91A98C91274D58EF00E7DCC8 /* PlayHistoryRepository.swift in Sources */,
 				DFED21D02733931600E99641 /* MusicDescriptionView.swift in Sources */,

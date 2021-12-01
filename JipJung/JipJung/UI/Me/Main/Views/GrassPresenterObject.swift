@@ -8,17 +8,17 @@
 import Foundation
 
 struct GrassPresenterObject {
+    let totalFocusHour: String
+    let averageFocusHour: String
+    let statisticsPeriod: String
+    let stageList: [FocusStage]
+    
     init(totalFocusHour: String, averageFocusHour: String, statisticsPeriod: String, stageList: [FocusStage]) {
         self.totalFocusHour = totalFocusHour
         self.averageFocusHour = averageFocusHour
         self.statisticsPeriod = statisticsPeriod
         self.stageList = stageList
     }
-    
-    let totalFocusHour: String
-    let averageFocusHour: String
-    let statisticsPeriod: String
-    let stageList: [FocusStage]
     
     init(dailyFocusTimes: [DateFocusRecordDTO], nDay: Int) {
         let dateFormatter = DateFormatter()
