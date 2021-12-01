@@ -32,8 +32,8 @@ class TagCollectionViewCell: UICollectionViewCell {
         self.layer.cornerRadius = 4
         contentView.addSubview(tagLabel)
         
-        tagLabel.snp.makeConstraints { make in
-            make.center.equalToSuperview()
+        tagLabel.snp.makeConstraints {
+            $0.center.equalToSuperview()
         }
     }
 }

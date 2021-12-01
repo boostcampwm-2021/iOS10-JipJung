@@ -19,6 +19,7 @@ final class SearchViewController: UIViewController {
         searchBar.placeholder = "Search entire library"
         searchBar.layer.cornerRadius = 3
         searchBar.searchBarStyle = .minimal
+        searchBar.searchTextField.leftView?.tintColor = .gray
         return searchBar
     }()
     
@@ -65,6 +66,21 @@ final class SearchViewController: UIViewController {
         return soundContentsCollectionView
     }()
     
+    private lazy var emptySearchResultView: UIView = {
+        let emptySearchResultView = UIView()
+        emptySearchResultView.isUserInteractionEnabled = false
+        return emptySearchResultView
+    }()
+    
+    private lazy var emptySearchResultLabel: UILabel = {
+        let emptySearchResultLabel = UILabel()
+        emptySearchResultLabel.isUserInteractionEnabled = false
+        emptySearchResultLabel.text = "검색된 결과가 없습니다."
+        emptySearchResultLabel.font = .systemFont(ofSize: 17)
+        emptySearchResultLabel.textColor = ApplicationMode.shared.mode.value == .bright ? .black : .white
+        return emptySearchResultLabel
+    }()
+    
     // MARK: - Private Variables
     
     private var disposeBag: DisposeBag = DisposeBag()
@@ -72,7 +88,7 @@ final class SearchViewController: UIViewController {
     private var viewModel: SearchViewModel?
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-       return .lightContent
+        return ApplicationMode.shared.mode.value == .bright ? .darkContent : .lightContent
     }
 
     // MARK: - Lifecycle Methods
@@ -125,6 +141,19 @@ final class SearchViewController: UIViewController {
             $0.top.equalTo(searchStackView.snp.bottom).offset(20)
             $0.leading.trailing.bottom.equalToSuperview()
         }
+        
+        emptySearchResultView.addSubview(emptySearchResultLabel)
+        emptySearchResultLabel.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.centerY.equalToSuperview().multipliedBy(0.9)
+        }
+        
+        view.addSubview(emptySearchResultView)
+        emptySearchResultView.snp.makeConstraints {
+            $0.top.equalTo(searchStackView.snp.bottom).offset(20)
+            $0.leading.trailing.bottom.equalToSuperview()
+        }
+        emptySearchResultView.isHidden = true
     }
     
     private func configureBrightModeUI() {
@@ -174,9 +203,19 @@ final class SearchViewController: UIViewController {
             .disposed(by: disposeBag)
         
         viewModel?.searchResult
+            .skip(1)
             .distinctUntilChanged()
-            .bind(onNext: { [weak self] _ in
+            .bind(onNext: { [weak self] in
                 guard let self = self else { return }
+                if $0.isEmpty {
+                    self.emptySearchResultLabel.textColor = ApplicationMode.shared.mode.value == .bright ? .black : .white
+                    self.searchHistoryTableView.isHidden = false
+                    self.emptySearchResultView.isHidden = false
+                    return
+                }
+                
+                self.searchHistoryTableView.isHidden = true
+                self.emptySearchResultView.isHidden = true
                 self.soundCollectionView.reloadData()
             })
             .disposed(by: disposeBag)
@@ -190,7 +229,6 @@ extension SearchViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let keyword = searchBar.text else { return }
-        self.searchHistoryTableView.isHidden = true
         viewModel?.saveSearchKeyword(keyword: keyword)
         viewModel?.search(keyword: keyword)
         dismissKeyboard()
@@ -204,7 +242,6 @@ extension SearchViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let searchHistory = viewModel?.searchHistory.value[indexPath.item] ?? ""
-        self.searchHistoryTableView.isHidden = true
         viewModel?.search(keyword: searchHistory)
     }
 }
@@ -216,6 +253,10 @@ extension SearchViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return "History"
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        (view as? UITableViewHeaderFooterView)?.textLabel?.textColor = .gray
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

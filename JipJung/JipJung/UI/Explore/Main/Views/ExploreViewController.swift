@@ -13,7 +13,11 @@ import RxCocoa
 final class ExploreViewController: UIViewController {
     // MARK: - Subviews
     
-    private lazy var scrollView: UIScrollView = UIScrollView()
+    private lazy var scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.showsVerticalScrollIndicator = false
+        return scrollView
+    }()
     private lazy var scrollContentView: UIView = UIView()
     
     private lazy var searchBar: UISearchBar = {
@@ -22,6 +26,7 @@ final class ExploreViewController: UIViewController {
         searchBar.placeholder = "Search entire library"
         searchBar.searchBarStyle = .minimal
         searchBar.layer.cornerRadius = 3
+        searchBar.searchTextField.leftView?.tintColor = .gray
         return searchBar
     }()
     
@@ -46,7 +51,6 @@ final class ExploreViewController: UIViewController {
         layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
 
         let soundContentsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        soundContentsCollectionView.showsHorizontalScrollIndicator = false
         soundContentsCollectionView.delegate = self
         soundContentsCollectionView.dataSource = self
         soundContentsCollectionView.register(
@@ -84,7 +88,8 @@ final class ExploreViewController: UIViewController {
         case .dark:
             configureDarkModeUI()
         }
-        soundTagCollectionView.selectItem(at: IndexPath(item: 0, section: 0),
+        soundTagCollectionView.selectItem(at: IndexPath(item: viewModel?.selectedTagIndex ?? 0,
+                                                        section: 0),
                                           animated: true,
                                           scrollPosition: .centeredHorizontally)
     }
@@ -172,9 +177,21 @@ final class ExploreViewController: UIViewController {
             .distinctUntilChanged()
             .bind(onNext: { [weak self] _ in
                 guard let self = self else { return }
+                self.updateCollectionViewHeight()
                 self.soundCollectionView.reloadData()
             })
             .disposed(by: disposeBag)
+    }
+    
+    private func updateCollectionViewHeight() {
+        let defaultHeight = 600
+        let height = max(defaultHeight, (viewModel?.categoryItems.value.count ?? 0 + 1)/2 * 280)
+        
+        soundCollectionView.snp.remakeConstraints {
+            $0.top.equalTo(soundTagCollectionView.snp.bottom).offset(20)
+            $0.height.equalTo(height)
+            $0.leading.trailing.bottom.equalToSuperview()
+        }
     }
 }
 
@@ -211,6 +228,7 @@ extension ExploreViewController: UICollectionViewDelegateFlowLayout {
 extension ExploreViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == soundTagCollectionView {
+            viewModel?.selectedTagIndex = indexPath.item
             let tag = viewModel?.soundTagList[safe: indexPath.item]?.value ?? ""
             viewModel?.categorize(by: tag)
             
