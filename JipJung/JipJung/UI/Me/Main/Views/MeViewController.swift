@@ -40,7 +40,7 @@ class MeViewController: UIViewController {
         dailyStatisticsView.snp.makeConstraints {
             $0.top.equalTo(view.snp.topMargin).offset(16)
             $0.leading.trailing.equalToSuperview().inset(10)
-            $0.height.equalTo(dailyStatisticsView.snp.width).multipliedBy(1.1)
+            $0.height.greaterThanOrEqualTo(dailyStatisticsView.snp.width)
         }
     }
     
