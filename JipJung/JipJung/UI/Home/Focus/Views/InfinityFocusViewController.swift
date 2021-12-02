@@ -14,7 +14,7 @@ import RxSwift
 final class InfinityFocusViewController: FocusViewController {
     let timerView: UIView = {
         let length = FocusViewControllerSize.timerViewLength
-        let size = CGSize(width: length, height: length)
+        let size = CGSize(width: length * 1.1, height: length * 1.1)
         let view = UIView(frame: CGRect(origin: .zero, size: size))
         return view
     }()
