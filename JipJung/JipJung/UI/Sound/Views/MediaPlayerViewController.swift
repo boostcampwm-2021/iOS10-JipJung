@@ -258,7 +258,7 @@ final class MediaPlayerViewController: UIViewController {
                     self.viewModel?.playMusic()
                 } else if playButtonTitle == "Download To Play" {
                     self.playButton.setTitle("Downloading....", for: .normal)
-                    self.viewModel?.playMusic()
+                    self.viewModel?.downloadMusic()
                 }
             }
             .disposed(by: disposeBag)
