@@ -188,9 +188,7 @@ final class CarouselView: UIView {
     }
     
     private func applyPaging(with scrollDirection: ScrollDirection) {
-        guard contents.value.count != 1 else {
-            return
-        }
+        guard contents.value.count > 1 else { return }
         
         switch scrollDirection {
         case .left:

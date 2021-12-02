@@ -6,18 +6,11 @@
 //
 
 import Foundation
+
 import RxSwift
 
-protocol SaveFocusTimeUseCaseProtocol {
-    func execute(seconds time: Int) -> Single<Bool>
-}
-
-final class SaveFocusTimeUseCase: SaveFocusTimeUseCaseProtocol {
-    private let focusTimeRepository: FocusTimeRepositoryProtocol
-    
-    init(focusTimeRepository: FocusTimeRepositoryProtocol) {
-        self.focusTimeRepository = focusTimeRepository
-    }
+final class SaveFocusTimeUseCase {
+    private let focusTimeRepository = FocusTimeRepository()
     
     func execute(seconds time: Int) -> Single<Bool> {
         let currentDate = Date()

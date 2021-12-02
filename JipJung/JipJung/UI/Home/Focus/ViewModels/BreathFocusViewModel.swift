@@ -27,12 +27,8 @@ final class BreathFocusViewModel {
     private var runningStateDisposeBag = DisposeBag()
     private let disposeBag = DisposeBag()
     
-    private let saveFocusTimeUseCase: SaveFocusTimeUseCaseProtocol
+    private let saveFocusTimeUseCase = SaveFocusTimeUseCase()
     private let audioPlayUseCase = AudioPlayUseCase()
-    
-    init(saveFocusTimeUseCase: SaveFocusTimeUseCaseProtocol) {
-        self.saveFocusTimeUseCase = saveFocusTimeUseCase
-    }
     
     func changeState(to state: BreathFocusState) {
         self.focusState.accept(state)

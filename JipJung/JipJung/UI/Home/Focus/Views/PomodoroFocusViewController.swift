@@ -22,7 +22,6 @@ final class PomodoroFocusViewController: FocusViewController {
         let pickerView = UIPickerView()
         pickerView.delegate = self
         pickerView.dataSource = self
-        
         return pickerView
     }()
     private lazy var minuteLabel: UILabel = {
@@ -71,7 +70,7 @@ final class PomodoroFocusViewController: FocusViewController {
     private let continueButton = FocusContinueButton()
     private let exitButton = FocusExitButton()
     
-    var viewModel: PomodoroFocusViewModel?
+    private let viewModel = PomodoroFocusViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -101,11 +100,6 @@ final class PomodoroFocusViewController: FocusViewController {
             self?.timerView.center = viewCenter
             self?.startButton.alpha = 0
         }
-    }
-    
-    convenience init(viewModel: PomodoroFocusViewModel) {
-        self.init(nibName: nil, bundle: nil)
-        self.viewModel = viewModel
     }
     
     private func configureTimerUI() {
@@ -182,20 +176,20 @@ final class PomodoroFocusViewController: FocusViewController {
     }
     
     private func bindUI() {
-        viewModel?.timerState.bind(onNext: { [weak self] in
+        viewModel.timerState.bind(onNext: { [weak self] in
                 guard let self = self else { return }
                 switch $0 {
                 case .ready:
                     self.presentReady()
                 case .running(let isResume):
-                    self.viewModel?.startClockTimer()
+                    self.viewModel.startClockTimer()
                     if isResume {
                         self.presentResume()
                     } else {
-                        self.presentStart(with: self.viewModel?.focusTime ?? 0)
+                        self.presentStart(with: self.viewModel.focusTime ?? 0)
                     }
                 case .paused:
-                    self.viewModel?.pauseClockTimer()
+                    self.viewModel.pauseClockTimer()
                     self.presentPaused()
                 }
             })
@@ -204,47 +198,47 @@ final class PomodoroFocusViewController: FocusViewController {
         startButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
-                self.viewModel?.changeTimerState(to: .running(isResume: false))
+                self.viewModel.changeTimerState(to: .running(isResume: false))
             }
             .disposed(by: disposeBag)
         
         pauseButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
-                self.viewModel?.changeTimerState(to: .paused)
+                self.viewModel.changeTimerState(to: .paused)
             }
             .disposed(by: disposeBag)
         
         continueButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
-                self.viewModel?.changeTimerState(to: .running(isResume: true))
+                self.viewModel.changeTimerState(to: .running(isResume: true))
             }
             .disposed(by: disposeBag)
         
         exitButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
-                if self.viewModel?.mode.value == .work {
-                    self.viewModel?.alertNotification()
+                if self.viewModel.mode.value == .work {
+                    self.viewModel.alertNotification()
                 }
-                self.viewModel?.changeTimerState(to: .ready)
-                self.viewModel?.resetClockTimer()
-                self.viewModel?.saveFocusRecord()
-                self.viewModel?.resetTotalFocusTime()
-                self.viewModel?.changeToWorkMode()
+                self.viewModel.changeTimerState(to: .ready)
+                self.viewModel.resetClockTimer()
+                self.viewModel.saveFocusRecord()
+                self.viewModel.resetTotalFocusTime()
+                self.viewModel.changeToWorkMode()
             }
             .disposed(by: disposeBag)
         
-        viewModel?.clockTime
+        viewModel.clockTime
             .bind(onNext: { [weak self] in
-                guard let self = self, $0 > 0,
-                      let focusTime = self.viewModel?.focusTime
-                else { return }
+                guard let self = self, $0 > 0 else { return }
+                
+                let focusTime = self.viewModel.focusTime
                 if $0 == focusTime {
-                    self.viewModel?.alertNotification()
-                    self.viewModel?.changeMode()
-                    self.viewModel?.resetClockTimer()
+                    self.viewModel.alertNotification()
+                    self.viewModel.changeMode()
+                    self.viewModel.resetClockTimer()
                     self.presentReady()
                     return
                 }
@@ -253,7 +247,7 @@ final class PomodoroFocusViewController: FocusViewController {
             })
             .disposed(by: disposeBag)
         
-        viewModel?.mode
+        viewModel.mode
             .bind(onNext: { [weak self] in
                 guard let self = self else { return }
                 switch $0 {
@@ -263,8 +257,7 @@ final class PomodoroFocusViewController: FocusViewController {
                     self.startButton.setTitle("Start", for: .normal)
                 case .relax:
                     self.relaxLabel.isHidden = false
-                    self.view.backgroundColor = UIColor(rgb: 0xA1D9BC,
-                                                        alpha: 0.6)
+                    self.view.backgroundColor = UIColor(rgb: 0xA1D9BC, alpha: 0.6)
                     self.startButton.setTitle("Relax", for: .normal)
                 }
             })
@@ -272,7 +265,7 @@ final class PomodoroFocusViewController: FocusViewController {
     }
     
     private func presentReady() {
-        timeLabel.text = viewModel?.focusTime.digitalClockFormatted
+        timeLabel.text = viewModel.focusTime.digitalClockFormatted
         pauseButton.isHidden = true
         timeLabel.isHidden = true
         timePickerView.isHidden = false
@@ -418,16 +411,13 @@ final class PomodoroFocusViewController: FocusViewController {
 
 extension PomodoroFocusViewController: UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        let pickerValue = (viewModel?.focusTimeList[row] ?? 0)
-        viewModel?.setFocusTime(value: pickerValue)
-        self.timeLabel.text = (viewModel?.focusTime ?? 0).digitalClockFormatted
+        let pickerValue = viewModel.focusTimeList[row]
+        viewModel.setFocusTime(value: pickerValue)
+        self.timeLabel.text = viewModel.focusTime.digitalClockFormatted
     }
     
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
         // NOTE: 시연 용이성을 위해 변경
-        guard let viewModel = viewModel else {
-            return UILabel()
-        }
         let pickerValue = viewModel.focusTimeList[row]
         let text = "\(pickerValue * viewModel.timeUnit)"
         timePickerView.subviews.forEach {
@@ -454,6 +444,6 @@ extension PomodoroFocusViewController: UIPickerViewDataSource {
     }
      
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return viewModel?.focusTimeList.count ?? 0
+        return viewModel.focusTimeList.count
     }
 }

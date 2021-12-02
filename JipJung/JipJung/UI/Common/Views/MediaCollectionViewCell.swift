@@ -40,7 +40,7 @@ final class MediaCollectionViewCell: UICollectionViewCell {
         self.configureUI()
     }
     
-    func configureUI() {
+    private func configureUI() {
         backgroundColor = .white
         layer.cornerRadius = 10
         

@@ -52,8 +52,7 @@ final class ExploreViewController: UIViewController {
     }()
     
     private let disposeBag = DisposeBag()
-    
-    private var viewModel: ExploreViewModel?
+    private let viewModel = ExploreViewModel()
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return ApplicationMode.shared.mode.value == .bright ? .darkContent : .lightContent
@@ -64,7 +63,7 @@ final class ExploreViewController: UIViewController {
         
         configureCommonUI()
         bindUI()
-        viewModel?.categorize(by: SoundTag.all.value)
+        viewModel.categorize(by: SoundTag.all.value)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -80,17 +79,12 @@ final class ExploreViewController: UIViewController {
         }
         soundTagCollectionView.selectItem(
             at: IndexPath(
-                item: viewModel?.selectedTagIndex ?? 0,
+                item: viewModel.selectedTagIndex ?? 0,
                 section: 0
             ),
             animated: true,
             scrollPosition: .centeredHorizontally
         )
-    }
-    
-    convenience init(viewModel: ExploreViewModel) {
-        self.init(nibName: nil, bundle: nil)
-        self.viewModel = viewModel
     }
     
     private func configureCommonUI() {
@@ -163,7 +157,7 @@ final class ExploreViewController: UIViewController {
             }
             .disposed(by: disposeBag)
         
-        viewModel?.categoryItems
+        viewModel.categoryItems
             .distinctUntilChanged()
             .bind(onNext: { [weak self] _ in
                 guard let self = self else { return }
@@ -175,7 +169,7 @@ final class ExploreViewController: UIViewController {
     
     private func updateCollectionViewHeight() {
         let defaultHeight = 600
-        let height = max(defaultHeight, (viewModel?.categoryItems.value.count ?? 0 + 1)/2 * 280)
+        let height = max(defaultHeight, (viewModel.categoryItems.value.count ?? 0 + 1)/2 * 280)
         
         soundCollectionView.snp.remakeConstraints {
             $0.top.equalTo(soundTagCollectionView.snp.bottom).offset(20)
@@ -211,7 +205,7 @@ extension ExploreViewController: UICollectionViewDelegateFlowLayout {
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
         if collectionView == soundTagCollectionView {
-            let count = viewModel?.soundTagList[safe: indexPath.item]?.value.count ?? 0
+            let count = viewModel.soundTagList[safe: indexPath.item]?.value.count ?? 0
             return CGSize(width: count * 14, height: 30)
         } else if collectionView == soundCollectionView {
             let cellWidth = (collectionView.frame.size.width - 32) / 2 - 6
@@ -236,11 +230,11 @@ extension ExploreViewController: UICollectionViewDelegate {
         didSelectItemAt indexPath: IndexPath
     ) {
         if collectionView == soundTagCollectionView {
-            viewModel?.selectedTagIndex = indexPath.item
-            let tag = viewModel?.soundTagList[safe: indexPath.item]?.value ?? ""
-            viewModel?.categorize(by: tag)
+            viewModel.selectedTagIndex = indexPath.item
+            let tag = viewModel.soundTagList[safe: indexPath.item]?.value ?? ""
+            viewModel.categorize(by: tag)
         } else if collectionView == soundCollectionView {
-            let media = viewModel?.categoryItems.value[indexPath.item] ?? Media()
+            let media = viewModel.categoryItems.value[indexPath.item] ?? Media()
             let mediaPlayerViewController = MediaPlayerViewController(
                 viewModel: MediaPlayerViewModel(media: media)
             )
@@ -257,9 +251,9 @@ extension ExploreViewController: UICollectionViewDataSource {
         numberOfItemsInSection section: Int
     ) -> Int {
         if collectionView == soundTagCollectionView {
-            return viewModel?.soundTagList.count ?? 0
+            return viewModel.soundTagList.count ?? 0
         } else if collectionView == soundCollectionView {
-            return viewModel?.categoryItems.value.count ?? 0
+            return viewModel.categoryItems.value.count ?? 0
         } else {
             return 0
         }
@@ -273,17 +267,17 @@ extension ExploreViewController: UICollectionViewDataSource {
             guard let cell: SoundTagCollectionViewCell = collectionView.dequeueReusableCell(indexPath: indexPath) else {
                 return  UICollectionViewCell()
             }
-            cell.soundTagLabel.text = viewModel?.soundTagList[safe: indexPath.item]?.value
+            cell.soundTagLabel.text = viewModel.soundTagList[safe: indexPath.item]?.value
             return cell
         } else if collectionView == soundCollectionView {
             guard let cell: MediaCollectionViewCell = collectionView.dequeueReusableCell(indexPath: indexPath) else {
                 return  UICollectionViewCell()
             }
 
-            let media = viewModel?.categoryItems.value[indexPath.item] ?? Media()
+            let media = viewModel.categoryItems.value[indexPath.item] ?? Media()
             cell.titleView.text = media.name
             cell.imageView.image = UIImage(named: media.thumbnailImageFileName)
-            let colorHexString = viewModel?.categoryItems.value[indexPath.item].color ?? "FFFFFF"
+            let colorHexString = viewModel.categoryItems.value[indexPath.item].color ?? "FFFFFF"
             cell.backgroundColor = UIColor(
                 rgb: Int(colorHexString, radix: 16) ?? 0xFFFFFF,
                 alpha: 1.0

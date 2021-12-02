@@ -51,7 +51,7 @@ final class MaximCollectionViewCell: UICollectionViewCell {
     private(set) lazy var speakerLabel: UILabel = {
         let label = UILabel()
         var font = UIFont.preferredFont(forTextStyle: .subheadline)
-        if let fontDescriptor = font.fontDescriptor .withSymbolicTraits(.traitItalic) {
+        if let fontDescriptor = font.fontDescriptor.withSymbolicTraits(.traitItalic) {
             font = UIFont(descriptor: fontDescriptor, size: 0)
         }
         label.font = font

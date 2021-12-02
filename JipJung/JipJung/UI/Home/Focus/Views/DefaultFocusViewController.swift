@@ -22,14 +22,12 @@ final class DefaultFocusViewController: FocusViewController {
         let pickerView = UIPickerView()
         pickerView.delegate = self
         pickerView.dataSource = self
-        
         return pickerView
     }()
     private lazy var minuteLabel: UILabel = {
         let label = UILabel()
         label.text = "min"
         label.textColor = .systemGray
-        
         return label
     }()
     private lazy var timeLabel: UILabel = {
@@ -58,18 +56,11 @@ final class DefaultFocusViewController: FocusViewController {
     }()
     
     private let pulseGroupLayer = CALayer()
-    
+    private let viewModel = DefaultFocusViewModel()
     private let startButton = FocusStartButton()
     private let pauseButton = FocusPauseButton()
     private let continueButton = FocusContinueButton()
     private let exitButton = FocusExitButton()
-    
-    private var viewModel: DefaultFocusViewModel?
-    
-    convenience init(viewModel: DefaultFocusViewModel) {
-        self.init(nibName: nil, bundle: nil)
-        self.viewModel = viewModel
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,12 +78,13 @@ final class DefaultFocusViewController: FocusViewController {
         }
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        startButton.alpha = 0
-        timerView.alpha = 0
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        self.startButton.alpha = 0
+        self.timerView.alpha = 0
         let viewCenter = view.center
+        self.timerView.center = CGPoint(x: viewCenter.x, y: viewCenter.y * 0.9)
         UIView.animate(withDuration: 0.6, delay: 0.3, options: []) { [weak self] in
             self?.timerView.alpha = 1
             self?.timerView.center = CGPoint(x: viewCenter.x, y: viewCenter.y * 0.65)
@@ -165,25 +157,21 @@ final class DefaultFocusViewController: FocusViewController {
     }
     
     private func bindUI() {
-        viewModel?.timerState.bind(onNext: { [weak self] in
-            guard let self = self,
-                  let viewModel = self.viewModel
-            else {
-                return
-            }
+        viewModel.timerState.bind(onNext: { [weak self] in
+            guard let self = self else { return }
             
             switch $0 {
             case .ready:
-                self.presentReady(value: viewModel.focusTime)
+                self.presentReady(value: self.viewModel.focusTime)
             case .running(let isResume):
                 if isResume {
                     self.presentResume()
                 } else {
-                    viewModel.startClockTimer()
-                    self.presentStart(with: viewModel.focusTime)
+                    self.viewModel.startClockTimer()
+                    self.presentStart(with: self.viewModel.focusTime)
                 }
             case .paused:
-                viewModel.pauseClockTimer()
+                self.viewModel.pauseClockTimer()
                 self.presentPaused()
             }
         })
@@ -192,43 +180,43 @@ final class DefaultFocusViewController: FocusViewController {
         startButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
-                self.viewModel?.changeTimerState(to: .running(isResume: false))
+                self.viewModel.changeTimerState(to: .running(isResume: false))
             }
             .disposed(by: disposeBag)
         
         pauseButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
-                self.viewModel?.changeTimerState(to: .paused)
+                self.viewModel.changeTimerState(to: .paused)
             }
             .disposed(by: disposeBag)
         
         continueButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
-                self.viewModel?.changeTimerState(to: .running(isResume: true))
+                self.viewModel.changeTimerState(to: .running(isResume: true))
             }
             .disposed(by: disposeBag)
         
         exitButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
-                self.viewModel?.alertNotification()
-                self.viewModel?.saveFocusRecord()
-                self.viewModel?.changeTimerState(to: .ready)
-                self.viewModel?.resetClockTimer()
+                self.viewModel.alertNotification()
+                self.viewModel.saveFocusRecord()
+                self.viewModel.changeTimerState(to: .ready)
+                self.viewModel.resetClockTimer()
             }
             .disposed(by: disposeBag)
         
-        viewModel?.clockTime
+        viewModel.clockTime
             .bind(onNext: { [weak self] in
-                guard let self = self, $0 > 0,
-                      let focusTime = self.viewModel?.focusTime
-                else { return }
+                guard let self = self, $0 > 0 else { return }
+                
+                let focusTime = self.viewModel.focusTime
                 if $0 == focusTime {
-                    self.viewModel?.alertNotification()
-                    self.viewModel?.saveFocusRecord()
-                    self.viewModel?.resetClockTimer()
+                    self.viewModel.alertNotification()
+                    self.viewModel.saveFocusRecord()
+                    self.viewModel.resetClockTimer()
                     self.presentReady(value: focusTime)
                     return
                 }
@@ -384,15 +372,13 @@ final class DefaultFocusViewController: FocusViewController {
 
 extension DefaultFocusViewController: UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        let focusTime = (viewModel?.focusTimeList[row] ?? 0) * 60
-        viewModel?.setFocusTime(seconds: focusTime)
+        let focusTime = viewModel.focusTimeList[row] * 60
+        viewModel.setFocusTime(seconds: focusTime)
         self.timeLabel.text = focusTime.digitalClockFormatted
     }
     
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
-        guard let minuteInfo = viewModel?.focusTimeList[row] else {
-            return UILabel()
-        }
+        let minuteInfo = viewModel.focusTimeList[row]
         timePickerView.subviews.forEach {
             $0.backgroundColor = .clear
         }
@@ -417,6 +403,6 @@ extension DefaultFocusViewController: UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return viewModel?.focusTimeList.count ?? 0
+        return viewModel.focusTimeList.count
     }
 }

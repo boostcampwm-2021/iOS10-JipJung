@@ -50,7 +50,7 @@ class BlurCircleButton: UIView {
         }
     }
     
-    @objc func buttonClicked(_ sender: UIGestureRecognizer) {
+    @objc private func buttonClicked(_ sender: UIGestureRecognizer) {
         buttonClickListener?()
     }
 }

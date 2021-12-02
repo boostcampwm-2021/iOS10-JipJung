@@ -11,17 +11,12 @@ import RxRelay
 import RxSwift
 
 final class ExploreViewModel {
+    private let searchMediaUseCase = SearchMediaUseCase()
+    private let disposeBag = DisposeBag()
+
     let categoryItems = BehaviorRelay<[Media]>(value: [])
     let soundTagList = SoundTag.allCases
     var selectedTagIndex = 0
-    
-    private let disposeBag = DisposeBag()
-
-    private let searchMediaUseCase: SearchMediaUseCase
-    
-    init(searchMediaUseCase: SearchMediaUseCase) {
-        self.searchMediaUseCase = searchMediaUseCase
-    }
     
     func categorize(by tag: String) {
         guard !tag.isEmpty else { return }

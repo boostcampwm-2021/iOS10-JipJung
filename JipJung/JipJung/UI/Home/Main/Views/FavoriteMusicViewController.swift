@@ -79,7 +79,7 @@ final class FavoriteViewController: UIViewController {
                 to: favoriteCollectionView.rx.items(
                     cellIdentifier: MediaCollectionViewCell.identifier
                 )
-            ) { (item, element, cell) in
+            ) { (_, element, cell) in
                 guard let cell = cell as? MediaCollectionViewCell else { return }
 
                 cell.titleView.text = element.name

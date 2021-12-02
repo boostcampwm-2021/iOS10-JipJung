@@ -27,14 +27,10 @@ final class PomodoroFocusViewModel {
     var totalFocusTime = 0
     let timeUnit = 5
     
-    private var runningStateDisposeBag = DisposeBag()
     private let disposeBag = DisposeBag()
+    private let saveFocusTimeUseCase = SaveFocusTimeUseCase()
     
-    private let saveFocusTimeUseCase: SaveFocusTimeUseCaseProtocol
-    
-    init(saveFocusTimeUseCase: SaveFocusTimeUseCaseProtocol) {
-        self.saveFocusTimeUseCase = saveFocusTimeUseCase
-    }
+    private var runningStateDisposeBag = DisposeBag()
     
     func changeTimerState(to timerState: TimerState) {
         self.timerState.accept(timerState)

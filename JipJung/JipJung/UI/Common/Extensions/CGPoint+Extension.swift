@@ -5,7 +5,7 @@
 //  Created by Soohyeon Lee on 2021/11/18.
 //
 
-import UIKit
+import CoreGraphics
 
 extension CGPoint {
     static func - (lhs: CGPoint, rhs: CGPoint) -> Self {

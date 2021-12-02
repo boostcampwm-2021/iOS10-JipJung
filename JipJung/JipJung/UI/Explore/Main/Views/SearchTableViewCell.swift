@@ -1,5 +1,5 @@
 //
-//  DummyCell.swift
+//  SearchTableViewCell.swift
 //  JipJung
 //
 //  Created by 오현식 on 2021/11/04.
