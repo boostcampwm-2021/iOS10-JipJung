@@ -8,6 +8,11 @@
 import UIKit
 
 class MediaPlayerBaseButton: UIButton {
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.makeCircle()
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
@@ -17,14 +22,9 @@ class MediaPlayerBaseButton: UIButton {
         super.init(coder: aDecoder)
         configure()
     }
-
+    
     func configure() {
         self.backgroundColor = UIColor(white: 1, alpha: 0.35)
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        self.makeCircle()
     }
 }
 

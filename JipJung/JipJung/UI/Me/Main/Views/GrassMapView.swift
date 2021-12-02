@@ -8,7 +8,8 @@
 import UIKit
 
 class GrassMapView: UIView {
-    private let weeksStackView = UIStackView()
+    private lazy var weeksStackView = UIStackView()
+    
     private var monthLabelLists = [UILabel]()
     
     override init(frame: CGRect) {
@@ -36,11 +37,15 @@ class GrassMapView: UIView {
             let weekStackView = UIStackView()
             weekStackView.axis = .vertical
             for _ in 1...7 {
-                let dayView = UIView(frame: CGRect(
-                    origin: .zero,
-                    size: CGSize(
-                        width: MeGrassMapViewSize.cellLength,
-                        height: MeGrassMapViewSize.cellLength)))
+                let dayView = UIView(
+                    frame: CGRect(
+                        origin: .zero,
+                        size: CGSize(
+                            width: MeGrassMapViewSize.cellLength,
+                            height: MeGrassMapViewSize.cellLength
+                        )
+                    )
+                )
                 dayView.backgroundColor = .systemGray3
                 dayView.layer.cornerRadius = 5
                 weekStackView.addArrangedSubview(dayView)
@@ -56,7 +61,7 @@ class GrassMapView: UIView {
             addSubview(monthLabel)
             monthLabel.snp.makeConstraints {
                 $0.bottom.equalTo(weekStackView.snp.top)
-                $0.centerX.equalTo(weekStackView.snp.centerX)
+                $0.centerX.equalTo(weekStackView)
             }
         }
         
@@ -81,8 +86,8 @@ class GrassMapView: UIView {
 
 extension GrassMapView {
     subscript(_ index: (week: Int, day: Int)) -> UIView? {
-        guard (0..<7).contains(index.day),
-              (0..<MeGrassMap.weekCount).contains(index.week)
+        guard (0..<7) ~= index.day,
+              (0..<MeGrassMap.weekCount) ~= index.week
         else {
             return nil
         }

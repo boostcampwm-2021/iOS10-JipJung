@@ -6,8 +6,9 @@
 //
 
 import Foundation
-import RxSwift
+
 import RxRelay
+import RxSwift
 
 final class SearchMediaUseCase {
     let allMediaList = BehaviorRelay<[Media]>(value: [])

@@ -8,6 +8,12 @@
 import UIKit
 
 final class MaximCollectionViewCell: UICollectionViewCell {
+    private lazy var seperateLine: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemGray3
+        return view
+    }()
+    
     private(set) lazy var closeButton: UIButton = {
         let button = CloseButton()
         button.tintColor = .white
@@ -43,11 +49,6 @@ final class MaximCollectionViewCell: UICollectionViewCell {
         label.setLineSpacing(lineSpacing: 10)
         return label
     }()
-    private(set) lazy var seperateLine: UIView = {
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: 30, height: 5))
-        view.backgroundColor = .systemGray3
-        return view
-    }()
     private(set) lazy var speakerLabel: UILabel = {
         let label = UILabel()
         var font = UIFont.preferredFont(forTextStyle: .subheadline)
@@ -63,9 +64,9 @@ final class MaximCollectionViewCell: UICollectionViewCell {
     var isShown = false {
         willSet {
             if newValue {
-                UIView.animate(withDuration: 2, delay: 0, options: [], animations: ({ [weak self] in
-                    self?.contentLabel.alpha = 1
-                }))
+                UIView.animate(withDuration: 2) {
+                    self.contentLabel.alpha = 1
+                }
             } else {
                 self.contentLabel.alpha = 0
             }
@@ -88,7 +89,7 @@ final class MaximCollectionViewCell: UICollectionViewCell {
         addSubview(speakerLabel)
         speakerLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(30)
-            $0.bottom.equalTo(self.safeAreaLayoutGuide.snp.bottom).offset(-20)
+            $0.bottom.equalTo(snp.bottomMargin).offset(-20)
         }
         
         addSubview(seperateLine)

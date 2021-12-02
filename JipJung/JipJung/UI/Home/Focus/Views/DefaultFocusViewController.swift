@@ -54,13 +54,13 @@ final class DefaultFocusViewController: FocusViewController {
         shapeLayer.fillColor = nil
         return shapeLayer
     }()
+    private lazy var pulseGroupLayer = CALayer()
+    private lazy var startButton = FocusStartButton()
+    private lazy var pauseButton = FocusPauseButton()
+    private lazy var continueButton = FocusContinueButton()
+    private lazy var exitButton = FocusExitButton()
     
-    private let pulseGroupLayer = CALayer()
     private let viewModel = DefaultFocusViewModel()
-    private let startButton = FocusStartButton()
-    private let pauseButton = FocusPauseButton()
-    private let continueButton = FocusContinueButton()
-    private let exitButton = FocusExitButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()

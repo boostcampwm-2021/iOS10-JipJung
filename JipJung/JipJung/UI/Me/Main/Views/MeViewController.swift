@@ -38,9 +38,8 @@ class MeViewController: UIViewController {
     private func configureLayout() {
         view.addSubview(dailyStatisticsView)
         dailyStatisticsView.snp.makeConstraints {
-            $0.center.equalToSuperview()
-            $0.leading.equalToSuperview()
-            $0.trailing.equalToSuperview().offset(-10)
+            $0.top.equalTo(view.snp.topMargin).offset(16)
+            $0.leading.trailing.equalToSuperview().inset(10)
             $0.height.equalTo(dailyStatisticsView.snp.width).multipliedBy(1.1)
         }
     }

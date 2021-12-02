@@ -7,7 +7,7 @@
 
 import Foundation
 
-class LocalFileManager {
+final class LocalFileManager {
     static let shared = LocalFileManager()
     private init() {}
     

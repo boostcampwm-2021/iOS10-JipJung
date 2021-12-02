@@ -27,7 +27,7 @@ final class TagCollectionViewCell: UICollectionViewCell {
         cofigure()
     }
     
-    func cofigure() {
+    private func cofigure() {
         self.backgroundColor = .gray
         self.layer.cornerRadius = 4
         contentView.addSubview(tagLabel)

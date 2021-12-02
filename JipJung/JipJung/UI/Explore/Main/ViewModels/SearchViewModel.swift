@@ -11,20 +11,13 @@ import RxRelay
 import RxSwift
 
 final class SearchViewModel {
-    var searchHistory = BehaviorRelay<[String]>(value: [])
-    var searchResult = BehaviorRelay<[Media]>(value: [])
+    let searchHistory = BehaviorRelay<[String]>(value: [])
+    let searchResult = BehaviorRelay<[Media]>(value: [])
     
     private let disposeBag = DisposeBag()
+    private let searchHistoryUseCase = SearchHistoryUseCase()
+    private let searchMediaUseCase = SearchMediaUseCase()
     
-    private let searchHistoryUseCase: SearchHistoryUseCase
-    private let searchMediaUseCase: SearchMediaUseCase
-    
-    init(searchHistoryUseCase: SearchHistoryUseCase,
-         searchMediaUseCase: SearchMediaUseCase) {
-        self.searchHistoryUseCase = searchHistoryUseCase
-        self.searchMediaUseCase = searchMediaUseCase
-    }
-
     func saveSearchKeyword(keyword: String) {
         var searchHistoryValue = searchHistoryUseCase.load()
         searchHistoryValue.append(keyword)

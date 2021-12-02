@@ -11,9 +11,9 @@ import RxRelay
 import RxSwift
 
 final class InfinityFocusViewModel {
-    var clockTime = BehaviorRelay<Int>(value: 0)
-    var isFocusRecordSaved = BehaviorRelay<Bool>(value: false)
-    var timerState = BehaviorRelay<TimerState>(value: .ready)
+    let clockTime = BehaviorRelay<Int>(value: 0)
+    let isFocusRecordSaved = BehaviorRelay<Bool>(value: false)
+    let timerState = BehaviorRelay<TimerState>(value: .ready)
     
     private let disposeBag = DisposeBag()
     private let saveFocusTimeUseCase = SaveFocusTimeUseCase()

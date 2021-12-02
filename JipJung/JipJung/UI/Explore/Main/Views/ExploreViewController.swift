@@ -79,7 +79,7 @@ final class ExploreViewController: UIViewController {
         }
         soundTagCollectionView.selectItem(
             at: IndexPath(
-                item: viewModel.selectedTagIndex ?? 0,
+                item: viewModel.selectedTagIndex,
                 section: 0
             ),
             animated: true,
@@ -115,7 +115,7 @@ final class ExploreViewController: UIViewController {
         scrollContentView.addSubview(soundCollectionView)
         soundCollectionView.snp.makeConstraints {
             $0.top.equalTo(soundTagCollectionView.snp.bottom).offset(20)
-            $0.height.equalTo(2400)
+            $0.height.equalTo(600)
             $0.leading.trailing.bottom.equalToSuperview()
         }
     }
@@ -147,12 +147,11 @@ final class ExploreViewController: UIViewController {
     private func bindUI() {
         ApplicationMode.shared.mode
             .bind { [weak self] in
-                guard let self = self else { return }
                 switch $0 {
                 case .bright:
-                    self.configureBrightModeUI()
+                    self?.configureBrightModeUI()
                 case .dark:
-                    self.configureDarkModeUI()
+                    self?.configureDarkModeUI()
                 }
             }
             .disposed(by: disposeBag)
@@ -169,12 +168,13 @@ final class ExploreViewController: UIViewController {
     
     private func updateCollectionViewHeight() {
         let defaultHeight = 600
-        let height = max(defaultHeight, (viewModel.categoryItems.value.count ?? 0 + 1)/2 * 280)
+        let height = max(
+            defaultHeight,
+            (viewModel.categoryItems.value.count + 1)/2 * 280
+        )
         
-        soundCollectionView.snp.remakeConstraints {
-            $0.top.equalTo(soundTagCollectionView.snp.bottom).offset(20)
+        soundCollectionView.snp.updateConstraints {
             $0.height.equalTo(height)
-            $0.leading.trailing.bottom.equalToSuperview()
         }
     }
 }
@@ -187,13 +187,7 @@ extension ExploreViewController: UISearchBarDelegate {
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         dismissKeyboard()
         
-        let searchViewController = SearchViewController(
-            viewModel: SearchViewModel(
-                searchHistoryUseCase: SearchHistoryUseCase(),
-                searchMediaUseCase: SearchMediaUseCase()
-            )
-        )
-            
+        let searchViewController = SearchViewController()
         navigationController?.pushViewController(searchViewController, animated: true)
     }
 }
@@ -234,7 +228,7 @@ extension ExploreViewController: UICollectionViewDelegate {
             let tag = viewModel.soundTagList[safe: indexPath.item]?.value ?? ""
             viewModel.categorize(by: tag)
         } else if collectionView == soundCollectionView {
-            let media = viewModel.categoryItems.value[indexPath.item] ?? Media()
+            let media = viewModel.categoryItems.value[indexPath.item]
             let mediaPlayerViewController = MediaPlayerViewController(
                 viewModel: MediaPlayerViewModel(media: media)
             )
@@ -251,9 +245,9 @@ extension ExploreViewController: UICollectionViewDataSource {
         numberOfItemsInSection section: Int
     ) -> Int {
         if collectionView == soundTagCollectionView {
-            return viewModel.soundTagList.count ?? 0
+            return viewModel.soundTagList.count
         } else if collectionView == soundCollectionView {
-            return viewModel.categoryItems.value.count ?? 0
+            return viewModel.categoryItems.value.count
         } else {
             return 0
         }
@@ -274,10 +268,10 @@ extension ExploreViewController: UICollectionViewDataSource {
                 return  UICollectionViewCell()
             }
 
-            let media = viewModel.categoryItems.value[indexPath.item] ?? Media()
+            let media = viewModel.categoryItems.value[indexPath.item]
             cell.titleView.text = media.name
             cell.imageView.image = UIImage(named: media.thumbnailImageFileName)
-            let colorHexString = viewModel.categoryItems.value[indexPath.item].color ?? "FFFFFF"
+            let colorHexString = viewModel.categoryItems.value[indexPath.item].color
             cell.backgroundColor = UIColor(
                 rgb: Int(colorHexString, radix: 16) ?? 0xFFFFFF,
                 alpha: 1.0

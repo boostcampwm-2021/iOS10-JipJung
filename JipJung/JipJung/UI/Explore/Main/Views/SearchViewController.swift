@@ -7,9 +7,9 @@
 
 import UIKit
 
-import SnapKit
 import RxCocoa
 import RxSwift
+import SnapKit
 
 final class SearchViewController: UIViewController {
     private lazy var searchBar: UISearchBar = {
@@ -70,9 +70,9 @@ final class SearchViewController: UIViewController {
         return label
     }()
     
+    private let viewModel = SearchViewModel()
     private let disposeBag = DisposeBag()
     private var cellDisposeBag = DisposeBag()
-    private var viewModel: SearchViewModel?
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return ApplicationMode.shared.mode.value == .bright ? .darkContent : .lightContent
@@ -83,7 +83,7 @@ final class SearchViewController: UIViewController {
         
         configureCommonUI()
         bindUI()
-        viewModel?.loadSearchHistory()
+        viewModel.loadSearchHistory()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -97,11 +97,6 @@ final class SearchViewController: UIViewController {
         }
     }
 
-    convenience init(viewModel: SearchViewModel) {
-        self.init(nibName: nil, bundle: nil)
-        self.viewModel = viewModel
-    }
-    
     private func configureCommonUI() {
         view.addSubview(searchStackView)
         searchStackView.snp.makeConstraints {
@@ -176,14 +171,14 @@ final class SearchViewController: UIViewController {
             }
             .disposed(by: disposeBag)
         
-        viewModel?.searchHistory
+        viewModel.searchHistory
             .distinctUntilChanged()
             .bind(onNext: { [weak self] _ in
                 self?.searchHistoryTableView.reloadData()
             })
             .disposed(by: disposeBag)
         
-        viewModel?.searchResult
+        viewModel.searchResult
             .skip(1)
             .distinctUntilChanged()
             .bind(onNext: { [weak self] in
@@ -211,8 +206,8 @@ extension SearchViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let keyword = searchBar.text else { return }
-        viewModel?.saveSearchKeyword(keyword: keyword)
-        viewModel?.search(keyword: keyword)
+        viewModel.saveSearchKeyword(keyword: keyword)
+        viewModel.search(keyword: keyword)
         dismissKeyboard()
     }
 }
@@ -229,8 +224,8 @@ extension SearchViewController: UITableViewDelegate {
         _ tableView: UITableView,
         didSelectRowAt indexPath: IndexPath
     ) {
-        let searchHistory = viewModel?.searchHistory.value[indexPath.item] ?? ""
-        viewModel?.search(keyword: searchHistory)
+        let searchHistory = viewModel.searchHistory.value[indexPath.item] ?? ""
+        viewModel.search(keyword: searchHistory)
     }
 }
 
@@ -261,7 +256,7 @@ extension SearchViewController: UITableViewDataSource {
         _ tableView: UITableView,
         numberOfRowsInSection section: Int
     ) -> Int {
-        return viewModel?.searchHistory.value.count ?? 0
+        return viewModel.searchHistory.value.count
     }
     
     func tableView(
@@ -271,16 +266,16 @@ extension SearchViewController: UITableViewDataSource {
         guard let cell: SearchTableViewCell = tableView.dequeueReusableCell()
         else { return UITableViewCell() }
         
-        cell.searchHistory.text = viewModel?.searchHistory.value[indexPath.item]
+        cell.searchHistory.text = viewModel.searchHistory.value[indexPath.item]
         
         if indexPath.item == 0 {
             cellDisposeBag = DisposeBag()
         }
         
-        cell.configureUI()
+        cell.changeColor()
         cell.deleteButton.rx.tap
             .bind { [weak self] _ in
-                self?.viewModel?.removeSearchHistory(at: indexPath.item)
+                self?.viewModel.removeSearchHistory(at: indexPath.item)
             }
             .disposed(by: cellDisposeBag)
         return cell
@@ -292,7 +287,7 @@ extension SearchViewController: UICollectionViewDelegate {
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
-        let media = viewModel?.searchResult.value[indexPath.item] ?? Media()
+        let media = viewModel.searchResult.value[indexPath.item]
         let mediaPlayerViewController = MediaPlayerViewController(
             viewModel: MediaPlayerViewModel(
                 media: media
@@ -326,7 +321,7 @@ extension SearchViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        return viewModel?.searchResult.value.count ?? 0
+        return viewModel.searchResult.value.count
     }
     
     func collectionView(
@@ -336,10 +331,10 @@ extension SearchViewController: UICollectionViewDataSource {
         guard let cell: MediaCollectionViewCell = collectionView.dequeueReusableCell(indexPath: indexPath) else {
             return  UICollectionViewCell()
         }
-        let media = viewModel?.searchResult.value[indexPath.item] ?? Media()
+        let media = viewModel.searchResult.value[indexPath.item]
         cell.titleView.text = media.name
         cell.imageView.image = UIImage(named: media.thumbnailImageFileName)
-        let colorHexString = viewModel?.searchResult.value[indexPath.item].color ?? "FFFFFF"
+        let colorHexString = viewModel.searchResult.value[indexPath.item].color
         cell.backgroundColor = UIColor(
             rgb: Int(colorHexString, radix: 16) ?? 0xFFFFFF,
             alpha: 1.0

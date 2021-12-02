@@ -6,12 +6,12 @@
 //
 
 import AVKit
+import SpriteKit
 import UIKit
 
-import SnapKit
-import RxSwift
 import RxCocoa
-import SpriteKit
+import RxSwift
+import SnapKit
 
 final class MediaPlayerViewController: UIViewController {
     private lazy var navigationBar = UINavigationBar()
@@ -39,18 +39,6 @@ final class MediaPlayerViewController: UIViewController {
         return button
     }()
     private lazy var clubView = SKView()
-    
-    private let themeColor = CGColor(red: 34.0/255.0, green: 48.0/255.0, blue: 74.0/255.0, alpha: 1)
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-    
-    private var viewModel: MediaPlayerViewModel?
-    private let disposeBag = DisposeBag()
-    private var playerLooper: AVPlayerLooper?
-    private var queuePlayer: AVQueuePlayer?
-    private var playerLayer: AVPlayerLayer?
     private lazy var clubScene: SKScene = {
         let clubScene = ClubSKScene()
         clubScene.size = CGSize(
@@ -60,6 +48,23 @@ final class MediaPlayerViewController: UIViewController {
         clubScene.scaleMode = .fill
         return clubScene
     }()
+    
+    private let disposeBag = DisposeBag()
+    private let themeColor = CGColor(
+        red: 34.0/255.0,
+        green: 48.0/255.0,
+        blue: 74.0/255.0,
+        alpha: 1
+    )
+    
+    private var viewModel: MediaPlayerViewModel?
+    private var playerLooper: AVPlayerLooper?
+    private var queuePlayer: AVQueuePlayer?
+    private var playerLayer: AVPlayerLayer?
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -129,7 +134,7 @@ final class MediaPlayerViewController: UIViewController {
             mediaDescriptionView.gradientLayer.removeFromSuperlayer()
         }
         
-        self.view.addSubview(topView)
+        view.addSubview(topView)
         topView.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
             $0.height.equalTo(view.snp.width).multipliedBy(1.2)

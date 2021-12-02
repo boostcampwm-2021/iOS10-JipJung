@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-class MediaPlayerMaximView: UIView {
+final class MediaPlayerMaximView: UIView {
     let maximLabel: UILabel = {
         let label = UILabel()
         let text = """
@@ -48,7 +48,7 @@ class MediaPlayerMaximView: UIView {
         configure()
     }
     
-    func configure() {
+    private func configure() {
         addSubview(maximLabel)
         addSubview(speakerNameLabel)
         

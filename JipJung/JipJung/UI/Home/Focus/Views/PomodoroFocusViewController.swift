@@ -62,13 +62,11 @@ final class PomodoroFocusViewController: FocusViewController {
         shapeLayer.fillColor = nil
         return shapeLayer
     }()
-    
-    private let pulseGroupLayer = CALayer()
-    
-    private let startButton = FocusStartButton()
-    private let pauseButton = FocusPauseButton()
-    private let continueButton = FocusContinueButton()
-    private let exitButton = FocusExitButton()
+    private lazy var pulseGroupLayer = CALayer()
+    private lazy var startButton = FocusStartButton()
+    private lazy var pauseButton = FocusPauseButton()
+    private lazy var continueButton = FocusContinueButton()
+    private lazy var exitButton = FocusExitButton()
     
     private let viewModel = PomodoroFocusViewModel()
     

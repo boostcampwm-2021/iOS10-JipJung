@@ -9,7 +9,7 @@ import Foundation
 
 import RealmSwift
 
-class RealmDBManager {
+final class RealmDBManager {
     static let shared = RealmDBManager()
     private init() {}
     
