@@ -80,7 +80,7 @@ final class DefaultFocusViewController: FocusViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
+        
         self.startButton.alpha = 0
         self.timerView.alpha = 0
         let viewCenter = view.center
@@ -165,6 +165,7 @@ final class DefaultFocusViewController: FocusViewController {
                 self.presentReady(value: self.viewModel.focusTime)
             case .running(let isResume):
                 if isResume {
+                    self.viewModel.startClockTimer()
                     self.presentResume()
                 } else {
                     self.viewModel.startClockTimer()
