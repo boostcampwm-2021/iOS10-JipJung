@@ -651,7 +651,7 @@ extension HomeViewController: CarouselViewDelegate {
         
         let alert = UIAlertController(
             title: "목록에서 음원 삭제",
-            message: "음원 \(media.name)을 목록에서 삭제할까요?\n다운로드된 파일은 삭제되지않습니다.",
+            message: "음원 \(media.name) 음원을 목록에서 삭제할까요?\n다운로드된 파일은 삭제되지않습니다.",
             preferredStyle: .alert
         )
         let cancelAction = UIAlertAction(title: "취소", style: .cancel)
