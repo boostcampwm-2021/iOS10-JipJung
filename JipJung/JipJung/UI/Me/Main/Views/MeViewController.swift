@@ -6,14 +6,16 @@
 //
 
 import UIKit
-import RxSwift
+
 import RxCocoa
+import RxSwift
 import SnapKit
 
 class MeViewController: UIViewController {
-    private var viewModel = MeViewModel()
-    private var disposeBag = DisposeBag()
-    private var dailyStatisticsView = MeDailyStaticsView()
+    private lazy var dailyStatisticsView = MeDailyStaticsView()
+    
+    private let viewModel = MeViewModel()
+    private let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,10 +38,9 @@ class MeViewController: UIViewController {
     private func configureLayout() {
         view.addSubview(dailyStatisticsView)
         dailyStatisticsView.snp.makeConstraints {
-            $0.center.equalToSuperview()
-            $0.leading.equalToSuperview()
-            $0.trailing.equalToSuperview().offset(-10)
-            $0.height.equalTo(dailyStatisticsView.snp.width).multipliedBy(1.1)
+            $0.top.equalTo(view.snp.topMargin).offset(16)
+            $0.leading.trailing.equalToSuperview().inset(10)
+            $0.height.greaterThanOrEqualTo(dailyStatisticsView.snp.width)
         }
     }
     
@@ -53,7 +54,7 @@ class MeViewController: UIViewController {
             })
             self?.dailyStatisticsView.totalFocusLabelText = $0?.totalFocusHour
             self?.dailyStatisticsView.averageFocusLabelText = $0?.averageFocusHour
-            self?.dailyStatisticsView.dateLabelText = $0?.statisticsPeriod
+            self?.dailyStatisticsView.dateLabel.text = $0?.statisticsPeriod
         }.disposed(by: disposeBag)
         
         viewModel.monthIndex.bind { [weak self] monthIndexLists in

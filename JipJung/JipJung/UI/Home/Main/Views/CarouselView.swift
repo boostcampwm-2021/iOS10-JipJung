@@ -12,12 +12,12 @@ import RxSwift
 import SnapKit
 
 protocol CarouselViewDelegate: AnyObject {
-    func currentViewTapped()
+    func currentViewTapped(media: Media)
     func currentViewDownSwiped(media: Media)
-    func currentViewAppear(audioFileName: String, autoPlay: Bool)
+    func currentViewAppear(media: Media)
 }
 
-class CarouselView: UIView {
+final class CarouselView: UIView {
     enum ScrollDirection: CGFloat {
         case left = -1
         case right = 1
@@ -108,7 +108,6 @@ class CarouselView: UIView {
     }
     
     private func bindUI() {
-        
         let contentsObservable = contents
             .distinctUntilChanged()
             .filter { !$0.isEmpty }
@@ -137,7 +136,6 @@ class CarouselView: UIView {
                     currentItem: currentItem,
                     nextItem: nextItem
                 )
-                
                 self?.mediaPlayViewAppear(autoPlay: false)
             } onError: { error in
                 print(error.localizedDescription)
@@ -161,6 +159,7 @@ class CarouselView: UIView {
         guard contents.value.count != 1 else {
             return
         }
+        
         previousView.snp.updateConstraints {
             $0.centerX.equalToSuperview().offset(distanceX - UIScreen.deviceScreenSize.width)
         }
@@ -189,9 +188,7 @@ class CarouselView: UIView {
     }
     
     private func applyPaging(with scrollDirection: ScrollDirection) {
-        guard contents.value.count != 1 else {
-            return
-        }
+        guard contents.value.count > 1 else { return }
         
         switch scrollDirection {
         case .left:
@@ -238,7 +235,6 @@ class CarouselView: UIView {
                 $0?.layer.cornerRadius = 0
                 $0?.transform = CGAffineTransform.identity
             }
-            
         } completion: { [weak self] _ in
             guard let self = self else { return }
             
@@ -256,10 +252,7 @@ class CarouselView: UIView {
                 self.currentIndex.accept(nextIndex)
                 
                 self.previousView.pauseVideo()
-                self.currentView.pauseVideo()
                 self.nextView.pauseVideo()
-                
-                self.mediaPlayViewTapped()
             case .right:
                 let currentIndex = self.currentIndex.value
                 let contentsCount = self.contents.value.count
@@ -273,10 +266,7 @@ class CarouselView: UIView {
                 self.currentIndex.accept(nextIndex)
                 
                 self.previousView.pauseVideo()
-                self.currentView.pauseVideo()
                 self.nextView.pauseVideo()
-                
-                self.mediaPlayViewTapped()
             case .none:
                 break
             }
@@ -294,9 +284,13 @@ class CarouselView: UIView {
     }
     
     private func mediaPlayViewTapped() {
-        guard let delegate = delegate else { return }
+        guard let delegate = delegate,
+              let media = currentView.media.value
+        else {
+            return
+        }
 
-        delegate.currentViewTapped()
+        delegate.currentViewTapped(media: media)
     }
     
     private func mediaPlayViewDownSwiped() {
@@ -316,11 +310,10 @@ class CarouselView: UIView {
             return
         }
 
-        delegate.currentViewAppear(audioFileName: media.audioFileName, autoPlay: autoPlay)
+        delegate.currentViewAppear(media: media)
     }
 }
 
-// MARK: Touch Events
 extension CarouselView {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
@@ -354,7 +347,7 @@ extension CarouselView {
             applyPaging(with: .none)
             mediaPlayViewTapped()
             return
-        } else if abs(distance.x) < 30 && abs(distance.y) > 100 {
+        } else if abs(distance.x) < 30 && distance.y > 100 {
             applyPaging(with: .none)
             mediaPlayViewDownSwiped()
         } else {

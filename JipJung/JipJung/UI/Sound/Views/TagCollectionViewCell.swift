@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-class TagCollectionViewCell: UICollectionViewCell {
+final class TagCollectionViewCell: UICollectionViewCell {
     let tagLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 14)
@@ -27,13 +27,13 @@ class TagCollectionViewCell: UICollectionViewCell {
         cofigure()
     }
     
-    func cofigure() {
+    private func cofigure() {
         self.backgroundColor = .gray
         self.layer.cornerRadius = 4
         contentView.addSubview(tagLabel)
         
-        tagLabel.snp.makeConstraints { make in
-            make.center.equalToSuperview()
+        tagLabel.snp.makeConstraints {
+            $0.center.equalToSuperview()
         }
     }
 }

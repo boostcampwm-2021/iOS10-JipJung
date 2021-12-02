@@ -6,43 +6,34 @@
 //
 
 import Foundation
-import RxSwift
+
 import RxRelay
+import RxSwift
 
-protocol InfinityFocusViewModelInput {
-    func changeTimerState(to timerState: TimerState)
-    func startClockTimer()
-    func pauseClockTimer()
-    func resetClockTimer()
-    func saveFocusRecord()
-}
-
-protocol InfinityFocusViewModelOutput {
-    var clockTime: BehaviorRelay<Int> { get }
-    var isFocusRecordSaved: BehaviorRelay<Bool> { get }
-}
-
-final class InfinityFocusViewModel: InfinityFocusViewModelInput, InfinityFocusViewModelOutput {
-    var clockTime: BehaviorRelay<Int> = BehaviorRelay<Int>(value: 0)
-    var isFocusRecordSaved: BehaviorRelay<Bool> = BehaviorRelay<Bool>(value: false)
-    var timerState: BehaviorRelay<TimerState> = BehaviorRelay<TimerState>(value: .ready)
+final class InfinityFocusViewModel {
+    let clockTime = BehaviorRelay<Int>(value: 0)
+    let isFocusRecordSaved = BehaviorRelay<Bool>(value: false)
+    let timerState = BehaviorRelay<TimerState>(value: .ready)
     
-    private var runningStateDisposeBag: DisposeBag = DisposeBag()
-    private var disposeBag: DisposeBag = DisposeBag()
-    
-    private let saveFocusTimeUseCase: SaveFocusTimeUseCaseProtocol
+    private let disposeBag = DisposeBag()
+    private let saveFocusTimeUseCase = SaveFocusTimeUseCase()
     private let audioPlayUseCase = AudioPlayUseCase()
     
-    init(saveFocusTimeUseCase: SaveFocusTimeUseCaseProtocol) {
-        self.saveFocusTimeUseCase = saveFocusTimeUseCase
-    }
+    private var runningStateDisposeBag = DisposeBag()
     
     func changeTimerState(to timerState: TimerState) {
         self.timerState.accept(timerState)
     }
     
     func startClockTimer() {
-        audioPlayUseCase.controlAudio(playState: .manual(true))
+        NotificationCenter.default.post(
+            name: .controlForFocus,
+            object: nil,
+            userInfo: [
+                "PlayState": true
+            ]
+        )
+        
         Observable<Int>.interval(RxTimeInterval.seconds(1),
                                  scheduler: MainScheduler.instance)
             .subscribe { [weak self] _ in
@@ -53,12 +44,26 @@ final class InfinityFocusViewModel: InfinityFocusViewModelInput, InfinityFocusVi
     }
     
     func pauseClockTimer() {
-        audioPlayUseCase.controlAudio(playState: .manual(false))
+        NotificationCenter.default.post(
+            name: .controlForFocus,
+            object: nil,
+            userInfo: [
+                "PlayState": false
+            ]
+        )
+        
         runningStateDisposeBag = DisposeBag()
     }
     
     func resetClockTimer() {
-        audioPlayUseCase.controlAudio(playState: .manual(false))
+        NotificationCenter.default.post(
+            name: .controlForFocus,
+            object: nil,
+            userInfo: [
+                "PlayState": false
+            ]
+        )
+        
         clockTime.accept(0)
         runningStateDisposeBag = DisposeBag()
     }
@@ -71,5 +76,18 @@ final class InfinityFocusViewModel: InfinityFocusViewModelInput, InfinityFocusVi
                 self?.isFocusRecordSaved.accept(false)
             }
             .disposed(by: disposeBag)
+    }
+    
+    func alertNotification() {
+        let clockTime = clockTime.value
+        let happyEmojis = ["☺️", "😘", "😍", "🥳", "🤩"]
+        let minuteString = clockTime / 60 == 0 ? "" : "\(clockTime / 60)분 "
+        let secondString = clockTime % 60 == 0 ? "" : "\(clockTime % 60)초 "
+        let message = minuteString + secondString + "집중하셨어요!" + (happyEmojis.randomElement() ?? "")
+        PushNotificationMananger.shared.presentFocusStopNotification(
+            title: .focusFinish,
+            body: message
+        )
+        FeedbackGenerator.shared.impactOccurred()
     }
 }

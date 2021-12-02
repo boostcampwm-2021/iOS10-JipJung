@@ -12,7 +12,7 @@ import RxSwift
 import SnapKit
 import SpriteKit
 
-class HomeViewController: UIViewController {
+final class HomeViewController: UIViewController {
     private lazy var mainScrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.showsVerticalScrollIndicator = false
@@ -30,27 +30,26 @@ class HomeViewController: UIViewController {
     private lazy var topView = UIView()
     private lazy var bottomView = UIView()
     private lazy var maximButton: UIButton = {
-        let maximButton = UIButton()
-        maximButton.setTitle("하루 한 줄, 오늘의 명언", for: .normal)
-        maximButton.titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
-        maximButton.makeBlurBackground()
-        maximButton.layer.masksToBounds = true
-        maximButton.layer.cornerRadius = 16
-        return maximButton
+        let button = UIButton()
+        button.setTitle("하루 한 줄, 오늘의 명언", for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
+        button.makeBlurBackground()
+        button.layer.masksToBounds = true
+        button.layer.cornerRadius = 16
+        return button
     }()
     private lazy var playHistoryCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.sectionInset = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16)
-        layout.itemSize = HomeMainViewSize.musicCellSize
+        let cellWidth = UIScreen.deviceScreenSize.width / 2.5
+        layout.itemSize = CGSize(width: cellWidth, height: cellWidth * MediaCell.ratio)
         layout.minimumInteritemSpacing = 8
 
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
         collectionView.showsHorizontalScrollIndicator = false
-        collectionView.register(
-            MusicCollectionViewCell.self,
-            forCellWithReuseIdentifier: MusicCollectionViewCell.identifier)
+        collectionView.register(MediaCollectionViewCell.self)
         return collectionView
     }()
     private lazy var playHistoryEmptyLabel: UILabel = {
@@ -64,15 +63,14 @@ class HomeViewController: UIViewController {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.sectionInset = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16)
-        layout.itemSize = HomeMainViewSize.musicCellSize
+        let cellWidth = UIScreen.deviceScreenSize.width / 2.5
+        layout.itemSize = CGSize(width: cellWidth, height: cellWidth * MediaCell.ratio)
         layout.minimumInteritemSpacing = 8
 
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
         collectionView.showsHorizontalScrollIndicator = false
-        collectionView.register(
-            MusicCollectionViewCell.self,
-            forCellWithReuseIdentifier: MusicCollectionViewCell.identifier)
+        collectionView.register(MediaCollectionViewCell.self)
         return collectionView
     }()
     private lazy var favoriteEmptyLabel: UILabel = {
@@ -83,19 +81,21 @@ class HomeViewController: UIViewController {
         return label
     }()
     private lazy var touchTransferView = TouchTransferView()
-    private let clubView: SKView = SKView()
+    private lazy var clubView = SKView()
     private lazy var clubScene: SKScene = {
-        let clubScene = ClubSKScene()
-        clubScene.size = CGSize(width: view.frame.width,
-                                height: view.frame.height)
-        clubScene.scaleMode = .fill
-        return clubScene
+        let skScene = ClubSKScene()
+        skScene.size = CGSize(
+            width: view.frame.width,
+            height: view.frame.height
+        )
+        skScene.scaleMode = .fill
+        return skScene
     }()
     
-    private let viewModel: HomeViewModel = HomeViewModel()
+    private let viewModel = HomeViewModel()
     private let disposeBag = DisposeBag()
-    private var topBottomViewGap: CGFloat = 0
     
+    private var topBottomViewGap: CGFloat = 0
     private var isAttached = false
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -114,16 +114,10 @@ class HomeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if let currentMedia = carouselView.getMediaFromCurrentView() {
-            viewModel.mediaPlayViewAppear(currentMedia.audioFileName)
-                .subscribe { [weak self] state in
-                    if state {
-                        self?.carouselView.playVideoInCurrentView()
-                    }
-                } onFailure: { error in
-                    print(error.localizedDescription)
-                }
-                .disposed(by: disposeBag)
+        guard let media = carouselView.getMediaFromCurrentView() else { return }
+        
+        if viewModel.mediaPlayViewAppear(media: media) {
+            carouselView.playVideoInCurrentView()
         }
     }
     
@@ -134,7 +128,7 @@ class HomeViewController: UIViewController {
     }
     
     private func configureUI() {
-        view.backgroundColor = .lightGray
+        view.backgroundColor = .black
         
         configureObserver()
         configureTopBottomViewGap()
@@ -155,12 +149,20 @@ class HomeViewController: UIViewController {
             name: .refreshHome,
             object: nil
         )
-    }
-    
-    @objc private func refresh(_ sender: Notification) {
-        guard let typeList = sender.userInfo?["RefreshType"] as? [RefreshHomeData] else { return }
-
-        viewModel.refresh(typeList: typeList)
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(controlForFocus(_:)),
+            name: .controlForFocus,
+            object: nil
+        )
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(showCarouselView(_:)),
+            name: .showCarouselView,
+            object: nil
+        )
     }
     
     private func configureTopBottomViewGap() {
@@ -244,7 +246,7 @@ class HomeViewController: UIViewController {
         
         let modeSwitch: UIButton = {
             let button = UIButton()
-            let configuration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 30))
+            let configuration = UIImage.SymbolConfiguration(font: .preferredFont(forTextStyle: .title1))
             button.setImage(
                 UIImage(systemName: "repeat.circle.fill", withConfiguration: configuration),
                 for: .normal
@@ -254,7 +256,7 @@ class HomeViewController: UIViewController {
         }()
         
         modeSwitch.rx.tap
-            .bind { [weak self] in
+            .bind {
                 ApplicationMode.shared.convert()
             }
             .disposed(by: disposeBag)
@@ -324,7 +326,7 @@ class HomeViewController: UIViewController {
         let recentPlayHistoryHeader = HomeListHeaderView()
         recentPlayHistoryHeader.titleLabel.text = "재생 기록"
         recentPlayHistoryHeader.allButton.rx.tap
-            .bind { [weak self] _ in
+            .bind { [weak self] in
                 if self?.viewModel.recentPlayHistory.value.count == 0 {
                     return
                 }
@@ -358,7 +360,7 @@ class HomeViewController: UIViewController {
         let favoriteHeader = HomeListHeaderView()
         favoriteHeader.titleLabel.text = "좋아요 누른 음원"
         favoriteHeader.allButton.rx.tap
-            .bind { [weak self] _ in
+            .bind { [weak self] in
                 if self?.viewModel.favoriteSoundList.value.count == 0 {
                     return
                 }
@@ -370,6 +372,7 @@ class HomeViewController: UIViewController {
                 self?.present(favoriteNavigationView, animated: true)
             }
             .disposed(by: disposeBag)
+        
         bottomView.addSubview(favoriteHeader)
         favoriteHeader.snp.makeConstraints {
             $0.top.equalTo(playHistoryCollectionView.snp.bottom).offset(8)
@@ -389,14 +392,15 @@ class HomeViewController: UIViewController {
         favoriteEmptyLabel.snp.makeConstraints {
             $0.center.equalTo(favoriteCollectionView)
         }
-        
     }
     
     private func configureTouchTransferView() {
         touchTransferView.transferView = carouselView
         view.addSubview(touchTransferView)
         touchTransferView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(HomeMainViewSize.topViewHeight + UIApplication.statusBarHeight)
+            $0.top.equalToSuperview().offset(
+                HomeMainViewSize.topViewHeight + UIApplication.statusBarHeight
+            )
             $0.width.centerX.equalToSuperview()
             $0.height.equalTo(topBottomViewGap)
         }
@@ -434,8 +438,8 @@ class HomeViewController: UIViewController {
         )
             .merge()
             .subscribe(onNext: { [weak self] media in
-                let musicPlayerView = MusicPlayerViewController(
-                    viewModel: MusicPlayerViewModel(
+                let musicPlayerView = MediaPlayerViewController(
+                    viewModel: MediaPlayerViewModel(
                         media: media
                     )
                 )
@@ -466,10 +470,10 @@ class HomeViewController: UIViewController {
         playHistoryObservable
             .bind(
                 to: playHistoryCollectionView.rx.items(
-                    cellIdentifier: MusicCollectionViewCell.identifier
+                    cellIdentifier: MediaCollectionViewCell.identifier
                 )
-            ) { (item, element, cell) in
-                guard let cell = cell as? MusicCollectionViewCell else { return }
+            ) { (_, element, cell) in
+                guard let cell = cell as? MediaCollectionViewCell else { return }
 
                 cell.titleView.text = element.name
                 cell.imageView.image = UIImage(named: element.thumbnailImageFileName)
@@ -492,10 +496,10 @@ class HomeViewController: UIViewController {
             .distinctUntilChanged()
             .bind(
                 to: favoriteCollectionView.rx.items(
-                    cellIdentifier: MusicCollectionViewCell.identifier
+                    cellIdentifier: MediaCollectionViewCell.identifier
                 )
-            ) { (item, element, cell) in
-                guard let cell = cell as? MusicCollectionViewCell else { return }
+            ) { (_, element, cell) in
+                guard let cell = cell as? MediaCollectionViewCell else { return }
                 
                 cell.titleView.text = element.name
                 cell.imageView.image = UIImage(named: element.thumbnailImageFileName)
@@ -520,7 +524,8 @@ class HomeViewController: UIViewController {
                     UIView.animate(
                         withDuration: 0.35,
                         delay: 0,
-                        options: [.autoreverse, .repeat]) {
+                        options: [.autoreverse, .repeat]
+                    ) {
                         self.clubScene.view?.layer.opacity = 0.25
                     }
                 }
@@ -528,12 +533,36 @@ class HomeViewController: UIViewController {
             .disposed(by: disposeBag)
     }
     
-    private func mediaPlayButtonTouched() -> Single<Bool> {
-        return viewModel.mediaPlayViewTapped()
+    private func mediaPlayButtonTouched(media: Media) -> Single<Bool> {
+        return viewModel.mediaPlayViewTapped(media: media)
+    }
+    
+    @objc private func refresh(_ sender: Notification) {
+        guard let typeList = sender.userInfo?["RefreshType"] as? [RefreshHomeData] else { return }
+
+        viewModel.refresh(typeList: typeList)
+    }
+    
+    @objc private func controlForFocus(_ sender: Notification) {
+        guard let playState = sender.userInfo?["PlayState"] as? Bool,
+              let media = carouselView.getMediaFromCurrentView()
+        else {
+            return
+        }
+        
+        viewModel.receiveNotificationForFocus(media: media, state: playState)
+    }
+    
+    @objc private func showCarouselView(_ sender: Notification) {
+        guard let media = carouselView.getMediaFromCurrentView() else { return }
+        
+        if viewModel.mediaPlayViewAppear(media: media) {
+            carouselView.playVideoInCurrentView()
+        }
     }
     
     @objc private func bottomViewDragged(_ sender: UIPanGestureRecognizer) {
-        if sender.state != .ended { return }
+        guard sender.state == .ended else { return }
         
         let moveY = sender.translation(in: sender.view).y
         if (self.isAttached && moveY > 50) || (!self.isAttached && moveY < 50) {
@@ -555,7 +584,6 @@ class HomeViewController: UIViewController {
 
 extension HomeViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
         let currentContentsOffsetY = scrollView.contentOffset.y
         let currentTopBottomYGap = topBottomViewGap - (currentContentsOffsetY + UIApplication.statusBarHeight)
 
@@ -590,7 +618,11 @@ extension HomeViewController: UIGestureRecognizerDelegate {
 }
 
 extension HomeViewController: UIViewControllerTransitioningDelegate {
-    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func animationController(
+        forPresented presented: UIViewController,
+        presenting: UIViewController,
+        source: UIViewController
+    ) -> UIViewControllerAnimatedTransitioning? {
         return SlowPresent(duration: 0.5, animationType: .present)
     }
     
@@ -600,8 +632,8 @@ extension HomeViewController: UIViewControllerTransitioningDelegate {
 }
 
 extension HomeViewController: CarouselViewDelegate {
-    func currentViewTapped() {
-        mediaPlayButtonTouched()
+    func currentViewTapped(media: Media) {
+        mediaPlayButtonTouched(media: media)
             .subscribe { [weak self] state in
                 if state {
                     self?.carouselView.playVideoInCurrentView()
@@ -619,7 +651,7 @@ extension HomeViewController: CarouselViewDelegate {
         
         let alert = UIAlertController(
             title: "목록에서 음원 삭제",
-            message: "음원 \(media.name)을 목록에서 삭제할까요?\n다운로드된 파일은 삭제되지않습니다.",
+            message: "\(media.name) 음원을 목록에서 삭제할까요?\n다운로드된 파일은 삭제되지않습니다.",
             preferredStyle: .alert
         )
         let cancelAction = UIAlertAction(title: "취소", style: .cancel)
@@ -656,17 +688,9 @@ extension HomeViewController: CarouselViewDelegate {
         present(alert, animated: true)
     }
     
-    func currentViewAppear(audioFileName: String, autoPlay: Bool) {
-        return viewModel.mediaPlayViewAppear(audioFileName, autoPlay: autoPlay)
-            .subscribe { [weak self] state in
-                if state {
-                    self?.carouselView.playVideoInCurrentView()
-                } else {
-                    self?.carouselView.pauseVideoInCurrentView()
-                }
-            } onFailure: { error in
-                print(error.localizedDescription)
-            }
-            .disposed(by: disposeBag)
+    func currentViewAppear(media: Media) {
+        if viewModel.mediaPlayViewAppear(media: media) {
+            carouselView.playVideoInCurrentView()
+        }
     }
 }

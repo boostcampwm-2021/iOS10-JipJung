@@ -7,16 +7,13 @@
 
 import UIKit
 
-class FeedbackGenerator {
+final class FeedbackGenerator {
     static let shared = FeedbackGenerator()
+    private init() {}
     
-    private var lightGenerator: UIImpactFeedbackGenerator?
-    
-    private init() {
-        lightGenerator = UIImpactFeedbackGenerator(style: .light)
-    }
+    private let lightGenerator = UIImpactFeedbackGenerator(style: .light)
     
     func impactOccurred() {
-        lightGenerator?.impactOccurred()
+        lightGenerator.impactOccurred()
     }
 }

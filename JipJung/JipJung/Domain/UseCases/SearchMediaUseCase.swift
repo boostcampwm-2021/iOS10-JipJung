@@ -6,8 +6,9 @@
 //
 
 import Foundation
-import RxSwift
+
 import RxRelay
+import RxSwift
 
 final class SearchMediaUseCase {
     let allMediaList = BehaviorRelay<[Media]>(value: [])
@@ -49,7 +50,7 @@ final class SearchMediaUseCase {
     }
     
     private func fetchAllMediaList() {
-        mediaListRepository.fetchAllMediaList()
+        mediaListRepository.read()
             .subscribe { [weak self] in
                 self?.allMediaList.accept($0)
             } onFailure: { error in

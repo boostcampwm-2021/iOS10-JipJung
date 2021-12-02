@@ -6,51 +6,46 @@
 //
 
 import UIKit
-import RxSwift
+
 import RxCocoa
 import RxRelay
+import RxSwift
 
 final class BreathFocusViewController: FocusViewController {
-    // MARK: - Subviews
-    
     private lazy var timePickerView: UIPickerView = {
-        let timePickerView = UIPickerView()
-        timePickerView.delegate = self
-        timePickerView.dataSource = self
-        return timePickerView
+        let pickerView = UIPickerView()
+        pickerView.delegate = self
+        pickerView.dataSource = self
+        return pickerView
     }()
-    
     private lazy var minuteLabel: UILabel = {
-        let minuteLabel = UILabel()
-        minuteLabel.text = "min"
-        minuteLabel.textColor = .init(white: 1.0, alpha: 0.8)
-        return minuteLabel
+        let label = UILabel()
+        label.text = "min"
+        label.textColor = .init(white: 1.0, alpha: 0.8)
+        return label
     }()
-    
-    private lazy var timeLabel: UILabel = {
-        let timeLabel = UILabel()
-        timeLabel.text = "7 breaths"
-        timeLabel.font = UIFont.boldSystemFont(ofSize: 21)
-        timeLabel.textColor = .white
-        return timeLabel
+    private lazy var numberOfBreathLabel: UILabel = {
+        let label = UILabel()
+        label.text = "7 breaths"
+        label.font = .preferredFont(forTextStyle: .title2)
+        label.textColor = .white
+        return label
     }()
-    
-    private let breathView = UIView()
     private lazy var breathShapeLayer: CAShapeLayer = {
-        let drawingLayer = CAShapeLayer()
-        drawingLayer.fillColor = .init(red: 0.1, green: 1.0, blue: 0.3, alpha: 0.5)
-        drawingLayer.shadowColor = .init(red: 0, green: 1.0, blue: 0, alpha: 1)
-        drawingLayer.shadowOpacity = 0.9
-        drawingLayer.shadowOffset = CGSize.zero
-        drawingLayer.shadowRadius = 20
-        return drawingLayer
+        let shapeLayer = CAShapeLayer()
+        shapeLayer.fillColor = .init(red: 0.1, green: 1.0, blue: 0.3, alpha: 0.5)
+        shapeLayer.shadowColor = .init(red: 0, green: 1.0, blue: 0, alpha: 1)
+        shapeLayer.shadowOpacity = 0.9
+        shapeLayer.shadowOffset = CGSize.zero
+        shapeLayer.shadowRadius = 20
+        return shapeLayer
     }()
     private lazy var scalingShapeLayer: CAShapeLayer = {
-        let scalingShapeLayer = CAShapeLayer()
-        scalingShapeLayer.fillColor = .init(gray: 0, alpha: 0)
-        scalingShapeLayer.strokeColor = UIColor.white.cgColor
-        scalingShapeLayer.lineWidth = 2.0
-        return scalingShapeLayer
+        let shapeLayer = CAShapeLayer()
+        shapeLayer.fillColor = .init(gray: 0, alpha: 0)
+        shapeLayer.strokeColor = UIColor.white.cgColor
+        shapeLayer.lineWidth = 2.0
+        return shapeLayer
     }()
     private lazy var textLayer: CATextLayer = {
         let textLayer = CATextLayer()
@@ -58,44 +53,44 @@ final class BreathFocusViewController: FocusViewController {
         textLayer.string = "Inhale"
         return textLayer
     }()
-    private let countdownView = CountdownView()
-    
-    private lazy var startButton: UIButton = {
-        let startButton = UIButton()
-        startButton.tintColor = .gray
-        let playImage = UIImage(systemName: "play.fill")?.withRenderingMode(.alwaysTemplate)
-        startButton.setImage(playImage, for: .normal)
-        startButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 12)
-        startButton.setTitle("Start", for: .normal)
-        startButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
-        startButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 0)
-        startButton.setTitleColor(UIColor.gray, for: .normal)
-        startButton.layer.cornerRadius = 25
-        startButton.backgroundColor = .white
-        return startButton
+    private lazy var breathView = UIView()
+    private lazy var countdownView = CountdownView()
+    private lazy var startButton = FocusStartButton()
+    private lazy var stopButton: FocusExitButton = {
+        let focusExitButton = FocusExitButton()
+        focusExitButton.setTitle("Stop", for: .normal)
+        return focusExitButton
     }()
     
-    private lazy var stopButton: UIButton = {
-        let stopButton = UIButton()
-        stopButton.setTitle("Stop", for: .normal)
-        stopButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
-        stopButton.setTitleColor(UIColor.white, for: .normal)
-        stopButton.layer.cornerRadius = 25
-        stopButton.backgroundColor = .lightGray
-        stopButton.layer.borderColor = UIColor.white.cgColor
-        stopButton.layer.borderWidth = 2
-        return stopButton
-    }()
-    
-    // MARK: - Private Variables
-    
-    private var viewModel: BreathFocusViewModel?
-    // MARK: - Lifecycle Methods
+    private let viewModel = BreathFocusViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
         bindUI()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        startButton.alpha = 0
+        breathView.alpha = 0
+        let viewCenter = view.center
+        breathView.center = CGPoint(x: viewCenter.x, y: viewCenter.y * 0.9)
+        UIView.animate(withDuration: 0.6, delay: 0.3, options: []) { [weak self] in
+            self?.breathView.alpha = 1
+            self?.breathView.center = CGPoint(x: viewCenter.x, y: viewCenter.y * 0.8)
+            self?.startButton.alpha = 1
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        let viewCenter = view.center
+        UIView.animate(withDuration: 0.6) { [weak self] in
+            self?.breathView.center = viewCenter
+            self?.startButton.alpha = 0
+        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -107,15 +102,6 @@ final class BreathFocusViewController: FocusViewController {
                                  size: CGSize(width: 120, height: 100))
         startWiggleAnimation()
     }
-    
-    // MARK: - Initializer
-
-    convenience init(viewModel: BreathFocusViewModel) {
-        self.init(nibName: nil, bundle: nil)
-        self.viewModel = viewModel
-    }
-    
-    // MARK: - Helpers
     
     private func configureUI() {
         view.makeBlurBackground()
@@ -138,18 +124,18 @@ final class BreathFocusViewController: FocusViewController {
         }
         countdownView.isHidden = true
         
-        view.addSubview(timeLabel)
-        timeLabel.snp.makeConstraints {
-            $0.top.equalTo(breathView.snp.bottom).offset(10)
+        view.addSubview(numberOfBreathLabel)
+        numberOfBreathLabel.snp.makeConstraints {
+            $0.top.equalTo(view.snp.centerY).multipliedBy(1.2)
             $0.centerX.equalToSuperview()
         }
         
-        view.addSubview(timePickerView)
+        breathView.addSubview(timePickerView)
         timePickerView.snp.makeConstraints {
             $0.center.equalTo(breathView.snp.center)
         }
         
-        view.addSubview(minuteLabel)
+        breathView.addSubview(minuteLabel)
         minuteLabel.snp.makeConstraints {
             $0.centerY.equalTo(timePickerView)
             $0.centerX.equalTo(timePickerView.snp.centerX).offset(60)
@@ -177,34 +163,34 @@ final class BreathFocusViewController: FocusViewController {
         startButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
-                self.viewModel?.changeState(to: .running)
+                self.viewModel.changeState(to: .running)
             }
             .disposed(by: disposeBag)
         
         stopButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
-                self.viewModel?.changeState(to: .stop)
+                self.viewModel.changeState(to: .stop)
             }
             .disposed(by: disposeBag)
         
-        viewModel?.focusState
+        viewModel.focusState
             .skip(1)
             .distinctUntilChanged()
             .bind(onNext: { [weak self] in
-            guard let self = self else { return }
-            switch $0 {
-            case .running:
-                self.startBreath()
-            case .stop:
-                self.alertNotification()
-                self.stopBreath()
-                self.viewModel?.saveFocusRecord()
-                self.viewModel?.resetClockTimer()
-            }
-        }).disposed(by: disposeBag)
-
-        viewModel?.clockTime.bind(onNext: { [weak self] in
+                guard let self = self else { return }
+                switch $0 {
+                case .running:
+                    self.startBreath()
+                case .stop:
+                    self.viewModel.alertNotification()
+                    self.stopBreath()
+                    self.viewModel.saveFocusRecord()
+                    self.viewModel.resetClockTimer()
+                }
+            }).disposed(by: disposeBag)
+        
+        viewModel.clockTime.bind(onNext: { [weak self] in
             guard let self = self else { return }
             if $0 % 7 == 3 {
                 self.textLayer.opacity = 0
@@ -222,50 +208,49 @@ final class BreathFocusViewController: FocusViewController {
                 self.textLayer.string = "Inhale"
                 self.textLayer.opacity = 1
                 
-                UIView.animate(withDuration: 4.0,
-                               delay: 0.0,
-                               options: .allowUserInteraction,
-                               animations: {
-                    self.view.layer.backgroundColor = .init(red: 129.0 / 255.0, green: 240.0 / 255.0, blue: 135.0 / 255.0, alpha: 0.8)
-                },
-                               completion: nil)
+                UIView.animate(
+                    withDuration: 4.0,
+                    delay: 0.0,
+                    options: .allowUserInteraction,
+                    animations: {
+                        self.view.layer.backgroundColor = .init(
+                            red: 129.0 / 255.0,
+                            green: 240.0 / 255.0,
+                            blue: 135.0 / 255.0,
+                            alpha: 0.8
+                        )
+                    },
+                    completion: nil
+                )
             } else if $0 % 7 == 4 {
-                UIView.animate(withDuration: 3.0,
-                               delay: 0.0,
-                               options: .allowUserInteraction,
-                               animations: {
-                    self.view.layer.backgroundColor = .init(red: 131.0 / 255.0, green: 79.0 / 255.0, blue: 163.0 / 255.0, alpha: 0.3)
+                UIView.animate(
+                    withDuration: 3.0,
+                    delay: 0.0,
+                    options: .allowUserInteraction,
+                    animations: {
+                    self.view.layer.backgroundColor = .init(
+                        red: 131.0 / 255.0,
+                        green: 79.0 / 255.0,
+                        blue: 163.0 / 255.0,
+                        alpha: 0.3
+                    )
                 },
-                               completion: nil)
+                    completion: nil
+                )
             }
             
         }).disposed(by: disposeBag)
     }
     
-    private func alertNotification() {
-        guard let clockTime = self.viewModel?.clockTime.value else {
-            return
-        }
-        let angryEmpjis = ["😡", "🤬", "🥵", "🥶", "😰"]
-        let happyEmojis = ["☺️", "😘", "😍", "🥳", "🤩"]
-        let times = clockTime / 7
-        let message = times > 0
-        ? "\(clockTime / 7)회 호흡 운동하셨습니다." + (happyEmojis.randomElement() ?? "")
-        : "\(times)회... 반복했습니다. 집중합시다!" + (angryEmpjis.randomElement() ?? "")
-        PushNotificationMananger.shared.presentFocusStopNotification(title: .focusFinish,
-                                                                     body: message)
-        FeedbackGenerator.shared.impactOccurred()
-    }
-    
     private func startBreath() {
         startButton.isHidden = true
         stopButton.isHidden = false
-        timeLabel.isHidden = true
+        numberOfBreathLabel.isHidden = true
         timePickerView.isHidden = true
         minuteLabel.isHidden = true
-
+        
         startIntroAnimation()
-
+        
         // 진입 배경 애니메이션 연결 처리
         self.stopButton.layer.opacity = 0
         UIView.animate(withDuration: 0.4, delay: .zero, options: .curveEaseIn) {
@@ -276,10 +261,9 @@ final class BreathFocusViewController: FocusViewController {
             UIView.animate(withDuration: 3) {
                 self.view.layer.backgroundColor = .none
             }
-
-            // TODO: 버튼 동시 클릭 문제 해결, 버튼 나타나는 타이밍 조정하기
+            
             DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
-                UIView.animate(withDuration: 2.0) {
+                UIView.animate(withDuration: 2.0, delay: .zero, options: .allowUserInteraction) {
                     self.stopButton.layer.opacity = 1
                 }
             }
@@ -290,7 +274,7 @@ final class BreathFocusViewController: FocusViewController {
                     self.countdownView.isHidden = true
                     self.scalingShapeLayer.isHidden = false
                     self.startInhaleExhaleAnimation()
-                    self.viewModel?.startClockTimer()
+                    self.viewModel.startClockTimer()
                 }
             }
         }
@@ -300,7 +284,7 @@ final class BreathFocusViewController: FocusViewController {
     private func stopBreath() {
         startButton.isHidden = false
         stopButton.isHidden = true
-        timeLabel.isHidden = false
+        numberOfBreathLabel.isHidden = false
         timePickerView.isHidden = false
         minuteLabel.isHidden = false
         breathShapeLayer.isHidden = false
@@ -316,11 +300,11 @@ final class BreathFocusViewController: FocusViewController {
         let scaleUpAnimation = CABasicAnimation(keyPath: "transform.scale")
         scaleUpAnimation.fromValue = 1.0
         scaleUpAnimation.toValue = 5.0
-
+        
         let opacityDownAnimation = CABasicAnimation(keyPath: "opacity")
         opacityDownAnimation.fromValue = 1.0
         opacityDownAnimation.toValue = 0.5
-
+        
         let introAnimations = CAAnimationGroup()
         introAnimations.animations = [scaleUpAnimation, opacityDownAnimation]
         introAnimations.repeatCount = 1
@@ -356,7 +340,7 @@ final class BreathFocusViewController: FocusViewController {
         exhaleAnimation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
         
         animations.isRemovedOnCompletion = true
-        animations.repeatCount = Float(viewModel?.focusTime ?? 1)
+        animations.repeatCount = Float(viewModel.focusTime)
         animations.animations?.append(inhaleAnimation)
         animations.animations?.append(exhaleAnimation)
         animations.delegate = self
@@ -366,13 +350,13 @@ final class BreathFocusViewController: FocusViewController {
 
 extension BreathFocusViewController: UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        let focusTime = (viewModel?.focusTimeList[row] ?? 0) * 7
-        viewModel?.setFocusTime(seconds: focusTime)
-        self.timeLabel.text = "\(focusTime) breaths"
+        let focusTime = viewModel.focusTimeList[row] * 7
+        viewModel.setFocusTime(seconds: focusTime)
+        self.numberOfBreathLabel.text = "\(focusTime) breaths"
     }
     
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
-        guard let minuteInfo = viewModel?.focusTimeList[row] else { return UILabel() }
+        let minuteInfo = viewModel.focusTimeList[row]
         timePickerView.subviews.forEach {
             $0.backgroundColor = .clear
         }
@@ -380,7 +364,7 @@ extension BreathFocusViewController: UIPickerViewDelegate {
         pickerLabel = UILabel()
         pickerLabel.text = "\(minuteInfo)"
         pickerLabel.textColor = UIColor.white
-        pickerLabel.font = UIFont.systemFont(ofSize: 35)
+        pickerLabel.font = .preferredFont(forTextStyle: .largeTitle)
         pickerLabel.textAlignment = .center
         
         return pickerLabel
@@ -397,19 +381,11 @@ extension BreathFocusViewController: UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return viewModel?.focusTimeList.count ?? 0
+        return viewModel.focusTimeList.count ?? 0
     }
 }
 extension BreathFocusViewController: CAAnimationDelegate {
-    func animationDidStart(_ anim: CAAnimation) {
-        // MARK: 디버깅 할 때 필요해서 남겨 두었습니다
-        print(#function, #line)
-    }
-
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
-        // MARK: 디버깅 할 때 필요해서 남겨 두었습니다
-        print(#function, #line, flag, anim.description)
-
-        viewModel?.changeState(to: .stop)
+        viewModel.changeState(to: .stop)
     }
 }

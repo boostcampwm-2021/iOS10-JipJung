@@ -8,40 +8,35 @@
 import UIKit
 
 class MeDailyStaticsView: UIView {
-    private lazy var dateLabel: UILabel = {
-        let dateLabel = UILabel()
-        dateLabel.text = "11월 11일 ~ 11월 12일"
-        dateLabel.textColor = .systemGray
-        dateLabel.font = .systemFont(ofSize: 28, weight: .bold)
-        return dateLabel
+    private(set) lazy var grassMapView = GrassMapView()
+    private(set) lazy var dateLabel: UILabel = {
+        let label = UILabel()
+        label.text = "11월 11일 ~ 11월 12일"
+        label.textColor = .systemGray
+        label.font = .systemFont(ofSize: 28, weight: .bold)
+        return label
     }()
-    
+
     private lazy var totalFocusStackView: UIStackView = {
-        return makeFocusRepresentativeValueStackViewStackView(category: "Total")
+        return makeFocusRepresentativeValueStackView(category: "Total")
     }()
-    
     private lazy var averageFocusStackView: UIStackView = {
-        return makeFocusRepresentativeValueStackViewStackView(category: "Average")
+        return makeFocusRepresentativeValueStackView(category: "Average")
     }()
-    
     private lazy var representativeValuesStackView: UIStackView = {
-        let representativeValuesStackView = UIStackView()
-        representativeValuesStackView.addArrangedSubview(totalFocusStackView)
-        representativeValuesStackView.addArrangedSubview(averageFocusStackView)
-        representativeValuesStackView.distribution = .equalSpacing
-        return representativeValuesStackView
+        let stackView = UIStackView()
+        stackView.addArrangedSubview(totalFocusStackView)
+        stackView.addArrangedSubview(averageFocusStackView)
+        stackView.distribution = .equalSpacing
+        return stackView
     }()
-    
-    var grassMapView = GrassMapView()
-    
     private lazy var unitDescriptionLabel: UILabel = {
         let label = UILabel()
         label.text = "단위: 시간(H)"
-        label.font = .systemFont(ofSize: 12)
+        label.font = .preferredFont(forTextStyle: .caption1)
         label.textColor = MeGrassMap.tintColor
         return label
     }()
-    
     private lazy var stageColorDescriptionStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.distribution = .fillEqually
@@ -52,68 +47,6 @@ class MeDailyStaticsView: UIView {
         }
         return stackView
     }()
-    
-    func makeColorDescriptionViewList() -> [UIView] {
-        return FocusStage
-            .allCases
-            .dropFirst()
-            .map {
-                let colorDescriptionView = UIView()
-            colorDescriptionView.translatesAutoresizingMaskIntoConstraints = false
-            
-            let colorMarkerView = UIView()
-            colorMarkerView.backgroundColor = $0.greenColor
-            colorDescriptionView.addSubview(colorMarkerView)
-            colorMarkerView.snp.makeConstraints {
-                $0.leading.equalToSuperview()
-                $0.centerY.equalToSuperview()
-                $0.height.width.equalTo(MeGrassMapViewSize.cellLength)
-            }
-            
-            let colorDescriptionLabel = UILabel()
-            colorDescriptionLabel.textColor = MeGrassMap.tintColor
-            colorDescriptionLabel.font = .systemFont(ofSize: 20)
-            colorDescriptionLabel.text = "\($0)"
-            colorDescriptionLabel.adjustsFontSizeToFitWidth = true
-            colorDescriptionView.addSubview(colorDescriptionLabel)
-            colorDescriptionLabel.snp.makeConstraints {
-                $0.centerY.equalToSuperview()
-                $0.leading.equalTo(colorMarkerView.snp.trailing).offset(10)
-            }
-
-            return colorDescriptionView
-        }
-    }
-
-    // MARK: 평균, 총합 등의 대표값이란 의미에서 RepresentativeValue를 썼습니다.
-    private func makeFocusRepresentativeValueStackViewStackView(category: String) -> UIStackView {
-        let representativeValueStackView = UIStackView()
-        representativeValueStackView.axis = .vertical
-        representativeValueStackView.alignment = .center
-        
-        let descriptionLabel = UILabel()
-        descriptionLabel.text = "0"
-        descriptionLabel.textColor = .systemGray
-        descriptionLabel.font = .systemFont(ofSize: 24)
-        
-        let titleLabel = UILabel()
-        titleLabel.text = "\(category) Focus Hours"
-        titleLabel.textColor = .systemGray
-        titleLabel.font = .systemFont(ofSize: 16)
-        
-        representativeValueStackView.addArrangedSubview(descriptionLabel)
-        representativeValueStackView.addArrangedSubview(titleLabel)
-        return representativeValueStackView
-    }
-    
-    var dateLabelText: String? {
-        get {
-            return dateLabel.text
-        }
-        set {
-            dateLabel.text = newValue
-        }
-    }
     
     var totalFocusLabelText: String? {
         get {
@@ -143,7 +76,61 @@ class MeDailyStaticsView: UIView {
         configureUI()
     }
     
-    func configureUI() {
+    private func makeColorDescriptionViewList() -> [UIView] {
+        return FocusStage
+            .allCases
+            .dropFirst()
+            .map {
+                let colorDescriptionView = UIView()
+                colorDescriptionView.translatesAutoresizingMaskIntoConstraints = false
+                
+                let colorMarkerView = UIView()
+                colorMarkerView.backgroundColor = $0.greenColor
+                colorDescriptionView.addSubview(colorMarkerView)
+                colorMarkerView.snp.makeConstraints {
+                    $0.leading.equalToSuperview()
+                    $0.centerY.equalToSuperview()
+                    $0.size.equalTo(MeGrassMapViewSize.cellLength)
+                }
+                
+                let colorDescriptionLabel = UILabel()
+                colorDescriptionLabel.textColor = MeGrassMap.tintColor
+                colorDescriptionLabel.font = .preferredFont(forTextStyle: .title3)
+                colorDescriptionLabel.text = "\($0)"
+                colorDescriptionLabel.adjustsFontSizeToFitWidth = true
+                colorDescriptionView.addSubview(colorDescriptionLabel)
+                colorDescriptionLabel.snp.makeConstraints {
+                    $0.centerY.equalToSuperview()
+                    $0.leading.equalTo(colorMarkerView.snp.trailing)
+                }
+
+            return colorDescriptionView
+        }
+    }
+
+    private func makeFocusRepresentativeValueStackView(category: String) -> UIStackView {
+        let representativeValueStackView = UIStackView()
+        representativeValueStackView.axis = .vertical
+        representativeValueStackView.alignment = .center
+        representativeValueStackView.spacing = 8
+        
+        let descriptionLabel = UILabel()
+        descriptionLabel.text = "0"
+        descriptionLabel.textColor = .systemGray
+        descriptionLabel.font = .preferredFont(forTextStyle: .title1)
+        
+        let titleLabel = UILabel()
+        titleLabel.text = "\(category) Hours"
+        titleLabel.textColor = .systemGray
+        titleLabel.font = .preferredFont(forTextStyle: .headline)
+        titleLabel.adjustsFontSizeToFitWidth = true
+        
+        representativeValueStackView.addArrangedSubview(descriptionLabel)
+        representativeValueStackView.addArrangedSubview(titleLabel)
+        return representativeValueStackView
+    }
+    
+    private func configureUI() {
         self.backgroundColor = .systemGray6
         self.layer.cornerRadius = 10
         
@@ -156,16 +143,14 @@ class MeDailyStaticsView: UIView {
         addSubview(representativeValuesStackView)
         representativeValuesStackView.snp.makeConstraints {
             $0.top.equalTo(dateLabel.snp.bottom).offset(30)
-            $0.leading.equalToSuperview().offset(30)
-            $0.trailing.equalToSuperview().offset(-30)
+            $0.leading.trailing.equalToSuperview().inset(16)
         }
         
         addSubview(grassMapView)
         grassMapView.snp.makeConstraints {
             $0.top.equalTo(representativeValuesStackView.snp.bottom).offset(30)
-            $0.leading.equalToSuperview().offset(30)
-            $0.trailing.equalToSuperview().offset(-30)
-            $0.bottom.equalToSuperview().offset(-80)
+            $0.leading.trailing.equalToSuperview().inset(30)
+            $0.height.equalTo(MeGrassMapViewSize.height)
         }
         
         addSubview(unitDescriptionLabel)
@@ -178,7 +163,7 @@ class MeDailyStaticsView: UIView {
             $0.top.equalTo(grassMapView.snp.bottom).offset(30)
             $0.bottom.equalTo(unitDescriptionLabel.snp.top).offset(-20)
             $0.leading.equalToSuperview().offset(100)
-            $0.trailing.equalToSuperview().offset(-20).priority(751)
+            $0.trailing.equalToSuperview().offset(-20)
         }
     }
 }

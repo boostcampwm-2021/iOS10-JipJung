@@ -7,7 +7,7 @@
 
 import UIKit
 
-//https://stackoverflow.com/questions/39158604/how-to-increase-line-spacing-in-uilabel-in-swift
+// 참고자료: https://stackoverflow.com/questions/39158604/how-to-increase-line-spacing-in-uilabel-in-swift
 
 extension UILabel {
     func setLineSpacing(lineSpacing: CGFloat = 0.0, lineHeightMultiple: CGFloat = 0.0) {
@@ -27,7 +27,8 @@ extension UILabel {
         attributedString.addAttribute(
             .paragraphStyle,
             value: paragraphStyle,
-            range: NSMakeRange(0, attributedString.length))
+            range: NSRange(location: 0, length: attributedString.length)
+        )
         attributedText = attributedString
     }
 }

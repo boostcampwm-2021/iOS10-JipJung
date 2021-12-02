@@ -6,78 +6,59 @@
 //
 
 import Foundation
-import RxSwift
-import RxRelay
-import RxCocoa
 
-protocol BreathFocusViewModelInput {
-    func changeState(to: BreathFocusState)
-    func startClockTimer()
-    func resetClockTimer()
-    func setFocusTime(seconds: Int)
-    func saveFocusRecord()
-}
+import RxCocoa
+import RxRelay
+import RxSwift
 
 enum BreathFocusState {
     case running
     case stop
 }
 
-protocol BreathFocusViewModelOutput {
-    var clockTime: BehaviorRelay<Int> { get }
-    var isFocusRecordSaved: BehaviorRelay<Bool> { get }
-    var focusState: BehaviorRelay<BreathFocusState> { get }
-}
-
-final class BreathFocusViewModel: BreathFocusViewModelInput, BreathFocusViewModelOutput {
-    var clockTime: BehaviorRelay<Int> = BehaviorRelay<Int>(value: -1)
-    var isFocusRecordSaved: BehaviorRelay<Bool> = BehaviorRelay<Bool>(value: false)
-    var focusState: BehaviorRelay<BreathFocusState> = BehaviorRelay<BreathFocusState>(value: .stop)
-    let focusTimeList: [Int] = Array<Int>(1...15)
-    var focusTime: Int = 7
-    var timerState: BehaviorRelay<TimerState> = BehaviorRelay<TimerState>(value: .ready)
+final class BreathFocusViewModel {
+    let clockTime = BehaviorRelay<Int>(value: -1)
+    let isFocusRecordSaved = BehaviorRelay<Bool>(value: false)
+    let focusState = BehaviorRelay<BreathFocusState>(value: .stop)
+    let timerState = BehaviorRelay<TimerState>(value: .ready)
+    let focusTimeList = [Int](1...15)
+    var focusTime = 7
     
-    private var runningStateDisposeBag: DisposeBag = DisposeBag()
-    private var disposeBag: DisposeBag = DisposeBag()
-    
-    private let saveFocusTimeUseCase: SaveFocusTimeUseCaseProtocol
+    private let disposeBag = DisposeBag()
+    private let saveFocusTimeUseCase = SaveFocusTimeUseCase()
     private let audioPlayUseCase = AudioPlayUseCase()
     
-    init(saveFocusTimeUseCase: SaveFocusTimeUseCaseProtocol) {
-        self.saveFocusTimeUseCase = saveFocusTimeUseCase
-    }
+    private var runningStateDisposeBag = DisposeBag()
     
     func changeState(to state: BreathFocusState) {
         self.focusState.accept(state)
     }
     
     func startClockTimer() {
-        audioPlayUseCase.readyToPlay("breath.WAV", autoPlay: true, restart: true)
-            .subscribe { [weak self] in
-            switch $0 {
-            case .success(let flag):
-                print(#function, #line, flag)
-            case .failure(let error):
-                print(#function, #line, error)
-            }
-        }.disposed(by: disposeBag)
+        audioPlayUseCase.control(audioFileName: BreathMode.audioName, autoPlay: true, restart: true)
+            .subscribe(onFailure: { error in
+                print(error.localizedDescription)
+            }).disposed(by: disposeBag)
         
         clockTime.accept(0)
-         Observable<Int>.interval(.seconds(1), scheduler: MainScheduler.instance)
+        Observable<Int>.interval(.seconds(1), scheduler: MainScheduler.instance)
             .subscribe { [weak self] _ in
                 guard let self = self else { return }
                 self.clockTime.accept(self.clockTime.value + 1)
             }
             .disposed(by: runningStateDisposeBag)
     }
-
+    
     func resetClockTimer() {
-        audioPlayUseCase.controlAudio(playState: .manual(false))
+        audioPlayUseCase.control(audioFileName: BreathMode.audioName, state: false)
+            .subscribe(onFailure: { error in
+                print(error.localizedDescription)
+            }).disposed(by: disposeBag)
+        
         clockTime.accept(-1)
         runningStateDisposeBag = DisposeBag()
     }
-
-    // 숨쉬기 횟수 설정
+    
     func setFocusTime(seconds: Int) {
         focusTime = seconds
     }
@@ -90,5 +71,20 @@ final class BreathFocusViewModel: BreathFocusViewModelInput, BreathFocusViewMode
                 self?.isFocusRecordSaved.accept(false)
             }
             .disposed(by: disposeBag)
+    }
+    
+    func alertNotification() {
+        let clockTime = clockTime.value
+        let angryEmpjis = ["😡", "🤬", "🥵", "🥶", "😰"]
+        let happyEmojis = ["☺️", "😘", "😍", "🥳", "🤩"]
+        let times = clockTime / 7
+        let message = times > 0
+        ? "\(times)회 호흡 운동하셨습니다." + (happyEmojis.randomElement() ?? "")
+        : "\(times)회... 반복했습니다. 집중합시다!" + (angryEmpjis.randomElement() ?? "")
+        PushNotificationMananger.shared.presentFocusStopNotification(
+            title: .focusFinish,
+            body: message
+        )
+        FeedbackGenerator.shared.impactOccurred()
     }
 }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8A3D83502507671361AFBEA7 /* Pods_JipJung_MeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57A904A9E04F7D2AC26A261B /* Pods_JipJung_MeTests.framework */; };
 		911D7F7E27428430003B7C3B /* AudioPlayManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 911D7F7D27428430003B7C3B /* AudioPlayManager.swift */; };
 		911D7F8027428473003B7C3B /* Audio+Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 911D7F7F27428473003B7C3B /* Audio+Enums.swift */; };
 		912A72042733B99300C1A37E /* LocalFileManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 912A72032733B99300C1A37E /* LocalFileManagerTests.swift */; };
@@ -26,7 +27,7 @@
 		9165585A273B78A000C55CDC /* MediaListRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91655859273B78A000C55CDC /* MediaListRepository.swift */; };
 		9165585C273B8E6E00C55CDC /* PlayHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9165585B273B8E6E00C55CDC /* PlayHistory.swift */; };
 		9165585E273B8F5000C55CDC /* MaximListRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9165585D273B8F5000C55CDC /* MaximListRepository.swift */; };
-		9172BBEF274225A3000E1060 /* MusicPlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9172BBEE274225A3000E1060 /* MusicPlayerViewModel.swift */; };
+		9172BBEF274225A3000E1060 /* MediaPlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9172BBEE274225A3000E1060 /* MediaPlayerViewModel.swift */; };
 		9172BBF3274225F2000E1060 /* ExploreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9172BBF2274225F2000E1060 /* ExploreViewModel.swift */; };
 		9172BBF727422618000E1060 /* MeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9172BBF627422618000E1060 /* MeViewModel.swift */; };
 		9172BBFC274226A8000E1060 /* MaximViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9172BBFB274226A8000E1060 /* MaximViewController.swift */; };
@@ -35,8 +36,7 @@
 		917BDD5B2745FBDA0049E944 /* MediaPlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917BDD5A2745FBDA0049E944 /* MediaPlayView.swift */; };
 		917BDD5D2746268D0049E944 /* TouchTransferView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917BDD5C2746268D0049E944 /* TouchTransferView.swift */; };
 		917BDD5F274638750049E944 /* CGPoint+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917BDD5E274638750049E944 /* CGPoint+Extension.swift */; };
-		918D19A5273D21B300A13954 /* sea.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 91184BB3273D1E01007A29C8 /* sea.mp4 */; };
-		9198DE952733863500EBAEC8 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9198DE942733863500EBAEC8 /* Common.swift */; };
+		919519412755E24E0081A775 /* Common+Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 919519402755E24E0081A775 /* Common+Enums.swift */; };
 		91A98C91274D58EF00E7DCC8 /* PlayHistoryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A98C90274D58EF00E7DCC8 /* PlayHistoryRepository.swift */; };
 		91CE6F6F2739024800176AF2 /* Home+Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CE6F6E2739024800176AF2 /* Home+Enums.swift */; };
 		91CE6F7327390AD200176AF2 /* FocusButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CE6F7227390AD200176AF2 /* FocusButton.swift */; };
@@ -44,11 +44,12 @@
 		91D02268273CB5FD0073EA2A /* BrightMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D02267273CB5FD0073EA2A /* BrightMedia.swift */; };
 		91D0226A273CB6050073EA2A /* DarknessMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D02269273CB6050073EA2A /* DarknessMedia.swift */; };
 		91D0226C273CBA340073EA2A /* MediaListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D0226B273CBA340073EA2A /* MediaListUseCase.swift */; };
-		91D02279273CDF610073EA2A /* DummyData.json in Resources */ = {isa = PBXBuildFile; fileRef = 91D02278273CDF610073EA2A /* DummyData.json */; };
+		91D02279273CDF610073EA2A /* ResourceData.json in Resources */ = {isa = PBXBuildFile; fileRef = 91D02278273CDF610073EA2A /* ResourceData.json */; };
 		91D0227D273CE6F50073EA2A /* DBStructureForJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D0227C273CE6F50073EA2A /* DBStructureForJSON.swift */; };
 		91DABCC0273A4EF000E57AAE /* AudioPlayUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DABCBF273A4EF000E57AAE /* AudioPlayUseCase.swift */; };
 		91E4178927312FEB001BA0A6 /* LocalFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E4178827312FEB001BA0A6 /* LocalFileManager.swift */; };
 		91EA47C6273846A800780C3E /* BlurCircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91EA47C5273846A800780C3E /* BlurCircleButton.swift */; };
+		956014A70B264AA2AC664384 /* Pods_JipJung_MaximTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35D5F58CC74CC2064013821E /* Pods_JipJung_MaximTests.framework */; };
 		B4015CD42739151B006BD14A /* PlayHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4015CD32739151B006BD14A /* PlayHistoryViewController.swift */; };
 		B4015CD627391529006BD14A /* FavoriteMusicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4015CD527391529006BD14A /* FavoriteMusicViewController.swift */; };
 		B4015CD82739270C006BD14A /* SoundTagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4015CD72739270C006BD14A /* SoundTagCollectionViewCell.swift */; };
@@ -128,7 +129,7 @@
 		B42226CC2741134100F8CA3D /* UICollectionView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42226CB2741134100F8CA3D /* UICollectionView+Extension.swift */; };
 		B42226CE2741144200F8CA3D /* UITableView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42226CD2741144200F8CA3D /* UITableView+Extension.swift */; };
 		B481FC7D274521B800D1F2EA /* FavoriteMediaUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B481FC7C274521B800D1F2EA /* FavoriteMediaUseCase.swift */; };
-		B481FC7F2745238100D1F2EA /* MyFavoriteRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B481FC7E2745238100D1F2EA /* MyFavoriteRepository.swift */; };
+		B481FC7F2745238100D1F2EA /* FavoriteRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B481FC7E2745238100D1F2EA /* FavoriteRepository.swift */; };
 		B490FDBE274B771F008A4454 /* ApplicationMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B490FDBD274B771F008A4454 /* ApplicationMode.swift */; };
 		B490FE30274C9C2B008A4454 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B490FE2E274C9C2B008A4454 /* Assets.xcassets */; };
 		B490FE38274CBEB3008A4454 /* ClubSKScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B490FE37274CBEB3008A4454 /* ClubSKScene.swift */; };
@@ -141,7 +142,6 @@
 		B4EF13B52742933F0086D8CD /* SearchHistoryUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4EF13B42742933F0086D8CD /* SearchHistoryUseCase.swift */; };
 		B4EF13B72742935B0086D8CD /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4EF13B62742935B0086D8CD /* SearchViewModel.swift */; };
 		B4EF13B927429A0F0086D8CD /* SearchMediaUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4EF13B827429A0F0086D8CD /* SearchMediaUseCase.swift */; };
-		B4EF13BB274370060086D8CD /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4EF13BA274370060086D8CD /* String+Extension.swift */; };
 		B4EF13BD2744B9880086D8CD /* FetchMediaURLUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4EF13BC2744B9880086D8CD /* FetchMediaURLUseCase.swift */; };
 		B4F36B5127336EE20073609C /* UserDefaultsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F36B5027336EE20073609C /* UserDefaultsStorage.swift */; };
 		B4F36B5927338E9B0073609C /* UserDefaultsStorageTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F36B5827338E9B0073609C /* UserDefaultsStorageTest.swift */; };
@@ -158,9 +158,6 @@
 		DD4D030927449AAC007AA4DD /* MaximPresenterObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4D030827449AAC007AA4DD /* MaximPresenterObject.swift */; };
 		DD6FD1F4274BBA2700568A4E /* MeDailyStaticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6FD1F3274BBA2700568A4E /* MeDailyStaticsView.swift */; };
 		DD6FD1F6274BCEB300568A4E /* Me+Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6FD1F5274BCEB300568A4E /* Me+Enums.swift */; };
-		DD6FD1F8274BD08400568A4E /* MeHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6FD1F7274BD08400568A4E /* MeHeaderCollectionReusableView.swift */; };
-		DD7CDCAC274CBA66005ADF35 /* MeMonthYearStaticsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD7CDCAB274CBA66005ADF35 /* MeMonthYearStaticsCollectionViewCell.swift */; };
-		DD7CDCAE274CBA95005ADF35 /* MeExtraCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD7CDCAD274CBA94005ADF35 /* MeExtraCollectionViewCell.swift */; };
 		DD7CDCB2274CFA43005ADF35 /* GrassMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD7CDCB1274CFA43005ADF35 /* GrassMapView.swift */; };
 		DD7CDCB4274D1E66005ADF35 /* LoadFocusTimeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD7CDCB3274D1E66005ADF35 /* LoadFocusTimeUseCase.swift */; };
 		DD7CDCB9274E074E005ADF35 /* DummyFocusData.json in Resources */ = {isa = PBXBuildFile; fileRef = DD7CDCB8274DFB87005ADF35 /* DummyFocusData.json */; };
@@ -170,21 +167,27 @@
 		DD82808E273CF07800BB2A60 /* CycleAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD82808D273CF07800BB2A60 /* CycleAnimation.swift */; };
 		DD828092273D113200BB2A60 /* NetworkEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD828091273D113200BB2A60 /* NetworkEnums.swift */; };
 		DD828095273D1F8E00BB2A60 /* FocusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD828094273D1F8E00BB2A60 /* FocusViewController.swift */; };
-		DD8473632744C24500DF4FCB /* MaximViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9172BBFD274226B1000E1060 /* MaximViewModel.swift */; };
 		DD84736527453FD700DF4FCB /* MaximCalendarHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD84736427453FD700DF4FCB /* MaximCalendarHeaderCollectionViewCell.swift */; };
 		DD8473672746112D00DF4FCB /* Maxim+Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8473662746112D00DF4FCB /* Maxim+Enums.swift */; };
 		DD8564CA273F9E6F00049D9B /* SlowPresent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8564C9273F9E6F00049D9B /* SlowPresent.swift */; };
+		DD97B0282755C2FA009A1E5C /* Focus+Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD97B0272755C2FA009A1E5C /* Focus+Enums.swift */; };
+		DD97B03D2755F8FC009A1E5C /* MaximListUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD97B03C2755F8FC009A1E5C /* MaximListUseCaseTests.swift */; };
+		DD97B0432755FE96009A1E5C /* MaximListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91655857273B773400C55CDC /* MaximListUseCase.swift */; };
+		DD97B045275608E2009A1E5C /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4153946273BA005004EF80F /* Date+Extension.swift */; };
+		DD97B04827561135009A1E5C /* MaximListRepositoryStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD97B04727561135009A1E5C /* MaximListRepositoryStub.swift */; };
+		DD97B04927561F2B009A1E5C /* Maxim.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB5CEB02733746600E8F9EB /* Maxim.swift */; };
+		DD97B04A27562949009A1E5C /* Maxim.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB5CEB02733746600E8F9EB /* Maxim.swift */; };
+		DD97B06227562DA7009A1E5C /* MeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD97B06127562DA7009A1E5C /* MeTests.swift */; };
 		DDAA3D3D5F09E051F5BE96A6 /* Pods_JipJung.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6ECB91629425C2E076873750 /* Pods_JipJung.framework */; };
 		DDB5CE9E27328E8300E8F9EB /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB5CE9D27328E8300E8F9EB /* HomeViewController.swift */; };
 		DDB5CEA227328EC300E8F9EB /* ExploreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB5CEA127328EC300E8F9EB /* ExploreViewController.swift */; };
 		DDB5CEA827328EF400E8F9EB /* MeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB5CEA727328EF400E8F9EB /* MeViewController.swift */; };
 		DDB5CEAF273372A700E8F9EB /* Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB5CEAE273372A700E8F9EB /* Media.swift */; };
-		DDB5CEB12733746600E8F9EB /* Maxim.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB5CEB02733746600E8F9EB /* Maxim.swift */; };
 		DDB5CEB32733752D00E8F9EB /* FavoriteMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB5CEB22733752D00E8F9EB /* FavoriteMedia.swift */; };
-		DDB5CEB82733765500E8F9EB /* FavoriteMaxim.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB5CEB72733765500E8F9EB /* FavoriteMaxim.swift */; };
 		DDB5CEBE2733A49A00E8F9EB /* RealmDBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB5CEBD2733A49A00E8F9EB /* RealmDBManager.swift */; };
 		DDB92B9D2737BD5E00EE26F0 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB92B9C2737BD5E00EE26F0 /* UIView+Extension.swift */; };
-		DDB92BB0273A263100EE26F0 /* MusicCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB92BAF273A263100EE26F0 /* MusicCollectionViewCell.swift */; };
+		DDB92BB0273A263100EE26F0 /* MediaCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB92BAF273A263100EE26F0 /* MediaCollectionViewCell.swift */; };
+		DDF0D7C12756340200FE8681 /* FocusRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4153944273B9676004EF80F /* FocusRecord.swift */; };
 		DF05FD14274ABCDF006C8689 /* WiggleAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF05FD13274ABCDF006C8689 /* WiggleAnimation.swift */; };
 		DF05FD18274CA86F006C8689 /* CountdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF05FD17274CA86F006C8689 /* CountdownView.swift */; };
 		DF05FD3A274D7FD1006C8689 /* breath.WAV in Resources */ = {isa = PBXBuildFile; fileRef = DF05FD39274D7FD1006C8689 /* breath.WAV */; };
@@ -199,9 +202,10 @@
 		DF30FF05273CBC3B001C720E /* MusicPlayerButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF30FF04273CBC3B001C720E /* MusicPlayerButtons.swift */; };
 		DF6B111127390F1900D9924E /* MediaResourceRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6B111027390F1900D9924E /* MediaResourceRepository.swift */; };
 		DF71D22F2734455600CD980E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DF71D22E2734455600CD980E /* GoogleService-Info.plist */; };
-		DFED21CB2733702800E99641 /* MusicPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFED21CA2733702800E99641 /* MusicPlayerViewController.swift */; };
-		DFED21D02733931600E99641 /* MusicDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFED21CF2733931600E99641 /* MusicDescriptionView.swift */; };
-		DFED21D92733AE8400E99641 /* MusicPlayerMaximView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFED21D82733AE8400E99641 /* MusicPlayerMaximView.swift */; };
+		DFA33D51275617D700E675BF /* FocusButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFA33D50275617D700E675BF /* FocusButtons.swift */; };
+		DFED21CB2733702800E99641 /* MediaPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFED21CA2733702800E99641 /* MediaPlayerViewController.swift */; };
+		DFED21D02733931600E99641 /* MediaDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFED21CF2733931600E99641 /* MediaDescriptionView.swift */; };
+		DFED21D92733AE8400E99641 /* MediaPlayerMaximView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFED21D82733AE8400E99641 /* MediaPlayerMaximView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -219,7 +223,14 @@
 			remoteGlobalIDString = DD3902CC272FCA10009ECA82;
 			remoteInfo = JipJung;
 		};
-		DD84735E2744C1BA00DF4FCB /* PBXContainerItemProxy */ = {
+		DD97B03E2755F8FC009A1E5C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DD3902C5272FCA10009ECA82 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DD3902CC272FCA10009ECA82;
+			remoteInfo = JipJung;
+		};
+		DD97B06327562DA7009A1E5C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = DD3902C5272FCA10009ECA82 /* Project object */;
 			proxyType = 1;
@@ -231,8 +242,11 @@
 /* Begin PBXFileReference section */
 		0483E2A7DEBBF1C6B76CF830 /* Pods-JipJung.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JipJung.debug.xcconfig"; path = "Target Support Files/Pods-JipJung/Pods-JipJung.debug.xcconfig"; sourceTree = "<group>"; };
 		0B8DD22FEC5E234B31F27E14 /* Pods-JipJung.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JipJung.release.xcconfig"; path = "Target Support Files/Pods-JipJung/Pods-JipJung.release.xcconfig"; sourceTree = "<group>"; };
+		1530308276B90D1ECB8302E9 /* Pods-JipJung-MaximTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JipJung-MaximTests.release.xcconfig"; path = "Target Support Files/Pods-JipJung-MaximTests/Pods-JipJung-MaximTests.release.xcconfig"; sourceTree = "<group>"; };
+		35D5F58CC74CC2064013821E /* Pods_JipJung_MaximTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_JipJung_MaximTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		494377D0B5850D3875EADB60 /* Pods-JipJung-MeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JipJung-MeTests.release.xcconfig"; path = "Target Support Files/Pods-JipJung-MeTests/Pods-JipJung-MeTests.release.xcconfig"; sourceTree = "<group>"; };
+		57A904A9E04F7D2AC26A261B /* Pods_JipJung_MeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_JipJung_MeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6ECB91629425C2E076873750 /* Pods_JipJung.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_JipJung.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		91184BB3273D1E01007A29C8 /* sea.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = sea.mp4; sourceTree = "<group>"; };
 		911D7F7D27428430003B7C3B /* AudioPlayManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayManager.swift; sourceTree = "<group>"; };
 		911D7F7F27428473003B7C3B /* Audio+Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Audio+Enums.swift"; sourceTree = "<group>"; };
 		912A72012733B99300C1A37E /* LocalFileManagerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LocalFileManagerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -252,7 +266,7 @@
 		91655859273B78A000C55CDC /* MediaListRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaListRepository.swift; sourceTree = "<group>"; };
 		9165585B273B8E6E00C55CDC /* PlayHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayHistory.swift; sourceTree = "<group>"; };
 		9165585D273B8F5000C55CDC /* MaximListRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaximListRepository.swift; sourceTree = "<group>"; };
-		9172BBEE274225A3000E1060 /* MusicPlayerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayerViewModel.swift; sourceTree = "<group>"; };
+		9172BBEE274225A3000E1060 /* MediaPlayerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPlayerViewModel.swift; sourceTree = "<group>"; };
 		9172BBF2274225F2000E1060 /* ExploreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreViewModel.swift; sourceTree = "<group>"; };
 		9172BBF627422618000E1060 /* MeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeViewModel.swift; sourceTree = "<group>"; };
 		9172BBFB274226A8000E1060 /* MaximViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaximViewController.swift; sourceTree = "<group>"; };
@@ -261,7 +275,7 @@
 		917BDD5A2745FBDA0049E944 /* MediaPlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPlayView.swift; sourceTree = "<group>"; };
 		917BDD5C2746268D0049E944 /* TouchTransferView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchTransferView.swift; sourceTree = "<group>"; };
 		917BDD5E274638750049E944 /* CGPoint+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+Extension.swift"; sourceTree = "<group>"; };
-		9198DE942733863500EBAEC8 /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
+		919519402755E24E0081A775 /* Common+Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Common+Enums.swift"; sourceTree = "<group>"; };
 		91A98C90274D58EF00E7DCC8 /* PlayHistoryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayHistoryRepository.swift; sourceTree = "<group>"; };
 		91CE6F6E2739024800176AF2 /* Home+Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Home+Enums.swift"; sourceTree = "<group>"; };
 		91CE6F7227390AD200176AF2 /* FocusButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusButton.swift; sourceTree = "<group>"; };
@@ -269,11 +283,13 @@
 		91D02267273CB5FD0073EA2A /* BrightMedia.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrightMedia.swift; sourceTree = "<group>"; };
 		91D02269273CB6050073EA2A /* DarknessMedia.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarknessMedia.swift; sourceTree = "<group>"; };
 		91D0226B273CBA340073EA2A /* MediaListUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaListUseCase.swift; sourceTree = "<group>"; };
-		91D02278273CDF610073EA2A /* DummyData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = DummyData.json; sourceTree = "<group>"; };
+		91D02278273CDF610073EA2A /* ResourceData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResourceData.json; sourceTree = "<group>"; };
 		91D0227C273CE6F50073EA2A /* DBStructureForJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBStructureForJSON.swift; sourceTree = "<group>"; };
 		91DABCBF273A4EF000E57AAE /* AudioPlayUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayUseCase.swift; sourceTree = "<group>"; };
 		91E4178827312FEB001BA0A6 /* LocalFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFileManager.swift; sourceTree = "<group>"; };
 		91EA47C5273846A800780C3E /* BlurCircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurCircleButton.swift; sourceTree = "<group>"; };
+		AA0CE16DE313933A518FE3FB /* Pods-JipJung-MeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JipJung-MeTests.debug.xcconfig"; path = "Target Support Files/Pods-JipJung-MeTests/Pods-JipJung-MeTests.debug.xcconfig"; sourceTree = "<group>"; };
+		B2B7324890A70CF247912613 /* Pods-JipJung-MaximTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JipJung-MaximTests.debug.xcconfig"; path = "Target Support Files/Pods-JipJung-MaximTests/Pods-JipJung-MaximTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B4015CD32739151B006BD14A /* PlayHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayHistoryViewController.swift; sourceTree = "<group>"; };
 		B4015CD527391529006BD14A /* FavoriteMusicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteMusicViewController.swift; sourceTree = "<group>"; };
 		B4015CD72739270C006BD14A /* SoundTagCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundTagCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -354,7 +370,7 @@
 		B42226CB2741134100F8CA3D /* UICollectionView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Extension.swift"; sourceTree = "<group>"; };
 		B42226CD2741144200F8CA3D /* UITableView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Extension.swift"; sourceTree = "<group>"; };
 		B481FC7C274521B800D1F2EA /* FavoriteMediaUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteMediaUseCase.swift; sourceTree = "<group>"; };
-		B481FC7E2745238100D1F2EA /* MyFavoriteRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFavoriteRepository.swift; sourceTree = "<group>"; };
+		B481FC7E2745238100D1F2EA /* FavoriteRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteRepository.swift; sourceTree = "<group>"; };
 		B490FDBD274B771F008A4454 /* ApplicationMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationMode.swift; sourceTree = "<group>"; };
 		B490FE2E274C9C2B008A4454 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B490FE37274CBEB3008A4454 /* ClubSKScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClubSKScene.swift; sourceTree = "<group>"; };
@@ -367,7 +383,6 @@
 		B4EF13B42742933F0086D8CD /* SearchHistoryUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHistoryUseCase.swift; sourceTree = "<group>"; };
 		B4EF13B62742935B0086D8CD /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		B4EF13B827429A0F0086D8CD /* SearchMediaUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMediaUseCase.swift; sourceTree = "<group>"; };
-		B4EF13BA274370060086D8CD /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		B4EF13BC2744B9880086D8CD /* FetchMediaURLUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchMediaURLUseCase.swift; sourceTree = "<group>"; };
 		B4F36B5027336EE20073609C /* UserDefaultsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsStorage.swift; sourceTree = "<group>"; };
 		B4F36B5627338E9B0073609C /* UserDefaultsStorageTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UserDefaultsStorageTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -388,9 +403,6 @@
 		DD4D030827449AAC007AA4DD /* MaximPresenterObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaximPresenterObject.swift; sourceTree = "<group>"; };
 		DD6FD1F3274BBA2700568A4E /* MeDailyStaticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeDailyStaticsView.swift; sourceTree = "<group>"; };
 		DD6FD1F5274BCEB300568A4E /* Me+Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Me+Enums.swift"; sourceTree = "<group>"; };
-		DD6FD1F7274BD08400568A4E /* MeHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
-		DD7CDCAB274CBA66005ADF35 /* MeMonthYearStaticsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeMonthYearStaticsCollectionViewCell.swift; sourceTree = "<group>"; };
-		DD7CDCAD274CBA94005ADF35 /* MeExtraCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeExtraCollectionViewCell.swift; sourceTree = "<group>"; };
 		DD7CDCB1274CFA43005ADF35 /* GrassMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrassMapView.swift; sourceTree = "<group>"; };
 		DD7CDCB3274D1E66005ADF35 /* LoadFocusTimeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadFocusTimeUseCase.swift; sourceTree = "<group>"; };
 		DD7CDCB8274DFB87005ADF35 /* DummyFocusData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = DummyFocusData.json; sourceTree = "<group>"; };
@@ -400,20 +412,25 @@
 		DD82808D273CF07800BB2A60 /* CycleAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CycleAnimation.swift; sourceTree = "<group>"; };
 		DD828091273D113200BB2A60 /* NetworkEnums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkEnums.swift; sourceTree = "<group>"; };
 		DD828094273D1F8E00BB2A60 /* FocusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusViewController.swift; sourceTree = "<group>"; };
-		DD84735A2744C1BA00DF4FCB /* MaximViewModelTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MaximViewModelTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD84736427453FD700DF4FCB /* MaximCalendarHeaderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaximCalendarHeaderCollectionViewCell.swift; sourceTree = "<group>"; };
 		DD8473662746112D00DF4FCB /* Maxim+Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Maxim+Enums.swift"; sourceTree = "<group>"; };
 		DD8564C9273F9E6F00049D9B /* SlowPresent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlowPresent.swift; sourceTree = "<group>"; };
+		DD97B0272755C2FA009A1E5C /* Focus+Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Focus+Enums.swift"; sourceTree = "<group>"; };
+		DD97B03A2755F8FC009A1E5C /* MaximTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MaximTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DD97B03C2755F8FC009A1E5C /* MaximListUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaximListUseCaseTests.swift; sourceTree = "<group>"; };
+		DD97B04727561135009A1E5C /* MaximListRepositoryStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaximListRepositoryStub.swift; sourceTree = "<group>"; };
+		DD97B05127562B5F009A1E5C /* MeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeTests.swift; sourceTree = "<group>"; };
+		DD97B05F27562DA7009A1E5C /* MeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DD97B06127562DA7009A1E5C /* MeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeTests.swift; sourceTree = "<group>"; };
 		DDB5CE9D27328E8300E8F9EB /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		DDB5CEA127328EC300E8F9EB /* ExploreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreViewController.swift; sourceTree = "<group>"; };
 		DDB5CEA727328EF400E8F9EB /* MeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeViewController.swift; sourceTree = "<group>"; };
 		DDB5CEAE273372A700E8F9EB /* Media.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Media.swift; sourceTree = "<group>"; };
 		DDB5CEB02733746600E8F9EB /* Maxim.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Maxim.swift; sourceTree = "<group>"; };
 		DDB5CEB22733752D00E8F9EB /* FavoriteMedia.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteMedia.swift; sourceTree = "<group>"; };
-		DDB5CEB72733765500E8F9EB /* FavoriteMaxim.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteMaxim.swift; sourceTree = "<group>"; };
 		DDB5CEBD2733A49A00E8F9EB /* RealmDBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmDBManager.swift; sourceTree = "<group>"; };
 		DDB92B9C2737BD5E00EE26F0 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
-		DDB92BAF273A263100EE26F0 /* MusicCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicCollectionViewCell.swift; sourceTree = "<group>"; };
+		DDB92BAF273A263100EE26F0 /* MediaCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaCollectionViewCell.swift; sourceTree = "<group>"; };
 		DF05FD13274ABCDF006C8689 /* WiggleAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiggleAnimation.swift; sourceTree = "<group>"; };
 		DF05FD17274CA86F006C8689 /* CountdownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownView.swift; sourceTree = "<group>"; };
 		DF05FD39274D7FD1006C8689 /* breath.WAV */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = breath.WAV; sourceTree = "<group>"; };
@@ -428,9 +445,10 @@
 		DF30FF04273CBC3B001C720E /* MusicPlayerButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayerButtons.swift; sourceTree = "<group>"; };
 		DF6B111027390F1900D9924E /* MediaResourceRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaResourceRepository.swift; sourceTree = "<group>"; };
 		DF71D22E2734455600CD980E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		DFED21CA2733702800E99641 /* MusicPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayerViewController.swift; sourceTree = "<group>"; };
-		DFED21CF2733931600E99641 /* MusicDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicDescriptionView.swift; sourceTree = "<group>"; };
-		DFED21D82733AE8400E99641 /* MusicPlayerMaximView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayerMaximView.swift; sourceTree = "<group>"; };
+		DFA33D50275617D700E675BF /* FocusButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusButtons.swift; sourceTree = "<group>"; };
+		DFED21CA2733702800E99641 /* MediaPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPlayerViewController.swift; sourceTree = "<group>"; };
+		DFED21CF2733931600E99641 /* MediaDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDescriptionView.swift; sourceTree = "<group>"; };
+		DFED21D82733AE8400E99641 /* MediaPlayerMaximView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPlayerMaximView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -456,10 +474,19 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		DD8473572744C1BA00DF4FCB /* Frameworks */ = {
+		DD97B0372755F8FC009A1E5C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				956014A70B264AA2AC664384 /* Pods_JipJung_MaximTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DD97B05C27562DA7009A1E5C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8A3D83502507671361AFBEA7 /* Pods_JipJung_MeTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -477,6 +504,7 @@
 		913C31FA2743993800F82CCF /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				91D02278273CDF610073EA2A /* ResourceData.json */,
 				DF05FD39274D7FD1006C8689 /* breath.WAV */,
 				B401E387274E2EE60065A9EA /* M000.jpg */,
 				B401E386274E2EE60065A9EA /* M001.jpg */,
@@ -561,7 +589,7 @@
 				91655859273B78A000C55CDC /* MediaListRepository.swift */,
 				9165585D273B8F5000C55CDC /* MaximListRepository.swift */,
 				B4EF13B2274293220086D8CD /* SearchHistoryRepository.swift */,
-				B481FC7E2745238100D1F2EA /* MyFavoriteRepository.swift */,
+				B481FC7E2745238100D1F2EA /* FavoriteRepository.swift */,
 				91A98C90274D58EF00E7DCC8 /* PlayHistoryRepository.swift */,
 			);
 			path = Repositories;
@@ -570,8 +598,6 @@
 		91655849273B5CF900C55CDC /* Dummy */ = {
 			isa = PBXGroup;
 			children = (
-				91184BB3273D1E01007A29C8 /* sea.mp4 */,
-				91D02278273CDF610073EA2A /* DummyData.json */,
 				DD7CDCB8274DFB87005ADF35 /* DummyFocusData.json */,
 			);
 			path = Dummy;
@@ -591,6 +617,9 @@
 		9172BBE827422479000E1060 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				91EA47C5273846A800780C3E /* BlurCircleButton.swift */,
+				91CE6F7227390AD200176AF2 /* FocusButton.swift */,
+				917BDD5C2746268D0049E944 /* TouchTransferView.swift */,
 				DDB5CE9D27328E8300E8F9EB /* HomeViewController.swift */,
 				B4015CD32739151B006BD14A /* PlayHistoryViewController.swift */,
 				B4015CD527391529006BD14A /* FavoriteMusicViewController.swift */,
@@ -604,11 +633,8 @@
 		9172BBE9274224CC000E1060 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				91CE6F7227390AD200176AF2 /* FocusButton.swift */,
-				91EA47C5273846A800780C3E /* BlurCircleButton.swift */,
-				DDB92BAF273A263100EE26F0 /* MusicCollectionViewCell.swift */,
+				DDB92BAF273A263100EE26F0 /* MediaCollectionViewCell.swift */,
 				DD4D030127423C54007AA4DD /* CloseButton.swift */,
-				917BDD5C2746268D0049E944 /* TouchTransferView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -625,12 +651,12 @@
 				B42226CD2741144200F8CA3D /* UITableView+Extension.swift */,
 				B42226CB2741134100F8CA3D /* UICollectionView+Extension.swift */,
 				DD4D030427425610007AA4DD /* UILabel+Extension.swift */,
-				B4EF13BA274370060086D8CD /* String+Extension.swift */,
 				B4E4210C27463C3D00C39545 /* UIColor+Extension.swift */,
 				B4E4210E274673E300C39545 /* UICollectionViewCell+Extension.swift */,
 				B4E421102746753B00C39545 /* UITableViewCell+Extension.swift */,
 				917BDD5E274638750049E944 /* CGPoint+Extension.swift */,
 				912F3334274F6B70000E08FB /* Notification+Extension.swift */,
+				DD208D35273BDD390089A2AB /* CALayer+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -641,6 +667,7 @@
 				DD828094273D1F8E00BB2A60 /* FocusViewController.swift */,
 				B40D1FA8273B5F1900881A49 /* DefaultFocusViewController.swift */,
 				B40D1FAC273B5F2700881A49 /* PomodoroFocusViewController.swift */,
+				DFA33D50275617D700E675BF /* FocusButtons.swift */,
 				B40D1FB8273B674F00881A49 /* InfinityFocusViewController.swift */,
 				B4B780DE2741F6FA0080DC28 /* BreathFocusViewController.swift */,
 				DD82808B273CAE5F00BB2A60 /* FocusViewControllerFactory.swift */,
@@ -662,7 +689,7 @@
 		9172BBED27422583000E1060 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				9172BBEE274225A3000E1060 /* MusicPlayerViewModel.swift */,
+				9172BBEE274225A3000E1060 /* MediaPlayerViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -692,10 +719,6 @@
 			children = (
 				DDB5CEA727328EF400E8F9EB /* MeViewController.swift */,
 				DD6FD1F3274BBA2700568A4E /* MeDailyStaticsView.swift */,
-				DD6FD1F5274BCEB300568A4E /* Me+Enums.swift */,
-				DD6FD1F7274BD08400568A4E /* MeHeaderCollectionReusableView.swift */,
-				DD7CDCAB274CBA66005ADF35 /* MeMonthYearStaticsCollectionViewCell.swift */,
-				DD7CDCAD274CBA94005ADF35 /* MeExtraCollectionViewCell.swift */,
 				DD7CDCB1274CFA43005ADF35 /* GrassMapView.swift */,
 				DD7CDCBD274E380D005ADF35 /* GrassPresenterObject.swift */,
 			);
@@ -713,6 +736,7 @@
 		9172BBF827422676000E1060 /* Maxim */ = {
 			isa = PBXGroup;
 			children = (
+				DD8473662746112D00DF4FCB /* Maxim+Enums.swift */,
 				9172BBF927422695000E1060 /* Views */,
 				9172BBFA27422698000E1060 /* ViewModels */,
 			);
@@ -725,7 +749,6 @@
 				9172BBFB274226A8000E1060 /* MaximViewController.swift */,
 				DD4D03062743BBB9007AA4DD /* MaximCollectionViewCell.swift */,
 				DD84736427453FD700DF4FCB /* MaximCalendarHeaderCollectionViewCell.swift */,
-				DD8473662746112D00DF4FCB /* Maxim+Enums.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -739,12 +762,21 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
-		9198DE93273385D800EBAEC8 /* Localizing */ = {
+		9195193F2755E23A0081A775 /* Enums */ = {
 			isa = PBXGroup;
 			children = (
-				9198DE942733863500EBAEC8 /* Common.swift */,
+				919519402755E24E0081A775 /* Common+Enums.swift */,
 			);
-			path = Localizing;
+			path = Enums;
+			sourceTree = "<group>";
+		};
+		91966A192757495D003BE315 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				911D7F7F27428473003B7C3B /* Audio+Enums.swift */,
+				911D7F7D27428430003B7C3B /* AudioPlayManager.swift */,
+			);
+			path = Managers;
 			sourceTree = "<group>";
 		};
 		91CE6F7627391FF700176AF2 /* UseCases */ = {
@@ -756,8 +788,6 @@
 				B4153940273B93B0004EF80F /* SaveFocusTimeUseCase.swift */,
 				B4EF13B42742933F0086D8CD /* SearchHistoryUseCase.swift */,
 				B4EF13B827429A0F0086D8CD /* SearchMediaUseCase.swift */,
-				911D7F7D27428430003B7C3B /* AudioPlayManager.swift */,
-				911D7F7F27428473003B7C3B /* Audio+Enums.swift */,
 				B4EF13BC2744B9880086D8CD /* FetchMediaURLUseCase.swift */,
 				B481FC7C274521B800D1F2EA /* FavoriteMediaUseCase.swift */,
 				DD7CDCB3274D1E66005ADF35 /* LoadFocusTimeUseCase.swift */,
@@ -807,7 +837,6 @@
 			isa = PBXGroup;
 			children = (
 				DD208D2F273B55240089A2AB /* PulseAnimation.swift */,
-				DD208D35273BDD390089A2AB /* CALayer+Extension.swift */,
 				DD82808D273CF07800BB2A60 /* CycleAnimation.swift */,
 				DD8564C9273F9E6F00049D9B /* SlowPresent.swift */,
 				DF05FD13274ABCDF006C8689 /* WiggleAnimation.swift */,
@@ -824,6 +853,9 @@
 				DD3902CF272FCA10009ECA82 /* JipJung */,
 				B4F36B5727338E9B0073609C /* UserDefaultsStorageTest */,
 				912A72022733B99300C1A37E /* LocalFileManagerTests */,
+				DD97B03B2755F8FC009A1E5C /* MaximTests */,
+				DD97B05027562B5F009A1E5C /* MeTests */,
+				DD97B06027562DA7009A1E5C /* MeTests */,
 				DD3902CE272FCA10009ECA82 /* Products */,
 				DD3902F8272FD248009ECA82 /* Frameworks */,
 				FC10DDE8A3B3F38BE43E9B68 /* Pods */,
@@ -836,7 +868,8 @@
 				DD3902CD272FCA10009ECA82 /* JipJung.app */,
 				B4F36B5627338E9B0073609C /* UserDefaultsStorageTest.xctest */,
 				912A72012733B99300C1A37E /* LocalFileManagerTests.xctest */,
-				DD84735A2744C1BA00DF4FCB /* MaximViewModelTests.xctest */,
+				DD97B03A2755F8FC009A1E5C /* MaximTests.xctest */,
+				DD97B05F27562DA7009A1E5C /* MeTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -846,7 +879,6 @@
 			children = (
 				913C31FA2743993800F82CCF /* Resource */,
 				91655849273B5CF900C55CDC /* Dummy */,
-				9198DE93273385D800EBAEC8 /* Localizing */,
 				DD3902FD272FE21D009ECA82 /* Application */,
 				DF1722B02740FD1300F06140 /* Utils */,
 				DDB5CE9927328E5000E8F9EB /* UI */,
@@ -863,6 +895,8 @@
 			isa = PBXGroup;
 			children = (
 				6ECB91629425C2E076873750 /* Pods_JipJung.framework */,
+				35D5F58CC74CC2064013821E /* Pods_JipJung_MaximTests.framework */,
+				57A904A9E04F7D2AC26A261B /* Pods_JipJung_MeTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -876,6 +910,31 @@
 				B490FE2E274C9C2B008A4454 /* Assets.xcassets */,
 			);
 			path = Application;
+			sourceTree = "<group>";
+		};
+		DD97B03B2755F8FC009A1E5C /* MaximTests */ = {
+			isa = PBXGroup;
+			children = (
+				DD97B03C2755F8FC009A1E5C /* MaximListUseCaseTests.swift */,
+				DD97B04727561135009A1E5C /* MaximListRepositoryStub.swift */,
+			);
+			path = MaximTests;
+			sourceTree = "<group>";
+		};
+		DD97B05027562B5F009A1E5C /* MeTests */ = {
+			isa = PBXGroup;
+			children = (
+				DD97B05127562B5F009A1E5C /* MeTests.swift */,
+			);
+			path = MeTests;
+			sourceTree = "<group>";
+		};
+		DD97B06027562DA7009A1E5C /* MeTests */ = {
+			isa = PBXGroup;
+			children = (
+				DD97B06127562DA7009A1E5C /* MeTests.swift */,
+			);
+			path = MeTests;
 			sourceTree = "<group>";
 		};
 		DDB5CE9927328E5000E8F9EB /* UI */ = {
@@ -931,6 +990,7 @@
 		DDB5CEA327328ED900E8F9EB /* Me */ = {
 			isa = PBXGroup;
 			children = (
+				DD6FD1F5274BCEB300568A4E /* Me+Enums.swift */,
 				DDB5CEA427328EDF00E8F9EB /* Main */,
 			);
 			path = Me;
@@ -948,6 +1008,7 @@
 		DDB5CEAC2733727600E8F9EB /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				91966A192757495D003BE315 /* Managers */,
 				91CE6F7627391FF700176AF2 /* UseCases */,
 				DDB5CEAD2733728100E8F9EB /* Entities */,
 			);
@@ -961,7 +1022,6 @@
 				DDB5CEAE273372A700E8F9EB /* Media.swift */,
 				9165585B273B8E6E00C55CDC /* PlayHistory.swift */,
 				DDB5CEB22733752D00E8F9EB /* FavoriteMedia.swift */,
-				DDB5CEB72733765500E8F9EB /* FavoriteMaxim.swift */,
 				DDB5CEB02733746600E8F9EB /* Maxim.swift */,
 				91D02267273CB5FD0073EA2A /* BrightMedia.swift */,
 				91D02269273CB6050073EA2A /* DarknessMedia.swift */,
@@ -983,6 +1043,7 @@
 		DDB92B992737A96600EE26F0 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				9195193F2755E23A0081A775 /* Enums */,
 				9172BBEA274224DD000E1060 /* Extensions */,
 				9172BBE9274224CC000E1060 /* Views */,
 			);
@@ -992,6 +1053,7 @@
 		DDB92B9F2737E36300EE26F0 /* Focus */ = {
 			isa = PBXGroup;
 			children = (
+				DD97B0272755C2FA009A1E5C /* Focus+Enums.swift */,
 				9172BBEB274224FB000E1060 /* Views */,
 				9172BBEC274224FF000E1060 /* ViewModels */,
 			);
@@ -1040,11 +1102,11 @@
 		DFED21CC273383F600E99641 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				DFED21CF2733931600E99641 /* MusicDescriptionView.swift */,
-				DFED21D82733AE8400E99641 /* MusicPlayerMaximView.swift */,
+				DFED21CF2733931600E99641 /* MediaDescriptionView.swift */,
+				DFED21D82733AE8400E99641 /* MediaPlayerMaximView.swift */,
 				DF30FEF8273A730F001C720E /* TagCollectionViewCell.swift */,
 				DF30FF04273CBC3B001C720E /* MusicPlayerButtons.swift */,
-				DFED21CA2733702800E99641 /* MusicPlayerViewController.swift */,
+				DFED21CA2733702800E99641 /* MediaPlayerViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1054,6 +1116,10 @@
 			children = (
 				0483E2A7DEBBF1C6B76CF830 /* Pods-JipJung.debug.xcconfig */,
 				0B8DD22FEC5E234B31F27E14 /* Pods-JipJung.release.xcconfig */,
+				B2B7324890A70CF247912613 /* Pods-JipJung-MaximTests.debug.xcconfig */,
+				1530308276B90D1ECB8302E9 /* Pods-JipJung-MaximTests.release.xcconfig */,
+				AA0CE16DE313933A518FE3FB /* Pods-JipJung-MeTests.debug.xcconfig */,
+				494377D0B5850D3875EADB60 /* Pods-JipJung-MeTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -1117,22 +1183,44 @@
 			productReference = DD3902CD272FCA10009ECA82 /* JipJung.app */;
 			productType = "com.apple.product-type.application";
 		};
-		DD8473592744C1BA00DF4FCB /* MaximViewModelTests */ = {
+		DD97B0392755F8FC009A1E5C /* MaximTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = DD8473622744C1BA00DF4FCB /* Build configuration list for PBXNativeTarget "MaximViewModelTests" */;
+			buildConfigurationList = DD97B0402755F8FC009A1E5C /* Build configuration list for PBXNativeTarget "MaximTests" */;
 			buildPhases = (
-				DD8473562744C1BA00DF4FCB /* Sources */,
-				DD8473572744C1BA00DF4FCB /* Frameworks */,
-				DD8473582744C1BA00DF4FCB /* Resources */,
+				F8910C2512BCDBFFBC89DB04 /* [CP] Check Pods Manifest.lock */,
+				DD97B0362755F8FC009A1E5C /* Sources */,
+				DD97B0372755F8FC009A1E5C /* Frameworks */,
+				DD97B0382755F8FC009A1E5C /* Resources */,
+				8A126E409EA1840F6BA674C7 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				DD84735F2744C1BA00DF4FCB /* PBXTargetDependency */,
+				DD97B03F2755F8FC009A1E5C /* PBXTargetDependency */,
 			);
-			name = MaximViewModelTests;
-			productName = MaximViewModelTests;
-			productReference = DD84735A2744C1BA00DF4FCB /* MaximViewModelTests.xctest */;
+			name = MaximTests;
+			productName = MaximTests;
+			productReference = DD97B03A2755F8FC009A1E5C /* MaximTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		DD97B05E27562DA7009A1E5C /* MeTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DD97B06527562DA7009A1E5C /* Build configuration list for PBXNativeTarget "MeTests" */;
+			buildPhases = (
+				19E785978DFA75A18FD19D28 /* [CP] Check Pods Manifest.lock */,
+				DD97B05B27562DA7009A1E5C /* Sources */,
+				DD97B05C27562DA7009A1E5C /* Frameworks */,
+				DD97B05D27562DA7009A1E5C /* Resources */,
+				4F8625CEC82E577615AA0A75 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DD97B06427562DA7009A1E5C /* PBXTargetDependency */,
+			);
+			name = MeTests;
+			productName = MeTests;
+			productReference = DD97B05F27562DA7009A1E5C /* MeTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -1156,9 +1244,11 @@
 					DD3902CC272FCA10009ECA82 = {
 						CreatedOnToolsVersion = 13.1;
 					};
-					DD8473592744C1BA00DF4FCB = {
+					DD97B0392755F8FC009A1E5C = {
 						CreatedOnToolsVersion = 13.1;
-						TestTargetID = DD3902CC272FCA10009ECA82;
+					};
+					DD97B05E27562DA7009A1E5C = {
+						CreatedOnToolsVersion = 13.1;
 					};
 				};
 			};
@@ -1178,7 +1268,8 @@
 				DD3902CC272FCA10009ECA82 /* JipJung */,
 				B4F36B5527338E9B0073609C /* UserDefaultsStorageTest */,
 				912A72002733B99300C1A37E /* LocalFileManagerTests */,
-				DD8473592744C1BA00DF4FCB /* MaximViewModelTests */,
+				DD97B0392755F8FC009A1E5C /* MaximTests */,
+				DD97B05E27562DA7009A1E5C /* MeTests */,
 			);
 		};
 /* End PBXProject section */
@@ -1214,12 +1305,11 @@
 				B401E39B274E2EE70065A9EA /* M001.jpg in Resources */,
 				B401E3B0274E2F0B0065A9EA /* N001.jpg in Resources */,
 				B401E3EF274E30D20065A9EA /* U002.mp4 in Resources */,
-				918D19A5273D21B300A13954 /* sea.mp4 in Resources */,
 				B401E37C274E2ED60065A9EA /* D002.jpg in Resources */,
 				B401E39E274E2EE70065A9EA /* M011.jpg in Resources */,
 				B401E3DA274E2FE30065A9EA /* N006.jpg in Resources */,
 				B401E377274E2ED60065A9EA /* D002.mp3 in Resources */,
-				91D02279273CDF610073EA2A /* DummyData.json in Resources */,
+				91D02279273CDF610073EA2A /* ResourceData.json in Resources */,
 				B401E395274E2EE70065A9EA /* M013.jpg in Resources */,
 				B401E3CC274E2F920065A9EA /* D004.jpg in Resources */,
 				B401E3FD274E4E160065A9EA /* U003.mp4 in Resources */,
@@ -1253,11 +1343,10 @@
 				B401E3EE274E30D20065A9EA /* U002.jpg in Resources */,
 				B401E39D274E2EE70065A9EA /* M008.jpg in Resources */,
 				B401E3BD274E2F540065A9EA /* U001.jpg in Resources */,
-				918D19A5273D21B300A13954 /* sea.mp4 in Resources */,
 				B401E3D7274E2FE30065A9EA /* N003.mp4 in Resources */,
 				B401E37B274E2ED60065A9EA /* D001.mp3 in Resources */,
 				B401E397274E2EE70065A9EA /* M007.jpg in Resources */,
-				91D02279273CDF610073EA2A /* DummyData.json in Resources */,
+				91D02279273CDF610073EA2A /* ResourceData.json in Resources */,
 				DF05FD3A274D7FD1006C8689 /* breath.WAV in Resources */,
 				DD7CDCB9274E074E005ADF35 /* DummyFocusData.json in Resources */,
 				B401E3D8274E2FE30065A9EA /* N007.mp4 in Resources */,
@@ -1278,7 +1367,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		DD8473582744C1BA00DF4FCB /* Resources */ = {
+		DD97B0382755F8FC009A1E5C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DD97B05D27562DA7009A1E5C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1288,6 +1384,28 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		19E785978DFA75A18FD19D28 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-JipJung-MeTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		422FBE53D64A355C459A434C /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1327,6 +1445,40 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-JipJung/Pods-JipJung-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		4F8625CEC82E577615AA0A75 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-JipJung-MeTests/Pods-JipJung-MeTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-JipJung-MeTests/Pods-JipJung-MeTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-JipJung-MeTests/Pods-JipJung-MeTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8A126E409EA1840F6BA674C7 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-JipJung-MaximTests/Pods-JipJung-MaximTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-JipJung-MaximTests/Pods-JipJung-MaximTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-JipJung-MaximTests/Pods-JipJung-MaximTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		DD3902FB272FD2F2009ECA82 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1343,6 +1495,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
+		};
+		F8910C2512BCDBFFBC89DB04 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-JipJung-MaximTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1372,7 +1546,6 @@
 				B4F36B682733D4210073609C /* SearchTableViewCell.swift in Sources */,
 				B4EF13B927429A0F0086D8CD /* SearchMediaUseCase.swift in Sources */,
 				B4E421112746753B00C39545 /* UITableViewCell+Extension.swift in Sources */,
-				B4EF13BB274370060086D8CD /* String+Extension.swift in Sources */,
 				B40D1FB9273B674F00881A49 /* InfinityFocusViewController.swift in Sources */,
 				DDB92B9D2737BD5E00EE26F0 /* UIView+Extension.swift in Sources */,
 				B40D1FA9273B5F1900881A49 /* DefaultFocusViewController.swift in Sources */,
@@ -1387,7 +1560,7 @@
 				DF1722B72741036C00F06140 /* BundleManager.swift in Sources */,
 				DF1496AB274F83BA0053776F /* FeedbackGenerator.swift in Sources */,
 				DDB5CEB32733752D00E8F9EB /* FavoriteMedia.swift in Sources */,
-				DDB92BB0273A263100EE26F0 /* MusicCollectionViewCell.swift in Sources */,
+				DDB92BB0273A263100EE26F0 /* MediaCollectionViewCell.swift in Sources */,
 				DDB5CEB32733752D00E8F9EB /* FavoriteMedia.swift in Sources */,
 				DD4D030927449AAC007AA4DD /* MaximPresenterObject.swift in Sources */,
 				DD4D03072743BBB9007AA4DD /* MaximCollectionViewCell.swift in Sources */,
@@ -1401,10 +1574,8 @@
 				B4153947273BA005004EF80F /* Date+Extension.swift in Sources */,
 				DDB5CEA827328EF400E8F9EB /* MeViewController.swift in Sources */,
 				B4EF13B3274293220086D8CD /* SearchHistoryRepository.swift in Sources */,
-				DDB5CEB12733746600E8F9EB /* Maxim.swift in Sources */,
 				DF30FF05273CBC3B001C720E /* MusicPlayerButtons.swift in Sources */,
 				B4B780DF2741F6FA0080DC28 /* BreathFocusViewController.swift in Sources */,
-				DDB5CEB82733765500E8F9EB /* FavoriteMaxim.swift in Sources */,
 				9165585A273B78A000C55CDC /* MediaListRepository.swift in Sources */,
 				DF6B111127390F1900D9924E /* MediaResourceRepository.swift in Sources */,
 				9172BBF3274225F2000E1060 /* ExploreViewModel.swift in Sources */,
@@ -1413,13 +1584,12 @@
 				91655856273B6F0200C55CDC /* LocalDBEnums.swift in Sources */,
 				91655852273B618700C55CDC /* LocalFileEnums.swift in Sources */,
 				9172BBFE274226B1000E1060 /* MaximViewModel.swift in Sources */,
-				DD7CDCAC274CBA66005ADF35 /* MeMonthYearStaticsCollectionViewCell.swift in Sources */,
 				DDB5CEA227328EC300E8F9EB /* ExploreViewController.swift in Sources */,
-				DFED21CB2733702800E99641 /* MusicPlayerViewController.swift in Sources */,
+				DFED21CB2733702800E99641 /* MediaPlayerViewController.swift in Sources */,
 				9131514127400FBB001E7125 /* UIApplication+Extension.swift in Sources */,
 				DF6B111127390F1900D9924E /* MediaResourceRepository.swift in Sources */,
-				B481FC7F2745238100D1F2EA /* MyFavoriteRepository.swift in Sources */,
-				DDB5CEB82733765500E8F9EB /* FavoriteMaxim.swift in Sources */,
+				B481FC7F2745238100D1F2EA /* FavoriteRepository.swift in Sources */,
+				DFA33D51275617D700E675BF /* FocusButtons.swift in Sources */,
 				DD82808C273CAE5F00BB2A60 /* FocusViewControllerFactory.swift in Sources */,
 				B4B780E12741F7070080DC28 /* BreathFocusViewModel.swift in Sources */,
 				DDB5CEA227328EC300E8F9EB /* ExploreViewController.swift in Sources */,
@@ -1450,31 +1620,32 @@
 				91D0226A273CB6050073EA2A /* DarknessMedia.swift in Sources */,
 				B40D1FB7273B60A500881A49 /* Int+Extension.swift in Sources */,
 				B40D1FB3273B5F3500881A49 /* InfinityFocusViewModel.swift in Sources */,
+				DD97B0282755C2FA009A1E5C /* Focus+Enums.swift in Sources */,
 				B4EF13B72742935B0086D8CD /* SearchViewModel.swift in Sources */,
 				91CE6F6F2739024800176AF2 /* Home+Enums.swift in Sources */,
 				B42226CE2741144200F8CA3D /* UITableView+Extension.swift in Sources */,
 				9165585E273B8F5000C55CDC /* MaximListRepository.swift in Sources */,
-				9172BBEF274225A3000E1060 /* MusicPlayerViewModel.swift in Sources */,
+				9172BBEF274225A3000E1060 /* MediaPlayerViewModel.swift in Sources */,
 				B40D1FAB273B5F2100881A49 /* DefaultFocusViewModel.swift in Sources */,
 				91DABCC0273A4EF000E57AAE /* AudioPlayUseCase.swift in Sources */,
 				91D02268273CB5FD0073EA2A /* BrightMedia.swift in Sources */,
 				DD4D030527425611007AA4DD /* UILabel+Extension.swift in Sources */,
 				DDB5CEBE2733A49A00E8F9EB /* RealmDBManager.swift in Sources */,
-				DD6FD1F8274BD08400568A4E /* MeHeaderCollectionReusableView.swift in Sources */,
 				DF1496A9274F5B990053776F /* PushNotificationManager.swift in Sources */,
 				91655858273B773400C55CDC /* MaximListUseCase.swift in Sources */,
 				91EA47C6273846A800780C3E /* BlurCircleButton.swift in Sources */,
 				B4015CD42739151B006BD14A /* PlayHistoryViewController.swift in Sources */,
-				DD7CDCAE274CBA95005ADF35 /* MeExtraCollectionViewCell.swift in Sources */,
 				DD8564CA273F9E6F00049D9B /* SlowPresent.swift in Sources */,
 				91A98C91274D58EF00E7DCC8 /* PlayHistoryRepository.swift in Sources */,
-				DFED21D02733931600E99641 /* MusicDescriptionView.swift in Sources */,
+				DFED21D02733931600E99641 /* MediaDescriptionView.swift in Sources */,
 				912F3339274F9FF7000E08FB /* PlayHistoryViewModel.swift in Sources */,
 				DD828092273D113200BB2A60 /* NetworkEnums.swift in Sources */,
+				919519412755E24E0081A775 /* Common+Enums.swift in Sources */,
 				DD3902D3272FCA10009ECA82 /* SceneDelegate.swift in Sources */,
 				DD8473672746112D00DF4FCB /* Maxim+Enums.swift in Sources */,
 				B481FC7D274521B800D1F2EA /* FavoriteMediaUseCase.swift in Sources */,
 				B4EF13BD2744B9880086D8CD /* FetchMediaURLUseCase.swift in Sources */,
+				DD97B04A27562949009A1E5C /* Maxim.swift in Sources */,
 				DD208D30273B55240089A2AB /* PulseAnimation.swift in Sources */,
 				91D0226C273CBA340073EA2A /* MediaListUseCase.swift in Sources */,
 				DF1722B42741013600F06140 /* LocalDBMigrator.swift in Sources */,
@@ -1489,23 +1660,35 @@
 				B4015CD82739270C006BD14A /* SoundTagCollectionViewCell.swift in Sources */,
 				912F3333274F5489000E08FB /* MediaPlayViewModel.swift in Sources */,
 				912F3335274F6B70000E08FB /* Notification+Extension.swift in Sources */,
-				9198DE952733863500EBAEC8 /* Common.swift in Sources */,
 				917BDD5B2745FBDA0049E944 /* MediaPlayView.swift in Sources */,
 				DF05FD14274ABCDF006C8689 /* WiggleAnimation.swift in Sources */,
 				DF1722B22740FD2300F06140 /* ApplicationLaunch.swift in Sources */,
 				91CE6F7527391E1C00176AF2 /* HomeViewModel.swift in Sources */,
 				DD4D030227423C54007AA4DD /* CloseButton.swift in Sources */,
 				917BDD5D2746268D0049E944 /* TouchTransferView.swift in Sources */,
-				DFED21D92733AE8400E99641 /* MusicPlayerMaximView.swift in Sources */,
+				DFED21D92733AE8400E99641 /* MediaPlayerMaximView.swift in Sources */,
 				DF30FEF9273A730F001C720E /* TagCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		DD8473562744C1BA00DF4FCB /* Sources */ = {
+		DD97B0362755F8FC009A1E5C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DD8473632744C24500DF4FCB /* MaximViewModel.swift in Sources */,
+				DD97B04827561135009A1E5C /* MaximListRepositoryStub.swift in Sources */,
+				DD97B045275608E2009A1E5C /* Date+Extension.swift in Sources */,
+				DD97B04927561F2B009A1E5C /* Maxim.swift in Sources */,
+				DD97B0432755FE96009A1E5C /* MaximListUseCase.swift in Sources */,
+				DD97B03D2755F8FC009A1E5C /* MaximListUseCaseTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DD97B05B27562DA7009A1E5C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DD97B06227562DA7009A1E5C /* MeTests.swift in Sources */,
+				DDF0D7C12756340200FE8681 /* FocusRecord.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1522,10 +1705,15 @@
 			target = DD3902CC272FCA10009ECA82 /* JipJung */;
 			targetProxy = B4F36B5A27338E9B0073609C /* PBXContainerItemProxy */;
 		};
-		DD84735F2744C1BA00DF4FCB /* PBXTargetDependency */ = {
+		DD97B03F2755F8FC009A1E5C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = DD3902CC272FCA10009ECA82 /* JipJung */;
-			targetProxy = DD84735E2744C1BA00DF4FCB /* PBXContainerItemProxy */;
+			targetProxy = DD97B03E2755F8FC009A1E5C /* PBXContainerItemProxy */;
+		};
+		DD97B06427562DA7009A1E5C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DD3902CC272FCA10009ECA82 /* JipJung */;
+			targetProxy = DD97B06327562DA7009A1E5C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1811,10 +1999,10 @@
 			};
 			name = Release;
 		};
-		DD8473602744C1BA00DF4FCB /* Debug */ = {
+		DD97B0412755F8FC009A1E5C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B2B7324890A70CF247912613 /* Pods-JipJung-MaximTests.debug.xcconfig */;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6785P7H4GT;
@@ -1826,19 +2014,18 @@
 					"@loader_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = Wavvie.MaximViewModelTests;
+				PRODUCT_BUNDLE_IDENTIFIER = Albireo3754.MaximTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/JipJung.app/JipJung";
 			};
 			name = Debug;
 		};
-		DD8473612744C1BA00DF4FCB /* Release */ = {
+		DD97B0422755F8FC009A1E5C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1530308276B90D1ECB8302E9 /* Pods-JipJung-MaximTests.release.xcconfig */;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6785P7H4GT;
@@ -1850,12 +2037,57 @@
 					"@loader_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = Wavvie.MaximViewModelTests;
+				PRODUCT_BUNDLE_IDENTIFIER = Albireo3754.MaximTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/JipJung.app/JipJung";
+			};
+			name = Release;
+		};
+		DD97B06627562DA7009A1E5C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = AA0CE16DE313933A518FE3FB /* Pods-JipJung-MeTests.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6785P7H4GT;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Albireo3754.MeTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		DD97B06727562DA7009A1E5C /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 494377D0B5850D3875EADB60 /* Pods-JipJung-MeTests.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6785P7H4GT;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Albireo3754.MeTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -1898,11 +2130,20 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		DD8473622744C1BA00DF4FCB /* Build configuration list for PBXNativeTarget "MaximViewModelTests" */ = {
+		DD97B0402755F8FC009A1E5C /* Build configuration list for PBXNativeTarget "MaximTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				DD8473602744C1BA00DF4FCB /* Debug */,
-				DD8473612744C1BA00DF4FCB /* Release */,
+				DD97B0412755F8FC009A1E5C /* Debug */,
+				DD97B0422755F8FC009A1E5C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DD97B06527562DA7009A1E5C /* Build configuration list for PBXNativeTarget "MeTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DD97B06627562DA7009A1E5C /* Debug */,
+				DD97B06727562DA7009A1E5C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -6,52 +6,50 @@
 //
 
 import Foundation
-import RxSwift
+
 import RxRelay
+import RxSwift
 
 enum PomodoroMode {
     case work
     case relax
 }
 
-protocol PomodoroFocusViewModelInput {
-    func changeTimerState(to timerState: TimerState)
-    func startClockTimer()
-    func pauseClockTimer()
-    func resetClockTimer()
-    func setFocusTime(seconds: Int)
-    func saveFocusRecord()
-}
-
-protocol PomodoroFocusViewModelOutput {
-    var clockTime: BehaviorRelay<Int> { get }
-    var isFocusRecordSaved: BehaviorRelay<Bool> { get }
-    var mode: BehaviorRelay<PomodoroMode> { get }
-}
-
-final class PomodoroFocusViewModel: PomodoroFocusViewModelInput, PomodoroFocusViewModelOutput {
-    var clockTime: BehaviorRelay<Int> = BehaviorRelay<Int>(value: 0)
-    var isFocusRecordSaved: BehaviorRelay<Bool> = BehaviorRelay<Bool>(value: false)
-    var timerState: BehaviorRelay<TimerState> = BehaviorRelay<TimerState>(value: .ready)
-    var mode: BehaviorRelay<PomodoroMode> = BehaviorRelay<PomodoroMode>(value: .work)
-    let focusTimeList: [Int] = [1, 5, 8, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180]
-    var focusTime: Int = 60
-    var totalFocusTime: Int = 0
+final class PomodoroFocusViewModel {
+    let clockTime = BehaviorRelay<Int>(value: 0)
+    let isFocusRecordSaved = BehaviorRelay<Bool>(value: false)
+    let timerState = BehaviorRelay<TimerState>(value: .ready)
+    let mode = BehaviorRelay<PomodoroMode>(value: .work)
+    let focusTimeList = [1, 5, 8, 10, 15, 20, 25, 30, 35,
+                         40, 45, 50, 55, 60, 70, 80, 90,
+                         100, 110, 120, 130, 140, 150, 160, 170, 180]
+    let timeUnit = 5
     
-    private var runningStateDisposeBag: DisposeBag = DisposeBag()
-    private var disposeBag: DisposeBag = DisposeBag()
+    var totalFocusTime = 0
     
-    private let saveFocusTimeUseCase: SaveFocusTimeUseCaseProtocol
+    lazy var focusTime = timeUnit
     
-    init(saveFocusTimeUseCase: SaveFocusTimeUseCaseProtocol) {
-        self.saveFocusTimeUseCase = saveFocusTimeUseCase
-    }
+    private let disposeBag = DisposeBag()
+    private let saveFocusTimeUseCase = SaveFocusTimeUseCase()
+    
+    private var runningStateDisposeBag = DisposeBag()
     
     func changeTimerState(to timerState: TimerState) {
         self.timerState.accept(timerState)
     }
     
     func startClockTimer() {
+        if mode.value == .work {
+            NotificationCenter.default.post(
+                name: .controlForFocus,
+                object: nil,
+                userInfo: [
+                    "PlayState": true
+                ]
+            )
+            
+        }
+        
         Observable<Int>.interval(RxTimeInterval.seconds(1),
                                  scheduler: MainScheduler.instance)
             .subscribe { [weak self] _ in
@@ -66,27 +64,42 @@ final class PomodoroFocusViewModel: PomodoroFocusViewModelInput, PomodoroFocusVi
     }
     
     func pauseClockTimer() {
+        NotificationCenter.default.post(
+            name: .controlForFocus,
+            object: nil,
+            userInfo: [
+                "PlayState": false
+            ]
+        )
+        
         runningStateDisposeBag = DisposeBag()
     }
     
     func resetClockTimer() {
+        NotificationCenter.default.post(
+            name: .controlForFocus,
+            object: nil,
+            userInfo: [
+                "PlayState": false
+            ]
+        )
+        
         clockTime.accept(0)
         runningStateDisposeBag = DisposeBag()
     }
     
-    func setFocusTime(seconds: Int) {
-        focusTime = seconds
+    func setFocusTime(value: Int) {
+        focusTime = value * timeUnit
     }
     
     func saveFocusRecord() {
         saveFocusTimeUseCase.execute(seconds: totalFocusTime)
             .subscribe { [weak self] in
-                print(self?.totalFocusTime) //
                 self?.isFocusRecordSaved.accept($0)
             } onFailure: { [weak self] _ in
                 self?.isFocusRecordSaved.accept(false)
             }
-            .disposed(by: disposeBag) // TODO: disposeBag 2개 쓰는 것 같은데 하나만 써도 되지 않을까요?
+            .disposed(by: disposeBag)
     }
     
     func changeMode() {
@@ -104,5 +117,31 @@ final class PomodoroFocusViewModel: PomodoroFocusViewModelInput, PomodoroFocusVi
     
     func resetTotalFocusTime() {
         totalFocusTime = 0
+    }
+    
+    func alertNotification() {
+        let clockTime = clockTime.value
+        let sadEmojis = ["🥶", "😣", "😞", "😟", "😕"]
+        let happyEmojis = ["☺️", "😘", "😍", "🥳", "🤩"]
+        let relaxEmojis = ["👍", "👏", "🤜", "🙌", "🙏"]
+        switch mode.value {
+        case .work:
+            let minuteString = clockTime / 60 == 0 ? "" : "\(clockTime / 60)분 "
+            let secondString = clockTime % 60 == 0 ? "" : "\(clockTime % 60)초 "
+            let message = focusTime - clockTime > 0
+            ? "완료시간 전에 종료되었어요." + (sadEmojis.randomElement() ?? "")
+            : minuteString + secondString + "집중하셨어요!" + (happyEmojis.randomElement() ?? "")
+            PushNotificationMananger.shared.presentFocusStopNotification(
+                title: .focusFinish,
+                body: message
+            )
+        case .relax:
+            let message = "휴식시간이 끝났어요! 다시 집중해볼까요?" + (relaxEmojis.randomElement() ?? "")
+            PushNotificationMananger.shared.presentFocusStopNotification(
+                title: .relaxFinish,
+                body: message
+            )
+        }
+        FeedbackGenerator.shared.impactOccurred()
     }
 }

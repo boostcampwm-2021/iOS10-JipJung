@@ -13,22 +13,22 @@ final class MediaListUseCase {
     private let mediaListRepository = MediaListRepository()
     
     func fetchAllMediaList() -> Single<[Media]> {
-        return mediaListRepository.fetchAllMediaList()
+        return mediaListRepository.read()
     }
     
     func fetchMediaMyList(mode: MediaMode) -> Single<[Media]> {
-        return mediaListRepository.fetchMediaMyList(mode: mode)
+        return mediaListRepository.read(for: mode)
     }
     
     func removeMediaFromMode(media: Media) -> Single<Bool> {
-        return mediaListRepository.removeMediaFromMode(media: media)
+        return mediaListRepository.delete(mediaID: media.id, mode: media.mode)
     }
     
     func removeMediaFromMode(id: String, mode: Int) -> Single<Bool> {
-        mediaListRepository.removeMediaFromMode(id: id, mode: mode)
+        return mediaListRepository.delete(mediaID: id, mode: mode)
     }
     
-    func saveMediaFromMode(id: String, mode: Int) -> Single<Bool>  {
-        return mediaListRepository.saveMediaFromMode(id: id, mode: mode)
+    func saveMediaFromMode(id: String, mode: Int) -> Single<Bool> {
+        return mediaListRepository.create(mediaID: id, mode: mode)
     }
 }

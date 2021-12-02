@@ -6,22 +6,59 @@
 //
 
 import Foundation
+
 import RxSwift
 
 protocol FocusTimeRepositoryProtocol {
-    func save(record: FocusRecord) -> Single<Bool>
-    func load(date: Date) -> Single<[FocusRecord]>
+    func create(record: FocusRecord) -> Single<Bool>
+    func read(date: Date) -> Single<[FocusRecord]>
 }
 
 final class FocusTimeRepository: FocusTimeRepositoryProtocol {
-    private let realmDBManager = RealmDBManager.shared
-    private var disposeBag: DisposeBag = DisposeBag()
+    private let localDBManager = RealmDBManager.shared
     
-    func save(record: FocusRecord) -> Single<Bool> {
-        return realmDBManager.write(record) 
+    func create(record: FocusRecord) -> Single<Bool> {
+        return Single.create { [weak self] single in
+            guard let self = self else {
+                single(.failure(RealmError.initFailed))
+                return Disposables.create()
+            }
+            
+            do {
+                try self.localDBManager.add(record)
+            } catch {
+                single(.failure(error))
+            }
+            single(.success(true))
+            return Disposables.create()
+        }
     }
     
-    func load(date: Date) -> Single<[FocusRecord]> {
-        return realmDBManager.search(ofType: FocusRecord.self, with: NSPredicate(format: "(year = \(date.year)) AND (month = \(date.month)) AND (day = \(date.day))"))
+    func read(date: Date) -> Single<[FocusRecord]> {
+        return Single.create { [weak self] single in
+            guard let self = self else {
+                single(.failure(RealmError.initFailed))
+                return Disposables.create()
+            }
+            
+            do {
+                let predicate = NSPredicate(
+                    format: "(year = %@) AND (month = %@) AND (day = %@)",
+                    argumentArray: [
+                        date.year,
+                        date.month,
+                        date.day
+                    ]
+                )
+                let result = try self.localDBManager.objects(
+                    ofType: FocusRecord.self,
+                    with: predicate
+                )
+                single(.success(result))
+            } catch {
+                single(.failure(RealmError.searchFailed))
+            }
+            return Disposables.create()
+        }
     }
 }

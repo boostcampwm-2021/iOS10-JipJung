@@ -14,24 +14,21 @@ final class PlayHistoryViewController: UIViewController {
     private lazy var playHistoryCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.itemSize = CGSize(width: (UIScreen.deviceScreenSize.width-32)/2-6, height: 220)
+        let cellWidth = (UIScreen.deviceScreenSize.width - 32) / 2 - 6
+        layout.itemSize = CGSize(width: cellWidth, height: cellWidth * MediaCell.ratio)
         layout.sectionInset = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16)
         layout.minimumInteritemSpacing = 8
         layout.minimumLineSpacing = 8
 
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .clear
         collectionView.showsHorizontalScrollIndicator = false
-        collectionView.register(
-            MusicCollectionViewCell.self,
-            forCellWithReuseIdentifier: MusicCollectionViewCell.identifier
-        )
+        collectionView.register(MediaCollectionViewCell.self)
         return collectionView
     }()
     
     private let viewModel = PlayHistoryViewModel()
     private let disposeBag = DisposeBag()
-    
-    // MARK: - Lifecycle Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,13 +39,14 @@ final class PlayHistoryViewController: UIViewController {
         viewModel.viewDidLoad()
     }
     
-    // MARK: - Helpers
-    
     private func configureUI() {
         view.backgroundColor = .white
         navigationItem.title = "재생 기록"
         navigationItem.largeTitleDisplayMode = .always
         navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.largeTitleTextAttributes = [
+            NSAttributedString.Key.foregroundColor: UIColor.black
+        ]
         
         view.addSubview(playHistoryCollectionView)
         playHistoryCollectionView.snp.makeConstraints {
@@ -65,8 +63,8 @@ final class PlayHistoryViewController: UIViewController {
     private func bindUIwithView() {
         playHistoryCollectionView.rx.modelSelected(Media.self)
             .subscribe(onNext: { [weak self] media in
-                let musicPlayerView = MusicPlayerViewController(
-                    viewModel: MusicPlayerViewModel(
+                let musicPlayerView = MediaPlayerViewController(
+                    viewModel: MediaPlayerViewModel(
                         media: media
                     )
                 )
@@ -79,10 +77,10 @@ final class PlayHistoryViewController: UIViewController {
         viewModel.playHistory
             .bind(
                 to: playHistoryCollectionView.rx.items(
-                    cellIdentifier: MusicCollectionViewCell.identifier
+                    cellIdentifier: MediaCollectionViewCell.identifier
                 )
-            ) { (item, element, cell) in
-                guard let cell = cell as? MusicCollectionViewCell else { return }
+            ) { (_, element, cell) in
+                guard let cell = cell as? MediaCollectionViewCell else { return }
 
                 cell.titleView.text = element.name
                 cell.imageView.image = UIImage(named: element.thumbnailImageFileName)

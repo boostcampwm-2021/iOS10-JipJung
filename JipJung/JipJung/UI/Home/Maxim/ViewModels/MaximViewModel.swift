@@ -6,41 +6,28 @@
 //
 
 import Foundation
+
 import RxRelay
 import RxSwift
 
-protocol MaximViewModelInput {
-    func fetchMaximList()
-    func presentHeader()
-    func dismissHeader()
-    func selectDate(with indexPath: IndexPath)
-    func moveNDate(with nDate: Int)
-}
-
-protocol MaximViewModelOutput {
-    var maximList: BehaviorRelay<[MaximPresenterObject]> { get }
-    var isHeaderPresent: BehaviorRelay<Bool> { get }
-    var imageURLs: BehaviorRelay<[String]> { get }
-    var selectedDate: BehaviorRelay<IndexPath> { get }
-}
-
-final class MaximViewModel: MaximViewModelInput, MaximViewModelOutput {
+final class MaximViewModel {
     let maximList = BehaviorRelay<[MaximPresenterObject]>(value: [])
     let isHeaderPresent = BehaviorRelay<Bool>(value: false)
     let imageURLs = BehaviorRelay<[String]>(value: [])
     let selectedDate = BehaviorRelay<IndexPath>(value: IndexPath(item: 0, section: 0))
-    private var disposeBag = DisposeBag()
-    private let maximListUseCase: MaximListUseCase
-    private let today = Date()
     
-    init(maximListUseCase: MaximListUseCase = MaximListUseCase()) {
-        self.maximListUseCase = maximListUseCase
-    }
-
+    private let disposeBag = DisposeBag()
+    private let maximListUseCase = MaximListUseCase(
+        maximListRepository: MaximListRepository()
+    )
+    
     func fetchMaximList() {
-        maximListUseCase.fetchMaximList()
-            .map({
-                $0.map({ MaximPresenterObject(maxim: $0) })})
+        maximListUseCase.fetchWeeksMaximList()
+            .map {
+                $0.map {
+                    MaximPresenterObject(maxim: $0)
+                }
+            }
             .subscribe { [weak self] in
                 self?.maximList.accept($0)
             }
@@ -60,8 +47,12 @@ final class MaximViewModel: MaximViewModelInput, MaximViewModelOutput {
     }
     
     func moveNDate(with nDate: Int) {
-        if 0 <= selectedDate.value.item + nDate && selectedDate.value.item + nDate < maximList.value.count {
-            selectedDate.accept(IndexPath(item: selectedDate.value.item + nDate, section: selectedDate.value.section))
+        if (0..<maximList.value.count) ~= (selectedDate.value.item + nDate) {
+            let newSelectedDate = IndexPath(
+                item: selectedDate.value.item + nDate,
+                section: selectedDate.value.section
+            )
+            selectedDate.accept(newSelectedDate)
         }
     }
 }

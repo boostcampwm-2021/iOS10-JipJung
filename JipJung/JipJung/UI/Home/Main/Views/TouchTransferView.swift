@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TouchTransferView: UIView {
+final class TouchTransferView: UIView {
     var transferView: UIView?
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

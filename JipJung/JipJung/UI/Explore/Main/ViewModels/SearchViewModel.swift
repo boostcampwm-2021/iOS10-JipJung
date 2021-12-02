@@ -6,54 +6,40 @@
 //
 
 import Foundation
-import RxSwift
+
 import RxRelay
+import RxSwift
 
-protocol SearchViewModelInput {
-    func saveSearchKeyword(keyword: String)
-    func loadSearchHistory()
-    func removeSearchHistory(at index: Int)
-    func search(keyword: String)
-}
-
-protocol SearchViewModelOutput {
-    var searchHistory: BehaviorRelay<[String]> { get }
-    var searchResult: BehaviorRelay<[Media]> { get }
-}
-
-final class SearchViewModel: SearchViewModelInput, SearchViewModelOutput {
-    var searchHistory: BehaviorRelay<[String]> = BehaviorRelay<[String]>(value: [])
-    var searchResult: BehaviorRelay<[Media]> = BehaviorRelay<[Media]>(value: [])
+final class SearchViewModel {
+    let searchHistory = BehaviorRelay<[String]>(value: [])
+    let searchResult = BehaviorRelay<[Media]>(value: [])
     
-    private var disposeBag: DisposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
+    private let searchHistoryUseCase = SearchHistoryUseCase()
+    private let searchMediaUseCase = SearchMediaUseCase()
     
-    private let searchHistoryUseCase: SearchHistoryUseCase
-    private let searchMediaUseCase: SearchMediaUseCase
-    
-    init(searchHistoryUseCase: SearchHistoryUseCase,
-         searchMediaUseCase: SearchMediaUseCase) {
-        self.searchHistoryUseCase = searchHistoryUseCase
-        self.searchMediaUseCase = searchMediaUseCase
-    }
-
     func saveSearchKeyword(keyword: String) {
         var searchHistoryValue = searchHistoryUseCase.load()
         searchHistoryValue.append(keyword)
         searchHistoryUseCase.save(searchHistoryValue)
+        
+        searchHistoryValue = searchHistoryValue.reversed()
+            .elements(in: 0..<5)
         searchHistory.accept(searchHistoryValue)
     }
     
     func loadSearchHistory() {
         let searchHistoryValue = searchHistoryUseCase.load()
+            .reversed()
+            .elements(in: 0..<5)
         searchHistory.accept(searchHistoryValue)
     }
     
     func removeSearchHistory(at index: Int) {
         guard self.searchHistory.value.count > index else { return }
-        var searchHistoryValue = searchHistory.value
-        searchHistoryValue.remove(at: index)
+        var searchHistoryValue = searchHistoryUseCase.load()
+        searchHistoryValue.remove(at: searchHistoryValue.count-1-index)
         searchHistoryUseCase.save(searchHistoryValue)
-        searchHistory.accept(searchHistoryUseCase.load())
     }
     
     func search(keyword: String) {

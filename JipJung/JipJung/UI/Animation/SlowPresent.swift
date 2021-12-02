@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SlowPresent: NSObject {
+final class SlowPresent: NSObject {
     enum AnimationType {
         case present, dismiss
     }
@@ -22,7 +22,9 @@ class SlowPresent: NSObject {
 }
 
 extension SlowPresent: UIViewControllerAnimatedTransitioning {
-    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
+    func transitionDuration(
+        using transitionContext: UIViewControllerContextTransitioning?
+    ) -> TimeInterval {
         return duration
     }
     
@@ -45,11 +47,10 @@ extension SlowPresent: UIViewControllerAnimatedTransitioning {
         }
     }
     
-    func animationEnded(_ transitionCompleted: Bool) {
-        print(transitionCompleted)
-    }
-    
-    private func presentAnimation(with transitionContext: UIViewControllerContextTransitioning, toView: UIView) {
+    private func presentAnimation(
+        with transitionContext: UIViewControllerContextTransitioning,
+        toView: UIView
+    ) {
         let animationDuration = transitionDuration(using: transitionContext)
         toView.alpha = 0
         UIView.animate(
@@ -59,10 +60,14 @@ extension SlowPresent: UIViewControllerAnimatedTransitioning {
             },
             completion: {
                 transitionContext.completeTransition($0)
-            })
+            }
+        )
     }
     
-    private func dismissAnimation(with transitionContext: UIViewControllerContextTransitioning, fromView: UIView) {
+    private func dismissAnimation(
+        with transitionContext: UIViewControllerContextTransitioning,
+        fromView: UIView
+    ) {
         let animationDuration = transitionDuration(using: transitionContext)
         UIView.animate(
             withDuration: animationDuration,
@@ -71,6 +76,7 @@ extension SlowPresent: UIViewControllerAnimatedTransitioning {
             },
             completion: {
                 transitionContext.completeTransition($0)
-            })
+            }
+        )
     }
 }

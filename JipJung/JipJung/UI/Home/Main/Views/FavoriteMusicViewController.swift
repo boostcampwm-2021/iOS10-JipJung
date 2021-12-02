@@ -14,24 +14,21 @@ final class FavoriteViewController: UIViewController {
     private lazy var favoriteCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.itemSize = CGSize(width: (UIScreen.deviceScreenSize.width-32)/2-6, height: 220)
+        let cellWidth = (UIScreen.deviceScreenSize.width - 32) / 2 - 6
+        layout.itemSize = CGSize(width: cellWidth, height: cellWidth * MediaCell.ratio)
         layout.sectionInset = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16)
         layout.minimumInteritemSpacing = 8
         layout.minimumLineSpacing = 8
 
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .clear
         collectionView.showsHorizontalScrollIndicator = false
-        collectionView.register(
-            MusicCollectionViewCell.self,
-            forCellWithReuseIdentifier: MusicCollectionViewCell.identifier
-        )
+        collectionView.register(MediaCollectionViewCell.self)
         return collectionView
     }()
     
     private let viewModel = FavoriteViewModel()
     private let disposeBag = DisposeBag()
-    
-    // MARK: - Lifecycle Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,14 +39,15 @@ final class FavoriteViewController: UIViewController {
         viewModel.viewDidLoad()
     }
     
-    // MARK: - Helpers
-    
     private func configureUI() {
         view.backgroundColor = .white
         navigationItem.title = "좋아요 누른 음원"
         navigationItem.largeTitleDisplayMode = .always
         navigationController?.navigationBar.prefersLargeTitles = true
-        
+        navigationController?.navigationBar.largeTitleTextAttributes = [
+            NSAttributedString.Key.foregroundColor: UIColor.black
+        ]
+
         view.addSubview(favoriteCollectionView)
         favoriteCollectionView.snp.makeConstraints {
             $0.top.equalTo(view.snp.topMargin)
@@ -65,8 +63,8 @@ final class FavoriteViewController: UIViewController {
     private func bindUIwithView() {
         favoriteCollectionView.rx.modelSelected(Media.self)
             .subscribe(onNext: { [weak self] media in
-                let musicPlayerView = MusicPlayerViewController(
-                    viewModel: MusicPlayerViewModel(
+                let musicPlayerView = MediaPlayerViewController(
+                    viewModel: MediaPlayerViewModel(
                         media: media
                     )
                 )
@@ -79,10 +77,10 @@ final class FavoriteViewController: UIViewController {
         viewModel.favoriteSoundList
             .bind(
                 to: favoriteCollectionView.rx.items(
-                    cellIdentifier: MusicCollectionViewCell.identifier
+                    cellIdentifier: MediaCollectionViewCell.identifier
                 )
-            ) { (item, element, cell) in
-                guard let cell = cell as? MusicCollectionViewCell else { return }
+            ) { (_, element, cell) in
+                guard let cell = cell as? MediaCollectionViewCell else { return }
 
                 cell.titleView.text = element.name
                 cell.imageView.image = UIImage(named: element.thumbnailImageFileName)

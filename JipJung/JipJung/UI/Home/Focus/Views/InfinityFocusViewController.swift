@@ -6,100 +6,47 @@
 //
 
 import UIKit
-import RxSwift
+
 import RxCocoa
 import RxRelay
+import RxSwift
 
 final class InfinityFocusViewController: FocusViewController {
-    // MARK: - Subviews
-    private lazy var timerView: UIView = {
-        let timerView = UIView(frame: UIScreen.main.bounds)
-        timerView.isUserInteractionEnabled = false
-        return timerView
+    let timerView: UIView = {
+        let length = FocusViewControllerSize.timerViewLength
+        let size = CGSize(width: length * 1.1, height: length * 1.1)
+        let view = UIView(frame: CGRect(origin: .zero, size: size))
+        return view
     }()
-    
     private lazy var timeLabel: UILabel = {
-        let timeLabel = UILabel()
-        timeLabel.text = "00:00"
-        timeLabel.font = UIFont.boldSystemFont(ofSize: 35)
-        timeLabel.textColor = .white
-        return timeLabel
+        let label = UILabel()
+        label.text = "00:00"
+        label.font = .preferredFont(forTextStyle: .largeTitle)
+        label.textColor = .white
+        return label
     }()
-    
     private lazy var circleShapeLayer: CAShapeLayer = {
-        let circleShapeLayer = createCircleShapeLayer(
+        let shapeLayer = createCircleShapeLayer(
             strokeColor: UIColor.systemGray,
             lineWidth: 3
         )
-        return circleShapeLayer
+        return shapeLayer
     }()
-    
     private lazy var cometAnimationLayer: CALayer = {
-        let rotateAnimationLayer = createCometCircleShapeLayer(strokeColor: .white, lineWidth: 3)
-        return rotateAnimationLayer
+        return createCometCircleShapeLayer(strokeColor: .white, lineWidth: 3)
     }()
+    private lazy var pulseGroupLayer = CALayer()
+    private lazy var startButton = FocusStartButton()
+    private lazy var pauseButton = FocusPauseButton()
+    private lazy var continueButton = FocusContinueButton()
+    private lazy var exitButton = FocusExitButton()
     
-    private let pulseGroupLayer = CALayer()
-    
-    private lazy var startButton: UIButton = {
-        let startButton = UIButton()
-        startButton.tintColor = .gray
-        let playImage = UIImage(systemName: "play.fill")?.withRenderingMode(.alwaysTemplate)
-        startButton.setImage(playImage, for: .normal)
-        startButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 12)
-        startButton.setTitle("Start", for: .normal)
-        startButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
-        startButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 0)
-        startButton.setTitleColor(UIColor.gray, for: .normal)
-        startButton.layer.cornerRadius = 25
-        startButton.backgroundColor = .white
-        return startButton
-    }()
-    
-    private lazy var pauseButton: UIButton = {
-        let pauseButton = UIButton()
-        pauseButton.setTitle("Pause", for: .normal)
-        pauseButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
-        pauseButton.setTitleColor(UIColor.white, for: .normal)
-        pauseButton.layer.cornerRadius = 25
-        pauseButton.backgroundColor = .gray
-        pauseButton.layer.borderColor = UIColor.white.cgColor
-        pauseButton.layer.borderWidth = 2
-        return pauseButton
-    }()
-    
-    private lazy var continueButton: UIButton = {
-        let continueButton = UIButton()
-        continueButton.tintColor = .gray
-        continueButton.setTitle("Continue", for: .normal)
-        continueButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
-        continueButton.setTitleColor(UIColor.gray, for: .normal)
-        continueButton.layer.cornerRadius = 25
-        continueButton.backgroundColor = .white
-        return continueButton
-    }()
-    
-    private lazy var exitButton: UIButton = {
-        let exitButton = UIButton()
-        exitButton.setTitle("Exit", for: .normal)
-        exitButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
-        exitButton.setTitleColor(UIColor.white, for: .normal)
-        exitButton.layer.cornerRadius = 25
-        exitButton.backgroundColor = .gray
-        exitButton.layer.borderColor = UIColor.white.cgColor
-        exitButton.layer.borderWidth = 2
-        return exitButton
-    }()
-    
-    // MARK: - Private Variables
-    
-    private var viewModel: InfinityFocusViewModel?
-    // MARK: - Lifecycle Methods
-    
+    private let viewModel = InfinityFocusViewModel()
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureTimerUI()
         configureUI()
+        configureTimerUI()
         bindUI()
     }
     
@@ -112,7 +59,7 @@ final class InfinityFocusViewController: FocusViewController {
         self.timerView.center = CGPoint(x: viewCenter.x, y: viewCenter.y * 0.9)
         UIView.animate(withDuration: 0.6, delay: 0.3, options: []) { [weak self] in
             self?.timerView.alpha = 1
-            self?.timerView.center = CGPoint(x: viewCenter.x, y: viewCenter.y * 0.8)
+            self?.timerView.center = CGPoint(x: viewCenter.x, y: viewCenter.y * 0.65)
             self?.startButton.alpha = 1
         } completion: { [weak self] in
             if $0 {
@@ -128,30 +75,24 @@ final class InfinityFocusViewController: FocusViewController {
         UIView.animate(withDuration: 0.6) { [weak self] in
             self?.timerView.center = viewCenter
             self?.startButton.alpha = 0
-        } completion: { [weak self] in
-            if $0 {
-                self?.cometAnimationLayer.add(CycleAnimation(), forKey: nil)
-            }
         }
     }
-    
-    // MARK: - Initializer
 
-    convenience init(viewModel: InfinityFocusViewModel) {
-        self.init(nibName: nil, bundle: nil)
-        self.viewModel = viewModel
-    }
-    // MARK: - Helpers
-    
     private func configureTimerUI() {
         view.addSubview(timerView)
-        configurePulseLayer()
+        timerView.layer.addSublayer(pulseGroupLayer)
+        let pulseCount = 4
+        for _ in 0..<pulseCount {
+            let pulseLayer = createCircleShapeLayer(strokeColor: .white, lineWidth: 2)
+            pulseGroupLayer.addSublayer(pulseLayer)
+        }
+        
         timerView.layer.addSublayer(circleShapeLayer)
         timerView.addSubview(timeLabel)
         timeLabel.snp.makeConstraints {
             $0.center.equalToSuperview()
         }
-        configureCometLayer()
+        timerView.layer.addSublayer(cometAnimationLayer)
     }
     
     private func configureUI() {
@@ -190,29 +131,18 @@ final class InfinityFocusViewController: FocusViewController {
         }
     }
     
-    private func configurePulseLayer() {
-        timerView.layer.addSublayer(pulseGroupLayer)
-        let pulseCount = 4
-        for _ in 0..<pulseCount {
-            let pulseLayer = createCircleShapeLayer(strokeColor: .white, lineWidth: 2)
-            pulseGroupLayer.addSublayer(pulseLayer)
-        }
-    }
-    
-    private func configureCometLayer() {
-        timerView.layer.addSublayer(cometAnimationLayer)
-    }
-    
     private func bindUI() {
-        viewModel?.timerState.bind(onNext: { [weak self] in
+        viewModel.timerState.bind(onNext: { [weak self] in
                 guard let self = self else { return }
                 switch $0 {
                 case .ready:
-                    self.changeStateToReady()
-                case .running(let isContinue):
-                    self.changeStateToRunning()
+                    self.presentReady()
+                case .running(_):
+                    self.viewModel.startClockTimer()
+                    self.presentRunning()
                 case .paused:
-                    self.changeStateToPaused()
+                    self.viewModel.pauseClockTimer()
+                    self.presentPaused()
                 }
             })
             .disposed(by: disposeBag)
@@ -220,35 +150,35 @@ final class InfinityFocusViewController: FocusViewController {
         startButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
-                self.viewModel?.changeTimerState(to: .running(isResume: false))
+                self.viewModel.changeTimerState(to: .running(isResume: false))
             }
             .disposed(by: disposeBag)
         
         pauseButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
-                self.viewModel?.changeTimerState(to: .paused)
+                self.viewModel.changeTimerState(to: .paused)
             }
             .disposed(by: disposeBag)
         
         continueButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
-                self.viewModel?.changeTimerState(to: .running(isResume: true))
+                self.viewModel.changeTimerState(to: .running(isResume: true))
             }
             .disposed(by: disposeBag)
         
         exitButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
-                self.alertNotification()
-                self.viewModel?.changeTimerState(to: .ready)
-                self.viewModel?.resetClockTimer()
-                self.viewModel?.saveFocusRecord()
+                self.viewModel.alertNotification()
+                self.viewModel.changeTimerState(to: .ready)
+                self.viewModel.resetClockTimer()
+                self.viewModel.saveFocusRecord()
             }
             .disposed(by: disposeBag)
         
-        viewModel?.clockTime
+        viewModel.clockTime
             .bind(onNext: { [weak self] in
                 guard let self = self, $0 > 0 else { return }
                 self.timeLabel.text = $0.digitalClockFormatted
@@ -257,20 +187,7 @@ final class InfinityFocusViewController: FocusViewController {
             .disposed(by: disposeBag)
     }
     
-    private func alertNotification() {
-        guard let clockTime = self.viewModel?.clockTime.value else {
-            return
-        }
-        let happyEmojis = ["☺️", "😘", "😍", "🥳", "🤩"]
-        let minuteString = clockTime / 60 == 0 ? "" : "\(clockTime / 60)분 "
-        let secondString = clockTime % 60 == 0 ? "" : "\(clockTime % 60)초 "
-        let message = minuteString + secondString + "집중하셨어요!" + (happyEmojis.randomElement() ?? "")
-        PushNotificationMananger.shared.presentFocusStopNotification(title: .focusFinish,
-                                                                     body: message)
-        FeedbackGenerator.shared.impactOccurred()
-    }
-    
-    private func changeStateToReady() {
+    private func presentReady() {
         pauseButton.isHidden = true
         timeLabel.text = 0.digitalClockFormatted
         removePulseAnimation()
@@ -296,9 +213,8 @@ final class InfinityFocusViewController: FocusViewController {
         }
     }
     
-    private func changeStateToRunning() {
+    private func presentRunning() {
         startButton.isHidden = true
-        viewModel?.startClockTimer()
         
         UIView.animate(withDuration: 0.5) { [weak self] in
             guard let self = self else { return }
@@ -321,10 +237,9 @@ final class InfinityFocusViewController: FocusViewController {
         }
     }
     
-    private func changeStateToPaused() {
+    private func presentPaused() {
         startButton.isHidden = true
         pauseButton.isHidden = true
-        viewModel?.pauseClockTimer()
 
         UIView.animate(withDuration: 0.5) { [weak self] in
             guard let self = self else { return }
@@ -345,13 +260,20 @@ final class InfinityFocusViewController: FocusViewController {
         }
     }
     
-    private func createCircleShapeLayer(strokeColor: UIColor, lineWidth: CGFloat, startAngle: CGFloat = 0, endAngle: CGFloat = 2 * CGFloat.pi) -> CAShapeLayer {
+    private func createCircleShapeLayer(
+        strokeColor: UIColor,
+        lineWidth: CGFloat,
+        startAngle: CGFloat = 0,
+        endAngle: CGFloat = 2 * CGFloat.pi
+    ) -> CAShapeLayer {
         let circleShapeLayer = CAShapeLayer()
-        let circlePath = UIBezierPath(arcCenter: .zero,
-                                      radius: 125,
-                                      startAngle: startAngle,
-                                      endAngle: endAngle,
-                                      clockwise: true)
+        let circlePath = UIBezierPath(
+            arcCenter: .zero,
+            radius: FocusViewControllerSize.timerViewLength * 0.5,
+            startAngle: startAngle,
+            endAngle: endAngle,
+            clockwise: true
+        )
         circleShapeLayer.path = circlePath.cgPath
         circleShapeLayer.strokeColor = strokeColor.cgColor
         circleShapeLayer.lineCap = CAShapeLayerLineCap.round
@@ -369,24 +291,29 @@ final class InfinityFocusViewController: FocusViewController {
         pulseGroupLayer.sublayers?.forEach({ $0.removeAllAnimations() })
     }
     
-    private func createCometCircleShapeLayer(strokeColor: UIColor, lineWidth: CGFloat) -> CALayer {
+    private func createCometCircleShapeLayer(
+        strokeColor: UIColor,
+        lineWidth: CGFloat
+    ) -> CALayer {
         let circleShapeLayer = CAShapeLayer()
-        let circlePath = UIBezierPath(arcCenter: .zero,
-                                      radius: 125,
-                                      startAngle: 0,
-                                      endAngle: 2 * CGFloat.pi,
-                                      clockwise: true)
+        let circlePath = UIBezierPath(
+            arcCenter: .zero,
+            radius: FocusViewControllerSize.timerViewLength * 0.5,
+            startAngle: 0,
+            endAngle: 2 * CGFloat.pi,
+            clockwise: true
+        )
         
         circleShapeLayer.path = circlePath.cgPath
         circleShapeLayer.strokeColor = UIColor.red.cgColor
         circleShapeLayer.lineCap = CAShapeLayerLineCap.round
         circleShapeLayer.lineWidth = lineWidth
         circleShapeLayer.fillColor = UIColor.clear.cgColor
-        circleShapeLayer.position = view.center
+        circleShapeLayer.position = timerView.center
         
         let gradient = CAGradientLayer()
         gradient.frame = timerView.bounds
-        gradient.position = view.center
+        gradient.position = timerView.center
         gradient.colors = [UIColor.systemGray.cgColor, strokeColor.cgColor]
         gradient.startPoint = CGPoint(x: 0.5, y: 0.5)
         gradient.endPoint = CGPoint(x: 1.0, y: 1)

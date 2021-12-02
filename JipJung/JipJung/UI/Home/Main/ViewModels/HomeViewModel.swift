@@ -7,31 +7,15 @@
 
 import Foundation
 
-import RxSwift
 import RxRelay
+import RxSwift
 
-protocol HomeViewModelInput {
-    func viewDidLoad()
-    func refresh(typeList: [RefreshHomeData])
-    func modeSwitchTouched()
-    func mediaPlayViewTapped() -> Single<Bool>
-    func mediaPlayViewDownSwiped(media: Media) -> Single<Bool>
-    func mediaPlayViewAppear(_ audioFileName: String, autoPlay: Bool) -> Single<Bool>
-}
-
-protocol HomeViewModelOutput {
-    var mode: BehaviorRelay<MediaMode> { get }
-    var currentModeList: BehaviorRelay<[Media]> { get }
-    var favoriteSoundList: BehaviorRelay<[Media]> { get }
-    var recentPlayHistory: BehaviorRelay<[Media]> { get }
-}
-
-final class HomeViewModel: HomeViewModelInput, HomeViewModelOutput {
+final class HomeViewModel {
     private let mediaListUseCase = MediaListUseCase()
-    private let maximListUseCase = MaximListUseCase()
+    private let maximListUseCase = MaximListUseCase(maximListRepository: MaximListRepository())
     private let audioPlayUseCase = AudioPlayUseCase()
     private let playHistoryUseCase = PlayHistoryUseCase()
-    private let favoriteMediaUseCase = FavoriteMediaUseCase()
+    private let favoriteUseCase = FavoriteUseCase()
     
     private let disposeBag = DisposeBag()
     private let brightMode = BehaviorRelay<[Media]>(value: [])
@@ -44,9 +28,8 @@ final class HomeViewModel: HomeViewModelInput, HomeViewModelOutput {
     
     init() {
         Observable
-            .combineLatest(mode, brightMode, darknessMode) { ($0, $1, $2) }
+            .combineLatest(mode, brightMode, darknessMode)
             .subscribe { [weak self] mode, brightModeList, darknessModeList in
-                print(mode, brightModeList.count, darknessModeList.count)
                 if mode == .bright {
                     self?.currentModeList.accept(brightModeList)
                 } else {
@@ -85,8 +68,24 @@ final class HomeViewModel: HomeViewModelInput, HomeViewModelOutput {
         mode.accept(mode.value == .bright ? .dark : .bright)
     }
     
-    func mediaPlayViewTapped() -> Single<Bool> {
-        return audioPlayUseCase.controlAudio()
+    func mediaPlayViewTapped(media: Media) -> Single<Bool> {
+        return audioPlayUseCase.control(audioFileName: media.audioFileName, autoPlay: true, restart: false)
+    }
+    
+    func receiveNotificationForFocus(media: Media, state: Bool) {
+        if state {
+            audioPlayUseCase.control(audioFileName: media.audioFileName, autoPlay: true, restart: false)
+                .subscribe(onFailure: { error in
+                    print(error.localizedDescription)
+                })
+                .disposed(by: disposeBag)
+        } else {
+            audioPlayUseCase.control(audioFileName: media.audioFileName, state: state)
+                .subscribe(onFailure: { error in
+                    print(error.localizedDescription)
+                })
+                .disposed(by: disposeBag)
+        }
     }
     
     func mediaPlayViewDownSwiped(media: Media) -> Single<Bool> {
@@ -96,12 +95,13 @@ final class HomeViewModel: HomeViewModelInput, HomeViewModelOutput {
         return mediaListUseCase.removeMediaFromMode(media: media)
     }
     
-    func mediaPlayViewAppear(_ audioFileName: String, autoPlay: Bool = false) -> Single<Bool> {
-        return audioPlayUseCase.readyToPlay(audioFileName, autoPlay: autoPlay)
+    func mediaPlayViewAppear(media: Media, autoPlay: Bool = false) -> Bool {
+        return audioPlayUseCase.isPlaying(using: media.audioFileName)
     }
     
     private func fetchMediaMyList(mode: MediaMode) {
         mediaListUseCase.fetchMediaMyList(mode: mode)
+            .observe(on: MainScheduler.instance)
             .subscribe { [weak self] in
                 switch mode {
                 case .bright:
@@ -117,6 +117,7 @@ final class HomeViewModel: HomeViewModelInput, HomeViewModelOutput {
     
     private func fetchPlayHistory() {
         playHistoryUseCase.fetchPlayHistory()
+            .observe(on: MainScheduler.instance)
             .subscribe { [weak self] in
                 self?.recentPlayHistory.accept($0.elements(in: 0..<6))
             } onFailure: { error in
@@ -126,7 +127,8 @@ final class HomeViewModel: HomeViewModelInput, HomeViewModelOutput {
     }
     
     private func fetchFavoriteMediaList() {
-        favoriteMediaUseCase.fetchAll()
+        favoriteUseCase.fetchAll()
+            .observe(on: MainScheduler.instance)
             .subscribe { [weak self] in
                 self?.favoriteSoundList.accept($0)
             } onFailure: { error in

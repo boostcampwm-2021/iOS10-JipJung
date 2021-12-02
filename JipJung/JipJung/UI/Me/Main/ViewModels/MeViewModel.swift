@@ -6,26 +6,16 @@
 //
 
 import Foundation
+
 import RxSwift
 import RxRelay
 
-protocol MeViewModelInput {
-}
-
-protocol MeViewModelOutput {
-    var grassPresenterObject: BehaviorRelay<GrassPresenterObject?> { get }
-
-}
-
-final class MeViewModel: MeViewModelInput, MeViewModelOutput {
-    var grassPresenterObject: BehaviorRelay<GrassPresenterObject?> = BehaviorRelay<GrassPresenterObject?>(value: nil)
-    var monthIndex: BehaviorRelay<[(index: Int, month: String)]> = BehaviorRelay<[(index: Int, month: String)]>(value: [])
-    private var disposeBag: DisposeBag = DisposeBag()
-    private let loadFocusTimeUseCase: LoadFocusTimeUseCase
+final class MeViewModel {
+    let grassPresenterObject = BehaviorRelay<GrassPresenterObject?>(value: nil)
+    let monthIndex = BehaviorRelay<[(index: Int, month: String)]>(value: [])
     
-    init(loadFocusTimeUseCase: LoadFocusTimeUseCase = LoadFocusTimeUseCase()) {
-        self.loadFocusTimeUseCase = loadFocusTimeUseCase
-    }
+    private let disposeBag = DisposeBag()
+    private let loadFocusTimeUseCase = LoadFocusTimeUseCase()
     
     func fetchFocusTimeLists() {
         let nDay = MeGrassMap.dayCount - 7 + Date().weekday
@@ -36,16 +26,19 @@ final class MeViewModel: MeViewModelInput, MeViewModelOutput {
         }
         .disposed(by: disposeBag)
         
-        // MARK: Month의 변경날짜의 index를 알기 위함
-        historyObservable.flatMap({
-            return Observable.from($0.enumerated())
-        })
-            .filter({
+        historyObservable
+            .flatMap {
+                return Observable.from($0.enumerated())
+            }
+            .filter {
                 $0.offset % 7 == 0
-            })
-            .distinctUntilChanged({ $0.element.date.month
-            })
-            .map({(index: $0.offset / 7, month: "\($0.element.date.month)월") })
+            }
+            .distinctUntilChanged {
+                $0.element.date.month
+            }
+            .map {
+                (index: $0.offset / 7, month: "\($0.element.date.month)월")
+            }
             .toArray()
             .asObservable()
             .bind(to: monthIndex)

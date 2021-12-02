@@ -1,40 +1,30 @@
 //
-//  DummyCell.swift
+//  SearchTableViewCell.swift
 //  JipJung
 //
 //  Created by 오현식 on 2021/11/04.
 //
 
 import UIKit
+
 import SnapKit
 
-class SearchTableViewCell: UITableViewCell {
-    // MARK: - Subviews
-    
-    lazy var searchHistory: UILabel = {
-        let searchHistory = UILabel()
-        return searchHistory
-    }()
-    
+final class SearchTableViewCell: UITableViewCell {
+    lazy var searchHistory = UILabel()
     lazy var deleteButton: UIButton = {
-        let deleteButton = UIButton(type: .custom)
-        deleteButton.tintColor = .darkGray
-        deleteButton.setImage(UIImage(systemName: "xmark"), for: .normal)
-        deleteButton.backgroundColor = .clear
-        
-        return deleteButton
+        let button = UIButton(type: .custom)
+        button.tintColor = .darkGray
+        button.setImage(UIImage(systemName: "xmark"), for: .normal)
+        button.backgroundColor = .clear
+        return button
     }()
-    
     lazy var searchHistoryStackView: UIStackView = {
-        let searchHistoryStackView = UIStackView(arrangedSubviews: [searchHistory, deleteButton])
-        searchHistoryStackView.axis = .horizontal
-        searchHistoryStackView.spacing = 20
-        
-        return searchHistoryStackView
+        let stackView = UIStackView(arrangedSubviews: [searchHistory, deleteButton])
+        stackView.axis = .horizontal
+        stackView.spacing = 20
+        return stackView
     }()
     
-    // MARK: - Initializers
-       
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         configureUI()
@@ -45,16 +35,17 @@ class SearchTableViewCell: UITableViewCell {
         configureUI()
     }
     
-    func configureUI() {
+    private func configureUI() {
         selectionStyle = .none
         
         contentView.addSubview(searchHistoryStackView)
         searchHistoryStackView.snp.makeConstraints {
             $0.top.bottom.equalToSuperview()
-            $0.leading.equalToSuperview().offset(20)
-            $0.trailing.equalToSuperview().offset(-20)
+            $0.leading.trailing.equalToSuperview().inset(20)
         }
-        
+    }
+    
+    func changeColor() {
         switch ApplicationMode.shared.mode.value {
         case .bright:
             backgroundColor = .white

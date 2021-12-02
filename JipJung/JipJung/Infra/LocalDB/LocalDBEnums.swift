@@ -10,6 +10,6 @@ import Foundation
 enum RealmError: Error {
     case initFailed
     case searchFailed
-    case writeFailed
+    case addFailed
     case deleteFailed
 }

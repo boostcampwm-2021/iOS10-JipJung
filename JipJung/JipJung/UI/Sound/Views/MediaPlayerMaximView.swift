@@ -1,5 +1,5 @@
 //
-//  PlayerMaximView.swift
+//  MediaPlayerMaximView.swift
 //  JipJung
 //
 //  Created by turu on 2021/11/04.
@@ -9,27 +9,23 @@ import UIKit
 
 import SnapKit
 
-class MusicPlayerMaximView: UIView {
+final class MediaPlayerMaximView: UIView {
     let maximLabel: UILabel = {
         let label = UILabel()
-        let words = """
+        let text = """
         At night,
         The moon draws faint tides from ear to ear.
         """
         label.font = .systemFont(ofSize: 14, weight: .semibold)
         label.numberOfLines = 0
         label.textColor = .white
+        label.text = text
+        label.setLineSpacing(lineSpacing: 24)
         
-        let attrString = NSMutableAttributedString(string: words)
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 24
-        attrString.addAttribute(
-            NSAttributedString.Key.paragraphStyle,
-            value: paragraphStyle,
-            range: NSMakeRange(0, attrString.length)
-        )
-        label.attributedText = attrString
-        
+        label.lineBreakMode = .byWordWrapping
+        if #available(iOS 14.0, *) {
+            label.lineBreakStrategy = .hangulWordPriority
+        }
         return label
     }()
     
@@ -52,14 +48,13 @@ class MusicPlayerMaximView: UIView {
         configure()
     }
     
-    func configure() {
+    private func configure() {
         addSubview(maximLabel)
         addSubview(speakerNameLabel)
         
         maximLabel.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview()
             $0.center.equalToSuperview()
-            $0.height.equalTo(maximLabel.intrinsicContentSize.height)
         }
         
         speakerNameLabel.snp.makeConstraints {

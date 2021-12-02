@@ -6,88 +6,89 @@
 //
 
 import UIKit
-import SnapKit
-import RxSwift
+
 import RxCocoa
+import RxSwift
+import SnapKit
 
 final class SearchViewController: UIViewController {
-    // MARK: - Subviews
-    
     private lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.delegate = self
         searchBar.placeholder = "Search entire library"
         searchBar.layer.cornerRadius = 3
         searchBar.searchBarStyle = .minimal
+        searchBar.searchTextField.leftView?.tintColor = .gray
         return searchBar
     }()
-    
     private lazy var cancelButton: UIButton = {
-        let cancelButton = UIButton()
-        cancelButton.setTitle("Cancel", for: .normal)
-        cancelButton.setTitleColor(.darkGray, for: .normal)
-        
-        return cancelButton
+        let button = UIButton()
+        button.setTitle("Cancel", for: .normal)
+        button.setTitleColor(.darkGray, for: .normal)
+        return button
     }()
-    
     private lazy var searchStackView: UIStackView = {
-        let searchStackView = UIStackView(arrangedSubviews: [searchBar, cancelButton])
-        searchStackView.axis = .horizontal
-        searchStackView.spacing = 6
-        
-        return searchStackView
+        let stackView = UIStackView(arrangedSubviews: [searchBar, cancelButton])
+        stackView.axis = .horizontal
+        stackView.spacing = 6
+        return stackView
     }()
-    
     private lazy var searchHistoryTableView: UITableView = {
-        let searchHistoryTableView = UITableView()
-        searchHistoryTableView.backgroundColor = .black
-        searchHistoryTableView.separatorStyle = .none
-        searchHistoryTableView.delegate = self
-        searchHistoryTableView.dataSource = self
-        searchHistoryTableView.register(SearchTableViewCell.self, forCellReuseIdentifier: SearchTableViewCell.identifier)
-        
-        return searchHistoryTableView
+        let tableView = UITableView()
+        tableView.backgroundColor = .black
+        tableView.isScrollEnabled = false
+        tableView.separatorStyle = .none
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(SearchTableViewCell.self)
+        return tableView
     }()
-    
     private lazy var soundCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
 
-        let soundContentsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        soundContentsCollectionView.backgroundColor = .black
-        soundContentsCollectionView.showsHorizontalScrollIndicator = false
-        soundContentsCollectionView.delegate = self
-        soundContentsCollectionView.dataSource = self
-        soundContentsCollectionView.register(
-            MusicCollectionViewCell.self,
-            forCellWithReuseIdentifier: MusicCollectionViewCell.identifier)
-        return soundContentsCollectionView
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .black
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.register(MediaCollectionViewCell.self)
+        return collectionView
+    }()
+    private lazy var emptySearchResultView: UIView = {
+        let view = UIView()
+        view.isUserInteractionEnabled = false
+        return view
+    }()
+    private lazy var emptySearchResultLabel: UILabel = {
+        let label = UILabel()
+        label.isUserInteractionEnabled = false
+        label.text = "검색된 결과가 없습니다."
+        label.font = .systemFont(ofSize: 17)
+        label.textColor = ApplicationMode.shared.mode.value == .bright ? .black : .white
+        return label
     }()
     
-    // MARK: - Private Variables
-    
-    private var disposeBag: DisposeBag = DisposeBag()
-    private var cellDisposeBag: DisposeBag = DisposeBag()
-    private var viewModel: SearchViewModel?
+    private let viewModel = SearchViewModel()
+    private let disposeBag = DisposeBag()
+    private var cellDisposeBag = DisposeBag()
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-       return .lightContent
+        return ApplicationMode.shared.mode.value == .bright ? .darkContent : .lightContent
     }
 
-    // MARK: - Lifecycle Methods
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .black
         configureCommonUI()
         bindUI()
-        viewModel?.loadSearchHistory()
+        viewModel.loadSearchHistory()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         switch ApplicationMode.shared.mode.value {
         case .bright:
             configureBrightModeUI()
@@ -96,15 +97,6 @@ final class SearchViewController: UIViewController {
         }
     }
 
-    // MARK: - Initializer
-
-    convenience init(viewModel: SearchViewModel) {
-        self.init(nibName: nil, bundle: nil)
-        self.viewModel = viewModel
-    }
-    
-    // MARK: - Helpers
-    
     private func configureCommonUI() {
         view.addSubview(searchStackView)
         searchStackView.snp.makeConstraints {
@@ -125,6 +117,19 @@ final class SearchViewController: UIViewController {
             $0.top.equalTo(searchStackView.snp.bottom).offset(20)
             $0.leading.trailing.bottom.equalToSuperview()
         }
+        
+        emptySearchResultView.addSubview(emptySearchResultLabel)
+        emptySearchResultLabel.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.centerY.equalToSuperview().multipliedBy(0.9)
+        }
+        
+        view.addSubview(emptySearchResultView)
+        emptySearchResultView.snp.makeConstraints {
+            $0.top.equalTo(searchStackView.snp.bottom).offset(20)
+            $0.leading.trailing.bottom.equalToSuperview()
+        }
+        emptySearchResultView.isHidden = true
     }
     
     private func configureBrightModeUI() {
@@ -166,17 +171,28 @@ final class SearchViewController: UIViewController {
             }
             .disposed(by: disposeBag)
         
-        viewModel?.searchHistory
+        viewModel.searchHistory
             .distinctUntilChanged()
             .bind(onNext: { [weak self] _ in
                 self?.searchHistoryTableView.reloadData()
             })
             .disposed(by: disposeBag)
         
-        viewModel?.searchResult
+        viewModel.searchResult
+            .skip(1)
             .distinctUntilChanged()
-            .bind(onNext: { [weak self] _ in
+            .bind(onNext: { [weak self] in
                 guard let self = self else { return }
+                if $0.isEmpty {
+                    let colorForMode: UIColor = ApplicationMode.shared.mode.value == .bright ? .black : .white
+                    self.emptySearchResultLabel.textColor = colorForMode
+                    self.searchHistoryTableView.isHidden = false
+                    self.emptySearchResultView.isHidden = false
+                    return
+                }
+                
+                self.searchHistoryTableView.isHidden = true
+                self.emptySearchResultView.isHidden = true
                 self.soundCollectionView.reloadData()
             })
             .disposed(by: disposeBag)
@@ -190,52 +206,77 @@ extension SearchViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let keyword = searchBar.text else { return }
-        self.searchHistoryTableView.isHidden = true
-        viewModel?.saveSearchKeyword(keyword: keyword)
-        viewModel?.search(keyword: keyword)
+        viewModel.saveSearchKeyword(keyword: keyword)
+        viewModel.search(keyword: keyword)
         dismissKeyboard()
     }
 }
 
 extension SearchViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    func tableView(
+        _ tableView: UITableView,
+        heightForRowAt indexPath: IndexPath
+    ) -> CGFloat {
         return 50
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let searchHistory = viewModel?.searchHistory.value[indexPath.item] ?? ""
-        self.searchHistoryTableView.isHidden = true
-        viewModel?.search(keyword: searchHistory)
+    func tableView(
+        _ tableView: UITableView,
+        didSelectRowAt indexPath: IndexPath
+    ) {
+        let searchHistory = viewModel.searchHistory.value[indexPath.item] ?? ""
+        viewModel.search(keyword: searchHistory)
     }
 }
 
 extension SearchViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(
+        _ tableView: UITableView,
+        heightForHeaderInSection section: Int
+    ) -> CGFloat {
         return 15
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(
+        _ tableView: UITableView,
+        titleForHeaderInSection section: Int
+    ) -> String? {
         return "History"
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel?.searchHistory.value.count ?? 0
+    func tableView(
+        _ tableView: UITableView,
+        willDisplayHeaderView view: UIView,
+        forSection section: Int
+    ) {
+        (view as? UITableViewHeaderFooterView)?.textLabel?.textColor = .gray
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(
+        _ tableView: UITableView,
+        numberOfRowsInSection section: Int
+    ) -> Int {
+        return viewModel.searchHistory.value.count
+    }
+    
+    func tableView(
+        _ tableView: UITableView,
+        cellForRowAt indexPath: IndexPath
+    ) -> UITableViewCell {
         guard let cell: SearchTableViewCell = tableView.dequeueReusableCell()
         else { return UITableViewCell() }
         
-        cell.searchHistory.text = viewModel?.searchHistory.value[indexPath.item]
+        cell.searchHistory.text = viewModel.searchHistory.value[indexPath.item]
         
         if indexPath.item == 0 {
             cellDisposeBag = DisposeBag()
         }
         
-        cell.configureUI()
+        cell.changeColor()
         cell.deleteButton.rx.tap
             .bind { [weak self] _ in
-                self?.viewModel?.removeSearchHistory(at: indexPath.item)
+                self?.viewModel.removeSearchHistory(at: indexPath.item)
+                self?.viewModel.loadSearchHistory()
             }
             .disposed(by: cellDisposeBag)
         return cell
@@ -243,35 +284,62 @@ extension SearchViewController: UITableViewDataSource {
 }
 
 extension SearchViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let media = viewModel?.searchResult.value[indexPath.item] ?? Media()
-        navigationController?.pushViewController(MusicPlayerViewController(viewModel: MusicPlayerViewModel(media: media)), animated: true)
+    func collectionView(
+        _ collectionView: UICollectionView,
+        didSelectItemAt indexPath: IndexPath
+    ) {
+        let media = viewModel.searchResult.value[indexPath.item]
+        let mediaPlayerViewController = MediaPlayerViewController(
+            viewModel: MediaPlayerViewModel(
+                media: media
+            )
+        )
+        navigationController?.pushViewController(mediaPlayerViewController, animated: true)
     }
 }
 
 extension SearchViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (collectionView.frame.size.width-32)/2-6, height: 220)
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath
+    ) -> CGSize {
+        let cellWidth = (collectionView.frame.size.width-32)/2-6
+        return CGSize(width: cellWidth, height: cellWidth * MediaCell.ratio)
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        minimumLineSpacingForSectionAt section: Int
+    ) -> CGFloat {
         return 12
     }
 }
 
 extension SearchViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel?.searchResult.value.count ?? 0
+    func collectionView(
+        _ collectionView: UICollectionView,
+        numberOfItemsInSection section: Int
+    ) -> Int {
+        return viewModel.searchResult.value.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell: MusicCollectionViewCell = collectionView.dequeueReusableCell(indexPath: indexPath) else { return  UICollectionViewCell() }
-        let media = viewModel?.searchResult.value[indexPath.item] ?? Media()
+    func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
+        guard let cell: MediaCollectionViewCell = collectionView.dequeueReusableCell(indexPath: indexPath) else {
+            return  UICollectionViewCell()
+        }
+        let media = viewModel.searchResult.value[indexPath.item]
         cell.titleView.text = media.name
         cell.imageView.image = UIImage(named: media.thumbnailImageFileName)
-        let colorHexString = viewModel?.searchResult.value[indexPath.item].color ?? "FFFFFF"
-        cell.backgroundColor = UIColor(rgb: Int(colorHexString, radix: 16) ?? 0xFFFFFF,
-                                       alpha: 1.0)
+        let colorHexString = viewModel.searchResult.value[indexPath.item].color
+        cell.backgroundColor = UIColor(
+            rgb: Int(colorHexString, radix: 16) ?? 0xFFFFFF,
+            alpha: 1.0
+        )
         return cell
     }
 }

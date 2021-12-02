@@ -6,22 +6,22 @@
 //
 
 import Foundation
+
 import RxSwift
 
-final class FavoriteMediaUseCase {
-    private let myFavoriteRepository: MyFavoriteRepository = MyFavoriteRepository()
+final class FavoriteUseCase {
+    private let myFavoriteRepository: FavoriteRepository = FavoriteRepository()
     
     func read(id: String) -> Single<[FavoriteMedia]> {
-        return myFavoriteRepository.read(id: id)
+        return myFavoriteRepository.read(mediaID: id)
     }
     
     func fetchAll() -> Single<[Media]> {
-        return myFavoriteRepository.fetchAll()
+        return myFavoriteRepository.read()
     }
     
     func save(id: String, date: Date) -> Single<Bool> {
-        let favoriteMedia = FavoriteMedia(id: id, addDate: date)
-        return myFavoriteRepository.save(favoriteMedia)
+        return myFavoriteRepository.create(mediaID: id)
             .do(onSuccess: { _ in
                 NotificationCenter.default.post(
                     name: .refreshHome,
@@ -31,7 +31,14 @@ final class FavoriteMediaUseCase {
             })
     }
     
-    func delete(id: String) {
-        myFavoriteRepository.delete(id: id)
+    func delete(id: String) -> Single<Bool> {
+        return myFavoriteRepository.delete(mediaID: id)
+            .do(onSuccess: { _ in
+                NotificationCenter.default.post(
+                    name: .refreshHome,
+                    object: nil,
+                    userInfo: ["RefreshType": [RefreshHomeData.favorite]]
+                )
+            })
     }
 }
