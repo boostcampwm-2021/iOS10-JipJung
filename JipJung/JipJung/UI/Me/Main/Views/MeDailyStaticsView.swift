@@ -101,7 +101,7 @@ class MeDailyStaticsView: UIView {
                 colorDescriptionView.addSubview(colorDescriptionLabel)
                 colorDescriptionLabel.snp.makeConstraints {
                     $0.centerY.equalToSuperview()
-                    $0.leading.equalTo(colorMarkerView.snp.trailing).offset(10)
+                    $0.leading.equalTo(colorMarkerView.snp.trailing)
                 }
 
             return colorDescriptionView
@@ -112,6 +112,7 @@ class MeDailyStaticsView: UIView {
         let representativeValueStackView = UIStackView()
         representativeValueStackView.axis = .vertical
         representativeValueStackView.alignment = .center
+        representativeValueStackView.spacing = 8
         
         let descriptionLabel = UILabel()
         descriptionLabel.text = "0"
@@ -119,9 +120,10 @@ class MeDailyStaticsView: UIView {
         descriptionLabel.font = .preferredFont(forTextStyle: .title1)
         
         let titleLabel = UILabel()
-        titleLabel.text = "\(category) Focus Hours"
+        titleLabel.text = "\(category) Hours"
         titleLabel.textColor = .systemGray
         titleLabel.font = .preferredFont(forTextStyle: .headline)
+        titleLabel.adjustsFontSizeToFitWidth = true
         
         representativeValueStackView.addArrangedSubview(descriptionLabel)
         representativeValueStackView.addArrangedSubview(titleLabel)
@@ -147,9 +149,8 @@ class MeDailyStaticsView: UIView {
         addSubview(grassMapView)
         grassMapView.snp.makeConstraints {
             $0.top.equalTo(representativeValuesStackView.snp.bottom).offset(30)
-            $0.leading.equalToSuperview().offset(30)
-            $0.trailing.equalToSuperview().offset(-30)
-            $0.bottom.equalToSuperview().offset(-80)
+            $0.leading.trailing.equalToSuperview().inset(30)
+            $0.height.equalTo(MeGrassMapViewSize.height)
         }
         
         addSubview(unitDescriptionLabel)
@@ -162,7 +163,7 @@ class MeDailyStaticsView: UIView {
             $0.top.equalTo(grassMapView.snp.bottom).offset(30)
             $0.bottom.equalTo(unitDescriptionLabel.snp.top).offset(-20)
             $0.leading.equalToSuperview().offset(100)
-            $0.trailing.equalToSuperview().offset(-20).priority(751)
+            $0.trailing.equalToSuperview().offset(-20)
         }
     }
 }
