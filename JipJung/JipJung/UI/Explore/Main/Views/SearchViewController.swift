@@ -276,6 +276,7 @@ extension SearchViewController: UITableViewDataSource {
         cell.deleteButton.rx.tap
             .bind { [weak self] _ in
                 self?.viewModel.removeSearchHistory(at: indexPath.item)
+                self?.viewModel.loadSearchHistory()
             }
             .disposed(by: cellDisposeBag)
         return cell

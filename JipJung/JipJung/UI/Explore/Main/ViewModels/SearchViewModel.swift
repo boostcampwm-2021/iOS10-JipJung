@@ -37,10 +37,9 @@ final class SearchViewModel {
     
     func removeSearchHistory(at index: Int) {
         guard self.searchHistory.value.count > index else { return }
-        var searchHistoryValue = searchHistory.value
-        searchHistoryValue.remove(at: index)
+        var searchHistoryValue = searchHistoryUseCase.load()
+        searchHistoryValue.remove(at: searchHistoryValue.count-1-index)
         searchHistoryUseCase.save(searchHistoryValue)
-        searchHistory.accept(searchHistoryUseCase.load())
     }
     
     func search(keyword: String) {
