@@ -16,25 +16,23 @@ enum PomodoroMode {
 }
 
 final class PomodoroFocusViewModel {
-    var clockTime = BehaviorRelay<Int>(value: 0)
-    var isFocusRecordSaved = BehaviorRelay<Bool>(value: false)
-    var timerState = BehaviorRelay<TimerState>(value: .ready)
-    var mode = BehaviorRelay<PomodoroMode>(value: .work)
+    let clockTime = BehaviorRelay<Int>(value: 0)
+    let isFocusRecordSaved = BehaviorRelay<Bool>(value: false)
+    let timerState = BehaviorRelay<TimerState>(value: .ready)
+    let mode = BehaviorRelay<PomodoroMode>(value: .work)
     let focusTimeList = [1, 5, 8, 10, 15, 20, 25, 30, 35,
                          40, 45, 50, 55, 60, 70, 80, 90,
                          100, 110, 120, 130, 140, 150, 160, 170, 180]
-    lazy var focusTime = timeUnit
-    var totalFocusTime = 0
     let timeUnit = 5
     
-    private var runningStateDisposeBag = DisposeBag()
+    var totalFocusTime = 0
+    
+    lazy var focusTime = timeUnit
+    
     private let disposeBag = DisposeBag()
+    private let saveFocusTimeUseCase = SaveFocusTimeUseCase()
     
-    private let saveFocusTimeUseCase: SaveFocusTimeUseCaseProtocol
-    
-    init(saveFocusTimeUseCase: SaveFocusTimeUseCaseProtocol) {
-        self.saveFocusTimeUseCase = saveFocusTimeUseCase
-    }
+    private var runningStateDisposeBag = DisposeBag()
     
     func changeTimerState(to timerState: TimerState) {
         self.timerState.accept(timerState)
@@ -70,12 +68,11 @@ final class PomodoroFocusViewModel {
     func saveFocusRecord() {
         saveFocusTimeUseCase.execute(seconds: totalFocusTime)
             .subscribe { [weak self] in
-                print(self?.totalFocusTime) //
                 self?.isFocusRecordSaved.accept($0)
             } onFailure: { [weak self] _ in
                 self?.isFocusRecordSaved.accept(false)
             }
-            .disposed(by: disposeBag) // TODO: disposeBag 2개 쓰는 것 같은데 하나만 써도 되지 않을까요?
+            .disposed(by: disposeBag)
     }
     
     func changeMode() {

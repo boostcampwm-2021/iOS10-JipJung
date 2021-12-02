@@ -206,10 +206,10 @@ final class WiggleAnimation: CAAnimationGroup {
     }
 }
 
-// MARK: - 직접 사용하는 View가 아님
 struct AtypicalAnimationFrame {
+    private let gap: CGFloat = 0.27
+    
     let contentView: UIView
-    let gap: CGFloat = 0.27
     
     var length: CGFloat {
         return contentView.bounds.maxX * (1 - 2 * gap)

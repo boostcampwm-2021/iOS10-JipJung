@@ -11,7 +11,6 @@ import RxCocoa
 import RxSwift
 
 final class MaximViewController: UIViewController {
-    private var backgroundView = UIImageView()
     private lazy var closeButton: UIButton = {
         let button = CloseButton()
         button.tintColor = .white
@@ -25,53 +24,54 @@ final class MaximViewController: UIViewController {
         return button
     }()
     private lazy var calendarHeaderCollectionView: UICollectionView = {
-        let collectionViewLayout = UICollectionViewFlowLayout()
-        collectionViewLayout.sectionInset = UIEdgeInsets(
+        let layout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(
             top: 0,
             left: MaximCalendarHeaderCollectionViewSize.cellSpacing / CGFloat(2),
             bottom: 0,
-            right: 0)
+            right: MaximCalendarHeaderCollectionViewSize.cellSpacing / CGFloat(2)
+        )
         let screenWidth = UIScreen.main.bounds.size.width
         let cellWidth = screenWidth / 14
         let lineSpacing = cellWidth
-        collectionViewLayout.minimumLineSpacing = lineSpacing
-        collectionViewLayout.itemSize = CGSize(width: cellWidth, height: 100)
-        collectionViewLayout.scrollDirection = .horizontal
+        layout.minimumLineSpacing = lineSpacing
+        layout.itemSize = CGSize(width: cellWidth, height: 100)
+        layout.scrollDirection = .horizontal
 
-        let headerSize = 50
         let collectionView = UICollectionView(
-            frame: MaximCalendarHeaderCollectionViewSize.cellSize,
-            collectionViewLayout: collectionViewLayout)
+            frame: .zero,
+            collectionViewLayout: layout
+        )
         collectionView.contentInset = UIEdgeInsets(
             top: 0,
             left: 0,
             bottom: MaximViewSize.headerHeight + MaximViewSize.nocheHeight,
-            right: 0)
+            right: 0
+        )
         collectionView.isHidden = true
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.decelerationRate = .fast
         collectionView.delegate = self
-        collectionView.register(
-            MaximCalendarHeaderCollectionViewCell.self,
-            forCellWithReuseIdentifier: MaximCalendarHeaderCollectionViewCell.identifier)
+        collectionView.register(MaximCalendarHeaderCollectionViewCell.self)
         collectionView.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
         collectionView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         return collectionView
     }()
     private lazy var maximCollectionView: UICollectionView = {
-        let collectionViewLayout = UICollectionViewFlowLayout()
-        collectionViewLayout.itemSize = UIScreen.main.bounds.size
-        collectionViewLayout.scrollDirection = .horizontal
-        collectionViewLayout.minimumLineSpacing = 2
+        let layout = UICollectionViewFlowLayout()
+        layout.itemSize = UIScreen.main.bounds.size
+        layout.scrollDirection = .horizontal
+        layout.minimumLineSpacing = 2
         let screenBounds = UIScreen.main.bounds
-        let collectionView = UICollectionView(frame: screenBounds, collectionViewLayout: collectionViewLayout)
+        let collectionView = UICollectionView(
+            frame: screenBounds,
+            collectionViewLayout: layout
+        )
         collectionView.decelerationRate = .fast
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.delegate = self
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.register(
-            MaximCollectionViewCell.self,
-            forCellWithReuseIdentifier: MaximCollectionViewCell.identifier)
+        collectionView.register(MaximCollectionViewCell.self)
         collectionView.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
         return collectionView
     }()
@@ -98,43 +98,35 @@ final class MaximViewController: UIViewController {
         maximCollectionView.backgroundColor = .systemBackground
         view.addSubview(maximCollectionView)
         view.addSubview(calendarHeaderCollectionView)
-        calendarHeaderCollectionView.snp.makeConstraints { [weak self] in
-            guard let self = self else {
-                return
-            }
-            $0.width.equalToSuperview()
-            $0.bottom.equalTo(self.view.snp.top)
-            $0.leading.equalToSuperview()
+        calendarHeaderCollectionView.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview()
+            $0.bottom.equalTo(view.snp.top)
             $0.height.equalTo(200)
         }
         
         view.addSubview(closeButton)
-        closeButton.snp.makeConstraints { [weak self] in
-            guard let self = self else {
-                return
-            }
-            $0.width.equalTo(30)
-            $0.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(10)
+        closeButton.snp.makeConstraints {
+            $0.size.equalTo(30)
+            $0.top.equalTo(view.snp.topMargin).offset(10)
             $0.leading.equalToSuperview().offset(30)
-            $0.height.equalTo(30)
         }
         
         view.addSubview(calendarButton)
-        calendarButton.snp.makeConstraints { [weak self] in
-            guard let self = self else {
-                return
-            }
-            $0.width.equalTo(30)
-            $0.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(10)
+        calendarButton.snp.makeConstraints {
+            $0.size.equalTo(30)
+            $0.top.equalTo(view.snp.topMargin).offset(10)
             $0.centerX.equalToSuperview()
-            $0.height.equalTo(30)
         }
     }
     
     private func bindMaximCollectionView() {
         viewModel.maximList
             .map({$0.compactMap({$0})})
-            .bind(to: maximCollectionView.rx.items(cellIdentifier: MaximCollectionViewCell.identifier)) { index, maxim, cell in
+            .bind(to:
+                    maximCollectionView.rx.items(
+                        cellIdentifier: MaximCollectionViewCell.identifier
+                    )
+            ) { _, maxim, cell in
             guard let cell = cell as? MaximCollectionViewCell else {
                 return
             }
@@ -143,7 +135,9 @@ final class MaximViewController: UIViewController {
             cell.monthYearLabel.text = maxim.monthYear
             cell.contentLabel.text = maxim.content
             cell.speakerLabel.text = maxim.speaker
-            let backgroundView = UIImageView(image: UIImage(named: maxim.thumbnailImageAssetPath))
+            let backgroundView = UIImageView(
+                image: UIImage(named: maxim.thumbnailImageAssetPath)
+            )
             backgroundView.alpha = 0.5
             cell.backgroundView = backgroundView
             cell.isShown = false
@@ -168,13 +162,21 @@ final class MaximViewController: UIViewController {
     private func bindCalendarHeaderCollectionView() {
         viewModel.maximList.bind(
             to: calendarHeaderCollectionView.rx.items(cellIdentifier: MaximCalendarHeaderCollectionViewCell.identifier)
-        ) { _, maxim, cell in
+        ) { index, maxim, cell in
             guard let cell = cell as? MaximCalendarHeaderCollectionViewCell else {
                 return
             }
             cell.dayLabel.text = maxim.day
             cell.weekdayLabel.text = maxim.weekDay
-            cell.dayButton.setBackgroundImage(UIImage(named: maxim.thumbnailImageAssetPath), for: .normal)
+            cell.dayButton.setBackgroundImage(
+                UIImage(named: maxim.thumbnailImageAssetPath),
+                for: .normal
+            )
+            if self.viewModel.selectedDate.value.item == index {
+                cell.indicatorPointView.isHidden = false
+            } else {
+                cell.indicatorPointView.isHidden = true
+            }
             cell.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
         }
         .disposed(by: disposeBag)
@@ -198,7 +200,8 @@ final class MaximViewController: UIViewController {
         let index = indexPath.item / 7
         calendarHeaderCollectionView.contentOffset = CGPoint(
             x: CGFloat(index) * MaximCalendarHeaderCollectionViewSize.width,
-            y: 0)
+            y: 0
+        )
     }
     
     private func bindAction() {
@@ -230,42 +233,37 @@ final class MaximViewController: UIViewController {
     
     private func presentHeader() {
         calendarHeaderCollectionView.isHidden = false
-        self.calendarHeaderCollectionView.snp.updateConstraints { [weak self] in
-            guard let self = self else {
-                return
-            }
-            $0.bottom.equalTo(self.view.snp.top).offset(self.calendarHeaderCollectionView.frame.height)
+        self.calendarHeaderCollectionView.snp.updateConstraints {
+            $0.bottom.equalTo(view.snp.top)
+                .offset(calendarHeaderCollectionView.frame.height)
         }
-        UIView.animate(withDuration: 0.5, delay: 0, options: []) { [weak self] in
-            self?.calendarHeaderCollectionView.superview?.layoutIfNeeded()
+        UIView.animate(withDuration: 0.5) {
+            self.view.layoutIfNeeded()
         }
     }
     
     private func dismissHeader() {
-        self.calendarHeaderCollectionView.snp.updateConstraints { [weak self] in
-            guard let self = self else {
-                return
-            }
-            $0.bottom.equalTo(self.view.snp.top)
+        self.calendarHeaderCollectionView.snp.updateConstraints {
+            $0.bottom.equalTo(view.snp.top)
         }
-        UIView.animate(withDuration: 0.5, delay: 0, options: []) { [weak self] in
-            self?.calendarHeaderCollectionView.superview?.layoutIfNeeded()
+        UIView.animate(withDuration: 0.5) {
+            self.view.layoutIfNeeded()
         } completion: { [weak self] in
             self?.calendarHeaderCollectionView.isHidden = $0
         }
     }
 }
 
-// MARK: - CollectionViewDelegate
 extension MaximViewController: UICollectionViewDelegate {
 }
 
-// MARK: 출처 - https://eunjin3786.tistory.com/203
+// 출처 - https://eunjin3786.tistory.com/203
 extension MaximViewController: UIScrollViewDelegate {
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         switch scrollView {
         case maximCollectionView:
-            guard let layout = maximCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
+            guard let layout = maximCollectionView.collectionViewLayout
+                    as? UICollectionViewFlowLayout else { return }
             let cellWidthIncludingSpacing = layout.itemSize.width + layout.minimumLineSpacing
             let estimatedIndex = scrollView.contentOffset.x / cellWidthIncludingSpacing
             let index: Int
@@ -278,7 +276,10 @@ extension MaximViewController: UIScrollViewDelegate {
             } else {
                 index = Int(round(estimatedIndex))
             }
-            targetContentOffset.pointee = CGPoint(x: CGFloat(index) * cellWidthIncludingSpacing, y: 0)
+            targetContentOffset.pointee = CGPoint(
+                x: CGFloat(index) * cellWidthIncludingSpacing,
+                y: 0
+            )
         case calendarHeaderCollectionView:
             guard let layout = calendarHeaderCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
             let cellWidthIncludingSpacing = (layout.itemSize.width + layout.minimumLineSpacing) * 7
@@ -293,8 +294,10 @@ extension MaximViewController: UIScrollViewDelegate {
             } else {
                 index = Int(round(estimatedIndex))
             }
-            targetContentOffset.pointee = CGPoint(x: CGFloat(index) * cellWidthIncludingSpacing, y: 0)
-            
+            targetContentOffset.pointee = CGPoint(
+                x: CGFloat(index) * cellWidthIncludingSpacing,
+                y: 0
+            )
         default:
             break
         }

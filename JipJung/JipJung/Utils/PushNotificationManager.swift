@@ -8,14 +8,14 @@
 import Foundation
 import UserNotifications
 
-class PushNotificationMananger {
+final class PushNotificationMananger {
+    static let shared = PushNotificationMananger()
+    private init() {}
+    
     enum NotificationTitleType: String {
         case focusFinish = "집중 모드 종료"
         case relaxFinish = "휴식 종료"
     }
-    
-    static let shared = PushNotificationMananger()
-    private init() {}
     
     func presentFocusStopNotification(title: NotificationTitleType, body: String) {
         UNUserNotificationCenter.current().getNotificationSettings { status in

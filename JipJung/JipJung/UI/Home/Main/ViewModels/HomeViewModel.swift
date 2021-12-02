@@ -28,7 +28,7 @@ final class HomeViewModel {
     
     init() {
         Observable
-            .combineLatest(mode, brightMode, darknessMode) { ($0, $1, $2) }
+            .combineLatest(mode, brightMode, darknessMode)
             .subscribe { [weak self] mode, brightModeList, darknessModeList in
                 if mode == .bright {
                     self?.currentModeList.accept(brightModeList)

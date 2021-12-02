@@ -47,7 +47,7 @@ final class SoundTagCollectionViewCell: UICollectionViewCell {
         configureUI()
     }
     
-    func configureUI() {
+    private func configureUI() {
         layer.cornerRadius = frame.height/2
         
         contentView.addSubview(soundTagLabel)

@@ -9,21 +9,21 @@ import Foundation
 import SpriteKit
 
 final class ClubSKScene: SKScene {
+    private var lights = [SKLightNode]()
+    private var background = SKSpriteNode()
+    
     override func didMove(to view: SKView) {
         configureSpriteNode()
         animate()
     }
     
-    private var lights = [SKLightNode]()
-    private var background = SKSpriteNode()
-    
-    func configureSpriteNode() {
+    private func configureSpriteNode() {
         configureBackgroundNode()
         configureLightNode()
         addSpriteNode()
     }
     
-    func configureLightNode() {
+    private func configureLightNode() {
         let light1 = SKLightNode()
         light1.position = CGPoint(x: frame.midX/2, y: frame.maxY)
         light1.categoryBitMask = 0b0001
@@ -46,7 +46,7 @@ final class ClubSKScene: SKScene {
         lights.append(light3)
     }
     
-    func configureBackgroundNode() {
+    private func configureBackgroundNode() {
         background = SKSpriteNode(
             color: .white,
             size: CGSize(width: frame.width, height: frame.height)
@@ -55,15 +55,15 @@ final class ClubSKScene: SKScene {
         background.lightingBitMask = 0b0001
     }
     
-    func addSpriteNode() {
+    private func addSpriteNode() {
         lights.forEach { light in
             addChild(light)
         }
         addChild(background)
     }
     
-    func animate() {
-        var moveActionList: [SKAction] = [SKAction]()
+    private func animate() {
+        var moveActionList = [SKAction]()
         let moveActionSequence1 = SKAction.sequence(
             [
                 SKAction.move(

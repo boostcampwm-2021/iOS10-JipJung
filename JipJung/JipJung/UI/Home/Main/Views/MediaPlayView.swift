@@ -32,6 +32,7 @@ final class MediaPlayView: UIView {
     
     private let viewModel = MediaPlayViewModel()
     private let disposeBag = DisposeBag()
+    
     let media = BehaviorRelay<Media?>(value: nil)
     
     required init?(coder: NSCoder) {
@@ -52,6 +53,23 @@ final class MediaPlayView: UIView {
         bindUI()
         
         self.media.accept(media)
+    }
+    
+    func replaceMedia(media: Media) {
+        self.media.accept(media)
+    }
+    
+    func playVideo() {
+        playButton.isHidden = true
+        guard videoPlayer.currentItem != nil else { return }
+        videoPlayer.currentItem?.seek(to: .zero, completionHandler: nil)
+        videoPlayer.play()
+    }
+    
+    func pauseVideo() {
+        playButton.isHidden = false
+        guard videoPlayer.currentItem != nil else { return }
+        videoPlayer.pause()
     }
     
     private func configureUI() {
@@ -77,23 +95,6 @@ final class MediaPlayView: UIView {
                 self?.setMedia(media: media)
             })
             .disposed(by: disposeBag)
-    }
-    
-    func replaceMedia(media: Media) {
-        self.media.accept(media)
-    }
-    
-    func playVideo() {
-        playButton.isHidden = true
-        guard videoPlayer.currentItem != nil else { return }
-        videoPlayer.currentItem?.seek(to: .zero, completionHandler: nil)
-        videoPlayer.play()
-    }
-    
-    func pauseVideo() {
-        playButton.isHidden = false
-        guard videoPlayer.currentItem != nil else { return }
-        videoPlayer.pause()
     }
     
     private func setMedia(media: Media) {
@@ -135,6 +136,5 @@ final class MediaPlayView: UIView {
                 }
                 .disposed(by: disposeBag)
         }
-        
     }
 }

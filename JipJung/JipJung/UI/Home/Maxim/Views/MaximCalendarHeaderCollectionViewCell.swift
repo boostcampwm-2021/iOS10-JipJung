@@ -9,32 +9,32 @@ import UIKit
 
 final class MaximCalendarHeaderCollectionViewCell: UICollectionViewCell {
     private(set) lazy var weekdayLabel: UILabel = {
-        let weekdayLabel = UILabel()
-        weekdayLabel.font = .preferredFont(forTextStyle: .title3)
-        weekdayLabel.textColor = .gray
-        weekdayLabel.text = " "
-        return weekdayLabel
+        let label = UILabel()
+        label.font = .preferredFont(forTextStyle: .title3)
+        label.textColor = .gray
+        label.text = " "
+        return label
     }()
     private(set) lazy var dayLabel: UILabel = {
-        let dayLabel = UILabel()
-        dayLabel.text = "15"
-        dayLabel.font = .preferredFont(forTextStyle: .headline)
-        dayLabel.textColor = .white
-        return dayLabel
+        let label = UILabel()
+        label.text = "15"
+        label.font = .preferredFont(forTextStyle: .headline)
+        label.textColor = .white
+        return label
     }()
     private(set) lazy var indicatorPointView: UIView = {
-        let indicatorPointView = UIView()
-        indicatorPointView.backgroundColor = .red
-        indicatorPointView.isHidden = true
-        return indicatorPointView
+        let view = UIView()
+        view.backgroundColor = .red
+        view.isHidden = true
+        return view
     }()
     private(set) lazy var dayButton: UIButton = {
-        let dayButton = UIButton()
-        dayButton.isUserInteractionEnabled = false
-        dayButton.makeCircle()
-        dayButton.backgroundColor = .black
-        dayButton.alpha = 0.8
-        return dayButton
+        let button = UIButton()
+        button.isUserInteractionEnabled = false
+        button.makeCircle()
+        button.backgroundColor = .black
+        button.alpha = 0.8
+        return button
     }()
     
     override init(frame: CGRect) {

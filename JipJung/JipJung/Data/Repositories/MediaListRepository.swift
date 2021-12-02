@@ -12,8 +12,6 @@ import RxSwift
 final class MediaListRepository {
     private let localDBManager = RealmDBManager.shared
     
-    // MARK: Media
-    
     func read() -> Single<[Media]> {
         return Single.create { [weak self] single in
             guard let self = self else {
@@ -31,8 +29,6 @@ final class MediaListRepository {
         }
     }
     
-    // MARK: MediaMode
-    
     func create(mediaID: String, mode: Int) -> Single<Bool> {
         return Single.create { [weak self] single in
             guard let self = self else {
@@ -40,7 +36,6 @@ final class MediaListRepository {
                 return Disposables.create()
             }
             
-            // TODO: ViewModel에서 MediaMode를 가져오도록 변경 후 삭제
             guard let mode = MediaMode(rawValue: mode) else {
                 single(.failure(RealmError.initFailed))
                 return Disposables.create()

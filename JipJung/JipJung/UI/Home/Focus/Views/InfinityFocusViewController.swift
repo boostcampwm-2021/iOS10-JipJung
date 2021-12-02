@@ -33,18 +33,15 @@ final class InfinityFocusViewController: FocusViewController {
         return shapeLayer
     }()
     private lazy var cometAnimationLayer: CALayer = {
-        let shapeLayer = createCometCircleShapeLayer(strokeColor: .white, lineWidth: 3)
-        return shapeLayer
+        return createCometCircleShapeLayer(strokeColor: .white, lineWidth: 3)
     }()
+    private lazy var pulseGroupLayer = CALayer()
+    private lazy var startButton = FocusStartButton()
+    private lazy var pauseButton = FocusPauseButton()
+    private lazy var continueButton = FocusContinueButton()
+    private lazy var exitButton = FocusExitButton()
     
-    private let pulseGroupLayer = CALayer()
-    
-    private let startButton = FocusStartButton()
-    private let pauseButton = FocusPauseButton()
-    private let continueButton = FocusContinueButton()
-    private let exitButton = FocusExitButton()
-    
-    private var viewModel: InfinityFocusViewModel?
+    private let viewModel = InfinityFocusViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,11 +78,6 @@ final class InfinityFocusViewController: FocusViewController {
         }
     }
 
-    convenience init(viewModel: InfinityFocusViewModel) {
-        self.init(nibName: nil, bundle: nil)
-        self.viewModel = viewModel
-    }
-    
     private func configureTimerUI() {
         view.addSubview(timerView)
         timerView.layer.addSublayer(pulseGroupLayer)
@@ -100,7 +92,6 @@ final class InfinityFocusViewController: FocusViewController {
         timeLabel.snp.makeConstraints {
             $0.center.equalToSuperview()
         }
-        
         timerView.layer.addSublayer(cometAnimationLayer)
     }
     
@@ -141,16 +132,16 @@ final class InfinityFocusViewController: FocusViewController {
     }
     
     private func bindUI() {
-        viewModel?.timerState.bind(onNext: { [weak self] in
+        viewModel.timerState.bind(onNext: { [weak self] in
                 guard let self = self else { return }
                 switch $0 {
                 case .ready:
                     self.presentReady()
-                case .running(let isContinue):
-                    self.viewModel?.startClockTimer()
+                case .running(_):
+                    self.viewModel.startClockTimer()
                     self.presentRunning()
                 case .paused:
-                    self.viewModel?.pauseClockTimer()
+                    self.viewModel.pauseClockTimer()
                     self.presentPaused()
                 }
             })
@@ -159,35 +150,35 @@ final class InfinityFocusViewController: FocusViewController {
         startButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
-                self.viewModel?.changeTimerState(to: .running(isResume: false))
+                self.viewModel.changeTimerState(to: .running(isResume: false))
             }
             .disposed(by: disposeBag)
         
         pauseButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
-                self.viewModel?.changeTimerState(to: .paused)
+                self.viewModel.changeTimerState(to: .paused)
             }
             .disposed(by: disposeBag)
         
         continueButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
-                self.viewModel?.changeTimerState(to: .running(isResume: true))
+                self.viewModel.changeTimerState(to: .running(isResume: true))
             }
             .disposed(by: disposeBag)
         
         exitButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
-                self.viewModel?.alertNotification()
-                self.viewModel?.changeTimerState(to: .ready)
-                self.viewModel?.resetClockTimer()
-                self.viewModel?.saveFocusRecord()
+                self.viewModel.alertNotification()
+                self.viewModel.changeTimerState(to: .ready)
+                self.viewModel.resetClockTimer()
+                self.viewModel.saveFocusRecord()
             }
             .disposed(by: disposeBag)
         
-        viewModel?.clockTime
+        viewModel.clockTime
             .bind(onNext: { [weak self] in
                 guard let self = self, $0 > 0 else { return }
                 self.timeLabel.text = $0.digitalClockFormatted
@@ -269,10 +260,12 @@ final class InfinityFocusViewController: FocusViewController {
         }
     }
     
-    private func createCircleShapeLayer(strokeColor: UIColor,
-                                        lineWidth: CGFloat,
-                                        startAngle: CGFloat = 0,
-                                        endAngle: CGFloat = 2 * CGFloat.pi) -> CAShapeLayer {
+    private func createCircleShapeLayer(
+        strokeColor: UIColor,
+        lineWidth: CGFloat,
+        startAngle: CGFloat = 0,
+        endAngle: CGFloat = 2 * CGFloat.pi
+    ) -> CAShapeLayer {
         let circleShapeLayer = CAShapeLayer()
         let circlePath = UIBezierPath(
             arcCenter: .zero,
@@ -298,7 +291,10 @@ final class InfinityFocusViewController: FocusViewController {
         pulseGroupLayer.sublayers?.forEach({ $0.removeAllAnimations() })
     }
     
-    private func createCometCircleShapeLayer(strokeColor: UIColor, lineWidth: CGFloat) -> CALayer {
+    private func createCometCircleShapeLayer(
+        strokeColor: UIColor,
+        lineWidth: CGFloat
+    ) -> CALayer {
         let circleShapeLayer = CAShapeLayer()
         let circlePath = UIBezierPath(
             arcCenter: .zero,

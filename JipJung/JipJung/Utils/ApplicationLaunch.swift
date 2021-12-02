@@ -68,7 +68,7 @@ final class ApplicationLaunch: NSObject {
     private func configureInnerDB() throws {
         do {
             guard let url = BundleManager.shared
-                    .findURL(fileNameWithExtension: "DummyData.json")
+                    .findURL(fileNameWithExtension: "ResourceData.json")
             else {
                 throw ApplicationLaunchError.resourceJsonFileNotFound
             }
@@ -101,7 +101,7 @@ final class ApplicationLaunch: NSObject {
         }
     }
     
-    func configureLocalNotification() {
+    private func configureLocalNotification() {
         let notificationCenter = UNUserNotificationCenter.current()
         notificationCenter.requestAuthorization(options: [.alert, .sound]) { _, _  in }
         UNUserNotificationCenter.current().delegate = self

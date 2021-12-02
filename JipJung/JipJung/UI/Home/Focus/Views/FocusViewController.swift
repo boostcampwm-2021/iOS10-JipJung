@@ -12,7 +12,7 @@ import RxSwift
 
 class FocusViewController: UIViewController {
     let closeButton = CloseButton()
-    var disposeBag = DisposeBag()
+    let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,7 +24,7 @@ class FocusViewController: UIViewController {
         view.addSubview(closeButton)
         closeButton.snp.makeConstraints {
             $0.width.equalTo(30)
-            $0.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(10)
+            $0.top.equalTo(view.snp.topMargin).offset(10)
             $0.leading.equalToSuperview().offset(10)
             $0.height.equalTo(30)
         }

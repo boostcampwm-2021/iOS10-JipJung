@@ -11,23 +11,19 @@ import RxRelay
 import RxSwift
 
 final class DefaultFocusViewModel {
-    var clockTime = BehaviorRelay<Int>(value: 0)
-    var isFocusRecordSaved = BehaviorRelay<Bool>(value: false)
-    var timerState = BehaviorRelay<TimerState>(value: .ready)
+    let clockTime = BehaviorRelay<Int>(value: 0)
+    let isFocusRecordSaved = BehaviorRelay<Bool>(value: false)
+    let timerState = BehaviorRelay<TimerState>(value: .ready)
     let focusTimeList = [1, 5, 8, 10, 15, 20, 25, 30, 35,
                          40, 45, 50, 55, 60, 70, 80, 90,
                          100, 110, 120, 130, 140, 150, 160, 170, 180]
     var focusTime = 60
     
-    private var runningStateDisposeBag = DisposeBag()
     private let disposeBag = DisposeBag()
-    
-    private let saveFocusTimeUseCase: SaveFocusTimeUseCaseProtocol
+    private let saveFocusTimeUseCase = SaveFocusTimeUseCase()
     private let audioPlayUseCase = AudioPlayUseCase()
     
-    init(saveFocusTimeUseCase: SaveFocusTimeUseCaseProtocol) {
-        self.saveFocusTimeUseCase = saveFocusTimeUseCase
-    }
+    private var runningStateDisposeBag = DisposeBag()
     
     func changeTimerState(to timerState: TimerState) {
         self.timerState.accept(timerState)

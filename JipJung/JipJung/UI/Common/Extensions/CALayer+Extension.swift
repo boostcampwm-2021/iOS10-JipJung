@@ -7,7 +7,7 @@
 
 import UIKit
 
-//MARK: - 출처: https://stackoverflow.com/questions/33994520/how-to-pause-and-resume-uiview-animatewithduration
+// 참고 : https://stackoverflow.com/questions/33994520/how-to-pause-and-resume-uiview-animatewithduration
 
 extension CALayer {
     func pauseLayer() {

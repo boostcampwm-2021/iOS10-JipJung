@@ -53,17 +53,16 @@ final class BreathFocusViewController: FocusViewController {
         textLayer.string = "Inhale"
         return textLayer
     }()
-    
-    private let breathView = UIView()
-    private let countdownView = CountdownView()
-    private let startButton = FocusStartButton()
-    private let stopButton: FocusExitButton = {
+    private lazy var breathView = UIView()
+    private lazy var countdownView = CountdownView()
+    private lazy var startButton = FocusStartButton()
+    private lazy var stopButton: FocusExitButton = {
         let focusExitButton = FocusExitButton()
         focusExitButton.setTitle("Stop", for: .normal)
         return focusExitButton
     }()
     
-    private var viewModel: BreathFocusViewModel?
+    private let viewModel = BreathFocusViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -102,11 +101,6 @@ final class BreathFocusViewController: FocusViewController {
                                                  y: breathView.bounds.midY - 40),
                                  size: CGSize(width: 120, height: 100))
         startWiggleAnimation()
-    }
-    
-    convenience init(viewModel: BreathFocusViewModel) {
-        self.init(nibName: nil, bundle: nil)
-        self.viewModel = viewModel
     }
     
     private func configureUI() {
@@ -169,18 +163,18 @@ final class BreathFocusViewController: FocusViewController {
         startButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
-                self.viewModel?.changeState(to: .running)
+                self.viewModel.changeState(to: .running)
             }
             .disposed(by: disposeBag)
         
         stopButton.rx.tap
             .bind { [weak self] in
                 guard let self = self else { return }
-                self.viewModel?.changeState(to: .stop)
+                self.viewModel.changeState(to: .stop)
             }
             .disposed(by: disposeBag)
         
-        viewModel?.focusState
+        viewModel.focusState
             .skip(1)
             .distinctUntilChanged()
             .bind(onNext: { [weak self] in
@@ -189,14 +183,14 @@ final class BreathFocusViewController: FocusViewController {
                 case .running:
                     self.startBreath()
                 case .stop:
-                    self.viewModel?.alertNotification()
+                    self.viewModel.alertNotification()
                     self.stopBreath()
-                    self.viewModel?.saveFocusRecord()
-                    self.viewModel?.resetClockTimer()
+                    self.viewModel.saveFocusRecord()
+                    self.viewModel.resetClockTimer()
                 }
             }).disposed(by: disposeBag)
         
-        viewModel?.clockTime.bind(onNext: { [weak self] in
+        viewModel.clockTime.bind(onNext: { [weak self] in
             guard let self = self else { return }
             if $0 % 7 == 3 {
                 self.textLayer.opacity = 0
@@ -280,7 +274,7 @@ final class BreathFocusViewController: FocusViewController {
                     self.countdownView.isHidden = true
                     self.scalingShapeLayer.isHidden = false
                     self.startInhaleExhaleAnimation()
-                    self.viewModel?.startClockTimer()
+                    self.viewModel.startClockTimer()
                 }
             }
         }
@@ -346,7 +340,7 @@ final class BreathFocusViewController: FocusViewController {
         exhaleAnimation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
         
         animations.isRemovedOnCompletion = true
-        animations.repeatCount = Float(viewModel?.focusTime ?? 1)
+        animations.repeatCount = Float(viewModel.focusTime)
         animations.animations?.append(inhaleAnimation)
         animations.animations?.append(exhaleAnimation)
         animations.delegate = self
@@ -356,13 +350,13 @@ final class BreathFocusViewController: FocusViewController {
 
 extension BreathFocusViewController: UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        let focusTime = (viewModel?.focusTimeList[row] ?? 0) * 7
-        viewModel?.setFocusTime(seconds: focusTime)
+        let focusTime = viewModel.focusTimeList[row] * 7
+        viewModel.setFocusTime(seconds: focusTime)
         self.numberOfBreathLabel.text = "\(focusTime) breaths"
     }
     
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
-        guard let minuteInfo = viewModel?.focusTimeList[row] else { return UILabel() }
+        let minuteInfo = viewModel.focusTimeList[row]
         timePickerView.subviews.forEach {
             $0.backgroundColor = .clear
         }
@@ -387,11 +381,11 @@ extension BreathFocusViewController: UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return viewModel?.focusTimeList.count ?? 0
+        return viewModel.focusTimeList.count ?? 0
     }
 }
 extension BreathFocusViewController: CAAnimationDelegate {
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
-        viewModel?.changeState(to: .stop)
+        viewModel.changeState(to: .stop)
     }
 }

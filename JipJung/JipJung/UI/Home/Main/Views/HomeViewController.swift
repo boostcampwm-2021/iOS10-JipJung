@@ -81,16 +81,18 @@ final class HomeViewController: UIViewController {
         return label
     }()
     private lazy var touchTransferView = TouchTransferView()
-    private lazy var clubView: SKView = SKView()
+    private lazy var clubView = SKView()
     private lazy var clubScene: SKScene = {
-        let clubScene = ClubSKScene()
-        clubScene.size = CGSize(width: view.frame.width,
-                                height: view.frame.height)
-        clubScene.scaleMode = .fill
-        return clubScene
+        let skScene = ClubSKScene()
+        skScene.size = CGSize(
+            width: view.frame.width,
+            height: view.frame.height
+        )
+        skScene.scaleMode = .fill
+        return skScene
     }()
     
-    private let viewModel: HomeViewModel = HomeViewModel()
+    private let viewModel = HomeViewModel()
     private let disposeBag = DisposeBag()
     
     private var topBottomViewGap: CGFloat = 0
@@ -370,6 +372,7 @@ final class HomeViewController: UIViewController {
                 self?.present(favoriteNavigationView, animated: true)
             }
             .disposed(by: disposeBag)
+        
         bottomView.addSubview(favoriteHeader)
         favoriteHeader.snp.makeConstraints {
             $0.top.equalTo(playHistoryCollectionView.snp.bottom).offset(8)
@@ -389,7 +392,6 @@ final class HomeViewController: UIViewController {
         favoriteEmptyLabel.snp.makeConstraints {
             $0.center.equalTo(favoriteCollectionView)
         }
-        
     }
     
     private func configureTouchTransferView() {
@@ -522,7 +524,8 @@ final class HomeViewController: UIViewController {
                     UIView.animate(
                         withDuration: 0.35,
                         delay: 0,
-                        options: [.autoreverse, .repeat]) {
+                        options: [.autoreverse, .repeat]
+                    ) {
                         self.clubScene.view?.layer.opacity = 0.25
                     }
                 }

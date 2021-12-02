@@ -1,5 +1,5 @@
 //
-//  DummyCell.swift
+//  SearchTableViewCell.swift
 //  JipJung
 //
 //  Created by 오현식 on 2021/11/04.
@@ -35,7 +35,7 @@ final class SearchTableViewCell: UITableViewCell {
         configureUI()
     }
     
-    func configureUI() {
+    private func configureUI() {
         selectionStyle = .none
         
         contentView.addSubview(searchHistoryStackView)
@@ -43,7 +43,9 @@ final class SearchTableViewCell: UITableViewCell {
             $0.top.bottom.equalToSuperview()
             $0.leading.trailing.equalToSuperview().inset(20)
         }
-        
+    }
+    
+    func changeColor() {
         switch ApplicationMode.shared.mode.value {
         case .bright:
             backgroundColor = .white

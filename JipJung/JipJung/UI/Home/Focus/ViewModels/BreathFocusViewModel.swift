@@ -17,22 +17,18 @@ enum BreathFocusState {
 }
 
 final class BreathFocusViewModel {
-    var clockTime = BehaviorRelay<Int>(value: -1)
-    var isFocusRecordSaved = BehaviorRelay<Bool>(value: false)
-    var focusState = BehaviorRelay<BreathFocusState>(value: .stop)
+    let clockTime = BehaviorRelay<Int>(value: -1)
+    let isFocusRecordSaved = BehaviorRelay<Bool>(value: false)
+    let focusState = BehaviorRelay<BreathFocusState>(value: .stop)
+    let timerState = BehaviorRelay<TimerState>(value: .ready)
     let focusTimeList = [Int](1...15)
     var focusTime = 7
-    var timerState = BehaviorRelay<TimerState>(value: .ready)
     
-    private var runningStateDisposeBag = DisposeBag()
     private let disposeBag = DisposeBag()
-    
-    private let saveFocusTimeUseCase: SaveFocusTimeUseCaseProtocol
+    private let saveFocusTimeUseCase = SaveFocusTimeUseCase()
     private let audioPlayUseCase = AudioPlayUseCase()
     
-    init(saveFocusTimeUseCase: SaveFocusTimeUseCaseProtocol) {
-        self.saveFocusTimeUseCase = saveFocusTimeUseCase
-    }
+    private var runningStateDisposeBag = DisposeBag()
     
     func changeState(to state: BreathFocusState) {
         self.focusState.accept(state)
@@ -63,7 +59,6 @@ final class BreathFocusViewModel {
         runningStateDisposeBag = DisposeBag()
     }
     
-    // 숨쉬기 횟수 설정
     func setFocusTime(seconds: Int) {
         focusTime = seconds
     }

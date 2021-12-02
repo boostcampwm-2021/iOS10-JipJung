@@ -17,10 +17,10 @@ struct DBStructureForJSON: Decodable {
         case maximList = "Maxim"
     }
     
-    var allMediaList: [Media]
-    var brightModeList: [BrightMedia]
-    var darknessModeList: [DarknessMedia]
-    var playHistoryList: [PlayHistory]
-    var favoriteMediaList: [FavoriteMedia]
-    var maximList: [Maxim]
+    let allMediaList: [Media]
+    let brightModeList: [BrightMedia]
+    let darknessModeList: [DarknessMedia]
+    let playHistoryList: [PlayHistory]
+    let favoriteMediaList: [FavoriteMedia]
+    let maximList: [Maxim]
 }
