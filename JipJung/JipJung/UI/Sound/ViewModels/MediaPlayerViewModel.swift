@@ -96,6 +96,19 @@ final class MediaPlayerViewModel {
             .disposed(by: disposeBag)
     }
 
+    func downloadMusic() {
+        audioPlayUseCase.control(audioFileName: media.audioFileName, autoPlay: false)
+            .subscribe { [weak self] in
+                if $0 {
+                    self?.musicFileStatus.accept(FileStatus.downloaded)
+                }
+            } onFailure: { [weak self] in
+                self?.musicFileStatus.accept(.downloadFailed)
+                print($0.localizedDescription)
+            }
+            .disposed(by: disposeBag)
+    }
+    
     func playMusic() {
         audioPlayUseCase.control(audioFileName: media.audioFileName, autoPlay: true)
             .subscribe { [weak self] in
