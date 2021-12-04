@@ -64,23 +64,28 @@ final class HomeViewModel {
         }
     }
     
-    func modeSwitchTouched() {
-        mode.accept(mode.value == .bright ? .dark : .bright)
+    func modeSwitchTouched(media: Media) {
+        ApplicationMode.shared.convert()
+        audioPlayUseCase.control(media: media, state: false)
+            .subscribe(onFailure: { error in
+                print(error.localizedDescription)
+            })
+            .disposed(by: disposeBag)
     }
     
     func mediaPlayViewTapped(media: Media) -> Single<Bool> {
-        return audioPlayUseCase.control(audioFileName: media.audioFileName, autoPlay: true, restart: false)
+        return audioPlayUseCase.control(media: media, autoPlay: true, restart: false)
     }
     
     func receiveNotificationForFocus(media: Media, state: Bool) {
         if state {
-            audioPlayUseCase.control(audioFileName: media.audioFileName, autoPlay: true, restart: false)
+            audioPlayUseCase.control(media: media, autoPlay: true, restart: false, isContinue: true)
                 .subscribe(onFailure: { error in
                     print(error.localizedDescription)
                 })
                 .disposed(by: disposeBag)
         } else {
-            audioPlayUseCase.control(audioFileName: media.audioFileName, state: state)
+            audioPlayUseCase.control(media: media, state: state)
                 .subscribe(onFailure: { error in
                     print(error.localizedDescription)
                 })

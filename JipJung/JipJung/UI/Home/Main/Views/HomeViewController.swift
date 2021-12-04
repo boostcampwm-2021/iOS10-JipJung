@@ -159,8 +159,15 @@ final class HomeViewController: UIViewController {
         
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(showCarouselView(_:)),
-            name: .showCarouselView,
+            selector: #selector(checkCurrentPlay(_:)),
+            name: .checkCurrentPlay,
+            object: nil
+        )
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(checkCurrentPlay(_:)),
+            name: UIApplication.willEnterForegroundNotification,
             object: nil
         )
     }
@@ -256,8 +263,13 @@ final class HomeViewController: UIViewController {
         }()
         
         modeSwitch.rx.tap
-            .bind {
-                ApplicationMode.shared.convert()
+            .bind { [weak self] in
+                guard let self = self else { return }
+                
+                self.carouselView.pauseVideoInCurrentView()
+                if let media = self.carouselView.getMediaFromCurrentView() {
+                    self.viewModel.modeSwitchTouched(media: media)
+                }
             }
             .disposed(by: disposeBag)
         
@@ -553,11 +565,13 @@ final class HomeViewController: UIViewController {
         viewModel.receiveNotificationForFocus(media: media, state: playState)
     }
     
-    @objc private func showCarouselView(_ sender: Notification) {
+    @objc private func checkCurrentPlay(_ sender: Notification) {
         guard let media = carouselView.getMediaFromCurrentView() else { return }
         
         if viewModel.mediaPlayViewAppear(media: media) {
             carouselView.playVideoInCurrentView()
+        } else {
+            carouselView.pauseVideoInCurrentView()
         }
     }
     

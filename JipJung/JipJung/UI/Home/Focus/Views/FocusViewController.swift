@@ -34,7 +34,7 @@ class FocusViewController: UIViewController {
         closeButton.rx.tap.bind { [weak self] _ in
             self?.dismiss(animated: true) {
                 NotificationCenter.default.post(
-                    name: .showCarouselView,
+                    name: .checkCurrentPlay,
                     object: nil,
                     userInfo: nil
                 )

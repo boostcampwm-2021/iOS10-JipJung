@@ -18,7 +18,9 @@ enum MaximCalendarHeaderCollectionViewSize {
         origin: .zero,
         size: CGSize(
             width: MaximCalendarHeaderCollectionViewSize.width / 14,
-            height: MaximCalendarHeaderCollectionViewSize.width / 14 + MaximViewSize.nocheHeight + MaximViewSize.headerHeight * 2
+            height: MaximCalendarHeaderCollectionViewSize.width / 14
+            + MaximViewSize.nocheHeight
+            + MaximViewSize.headerHeight * 2
         )
     )
     static let cellSpacing = MaximCalendarHeaderCollectionViewSize.width / 14

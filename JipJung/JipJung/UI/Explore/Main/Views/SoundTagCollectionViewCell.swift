@@ -23,8 +23,7 @@ final class SoundTagCollectionViewCell: UICollectionViewCell {
                 backgroundColor = UIColor(rgb: 0x00FF80, alpha: 1.0)
                 soundTagLabel.textColor = .white
                 soundTagLabel.font = .systemFont(ofSize: 17, weight: .bold)
-            }
-            else {
+            } else {
                 switch ApplicationMode.shared.mode.value {
                 case .bright:
                     backgroundColor = .white

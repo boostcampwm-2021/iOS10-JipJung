@@ -12,5 +12,17 @@ enum FocusViewControllerSize {
 }
 
 enum BreathMode {
-    static let audioName = "breath.WAV"
+    static let media = Media(
+        id: "",
+        name: "Breath",
+        explanation: "",
+        maxim: "",
+        speaker: "",
+        color: "",
+        mode: 0,
+        tag: "",
+        thumbnailImageFileName: "",
+        videoFileName: "",
+        audioFileName: "breath.WAV"
+    )
 }

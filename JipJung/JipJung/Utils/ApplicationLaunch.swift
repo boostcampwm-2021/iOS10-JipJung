@@ -14,6 +14,7 @@ import RealmSwift
 final class ApplicationLaunch: NSObject {
     func start() {
         configureFirebase()
+        configureRemoteCommandCenter()
         configureAudioSession()
         configureLocalNotification()
         
@@ -86,6 +87,10 @@ final class ApplicationLaunch: NSObject {
         } catch {
             throw error
         }
+    }
+    
+    private func configureRemoteCommandCenter() {
+        UIApplication.shared.beginReceivingRemoteControlEvents()
     }
     
     private func configureAudioSession() {
