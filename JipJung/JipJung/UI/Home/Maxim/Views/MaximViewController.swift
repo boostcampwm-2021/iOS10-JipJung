@@ -281,7 +281,8 @@ extension MaximViewController: UIScrollViewDelegate {
                 y: 0
             )
         case calendarHeaderCollectionView:
-            guard let layout = calendarHeaderCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
+            guard let layout = calendarHeaderCollectionView.collectionViewLayout
+                    as? UICollectionViewFlowLayout else { return }
             let cellWidthIncludingSpacing = (layout.itemSize.width + layout.minimumLineSpacing) * 7
             let estimatedIndex = scrollView.contentOffset.x / cellWidthIncludingSpacing
             let index: Int

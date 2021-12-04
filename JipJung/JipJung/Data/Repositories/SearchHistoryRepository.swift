@@ -16,7 +16,9 @@ final class SearchHistoryRepository {
     }
     
     func load() -> [String] {
-        guard let searchHistory: [String] = userDefaultStorage.load(for: UserDefaultsKeys.searchHistory) else { return [] }
+        guard let searchHistory: [String] = userDefaultStorage.load(
+            for: UserDefaultsKeys.searchHistory
+        ) else { return [] }
         return searchHistory
     }
 }
