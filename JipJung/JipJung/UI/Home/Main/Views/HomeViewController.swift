@@ -263,8 +263,13 @@ final class HomeViewController: UIViewController {
         }()
         
         modeSwitch.rx.tap
-            .bind {
-                ApplicationMode.shared.convert()
+            .bind { [weak self] in
+                guard let self = self else { return }
+                
+                self.carouselView.pauseVideoInCurrentView()
+                if let media = self.carouselView.getMediaFromCurrentView() {
+                    self.viewModel.modeSwitchTouched(media: media)
+                }
             }
             .disposed(by: disposeBag)
         

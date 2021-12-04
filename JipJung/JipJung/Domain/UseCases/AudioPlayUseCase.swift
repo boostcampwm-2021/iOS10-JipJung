@@ -17,7 +17,7 @@ final class AudioPlayUseCase {
     
     private let disposeBag = DisposeBag()
     
-    func control(media: Media, autoPlay: Bool = false, restart: Bool = false) -> Single<Bool> {
+    func control(media: Media, autoPlay: Bool = false, restart: Bool = false, isContinue: Bool = false) -> Single<Bool> {
         return Single.create { [weak self] single in
             guard let self = self else {
                 single(.failure(AudioError.initFailed))
@@ -26,17 +26,16 @@ final class AudioPlayUseCase {
             
             do {
                 if self.audioPlayManager.isEqaul(with: media.audioFileName) {
-                    if autoPlay {
-                        let result = try self.play(media: media, restart: restart)
-                        single(.success(result))
-                    } else {
-                        if self.audioPlayManager.isPlaying() {
+                    if self.audioPlayManager.isPlaying() {
+                        if isContinue {
+                            single(.success(true))
+                        } else {
                             let result = try self.pause()
                             single(.success(result))
-                        } else {
-                            let result = try self.play(media: media, restart: restart)
-                            single(.success(result))
                         }
+                    } else {
+                        let result = try self.play(media: media, restart: restart)
+                        single(.success(result))
                     }
                 } else {
                     self.mediaResourceRepository.getMediaURL(fileName: media.audioFileName, type: .audio)
@@ -87,7 +86,7 @@ final class AudioPlayUseCase {
         }
     }
     
-    private func play(media: Media, restart: Bool) throws -> Bool {
+    func play(media: Media, restart: Bool) throws -> Bool {
         do {
             if try audioPlayManager.play(media: media, restart: restart) {
                 if let mediaID = media.audioFileName.components(separatedBy: ".")[safe: 0] {
@@ -114,7 +113,7 @@ final class AudioPlayUseCase {
         }
     }
     
-    private func pause() throws -> Bool {
+    func pause() throws -> Bool {
         do {
             try audioPlayManager.pause()
             return false
