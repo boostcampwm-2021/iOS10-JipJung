@@ -159,8 +159,8 @@ final class HomeViewController: UIViewController {
         
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(showCarouselView(_:)),
-            name: .showCarouselView,
+            selector: #selector(checkCurrentPlay(_:)),
+            name: .checkCurrentPlay,
             object: nil
         )
     }
@@ -553,11 +553,13 @@ final class HomeViewController: UIViewController {
         viewModel.receiveNotificationForFocus(media: media, state: playState)
     }
     
-    @objc private func showCarouselView(_ sender: Notification) {
+    @objc private func checkCurrentPlay(_ sender: Notification) {
         guard let media = carouselView.getMediaFromCurrentView() else { return }
         
         if viewModel.mediaPlayViewAppear(media: media) {
             carouselView.playVideoInCurrentView()
+        } else {
+            carouselView.pauseVideoInCurrentView()
         }
     }
     

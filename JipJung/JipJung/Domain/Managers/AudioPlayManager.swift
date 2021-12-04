@@ -7,6 +7,7 @@
 
 import AVFoundation
 import Foundation
+import MediaPlayer
 
 import RxRelay
 import RxSwift
@@ -20,8 +21,42 @@ class AudioPlayManager {
     }
     
     static let shared = AudioPlayManager()
-    private init() {}
+    private init() {
+        remoteCommandCenter.playCommand.addTarget { [weak self] _ in
+            guard let audioPlayer = self?.audioPlayer else {
+                return .noSuchContent
+            }
+            
+            audioPlayer.play()
+            
+            NotificationCenter.default.post(
+                name: .checkCurrentPlay,
+                object: nil,
+                userInfo: nil
+            )
+            
+            return .success
+        }
+        
+        remoteCommandCenter.pauseCommand.addTarget { [weak self] _ in
+            guard let audioPlayer = self?.audioPlayer else {
+                return .noSuchContent
+            }
+            
+            audioPlayer.pause()
+            
+            NotificationCenter.default.post(
+                name: .checkCurrentPlay,
+                object: nil,
+                userInfo: nil
+            )
+            
+            return .success
+        }
+    }
     
+    private let remoteCommandCenter = MPRemoteCommandCenter.shared()
+    private let remoteCommandInfoCenter = MPNowPlayingInfoCenter.default()
     private let mediaResourceRepository = MediaResourceRepository()
     private let disposeBag = DisposeBag()
     
@@ -52,6 +87,8 @@ class AudioPlayManager {
             audioPlayer.currentTime = 0
         }
 
+        configureRemoteCommandInfo()
+        
         return audioPlayer.play()
     }
     
@@ -89,5 +126,23 @@ class AudioPlayManager {
         }
         
         return audioPlayer.isPlaying
+    }
+    
+    private func configureRemoteCommandInfo() {
+        guard let audioPlayer = audioPlayer else { return }
+        
+        var nowPlayingInfo = remoteCommandInfoCenter.nowPlayingInfo ?? [String: Any]()
+        nowPlayingInfo[MPMediaItemPropertyTitle] = "콘텐츠 제목"
+        
+        if let image = UIImage(named: "app_icon") {
+            nowPlayingInfo[MPMediaItemPropertyArtwork] = MPMediaItemArtwork(
+                boundsSize: image.size,
+                requestHandler: { _ in
+                    return image
+                }
+            )
+        }
+        
+        remoteCommandInfoCenter.nowPlayingInfo = nowPlayingInfo
     }
 }
