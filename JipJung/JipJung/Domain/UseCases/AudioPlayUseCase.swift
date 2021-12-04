@@ -17,7 +17,7 @@ final class AudioPlayUseCase {
     
     private let disposeBag = DisposeBag()
     
-    func control(audioFileName: String, autoPlay: Bool = false, restart: Bool = false) -> Single<Bool> {
+    func control(media: Media, autoPlay: Bool = false, restart: Bool = false) -> Single<Bool> {
         return Single.create { [weak self] single in
             guard let self = self else {
                 single(.failure(AudioError.initFailed))
@@ -25,23 +25,23 @@ final class AudioPlayUseCase {
             }
             
             do {
-                if self.audioPlayManager.isEqaul(with: audioFileName) {
+                if self.audioPlayManager.isEqaul(with: media.audioFileName) {
                     if self.audioPlayManager.isPlaying() {
                         let result = try self.pause()
                         single(.success(result))
                     } else {
-                        let result = try self.play(audioFileName: audioFileName, restart: restart)
+                        let result = try self.play(media: media, restart: restart)
                         single(.success(result))
                     }
                 } else {
-                    self.mediaResourceRepository.getMediaURL(fileName: audioFileName, type: .audio)
+                    self.mediaResourceRepository.getMediaURL(fileName: media.audioFileName, type: .audio)
                         .observe(on: MainScheduler.asyncInstance)
                         .map { [weak self] in
                             try self?.audioPlayManager.ready(url: $0)
                         }
                         .subscribe {
                             if autoPlay {
-                                let result = try? self.play(audioFileName: audioFileName, restart: restart)
+                                let result = try? self.play(media: media, restart: restart)
                                 single(.success(result ?? false))
                             } else {
                                 single(.success(true))
@@ -59,16 +59,16 @@ final class AudioPlayUseCase {
         }
     }
     
-    func control(audioFileName: String, state: Bool, restart: Bool = false) -> Single<Bool> {
+    func control(media: Media, state: Bool, restart: Bool = false) -> Single<Bool> {
         return Single.create { [weak self] single in
             guard let self = self else {
                 single(.failure(AudioError.initFailed))
                 return Disposables.create()
             }
             do {
-                if self.audioPlayManager.isEqaul(with: audioFileName) {
+                if self.audioPlayManager.isEqaul(with: media.audioFileName) {
                     if state {
-                        let result = try self.play(audioFileName: audioFileName, restart: restart)
+                        let result = try self.play(media: media, restart: restart)
                         single(.success(result))
                     } else {
                         let result = try self.pause()
@@ -82,10 +82,10 @@ final class AudioPlayUseCase {
         }
     }
     
-    private func play(audioFileName: String, restart: Bool) throws -> Bool {
+    private func play(media: Media, restart: Bool) throws -> Bool {
         do {
-            if try audioPlayManager.play(audioFileName: audioFileName, restart: restart) {
-                if let mediaID = audioFileName.components(separatedBy: ".")[safe: 0] {
+            if try audioPlayManager.play(media: media, restart: restart) {
+                if let mediaID = media.audioFileName.components(separatedBy: ".")[safe: 0] {
                     playHistoryRepository.create(mediaID: mediaID)
                         .subscribe(onSuccess: { state in
                             if !state {

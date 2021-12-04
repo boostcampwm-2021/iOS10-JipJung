@@ -35,7 +35,7 @@ final class BreathFocusViewModel {
     }
     
     func startClockTimer() {
-        audioPlayUseCase.control(audioFileName: BreathMode.audioName, autoPlay: true, restart: true)
+        audioPlayUseCase.control(media: BreathMode.media, autoPlay: true, restart: true)
             .subscribe(onFailure: { error in
                 print(error.localizedDescription)
             }).disposed(by: disposeBag)
@@ -50,7 +50,7 @@ final class BreathFocusViewModel {
     }
     
     func resetClockTimer() {
-        audioPlayUseCase.control(audioFileName: BreathMode.audioName, state: false)
+        audioPlayUseCase.control(media: BreathMode.media, state: false)
             .subscribe(onFailure: { error in
                 print(error.localizedDescription)
             }).disposed(by: disposeBag)

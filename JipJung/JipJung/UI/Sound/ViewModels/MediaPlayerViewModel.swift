@@ -97,7 +97,7 @@ final class MediaPlayerViewModel {
     }
 
     func downloadMusic() {
-        audioPlayUseCase.control(audioFileName: media.audioFileName, autoPlay: false)
+        audioPlayUseCase.control(media: media, autoPlay: false)
             .subscribe { [weak self] in
                 if $0 {
                     self?.musicFileStatus.accept(FileStatus.downloaded)
@@ -110,7 +110,7 @@ final class MediaPlayerViewModel {
     }
     
     func playMusic() {
-        audioPlayUseCase.control(audioFileName: media.audioFileName, autoPlay: true)
+        audioPlayUseCase.control(media: media, autoPlay: true)
             .subscribe { [weak self] in
                 self?.isMusicPlaying.accept($0)
                 if $0 {
@@ -124,7 +124,7 @@ final class MediaPlayerViewModel {
     }
     
     func pauseMusic() {
-        audioPlayUseCase.control(audioFileName: media.audioFileName, state: false)
+        audioPlayUseCase.control(media: media, state: false)
             .subscribe { [weak self] in
                 self?.isMusicPlaying.accept($0)
             } onFailure: { [weak self] in

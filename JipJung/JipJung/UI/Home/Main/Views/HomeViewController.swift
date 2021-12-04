@@ -163,6 +163,13 @@ final class HomeViewController: UIViewController {
             name: .checkCurrentPlay,
             object: nil
         )
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(checkCurrentPlay(_:)),
+            name: UIApplication.willEnterForegroundNotification,
+            object: nil
+        )
     }
     
     private func configureTopBottomViewGap() {

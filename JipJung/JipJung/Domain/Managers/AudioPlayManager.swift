@@ -72,14 +72,14 @@ class AudioPlayManager {
         audioPlayer?.prepareToPlay()
     }
     
-    func play(audioFileName: String, restart: Bool) throws -> Bool {
+    func play(media: Media, restart: Bool) throws -> Bool {
         guard let audioPlayer = audioPlayer,
               let fileName = audioPlayer.url?.lastPathComponent
         else {
             throw AudioError.initFailed
         }
         
-        if fileName != audioFileName {
+        if fileName != media.audioFileName {
             return false
         }
 
@@ -87,7 +87,7 @@ class AudioPlayManager {
             audioPlayer.currentTime = 0
         }
 
-        configureRemoteCommandInfo()
+        configureRemoteCommandInfo(media: media)
         
         return audioPlayer.play()
     }
@@ -128,11 +128,9 @@ class AudioPlayManager {
         return audioPlayer.isPlaying
     }
     
-    private func configureRemoteCommandInfo() {
-        guard let audioPlayer = audioPlayer else { return }
-        
+    private func configureRemoteCommandInfo(media: Media) {
         var nowPlayingInfo = remoteCommandInfoCenter.nowPlayingInfo ?? [String: Any]()
-        nowPlayingInfo[MPMediaItemPropertyTitle] = "콘텐츠 제목"
+        nowPlayingInfo[MPMediaItemPropertyTitle] = media.name
         
         if let image = UIImage(named: "app_icon") {
             nowPlayingInfo[MPMediaItemPropertyArtwork] = MPMediaItemArtwork(
