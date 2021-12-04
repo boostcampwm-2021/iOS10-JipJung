@@ -26,12 +26,17 @@ final class AudioPlayUseCase {
             
             do {
                 if self.audioPlayManager.isEqaul(with: media.audioFileName) {
-                    if self.audioPlayManager.isPlaying() {
-                        let result = try self.pause()
-                        single(.success(result))
-                    } else {
+                    if autoPlay {
                         let result = try self.play(media: media, restart: restart)
                         single(.success(result))
+                    } else {
+                        if self.audioPlayManager.isPlaying() {
+                            let result = try self.pause()
+                            single(.success(result))
+                        } else {
+                            let result = try self.play(media: media, restart: restart)
+                            single(.success(result))
+                        }
                     }
                 } else {
                     self.mediaResourceRepository.getMediaURL(fileName: media.audioFileName, type: .audio)
