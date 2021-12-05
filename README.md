@@ -24,6 +24,13 @@
 
 > 하루 한 줄, 당신의 마음을 편안하게 해 줄 글을 소개해드릴게요.
 
+## 🧑‍🤝‍🧑  팀원 소개
+
+|  iOS |  iOS |  iOS |  iOS |  
+| :------------: | :------------: | :------------: | :------------: |
+|  <img width=240 src=https://media.giphy.com/media/szf5P2VvfOeShdnhOc/giphy.gif>  | <img width=240 src=https://user-images.githubusercontent.com/40790219/139001161-87c697a8-bb79-4feb-b0ef-514f3af25a82.jpeg> | <img width=240 src=https://user-images.githubusercontent.com/68768628/138987287-3f3afb65-2219-4e7f-a66d-62facb620776.gif>  | <img width=240 src=https://user-images.githubusercontent.com/38206212/139246077-5e48b153-3a0a-414a-ae6c-2bd4b76cde22.gif>  |
+|  `S031` [오현식🎧](https://github.com/Kinaan-Oh)  |  `S034` [윤상진💿](https://github.com/alibreo3754)  |  `S039` [이수현📢](https://github.com/soohyeon0487)  |  `S055` [조기완🔊](https://github.com/jogiking)
+
 ## 💡 주요 기능
 
 | 홈화면 상단 | 홈화면 하단 | 오늘의 명언 | 집중 통계 화면 |
@@ -140,14 +147,6 @@ iOS 클린 아키텍쳐 구조를 기본적으로 채용하였고 프레젠테�
         }
     }
     ```
-    
-
-## 🧑‍🤝‍🧑  팀원 소개
-
-|  iOS |  iOS |  iOS |  iOS |  
-| :------------: | :------------: | :------------: | :------------: |
-|  <img width=240 src=https://media.giphy.com/media/szf5P2VvfOeShdnhOc/giphy.gif>  | <img width=240 src=https://user-images.githubusercontent.com/40790219/139001161-87c697a8-bb79-4feb-b0ef-514f3af25a82.jpeg> | <img width=240 src=https://user-images.githubusercontent.com/68768628/138987287-3f3afb65-2219-4e7f-a66d-62facb620776.gif>  | <img width=240 src=https://user-images.githubusercontent.com/38206212/139246077-5e48b153-3a0a-414a-ae6c-2bd4b76cde22.gif>  |
-|  `S031` [오현식🎧](https://github.com/Kinaan-Oh)  |  `S034` [윤상진💿](https://github.com/alibreo3754)  |  `S039` [이수현📢](https://github.com/soohyeon0487)  |  `S055` [조기완🔊](https://github.com/jogiking)
 
 ## 👨‍💻 팀 개발 문화
 
