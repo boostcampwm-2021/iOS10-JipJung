@@ -97,9 +97,12 @@ final class BreathFocusViewController: FocusViewController {
         super.viewDidLayoutSubviews()
         breathShapeLayer.frame = breathView.bounds
         scalingShapeLayer.frame = breathView.bounds
-        textLayer.frame = CGRect(origin: CGPoint(x: breathView.bounds.midX - 60,
-                                                 y: breathView.bounds.midY - 40),
-                                 size: CGSize(width: 120, height: 100))
+        textLayer.frame = CGRect(
+            origin: CGPoint(
+                x: breathView.bounds.midX - 60,
+                y: breathView.bounds.midY - 40),
+            size: CGSize(width: 120, height: 100)
+        )
         startWiggleAnimation()
     }
     
@@ -299,7 +302,7 @@ final class BreathFocusViewController: FocusViewController {
     private func startIntroAnimation() {
         let scaleUpAnimation = CABasicAnimation(keyPath: "transform.scale")
         scaleUpAnimation.fromValue = 1.0
-        scaleUpAnimation.toValue = 5.0
+        scaleUpAnimation.toValue = 10.0
         
         let opacityDownAnimation = CABasicAnimation(keyPath: "opacity")
         opacityDownAnimation.fromValue = 1.0
