@@ -302,7 +302,7 @@ final class BreathFocusViewController: FocusViewController {
     private func startIntroAnimation() {
         let scaleUpAnimation = CABasicAnimation(keyPath: "transform.scale")
         scaleUpAnimation.fromValue = 1.0
-        scaleUpAnimation.toValue = 10.0
+        scaleUpAnimation.toValue = 5.0
         
         let opacityDownAnimation = CABasicAnimation(keyPath: "opacity")
         opacityDownAnimation.fromValue = 1.0
