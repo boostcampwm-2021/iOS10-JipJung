@@ -14,7 +14,7 @@ import RxSwift
 final class InfinityFocusViewController: FocusViewController {
     let timerView: UIView = {
         let length = FocusViewControllerSize.timerViewLength
-        let size = CGSize(width: length * 1.1, height: length * 1.1)
+        let size = CGSize(width: length, height: length)
         let view = UIView(frame: CGRect(origin: .zero, size: size))
         return view
     }()
@@ -303,16 +303,27 @@ final class InfinityFocusViewController: FocusViewController {
             endAngle: 2 * CGFloat.pi,
             clockwise: true
         )
-        
         circleShapeLayer.path = circlePath.cgPath
         circleShapeLayer.strokeColor = UIColor.red.cgColor
         circleShapeLayer.lineCap = CAShapeLayerLineCap.round
         circleShapeLayer.lineWidth = lineWidth
         circleShapeLayer.fillColor = UIColor.clear.cgColor
-        circleShapeLayer.position = timerView.center
+        let centerWithLineWidth = CGPoint(
+            x: timerView.center.x + lineWidth,
+            y: timerView.center.y + lineWidth
+        )
+        circleShapeLayer.position = centerWithLineWidth
         
+        let boundWithLineWidth = timerView.bounds.inset(
+            by: UIEdgeInsets(
+                top: -lineWidth,
+                left: -lineWidth,
+                bottom: -lineWidth,
+                right: -lineWidth
+            )
+        )
         let gradient = CAGradientLayer()
-        gradient.frame = timerView.bounds
+        gradient.frame = boundWithLineWidth
         gradient.position = timerView.center
         gradient.colors = [UIColor.systemGray.cgColor, strokeColor.cgColor]
         gradient.startPoint = CGPoint(x: 0.5, y: 0.5)

@@ -97,9 +97,12 @@ final class BreathFocusViewController: FocusViewController {
         super.viewDidLayoutSubviews()
         breathShapeLayer.frame = breathView.bounds
         scalingShapeLayer.frame = breathView.bounds
-        textLayer.frame = CGRect(origin: CGPoint(x: breathView.bounds.midX - 60,
-                                                 y: breathView.bounds.midY - 40),
-                                 size: CGSize(width: 120, height: 100))
+        textLayer.frame = CGRect(
+            origin: CGPoint(
+                x: breathView.bounds.midX - 60,
+                y: breathView.bounds.midY - 40),
+            size: CGSize(width: 120, height: 100)
+        )
         startWiggleAnimation()
     }
     
