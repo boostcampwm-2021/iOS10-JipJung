@@ -14,7 +14,9 @@ final class MaximViewModel {
     let maximList = BehaviorRelay<[MaximPresenterObject]>(value: [])
     let isHeaderPresent = BehaviorRelay<Bool>(value: false)
     let imageURLs = BehaviorRelay<[String]>(value: [])
-    let selectedDate = BehaviorRelay<IndexPath>(value: IndexPath(item: 0, section: 0))
+    let selectedDate = BehaviorRelay<Int>(value: 0)
+    let jumpedDate = PublishRelay<Int>()
+    let jumpedWeek = PublishRelay<Int>()
     
     private let disposeBag = DisposeBag()
     private let maximListUseCase = MaximListUseCase(
@@ -42,17 +44,32 @@ final class MaximViewModel {
         isHeaderPresent.accept(false)
     }
     
-    func selectDate(with indexPath: IndexPath) {
-        selectedDate.accept(indexPath)
+    func scrollDate(to index: Int) {
+        let index = compressIndex(index)
+        jumpedWeek.accept(index / 7)
+        selectedDate.accept(index)
     }
     
-    func moveNDate(with nDate: Int) {
-        if (0..<maximList.value.count) ~= (selectedDate.value.item + nDate) {
-            let newSelectedDate = IndexPath(
-                item: selectedDate.value.item + nDate,
-                section: selectedDate.value.section
-            )
-            selectedDate.accept(newSelectedDate)
+    func scrollWeek(to index: Int) {
+        let index = (selectedDate.value % 7 + index * 7)
+        jumpDate(to: index)
+    }
+    
+    func jumpDate(to index: Int) {
+        let index = compressIndex(index)
+        jumpedDate.accept(index)
+        selectedDate.accept(index)
+    }
+    
+    // 참고:  https://stackoverflow.com/questions/31656642/lesser-than-or-greater-than-in-swift-switch-statement
+    private func compressIndex(_ index: Int) -> Int {
+        switch index {
+        case ..<0:
+            return 0
+        case maximList.value.count...:
+            return maximList.value.count - 1
+        default:
+            return index
         }
     }
 }
