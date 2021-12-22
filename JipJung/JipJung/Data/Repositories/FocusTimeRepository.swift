@@ -9,11 +9,6 @@ import Foundation
 
 import RxSwift
 
-protocol FocusTimeRepositoryProtocol {
-    func create(record: FocusRecord) -> Single<Bool>
-    func read(date: Date) -> Single<[FocusRecord]>
-}
-
 final class FocusTimeRepository: FocusTimeRepositoryProtocol {
     private let localDBManager = RealmDBManager.shared
     
@@ -43,12 +38,7 @@ final class FocusTimeRepository: FocusTimeRepositoryProtocol {
             
             do {
                 let predicate = NSPredicate(
-                    format: "(year = %@) AND (month = %@) AND (day = %@)",
-                    argumentArray: [
-                        date.year,
-                        date.month,
-                        date.day
-                    ]
+                    format: "(year = \(date.year)) AND (month = \(date.month)) AND (day = \(date.day))"
                 )
                 let result = try self.localDBManager.objects(
                     ofType: FocusRecord.self,

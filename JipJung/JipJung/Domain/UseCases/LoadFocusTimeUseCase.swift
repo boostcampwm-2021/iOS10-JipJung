@@ -9,10 +9,15 @@ import Foundation
 
 import RxSwift
 
+protocol FocusTimeRepositoryProtocol {
+    func create(record: FocusRecord) -> Single<Bool>
+    func read(date: Date) -> Single<[FocusRecord]>
+}
+
 final class LoadFocusTimeUseCase {
     private let focusTimeRepository: FocusTimeRepositoryProtocol
     
-    init(focusTimeRepository: FocusTimeRepositoryProtocol = FocusTimeRepository()) {
+    init(focusTimeRepository: FocusTimeRepositoryProtocol) {
         self.focusTimeRepository = focusTimeRepository
     }
     

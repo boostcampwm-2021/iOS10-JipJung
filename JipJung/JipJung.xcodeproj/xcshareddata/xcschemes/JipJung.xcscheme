@@ -52,7 +52,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "DD97B05E27562DA7009A1E5C"
+               BlueprintIdentifier = "DD94DBD32773690100CE843B"
                BuildableName = "MeTests.xctest"
                BlueprintName = "MeTests"
                ReferencedContainer = "container:JipJung.xcodeproj">
