@@ -21,5 +21,8 @@ target 'JipJung' do
   end
   target 'MeTests' do
     test_pods
-  end 
+  end
+  target 'RealmTests' do
+    test_pods
+  end
 end
