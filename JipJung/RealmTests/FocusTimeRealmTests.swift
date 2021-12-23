@@ -6,11 +6,20 @@
 //
 
 import XCTest
+@testable import JipJung
+
+import RealmSwift
+import RxBlocking
 
 class FocusTimeRealmTests: XCTestCase {
-
+    
+    var loadFocusTimeUseCase: LoadFocusTimeUseCase! = nil
+        
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
+        Realm.Configuration.defaultConfiguration.inMemoryIdentifier = name
+        try! ApplicationLaunch().makeDebugLaunch()
+        loadFocusTimeUseCase = LoadFocusTimeUseCase(focusTimeRepository: FocusTimeRepository())
     }
 
     override func tearDownWithError() throws {
@@ -25,7 +34,11 @@ class FocusTimeRealmTests: XCTestCase {
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
         self.measure {
-            // Put the code you want to measure the time of here.
+            for i in 1...100 {
+                let historyObservable = loadFocusTimeUseCase.loadHistory(from: Date(), nDays: 140).asObservable().toBlocking()
+                let data = try! historyObservable.first()!
+                print(data)
+            }
         }
     }
 

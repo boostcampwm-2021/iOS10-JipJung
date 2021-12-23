@@ -46,6 +46,7 @@ final class ApplicationLaunch: NSObject {
 
             let data = try Data(contentsOf: url)
             let jsonDecoder = JSONDecoder()
+            // 이러면안되..
             let jsonValue = try jsonDecoder.decode([FocusRecord].self, from: data)
 
             try LocalDBMigrator.shared.migrate(dataList: jsonValue)

@@ -13,7 +13,7 @@ import RxSwift
 final class LocalDBMigrator {
     static let shared = LocalDBMigrator()
     private init() {}
-    
+
     func migrate<T: Object>(dataList: [T]) throws {
         for data in dataList {
             do {

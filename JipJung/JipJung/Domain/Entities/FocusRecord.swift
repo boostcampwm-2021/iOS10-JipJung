@@ -31,3 +31,21 @@ class FocusRecord: Object, Decodable {
         self.hour = hour
     }
 }
+
+class FocusRecordV2: Object {
+    @Persisted(primaryKey: true) var id: String
+    @Persisted var focusTime = List<FocusRecordTime>()
+    
+    private override init() {
+        super.init()
+    }
+
+    convenience init(id: Date, focusTime: Int, year: Int, month: Int, day: Int, hour: Int) {
+        self.init()
+        self.id = "\(id)"
+    }
+}
+
+class FocusRecordTime: Object {
+    @Persisted var focusTime: Int
+}

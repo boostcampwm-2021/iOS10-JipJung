@@ -177,6 +177,8 @@
 		DD94DC052774B3C000CE843B /* DateFocusRecordDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD7CDCBB274E1665005ADF35 /* DateFocusRecordDTO.swift */; };
 		DD94DC062774B3C600CE843B /* FocusRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4153944273B9676004EF80F /* FocusRecord.swift */; };
 		DD94DC072774B3E100CE843B /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4153946273BA005004EF80F /* Date+Extension.swift */; };
+		DD94DC0A2774B5E800CE843B /* LocalDBEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91655855273B6F0200C55CDC /* LocalDBEnums.swift */; };
+		DD94DC0C2774B84D00CE843B /* FocusTimeRealmTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD94DC0B2774B84D00CE843B /* FocusTimeRealmTests.swift */; };
 		DD97B0282755C2FA009A1E5C /* Focus+Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD97B0272755C2FA009A1E5C /* Focus+Enums.swift */; };
 		DD97B03D2755F8FC009A1E5C /* MaximListUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD97B03C2755F8FC009A1E5C /* MaximListUseCaseTests.swift */; };
 		DD97B0432755FE96009A1E5C /* MaximListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91655857273B773400C55CDC /* MaximListUseCase.swift */; };
@@ -434,6 +436,7 @@
 		DD94DBD62773690100CE843B /* MeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeTests.swift; sourceTree = "<group>"; };
 		DD94DBFC2774B22600CE843B /* RealmTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RealmTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD94DBFE2774B22600CE843B /* RealmTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmTests.swift; sourceTree = "<group>"; };
+		DD94DC0B2774B84D00CE843B /* FocusTimeRealmTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusTimeRealmTests.swift; sourceTree = "<group>"; };
 		DD97B0272755C2FA009A1E5C /* Focus+Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Focus+Enums.swift"; sourceTree = "<group>"; };
 		DD97B03A2755F8FC009A1E5C /* MaximTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MaximTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD97B03C2755F8FC009A1E5C /* MaximListUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaximListUseCaseTests.swift; sourceTree = "<group>"; };
@@ -949,6 +952,7 @@
 		DD94DBFD2774B22600CE843B /* RealmTests */ = {
 			isa = PBXGroup;
 			children = (
+				DD94DC0B2774B84D00CE843B /* FocusTimeRealmTests.swift */,
 				DD94DBFE2774B22600CE843B /* RealmTests.swift */,
 			);
 			path = RealmTests;
@@ -1297,6 +1301,7 @@
 					};
 					DD94DBFB2774B22600CE843B = {
 						CreatedOnToolsVersion = 13.1;
+						TestTargetID = DD3902CC272FCA10009ECA82;
 					};
 					DD97B0392755F8FC009A1E5C = {
 						CreatedOnToolsVersion = 13.1;
@@ -1786,6 +1791,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				DD94DBFF2774B22600CE843B /* RealmTests.swift in Sources */,
+				DD94DC0A2774B5E800CE843B /* LocalDBEnums.swift in Sources */,
+				DD94DC0C2774B84D00CE843B /* FocusTimeRealmTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2163,6 +2170,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1EDC1D98E36EF88952C8C8C1 /* Pods-JipJung-RealmTests.debug.xcconfig */;
 			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6785P7H4GT;
@@ -2179,6 +2187,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/JipJung.app/JipJung";
 			};
 			name = Debug;
 		};
@@ -2186,6 +2195,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3AF4843D18C1FE04CCA5342C /* Pods-JipJung-RealmTests.release.xcconfig */;
 			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6785P7H4GT;
@@ -2202,6 +2212,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/JipJung.app/JipJung";
 			};
 			name = Release;
 		};
