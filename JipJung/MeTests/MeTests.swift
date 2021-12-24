@@ -11,7 +11,7 @@ import Nimble
 
 class MeTests: XCTestCase {
     func testExample() throws {
-        LoadFocusTimeUseCase(focusTimeRepository: <#T##FocusTimeRepositoryProtocol#>)
+//        LoadFocusTimeUseCase(focusTimeRepository: <#T##FocusTimeRepositoryProtocol#>)
     }
 
     func testPerformanceExample() throws {

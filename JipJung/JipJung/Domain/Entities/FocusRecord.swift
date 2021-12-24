@@ -34,18 +34,28 @@ class FocusRecord: Object, Decodable {
 
 class FocusRecordV2: Object {
     @Persisted(primaryKey: true) var id: String
-    @Persisted var focusTime = List<FocusRecordTime>()
+    @Persisted var focusTime = List<FocusRecord>()
     
     private override init() {
         super.init()
     }
 
-    convenience init(id: Date, focusTime: Int, year: Int, month: Int, day: Int, hour: Int) {
+    convenience init(id: Date) {
+        self.init(id: id.realmId)
+    }
+    
+    convenience init(id: String) {
         self.init()
-        self.id = "\(id)"
+        self.id = id
     }
 }
 
 class FocusRecordTime: Object {
     @Persisted var focusTime: Int
+}
+
+extension Date {
+    var realmId: String {
+        "\(year)\(month)\(day)"
+    }
 }
