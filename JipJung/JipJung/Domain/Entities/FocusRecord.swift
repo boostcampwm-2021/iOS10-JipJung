@@ -49,13 +49,3 @@ class FocusRecordV2: Object {
         self.id = id
     }
 }
-
-class FocusRecordTime: Object {
-    @Persisted var focusTime: Int
-}
-
-extension Date {
-    var realmId: String {
-        "\(year)\(month)\(day)"
-    }
-}

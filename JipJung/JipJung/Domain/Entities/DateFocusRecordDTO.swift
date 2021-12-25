@@ -20,9 +20,3 @@ struct DateFocusRecordDTO: Comparable {
         self.focusSecond = focusSecond
     }
 }
-
-extension Date {
-    var midnight: Date {
-        Calendar.current.startOfDay(for: self)
-    }
-}
