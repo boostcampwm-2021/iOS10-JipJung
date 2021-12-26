@@ -19,6 +19,11 @@ final class ApplicationLaunch: NSObject {
         configureAudioSession()
         configureLocalNotification()
         
+        #if DEBUG
+        try? makeDebugLaunch()
+        #endif
+        try? LocalDBMigrator.shared.migrateSchema()
+        
         if isFirstLaunch() {
             do {
                 try configureInnerDB()
@@ -50,11 +55,7 @@ final class ApplicationLaunch: NSObject {
             let jsonDecoder = JSONDecoder()
             let jsonValue = try jsonDecoder.decode([FocusRecord].self, from: data)
             let focusTimeRepository = FocusTimeRepository()
-            for focusRecord in jsonValue {
-                focusTimeRepository.create(record: focusRecord)
-                    .subscribe()
-                    .disposed(by: disposeBag)
-            }
+            try LocalDBMigrator.shared.migrateJsonData(dataList: jsonValue)
         } catch {
             print(error)
         }
