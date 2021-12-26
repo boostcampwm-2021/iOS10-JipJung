@@ -17,11 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
-        #if DEBUG
-        try? applicationLaunch.makeDebugLaunch()
-        #endif
         applicationLaunch.start()
-
         return true
     }
 

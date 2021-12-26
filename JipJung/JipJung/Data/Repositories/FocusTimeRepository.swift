@@ -9,11 +9,6 @@ import Foundation
 
 import RxSwift
 
-protocol FocusTimeRepositoryProtocol {
-    func create(record: FocusRecord) -> Single<Bool>
-    func read(date: Date) -> Single<[FocusRecord]>
-}
-
 final class FocusTimeRepository: FocusTimeRepositoryProtocol {
     private let localDBManager = RealmDBManager.shared
     
@@ -25,7 +20,18 @@ final class FocusTimeRepository: FocusTimeRepositoryProtocol {
             }
             
             do {
-                try self.localDBManager.add(record)
+                let dateKey = "\(record.year)\(record.month)\(record.day)"
+                let dateFocusRecord: DateFocusRecord
+                if let dateFocusRecordObject = try self.localDBManager.object(ofType: DateFocusRecord.self, forPrimaryKey: dateKey) {
+                    dateFocusRecord = dateFocusRecordObject
+                    try dateFocusRecord.realm?.write({
+                        dateFocusRecord.focusTime.append(record)
+                    })
+                } else {
+                    dateFocusRecord = DateFocusRecord(id: dateKey)
+                    dateFocusRecord.focusTime.append(record)
+                }
+                try self.localDBManager.add(dateFocusRecord)
             } catch {
                 single(.failure(error))
             }
@@ -34,7 +40,7 @@ final class FocusTimeRepository: FocusTimeRepositoryProtocol {
         }
     }
     
-    func read(date: Date) -> Single<[FocusRecord]> {
+    func read(date: Date) -> Single<DateFocusRecord> {
         return Single.create { [weak self] single in
             guard let self = self else {
                 single(.failure(RealmError.initFailed))
@@ -42,19 +48,14 @@ final class FocusTimeRepository: FocusTimeRepositoryProtocol {
             }
             
             do {
-                let predicate = NSPredicate(
-                    format: "(year = %@) AND (month = %@) AND (day = %@)",
-                    argumentArray: [
-                        date.year,
-                        date.month,
-                        date.day
-                    ]
-                )
-                let result = try self.localDBManager.objects(
-                    ofType: FocusRecord.self,
-                    with: predicate
-                )
-                single(.success(result))
+                if let result = try self.localDBManager.object(
+                    ofType: DateFocusRecord.self,
+                    forPrimaryKey: date.realmId
+                ) {
+                    single(.success(result))
+                } else {
+                    single(.success(DateFocusRecord(id: date)))
+                }
             } catch {
                 single(.failure(RealmError.searchFailed))
             }

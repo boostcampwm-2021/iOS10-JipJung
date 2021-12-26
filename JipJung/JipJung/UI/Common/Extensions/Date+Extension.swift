@@ -32,3 +32,16 @@ extension Date {
         return Calendar.current.component(.year, from: self)
     }
 }
+
+extension Date {
+    var midnight: Date {
+        Calendar.current.startOfDay(for: self)
+    }
+}
+
+extension Date {
+    var realmId: String {
+        "\(year)\(month)\(day)"
+    }
+}
+

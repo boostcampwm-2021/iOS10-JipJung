@@ -15,7 +15,9 @@ final class MeViewModel {
     let monthIndex = BehaviorRelay<[(index: Int, month: String)]>(value: [])
     
     private let disposeBag = DisposeBag()
-    private let loadFocusTimeUseCase = LoadFocusTimeUseCase()
+    private let loadFocusTimeUseCase = LoadFocusTimeUseCase(
+        focusTimeRepository: FocusTimeRepository()
+    )
     
     func fetchFocusTimeLists() {
         let nDay = MeGrassMap.dayCount - 7 + Date().weekday

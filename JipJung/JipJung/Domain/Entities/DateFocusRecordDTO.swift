@@ -14,4 +14,9 @@ struct DateFocusRecordDTO: Comparable {
     
     let date: Date
     let focusSecond: Int
+    
+    internal init(date: Date, focusSecond: Int) {
+        self.date = date.midnight
+        self.focusSecond = focusSecond
+    }
 }

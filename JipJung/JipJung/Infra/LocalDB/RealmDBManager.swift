@@ -13,15 +13,23 @@ final class RealmDBManager {
     static let shared = RealmDBManager()
     private init() {}
     
-    func objects<T: Object>(ofType: T.Type, with predicate: NSPredicate? = nil) throws -> [T] {
+    func object<Entity: Object>(ofType: Entity.Type, forPrimaryKey: String) throws -> Entity? {
+        guard let realm = try? Realm() else {
+            throw RealmError.initFailed
+        }
+        
+        return realm.object(ofType: ofType, forPrimaryKey: forPrimaryKey)
+    }
+    
+    func objects<Entity: Object>(ofType: Entity.Type, with predicate: NSPredicate? = nil) throws -> [Entity] {
         guard let realm = try? Realm() else {
             throw RealmError.initFailed
         }
         
         if let predicate = predicate {
-            return Array(realm.objects(T.self).filter(predicate))
+            return Array(realm.objects(Entity.self).filter(predicate))
         } else {
-            return Array(realm.objects(T.self))
+            return Array(realm.objects(Entity.self))
         }
     }
     

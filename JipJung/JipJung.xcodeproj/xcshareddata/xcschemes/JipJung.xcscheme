@@ -52,9 +52,29 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "DD97B05E27562DA7009A1E5C"
+               BlueprintIdentifier = "DD94DBD32773690100CE843B"
                BuildableName = "MeTests.xctest"
                BlueprintName = "MeTests"
+               ReferencedContainer = "container:JipJung.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "DD94DBE12774B0AF00CE843B"
+               BuildableName = "RealmTest.xctest"
+               BlueprintName = "RealmTest"
+               ReferencedContainer = "container:JipJung.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "DD94DBFB2774B22600CE843B"
+               BuildableName = "RealmTests.xctest"
+               BlueprintName = "RealmTests"
                ReferencedContainer = "container:JipJung.xcodeproj">
             </BuildableReference>
          </TestableReference>

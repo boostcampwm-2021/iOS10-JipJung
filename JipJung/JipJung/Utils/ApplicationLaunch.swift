@@ -10,6 +10,7 @@ import Foundation
 
 import Firebase
 import RealmSwift
+import RxSwift
 
 final class ApplicationLaunch: NSObject {
     func start() {
@@ -17,6 +18,11 @@ final class ApplicationLaunch: NSObject {
         configureRemoteCommandCenter()
         configureAudioSession()
         configureLocalNotification()
+        
+        #if DEBUG
+        try? makeDebugLaunch()
+        #endif
+        try? LocalDBMigrator.shared.migrateSchema()
         
         if isFirstLaunch() {
             do {
@@ -31,6 +37,7 @@ final class ApplicationLaunch: NSObject {
     }
     
     #if DEBUG
+    var disposeBag = DisposeBag()
     func makeDebugLaunch() throws {
         try? FileManager.default.removeItem(
             at: Realm.Configuration.defaultConfiguration.fileURL ?? URL(fileURLWithPath: "")
@@ -43,12 +50,12 @@ final class ApplicationLaunch: NSObject {
             else {
                 throw ApplicationLaunchError.resourceJsonFileNotFound
             }
-
+            
             let data = try Data(contentsOf: url)
             let jsonDecoder = JSONDecoder()
             let jsonValue = try jsonDecoder.decode([FocusRecord].self, from: data)
-
-            try LocalDBMigrator.shared.migrate(dataList: jsonValue)
+            let focusTimeRepository = FocusTimeRepository()
+            try LocalDBMigrator.shared.migrateJsonData(dataList: jsonValue)
         } catch {
             print(error)
         }
@@ -79,11 +86,11 @@ final class ApplicationLaunch: NSObject {
             jsonDecoder.dateDecodingStrategy = .iso8601
             let jsonValue = try jsonDecoder.decode(DBStructureForJSON.self, from: data)
             
-            try LocalDBMigrator.shared.migrate(dataList: jsonValue.allMediaList)
-            try LocalDBMigrator.shared.migrate(dataList: jsonValue.favoriteMediaList)
-            try LocalDBMigrator.shared.migrate(dataList: jsonValue.brightModeList)
-            try LocalDBMigrator.shared.migrate(dataList: jsonValue.darknessModeList)
-            try LocalDBMigrator.shared.migrate(dataList: jsonValue.maximList)
+            try LocalDBMigrator.shared.migrateJsonData(dataList: jsonValue.allMediaList)
+            try LocalDBMigrator.shared.migrateJsonData(dataList: jsonValue.favoriteMediaList)
+            try LocalDBMigrator.shared.migrateJsonData(dataList: jsonValue.brightModeList)
+            try LocalDBMigrator.shared.migrateJsonData(dataList: jsonValue.darknessModeList)
+            try LocalDBMigrator.shared.migrateJsonData(dataList: jsonValue.maximList)
         } catch {
             throw error
         }

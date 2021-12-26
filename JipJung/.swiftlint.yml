@@ -1,6 +1,7 @@
 excluded:
 - Pods
 - MaximTests
+- RealmTests
 disabled_rules:
 - switch_case_alignment
 - trailing_whitespace
