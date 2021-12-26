@@ -10,6 +10,7 @@ import Foundation
 
 import Firebase
 import RealmSwift
+import RxSwift
 
 final class ApplicationLaunch: NSObject {
     func start() {
@@ -31,6 +32,7 @@ final class ApplicationLaunch: NSObject {
     }
     
     #if DEBUG
+    var disposeBag = DisposeBag()
     func makeDebugLaunch() throws {
         try? FileManager.default.removeItem(
             at: Realm.Configuration.defaultConfiguration.fileURL ?? URL(fileURLWithPath: "")
@@ -43,13 +45,16 @@ final class ApplicationLaunch: NSObject {
             else {
                 throw ApplicationLaunchError.resourceJsonFileNotFound
             }
-
+            
             let data = try Data(contentsOf: url)
             let jsonDecoder = JSONDecoder()
-            // 이러면안되..
             let jsonValue = try jsonDecoder.decode([FocusRecord].self, from: data)
-
-            try LocalDBMigrator.shared.migrate(dataList: jsonValue)
+            let focusTimeRepository = FocusTimeRepository()
+            for focusRecord in jsonValue {
+                focusTimeRepository.create(record: focusRecord)
+                    .subscribe()
+                    .disposed(by: disposeBag)
+            }
         } catch {
             print(error)
         }

@@ -173,7 +173,6 @@
 		DD8564CA273F9E6F00049D9B /* SlowPresent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8564C9273F9E6F00049D9B /* SlowPresent.swift */; };
 		DD94DBD72773690100CE843B /* MeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD94DBD62773690100CE843B /* MeTests.swift */; };
 		DD94DBDD27736A1D00CE843B /* LoadFocusTimeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD7CDCB3274D1E66005ADF35 /* LoadFocusTimeUseCase.swift */; };
-		DD94DBFF2774B22600CE843B /* RealmTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD94DBFE2774B22600CE843B /* RealmTests.swift */; };
 		DD94DC052774B3C000CE843B /* DateFocusRecordDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD7CDCBB274E1665005ADF35 /* DateFocusRecordDTO.swift */; };
 		DD94DC062774B3C600CE843B /* FocusRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4153944273B9676004EF80F /* FocusRecord.swift */; };
 		DD94DC072774B3E100CE843B /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4153946273BA005004EF80F /* Date+Extension.swift */; };
@@ -435,7 +434,6 @@
 		DD94DBD42773690100CE843B /* MeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD94DBD62773690100CE843B /* MeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeTests.swift; sourceTree = "<group>"; };
 		DD94DBFC2774B22600CE843B /* RealmTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RealmTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		DD94DBFE2774B22600CE843B /* RealmTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmTests.swift; sourceTree = "<group>"; };
 		DD94DC0B2774B84D00CE843B /* FocusTimeRealmTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusTimeRealmTests.swift; sourceTree = "<group>"; };
 		DD97B0272755C2FA009A1E5C /* Focus+Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Focus+Enums.swift"; sourceTree = "<group>"; };
 		DD97B03A2755F8FC009A1E5C /* MaximTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MaximTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -953,7 +951,6 @@
 			isa = PBXGroup;
 			children = (
 				DD94DC0B2774B84D00CE843B /* FocusTimeRealmTests.swift */,
-				DD94DBFE2774B22600CE843B /* RealmTests.swift */,
 			);
 			path = RealmTests;
 			sourceTree = "<group>";
@@ -1790,7 +1787,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DD94DBFF2774B22600CE843B /* RealmTests.swift in Sources */,
 				DD94DC0A2774B5E800CE843B /* LocalDBEnums.swift in Sources */,
 				DD94DC0C2774B84D00CE843B /* FocusTimeRealmTests.swift in Sources */,
 			);

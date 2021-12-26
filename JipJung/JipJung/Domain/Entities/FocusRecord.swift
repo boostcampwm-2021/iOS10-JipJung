@@ -32,7 +32,7 @@ class FocusRecord: Object, Decodable {
     }
 }
 
-class FocusRecordV2: Object {
+class DateFocusRecord: Object {
     @Persisted(primaryKey: true) var id: String
     @Persisted var focusTime = List<FocusRecord>()
     

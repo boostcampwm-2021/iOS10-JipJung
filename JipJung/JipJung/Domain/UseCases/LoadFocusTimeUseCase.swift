@@ -11,7 +11,7 @@ import RxSwift
 
 protocol FocusTimeRepositoryProtocol {
     func create(record: FocusRecord) -> Single<Bool>
-    func read(date: Date) -> Single<[FocusRecord]>
+    func read(date: Date) -> Single<DateFocusRecord>
 }
 
 final class LoadFocusTimeUseCase {
@@ -31,12 +31,12 @@ final class LoadFocusTimeUseCase {
                 date.addingTimeInterval(-oneDay * Double($0))
             }
         let focusRecordObservable = dateObservable
-            .flatMap {
-                self.focusTimeRepository.read(date: $0)
+            .flatMap {[weak self] in
+                self?.focusTimeRepository.read(date: $0) ?? Observable.just(DateFocusRecord()).asSingle()
             }
         return Observable.zip(dateObservable, focusRecordObservable)
             .map { date, focusRecords -> DateFocusRecordDTO in
-                let focusSecond = focusRecords.reduce(0) { $0 + $1.focusTime }
+                let focusSecond = focusRecords.focusTime.reduce(0) { $0 + $1.focusTime }
                 return DateFocusRecordDTO(date: date, focusSecond: focusSecond)
             }
             .toArray()
