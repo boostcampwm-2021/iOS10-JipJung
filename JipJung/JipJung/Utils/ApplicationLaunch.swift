@@ -85,11 +85,11 @@ final class ApplicationLaunch: NSObject {
             jsonDecoder.dateDecodingStrategy = .iso8601
             let jsonValue = try jsonDecoder.decode(DBStructureForJSON.self, from: data)
             
-            try LocalDBMigrator.shared.migrate(dataList: jsonValue.allMediaList)
-            try LocalDBMigrator.shared.migrate(dataList: jsonValue.favoriteMediaList)
-            try LocalDBMigrator.shared.migrate(dataList: jsonValue.brightModeList)
-            try LocalDBMigrator.shared.migrate(dataList: jsonValue.darknessModeList)
-            try LocalDBMigrator.shared.migrate(dataList: jsonValue.maximList)
+            try LocalDBMigrator.shared.migrateJsonData(dataList: jsonValue.allMediaList)
+            try LocalDBMigrator.shared.migrateJsonData(dataList: jsonValue.favoriteMediaList)
+            try LocalDBMigrator.shared.migrateJsonData(dataList: jsonValue.brightModeList)
+            try LocalDBMigrator.shared.migrateJsonData(dataList: jsonValue.darknessModeList)
+            try LocalDBMigrator.shared.migrateJsonData(dataList: jsonValue.maximList)
         } catch {
             throw error
         }
