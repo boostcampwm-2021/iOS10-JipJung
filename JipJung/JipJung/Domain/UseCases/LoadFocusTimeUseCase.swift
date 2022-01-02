@@ -43,18 +43,4 @@ final class LoadFocusTimeUseCase {
             .map({$0.sorted(by: <)})
             .asObservable()
     }
-    
-    func execute(seconds time: Int) -> Single<Bool> {
-        let currentDate = Date()
-        return focusTimeRepository.create(
-            record: FocusRecord(
-                id: UUID().uuidString,
-                focusTime: time,
-                year: currentDate.year,
-                month: currentDate.month,
-                day: currentDate.day,
-                hour: currentDate.hour
-            )
-        )
-    }
 }

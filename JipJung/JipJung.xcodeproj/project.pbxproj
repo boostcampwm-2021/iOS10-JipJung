@@ -164,6 +164,7 @@
 		DD7CDCB9274E074E005ADF35 /* DummyFocusData.json in Resources */ = {isa = PBXBuildFile; fileRef = DD7CDCB8274DFB87005ADF35 /* DummyFocusData.json */; };
 		DD7CDCBC274E1665005ADF35 /* DateFocusRecordDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD7CDCBB274E1665005ADF35 /* DateFocusRecordDTO.swift */; };
 		DD7CDCBE274E380D005ADF35 /* GrassPresenterObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD7CDCBD274E380D005ADF35 /* GrassPresenterObject.swift */; };
+		DD826A5E2781EA8600C5D329 /* LoadFocusTimeUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD826A5D2781EA8600C5D329 /* LoadFocusTimeUseCaseTests.swift */; };
 		DD82808C273CAE5F00BB2A60 /* FocusViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD82808B273CAE5F00BB2A60 /* FocusViewControllerFactory.swift */; };
 		DD82808E273CF07800BB2A60 /* CycleAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD82808D273CF07800BB2A60 /* CycleAnimation.swift */; };
 		DD828092273D113200BB2A60 /* NetworkEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD828091273D113200BB2A60 /* NetworkEnums.swift */; };
@@ -171,7 +172,6 @@
 		DD84736527453FD700DF4FCB /* MaximCalendarHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD84736427453FD700DF4FCB /* MaximCalendarHeaderCollectionViewCell.swift */; };
 		DD8473672746112D00DF4FCB /* Maxim+Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8473662746112D00DF4FCB /* Maxim+Enums.swift */; };
 		DD8564CA273F9E6F00049D9B /* SlowPresent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8564C9273F9E6F00049D9B /* SlowPresent.swift */; };
-		DD94DBD72773690100CE843B /* MeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD94DBD62773690100CE843B /* MeTests.swift */; };
 		DD94DBDD27736A1D00CE843B /* LoadFocusTimeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD7CDCB3274D1E66005ADF35 /* LoadFocusTimeUseCase.swift */; };
 		DD94DC052774B3C000CE843B /* DateFocusRecordDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD7CDCBB274E1665005ADF35 /* DateFocusRecordDTO.swift */; };
 		DD94DC062774B3C600CE843B /* FocusRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4153944273B9676004EF80F /* FocusRecord.swift */; };
@@ -194,6 +194,7 @@
 		DDB5CEBE2733A49A00E8F9EB /* RealmDBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB5CEBD2733A49A00E8F9EB /* RealmDBManager.swift */; };
 		DDB92B9D2737BD5E00EE26F0 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB92B9C2737BD5E00EE26F0 /* UIView+Extension.swift */; };
 		DDB92BB0273A263100EE26F0 /* MediaCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB92BAF273A263100EE26F0 /* MediaCollectionViewCell.swift */; };
+		DDC569662781EB31001B0C32 /* LoadFocusTimeRepositoryStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC569652781EB31001B0C32 /* LoadFocusTimeRepositoryStub.swift */; };
 		DF05FD14274ABCDF006C8689 /* WiggleAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF05FD13274ABCDF006C8689 /* WiggleAnimation.swift */; };
 		DF05FD18274CA86F006C8689 /* CountdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF05FD17274CA86F006C8689 /* CountdownView.swift */; };
 		DF05FD3A274D7FD1006C8689 /* breath.WAV in Resources */ = {isa = PBXBuildFile; fileRef = DF05FD39274D7FD1006C8689 /* breath.WAV */; };
@@ -424,6 +425,7 @@
 		DD7CDCB8274DFB87005ADF35 /* DummyFocusData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = DummyFocusData.json; sourceTree = "<group>"; };
 		DD7CDCBB274E1665005ADF35 /* DateFocusRecordDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFocusRecordDTO.swift; sourceTree = "<group>"; };
 		DD7CDCBD274E380D005ADF35 /* GrassPresenterObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrassPresenterObject.swift; sourceTree = "<group>"; };
+		DD826A5D2781EA8600C5D329 /* LoadFocusTimeUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadFocusTimeUseCaseTests.swift; sourceTree = "<group>"; };
 		DD82808B273CAE5F00BB2A60 /* FocusViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusViewControllerFactory.swift; sourceTree = "<group>"; };
 		DD82808D273CF07800BB2A60 /* CycleAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CycleAnimation.swift; sourceTree = "<group>"; };
 		DD828091273D113200BB2A60 /* NetworkEnums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkEnums.swift; sourceTree = "<group>"; };
@@ -432,7 +434,6 @@
 		DD8473662746112D00DF4FCB /* Maxim+Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Maxim+Enums.swift"; sourceTree = "<group>"; };
 		DD8564C9273F9E6F00049D9B /* SlowPresent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlowPresent.swift; sourceTree = "<group>"; };
 		DD94DBD42773690100CE843B /* MeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		DD94DBD62773690100CE843B /* MeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeTests.swift; sourceTree = "<group>"; };
 		DD94DBFC2774B22600CE843B /* RealmTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RealmTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD94DC0B2774B84D00CE843B /* FocusTimeRealmTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusTimeRealmTests.swift; sourceTree = "<group>"; };
 		DD97B0272755C2FA009A1E5C /* Focus+Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Focus+Enums.swift"; sourceTree = "<group>"; };
@@ -448,6 +449,7 @@
 		DDB5CEBD2733A49A00E8F9EB /* RealmDBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmDBManager.swift; sourceTree = "<group>"; };
 		DDB92B9C2737BD5E00EE26F0 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		DDB92BAF273A263100EE26F0 /* MediaCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaCollectionViewCell.swift; sourceTree = "<group>"; };
+		DDC569652781EB31001B0C32 /* LoadFocusTimeRepositoryStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadFocusTimeRepositoryStub.swift; sourceTree = "<group>"; };
 		DF05FD13274ABCDF006C8689 /* WiggleAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiggleAnimation.swift; sourceTree = "<group>"; };
 		DF05FD17274CA86F006C8689 /* CountdownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownView.swift; sourceTree = "<group>"; };
 		DF05FD39274D7FD1006C8689 /* breath.WAV */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = breath.WAV; sourceTree = "<group>"; };
@@ -942,7 +944,8 @@
 		DD94DBD52773690100CE843B /* MeTests */ = {
 			isa = PBXGroup;
 			children = (
-				DD94DBD62773690100CE843B /* MeTests.swift */,
+				DD826A5D2781EA8600C5D329 /* LoadFocusTimeUseCaseTests.swift */,
+				DDC569652781EB31001B0C32 /* LoadFocusTimeRepositoryStub.swift */,
 			);
 			path = MeTests;
 			sourceTree = "<group>";
@@ -1776,10 +1779,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				DD94DC072774B3E100CE843B /* Date+Extension.swift in Sources */,
-				DD94DBD72773690100CE843B /* MeTests.swift in Sources */,
 				DD94DBDD27736A1D00CE843B /* LoadFocusTimeUseCase.swift in Sources */,
 				DD94DC052774B3C000CE843B /* DateFocusRecordDTO.swift in Sources */,
+				DDC569662781EB31001B0C32 /* LoadFocusTimeRepositoryStub.swift in Sources */,
 				DD94DC062774B3C600CE843B /* FocusRecord.swift in Sources */,
+				DD826A5E2781EA8600C5D329 /* LoadFocusTimeUseCaseTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
