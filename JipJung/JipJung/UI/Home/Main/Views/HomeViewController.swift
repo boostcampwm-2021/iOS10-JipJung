@@ -497,7 +497,6 @@ final class HomeViewController: UIViewController {
         
         let favoriteObservable = viewModel.favoriteSoundList
             .distinctUntilChanged()
-        
         favoriteObservable
             .map { $0.isEmpty }
             .bind { [weak self] state in

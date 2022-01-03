@@ -27,10 +27,8 @@ final class LocalDBMigrator {
     }
     
     func migrateSchema() throws {
-        let needsMigrationToSchemaVersion1 = PublishSubject<Bool>()
-
         let config = Realm.Configuration(
-            schemaVersion: 1, // Set the new schema version.
+            schemaVersion: 1,
             migrationBlock: { migration, oldSchemaVersion in
                 if oldSchemaVersion < 1 {
                     DispatchQueue.main.async {
@@ -55,15 +53,10 @@ final class LocalDBMigrator {
                             try? RealmDBManager.shared.add(dateFocusRecord)
                         }
                     }
-                    
-                    DispatchQueue.main.async {
-                        print(2)
-                    }
                 }
             }
         )
-
         Realm.Configuration.defaultConfiguration = config
-        let backgroundScheduler = ConcurrentDispatchQueueScheduler(queue: DispatchQueue.global())
+        _ = try? Realm()
     }
 }
