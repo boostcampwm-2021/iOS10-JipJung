@@ -33,11 +33,11 @@ class FocusViewController: UIViewController {
     private func bindCloseButton() {
         closeButton.rx.tap.bind { [weak self] _ in
             self?.dismiss(animated: true) {
-                NotificationCenter.default.post(
-                    name: .checkCurrentPlay,
-                    object: nil,
-                    userInfo: nil
-                )
+//                NotificationCenter.default.post(
+//                    name: .checkCurrentPlay,
+//                    object: nil,
+//                    userInfo: nil
+//                )
             }
         }
         .disposed(by: disposeBag)

@@ -6,7 +6,9 @@
 //
 
 import Foundation
+
 import RxSwift
+
 struct LoadFocusTimeRepositoryStub: FocusTimeRepositoryProtocol {
     var focusTimes = [Date: DateFocusRecord]()
     
